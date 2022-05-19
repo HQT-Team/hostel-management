@@ -9,7 +9,7 @@ public class HelloServlet extends HttpServlet {
     private String message;
 
     public void init() {
-        message = "Hello IntelliJ!";
+        message = "Hello IntelliJ and Java Core!";
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
