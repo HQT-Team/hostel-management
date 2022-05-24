@@ -12,5 +12,5 @@ public class HostelOwnerAccount {
     private String username;
     private String createDate;
     private int status;
-    private HostelOwnerInfo info;
+    private HostelOwnerInfo hostelOwnerInfo;
 }
