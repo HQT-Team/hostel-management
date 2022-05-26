@@ -19,22 +19,42 @@ public class AddRoomServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "loginPage";
-        int quantityRoom = Integer.getInteger(request.getParameter("txtQuantityRoom"));
+        int quantityRoom = Integer.parseInt(request.getParameter("txtQuantityRoom"));
         String roomNumber = request.getParameter("txtRoomName");
-        int capacity = Integer.getInteger(request.getParameter("txtCapacity"));
-        String attic = request.getParameter("txtAttic");
-        String roomArea = request.getParameter("txtRoomArea");
-        String restrooms = request.getParameter("txtNumberRestrooms");
-        String windows = request.getParameter("txtNumberWindows");
-        String airConditions = request.getParameter("txtNumberAirConditions");
+        int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
+//        int attic = Integer.parseInt(request.getParameter("txtAttic"));
+        double roomArea = Double.parseDouble(request.getParameter("txtRoomArea"));
+        int restrooms = Integer.parseInt(request.getParameter("txtNumberRestrooms"));
+        int windows = Integer.parseInt(request.getParameter("txtNumberWindows"));
+        int airConditions = Integer.parseInt(request.getParameter("txtNumberAirConditions"));
         try {
-            Boolean isSuccess = RoomDAO.addNewRoom(1, roomNumber, 4, 25.00);
-            if (isSuccess) {
-                url = "success";
+            if (quantityRoom > 1) {
+                for (int i = 0; i < quantityRoom; i++) {
+                    Boolean isSuccess = RoomDAO.addNewRoom(1, null, capacity, roomArea, 1,
+                            "RestRoom", restrooms, 1,
+                            "Windows", windows, 1,
+                            "AirCondition", airConditions, 1);
+                    if (isSuccess) {
+                        url = "success";
+                    } else {
+                        url = "loginPage";
+                        break;
+                    }
+                }
+            } else {
+                Boolean isSuccess = RoomDAO.addNewRoom(1, roomNumber, capacity, roomArea, 1,
+                        "RestRoom", restrooms, 1,
+                        "Windows", windows, 1,
+                        "AirCondition", airConditions, 1);
+                if (isSuccess) {
+                    url = "success";
+                } else {
+                    url = "loginPage";
+                }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
