@@ -1,6 +1,6 @@
 package com.hqt.happyhostel.filter;
 
-import com.hqt.happyhostel.dao.HostelOwnerDAO;
+import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dto.Account;
 
 import javax.servlet.*;
@@ -39,25 +39,26 @@ public class AuthenticationFilter implements Filter {
 
             //check resource authentication
             String rule = (String) authProperties.getProperty(resource);
-            if(rule != null && rule.equals("restricted")) {
+            if(rule != null && rule.equals("restricted") && session.getAttribute("USER") == null) {
                 //CHECK COOKIE
-                Account acc = new Account();
+                Account acc = null;
                 if (c != null) {
                     for (Cookie cookie : c) {
                         if (cookie.getName().equals("selector")) {
                             token = cookie.getValue();
                         }
                     }
-                    if (token != null) acc = HostelOwnerDAO.getAccountByToken(token);
+                    if (token != null) acc = AccountDAO.getAccountByToken(token);
                 }
-                //NO SESSION AND NO COOKIE => LOGIN
-                if ((session == null || session.getAttribute("USER") == null) && acc == null) {
+                //NO COOKIE => LOGIN
+                if (acc == null) {
                     ((HttpServletResponse) response).sendRedirect("loginPage");
                 }
-                else {//HAVE SESSION OR COOKIE
+                else {
                     session.setAttribute("USER", acc);
                     chain.doFilter(request, response);
                 }
+
             }else {
                 chain.doFilter(request, response);
             }

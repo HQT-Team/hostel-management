@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HostelOwnerInfo {
+public class AccountInfo {
     private Information information;
 }

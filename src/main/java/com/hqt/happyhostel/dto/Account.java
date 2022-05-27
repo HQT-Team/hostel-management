@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 @Data
@@ -17,6 +16,6 @@ public class Account {
     private String expiredDate;
     private int status;
     private int role;
-    private HostelOwnerInfo hostelOwnerInfo;
+    private AccountInfo accountInfo;
     private ArrayList<RenterInfo> renterInfo;
 }

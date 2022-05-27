@@ -1,7 +1,7 @@
 package com.hqt.happyhostel.dao;
 
 import com.hqt.happyhostel.dto.Account;
-import com.hqt.happyhostel.dto.HostelOwnerInfo;
+import com.hqt.happyhostel.dto.AccountInfo;
 import com.hqt.happyhostel.dto.Information;
 import com.hqt.happyhostel.dto.RenterInfo;
 import com.hqt.happyhostel.utils.DBUtils;
@@ -9,12 +9,12 @@ import com.hqt.happyhostel.utils.DBUtils;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class HostelOwnerDAO {
+public class AccountDAO {
 
-    private static HostelOwnerInfo getOwnerAccountInformationById(int accId) {
+    private static AccountInfo getOwnerAccountInformationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
-        HostelOwnerInfo inf = null;
+        AccountInfo inf = null;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
@@ -32,7 +32,7 @@ public class HostelOwnerDAO {
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
                     String cccd = rs.getString("CCCD");
-                    inf = new HostelOwnerInfo(new Information(fullname, email, birthday, sex, phone, address, cccd));
+                    inf = new AccountInfo(new Information(fullname, email, birthday, sex, phone, address, cccd));
                 }
             }
         } catch (Exception e) {
@@ -110,7 +110,7 @@ public class HostelOwnerDAO {
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;
-        HostelOwnerInfo inf = null;
+        AccountInfo inf = null;
         RenterInfo renterInfo = null;
         try {
             cn = DBUtils.makeConnection();
@@ -165,7 +165,7 @@ public class HostelOwnerDAO {
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;
-        HostelOwnerInfo inf = null;
+        AccountInfo inf = null;
         RenterInfo renterInfo = null;
         try {
             cn = DBUtils.makeConnection();
