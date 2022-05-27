@@ -130,7 +130,7 @@ public class AccountDAO {
                     int status = rs.getInt("status");
                     int role = rs.getInt("role");
 
-                    if (role == 1) {
+                    if (role == 1 || role == 0) {
                         inf = getOwnerAccountInformationById(accId);
                         acc = new Account(Username, createdate, expireddate, status, role, inf, null);
                     } else {
@@ -184,7 +184,7 @@ public class AccountDAO {
                     int status = rs.getInt("status");
                     int role = rs.getInt("role");
 
-                    if (role == 1) {
+                    if (role == 1 || role == 0) {
                         inf = getOwnerAccountInformationById(accId);
                         acc = new Account(Username, createdate, expireddate, status, role, inf, null);
                     } else {

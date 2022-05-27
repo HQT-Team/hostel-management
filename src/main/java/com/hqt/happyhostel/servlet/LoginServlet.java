@@ -22,10 +22,10 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("txtemail");
         String password = request.getParameter("txtpassword");
         String save = request.getParameter("savelogin");
-
+        Account account = null;
         try {
-            Account account = AccountDAO.getAccountByUsernameAndPassword(username, password);
-            if (account != null) {
+            account = AccountDAO.getAccountByUsernameAndPassword(username, password);
+            if (account != null && account.getStatus() == 1) {
                 url = "success";
                 HttpSession session = request.getSession(true);
                 if (session != null) {
@@ -41,10 +41,16 @@ public class LoginServlet extends HttpServlet {
                     }
                 }
             }
+            if (account == null) request.setAttribute("WARNING", "Invalid username or password");
+            if (account.getStatus() == 0) request.setAttribute("WARNING", "Your account has been banned");
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            response.sendRedirect(url);
+            if (account != null && account.getStatus() == 1) {
+                response.sendRedirect(url);
+            }else {
+                request.getRequestDispatcher(url).forward(request, response);
+            }
         }
     }
 }

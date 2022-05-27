@@ -17,6 +17,7 @@
         <input type="password" name="txtpassword">
         <button type="submit" value="Login" name="action">Submit</button>
         <input type="checkbox" name="savelogin" value="savelogin" id="rememberMe"> <label for="rememberMe">Remember me</label>
+        <p style="color: #ff0000"><%= (request.getAttribute("WARNING") == null) ? "" : (String) request.getAttribute("WARNING")%></p>
     </form>
 </body>
 </html>
