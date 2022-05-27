@@ -40,9 +40,9 @@ public class LoginServlet extends HttpServlet {
                         AccountDAO.addTokenByUserName(token, username);
                     }
                 }
-            }
+            }else request.setAttribute("WARNING", "Your account has been banned");
             if (account == null) request.setAttribute("WARNING", "Invalid username or password");
-            if (account.getStatus() == 0) request.setAttribute("WARNING", "Your account has been banned");
+
         }catch (Exception e){
             e.printStackTrace();
         }finally {
