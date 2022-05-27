@@ -16,6 +16,7 @@
         <input type="text" name="txtemail">
         <input type="password" name="txtpassword">
         <button type="submit" value="Login" name="action">Submit</button>
+        <input type="checkbox" name="savelogin" value="savelogin" id="rememberMe"> <label for="rememberMe">Remember me</label>
     </form>
 </body>
 </html>

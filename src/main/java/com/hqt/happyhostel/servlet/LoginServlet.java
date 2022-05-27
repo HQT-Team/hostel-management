@@ -1,7 +1,8 @@
 package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.HostelOwnerDAO;
-import com.hqt.happyhostel.dto.HostelOwnerAccount;
+import com.hqt.happyhostel.dto.Account;
+import com.hqt.happyhostel.utils.RandomStringGenerator;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -20,16 +21,30 @@ public class LoginServlet extends HttpServlet {
         String url = "loginPage";
         String username = request.getParameter("txtemail");
         String password = request.getParameter("txtpassword");
+        String save = request.getParameter("savelogin");
+
         try {
-            HostelOwnerAccount owner = HostelOwnerDAO.getAccountByUsernameAndPassword(username, password);
+            Account owner = HostelOwnerDAO.getAccountByUsernameAndPassword(username, password);
             if (owner != null) {
                 url = "success";
-                request.setAttribute("owner", owner);
+                HttpSession session = request.getSession(true);
+                if (session != null) {
+                    session.setAttribute("USER", owner);
+                    if (save != null) {
+                        String token = RandomStringGenerator.randomToken(25,username);
+                        //DAO add cookie
+                        Cookie cookie = new Cookie("selector", token);
+                        cookie.setMaxAge(60*60*24*2);
+                        response.addCookie(cookie);
+
+                        HostelOwnerDAO.addTokenByUserName(token, username);
+                    }
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            response.sendRedirect(url);
         }
     }
 }
