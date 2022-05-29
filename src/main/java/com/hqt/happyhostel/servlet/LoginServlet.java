@@ -1,7 +1,8 @@
 package com.hqt.happyhostel.servlet;
 
-import com.hqt.happyhostel.dao.HostelOwnerDAO;
-import com.hqt.happyhostel.dto.HostelOwnerAccount;
+import com.hqt.happyhostel.dao.AccountDAO;
+import com.hqt.happyhostel.dto.Account;
+import com.hqt.happyhostel.utils.RandomStringGenerator;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -20,16 +21,36 @@ public class LoginServlet extends HttpServlet {
         String url = "loginPage";
         String username = request.getParameter("txtemail");
         String password = request.getParameter("txtpassword");
+        String save = request.getParameter("savelogin");
+        Account account = null;
         try {
-            HostelOwnerAccount owner = HostelOwnerDAO.getAccountByUsernameAndPassword(username, password);
-            if (owner != null) {
+            account = AccountDAO.getAccountByUsernameAndPassword(username, password);
+            if (account != null && account.getStatus() == 1) {
                 url = "success";
-                request.setAttribute("owner", owner);
-            }
+                HttpSession session = request.getSession(true);
+                if (session != null) {
+                    session.setAttribute("USER", account);
+                    if (save != null) {
+                        String token = RandomStringGenerator.randomToken(25,username);
+                        //DAO add cookie
+                        Cookie cookie = new Cookie("selector", token);
+                        cookie.setMaxAge(60*60*24*2);
+                        response.addCookie(cookie);
+
+                        AccountDAO.updateTokenByUserName(token, username);
+                    }
+                }
+            }else request.setAttribute("WARNING", "Your account has been banned");
+            if (account == null) request.setAttribute("WARNING", "Invalid username or password");
+
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            if (account != null && account.getStatus() == 1) {
+                response.sendRedirect(url);
+            }else {
+                request.getRequestDispatcher(url).forward(request, response);
+            }
         }
     }
 }

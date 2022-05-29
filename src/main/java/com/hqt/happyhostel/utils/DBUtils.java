@@ -8,9 +8,11 @@ public class DBUtils {
         Connection cn=null;
         String IP="localhost";
         String instanceName="CUTEPHOMAIQUE";
+//        String instanceName="KHOAHD7621\\KHOAHD";
         String port="1433";
         String uid="sa";
         String pwd="OIUOiu12";
+//        String pwd="0792596763";
         String db="HostelManagement";
         String driver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
         String url="jdbc:sqlserver://" +IP+"\\"+ instanceName+":"+port
