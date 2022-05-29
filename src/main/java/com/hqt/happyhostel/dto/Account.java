@@ -11,6 +11,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Account {
+    private int accId;
     private String username;
     private String createDate;
     private String expiredDate;

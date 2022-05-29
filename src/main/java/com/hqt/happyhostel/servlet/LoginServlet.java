@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
                         cookie.setMaxAge(60*60*24*2);
                         response.addCookie(cookie);
 
-                        AccountDAO.addTokenByUserName(token, username);
+                        AccountDAO.updateTokenByUserName(token, username);
                     }
                 }
             }else request.setAttribute("WARNING", "Your account has been banned");

@@ -11,6 +11,32 @@ import java.util.ArrayList;
 
 public class AccountDAO {
 
+    private static Account getAccount(ResultSet rs) {
+        Account acc = null;
+        AccountInfo inf = null;
+        RenterInfo renterInfo = null;
+        ArrayList<RenterInfo> renterInfoList = new ArrayList<>();
+        try {
+            int accId = rs.getInt("account_id");
+            String username = rs.getString("username");
+            String createdate = rs.getString("create_date");
+            String expireddate = rs.getString("expired_date");
+            int status = rs.getInt("status");
+            int role = rs.getInt("role");
+            if (role == 2) {//Renter
+                renterInfoList = getRenterAccountInformationById(accId);
+                acc = new Account(accId, username, createdate, expireddate, status, role, null, renterInfoList);
+            } else {
+                inf = getOwnerAccountInformationById(accId);
+                acc = new Account(accId, username, createdate, expireddate, status, role, inf, null);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return acc;
+    }
+
     private static AccountInfo getOwnerAccountInformationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -109,9 +135,8 @@ public class AccountDAO {
     public static Account getAccountByUsernameAndPassword(String username, String password) {
         Connection cn = null;
         PreparedStatement pst = null;
+        ResultSet rs = null;
         Account acc = null;
-        AccountInfo inf = null;
-        RenterInfo renterInfo = null;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
@@ -121,22 +146,9 @@ public class AccountDAO {
                 pst = cn.prepareStatement(sql);
                 pst.setString(1, username);
                 pst.setString(2, password);
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
-                    int accId = rs.getInt("account_id");
-                    String Username = rs.getString("username");
-                    String createdate = rs.getString("create_date");
-                    String expireddate = rs.getString("expired_date");
-                    int status = rs.getInt("status");
-                    int role = rs.getInt("role");
-
-                    if (role == 1 || role == 0) {
-                        inf = getOwnerAccountInformationById(accId);
-                        acc = new Account(Username, createdate, expireddate, status, role, inf, null);
-                    } else {
-                        ArrayList<RenterInfo> renterInfoList = getRenterAccountInformationById(accId);
-                        acc = new Account(Username, createdate, expireddate, status, role, null, renterInfoList);
-                    }
+                    acc = getAccount(rs);
                 }
             }
         } catch (Exception e) {
@@ -145,6 +157,13 @@ public class AccountDAO {
             if (pst != null) {
                 try {
                     pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -177,20 +196,7 @@ public class AccountDAO {
                 pst.setString(1, token);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
-                    int accId = rs.getInt("account_id");
-                    String Username = rs.getString("username");
-                    String createdate = rs.getString("create_date");
-                    String expireddate = rs.getString("expired_date");
-                    int status = rs.getInt("status");
-                    int role = rs.getInt("role");
-
-                    if (role == 1 || role == 0) {
-                        inf = getOwnerAccountInformationById(accId);
-                        acc = new Account(Username, createdate, expireddate, status, role, inf, null);
-                    } else {
-                        ArrayList<RenterInfo> renterInfoList = getRenterAccountInformationById(accId);
-                        acc = new Account(Username, createdate, expireddate, status, role, null, renterInfoList);
-                    }
+                    acc = getAccount(rs);
                 }
             }
         } catch (Exception e) {
@@ -215,28 +221,64 @@ public class AccountDAO {
     }
 
 
-    public static boolean addTokenByUserName(String token, String username) {
-        boolean result = true;
+
+
+    /*-------------------------------------UPDATE-------------------------------------*/
+
+    public static int updateTokenByUserName(String token, String username) {
+        int result = 0;
         Connection cn = null;
+        PreparedStatement pst = null;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "Select *\n" +
-                        "from [dbo].[Accounts]\n" +
+                String sqlUpdateStatus = "Update [dbo].[Accounts]\n" +
+                        "Set token = ?\n" +
                         "Where username = ?";
-                PreparedStatement pst = cn.prepareStatement(sql);
-                pst.setString(1, username);
-                ResultSet rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    String sqlUpdateStatus = "Update [dbo].[Accounts]\n" +
-                            "Set token = ?\n" +
-                            "Where username = ?";
-                    pst = cn.prepareStatement(sqlUpdateStatus);
-                    pst.setString(1, token);
-                    pst.setString(2, username);
-                    pst.executeUpdate();
-                } else result = false;
+                pst = cn.prepareStatement(sqlUpdateStatus);
+                pst.setString(1, token);
+                pst.setString(2, username);
+                result = pst.executeUpdate();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+
+    public static int updateAccountStatus(String username, int status) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Account acc = null;
+        int result = 0;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "Update [dbo].[Accounts]\n" +
+                        "Set status = ?\n" +
+                        "Where username = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, status);
+                pst.setString(2, username);
+                result = pst.executeUpdate();
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -250,4 +292,5 @@ public class AccountDAO {
         }
         return result;
     }
+
 }
