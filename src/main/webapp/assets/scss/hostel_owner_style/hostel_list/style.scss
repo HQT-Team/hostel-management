@@ -1,0 +1,86 @@
+@import "../../component_style/navbar";
+@import "../../component_style/sidebar";
+
+// Body
+.content-group {
+  min-height: var(--min-body-height);
+
+  .content-actions {
+    .add-hostel-btn {
+      background-color: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      font-weight: 600;
+
+      &:hover {
+        background-color: var(--primary-color);
+        color: var(--white-color);
+      }
+    }
+  }
+
+  .content-body {
+    padding: 16px 16px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+
+    .hostel-list__header {
+      font-size: 2.8rem;
+      line-height: 2.8rem;
+      font-weight: 700;
+      margin: 8px 0 24px;
+    }
+  }
+}
+
+// Table
+.hostel-table {
+  .hostel-table__body {
+    .hostel-table__body-link-detail,
+    .hostel-table__body-link-room-list,
+    .hostel-table__body-btn-edit {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: 1.8rem;
+      line-height: 1.8rem;
+      background-color: transparent;
+    }
+
+    .hostel-table__body-link-detail {
+      color: #008000;
+
+      &:hover {
+        color: #00b900;
+      }
+    }
+
+    .hostel-table__body-link-room-list {
+      color: var(--primary-color);
+
+      &:hover {
+        color: rgb(109, 170, 255);
+      }
+    }
+
+    .hostel-table__body-btn-edit {
+      color: var(--error-color);
+
+      &:hover {
+        color: rgb(255, 126, 126);
+      }
+    }
+  }
+}
+
+.dataTables_length {
+  margin-bottom: 24px;
+}
+
+// Model
+.edit-hostel-model {
+  .modal-content {
+    padding: 8px 16px;
+    border-radius: 6px;
+  }
+}
