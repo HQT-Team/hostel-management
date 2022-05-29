@@ -24,7 +24,7 @@ public class LogoutServlet extends HttpServlet {
                     c.setMaxAge(0);
                     c.setValue(null);
                     response.addCookie(c);
-                    AccountDAO.addTokenByUserName(null, username);
+                    AccountDAO.updateTokenByUserName(null, username);
                 }
             }
             url = "loginPage";
