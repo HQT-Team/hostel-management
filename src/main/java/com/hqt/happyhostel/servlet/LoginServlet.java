@@ -1,13 +1,15 @@
 package com.hqt.happyhostel.servlet;
 
+
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dto.Account;
-import com.hqt.happyhostel.utils.RandomStringGenerator;
+
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -36,7 +38,6 @@ public class LoginServlet extends HttpServlet {
                         Cookie cookie = new Cookie("selector", token);
                         cookie.setMaxAge(60*60*24*2);
                         response.addCookie(cookie);
-
                         AccountDAO.updateTokenByUserName(token, username);
                     }
                 }
