@@ -1,14 +1,15 @@
 package com.hqt.happyhostel.servlet;
 
-import com.hqt.happyhostel.dao.HostelOwnerDAO;
-import com.hqt.happyhostel.dao.RoomDAO;
-import com.hqt.happyhostel.dto.*;
+
+import com.hqt.happyhostel.dao.AccountDAO;
+import com.hqt.happyhostel.dto.Account;
+
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.ArrayList;
+
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -22,41 +23,35 @@ public class LoginServlet extends HttpServlet {
         String url = "loginPage";
         String username = request.getParameter("txtemail");
         String password = request.getParameter("txtpassword");
+        String save = request.getParameter("savelogin");
+        Account account = null;
         try {
-            HostelOwnerAccount owner = HostelOwnerDAO.getAccountByUsernameAndPassword(username, password);
-            if (owner != null) {
+            account = AccountDAO.getAccountByUsernameAndPassword(username, password);
+            if (account != null && account.getStatus() == 1) {
                 url = "success";
-                request.setAttribute("owner", owner);
+                HttpSession session = request.getSession(true);
+                if (session != null) {
+                    session.setAttribute("USER", account);
+                    if (save != null) {
+                        String token = RandomStringGenerator.randomToken(25,username);
+                        //DAO add cookie
+                        Cookie cookie = new Cookie("selector", token);
+                        cookie.setMaxAge(60*60*24*2);
+                        response.addCookie(cookie);
+                        AccountDAO.updateTokenByUserName(token, username);
+                    }
+                }
+            }else request.setAttribute("WARNING", "Your account has been banned");
+            if (account == null) request.setAttribute("WARNING", "Invalid username or password");
 
-                Hostels hostels = RoomDAO.getHostelInformationByHostelID(1);
-                request.setAttribute("hostel", hostels);
-
-                Contract contract = RoomDAO.getContract(55);
-                request.setAttribute("contract", contract);
-
-                Invoices invoice = RoomDAO.getNearestInvoice(55);
-                request.setAttribute("invoice", invoice);
-
-                Payment payment = RoomDAO.getNearestPayments(55);
-                request.setAttribute("payment", payment);
-
-                Consume consume = RoomDAO.getNearestConsume(55);
-                request.setAttribute("consume", consume);
-
-                ArrayList<RoommateInformation> roommateInformationArrayList = RoomDAO.getRoommateInformation(55);
-                request.setAttribute("roommateList", roommateInformationArrayList);
-
-                ArrayList<Infrastructures> infrastructures = RoomDAO.getInfrastructures(55);
-                request.setAttribute("infrastructures", infrastructures);
-
-                Room room = RoomDAO.getRoomInformation(55);
-                request.setAttribute("roomInformation", room);
-
-            }
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            if (account != null && account.getStatus() == 1) {
+                response.sendRedirect(url);
+            }else {
+                request.getRequestDispatcher(url).forward(request, response);
+            }
         }
     }
 }

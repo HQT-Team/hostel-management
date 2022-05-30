@@ -12,9 +12,10 @@
     <title>Dashboard</title>
 </head>
 <body>
-<h1>Dashboard</h1>
-<h1>Welcome ${requestScope.owner.hostelOwnerInfo.information.fullname}</h1>
-
+<h1>Welcome ${sessionScope.USER.accountInfo.information.fullname}</h1>
+<h1>Welcome ${sessionScope.USER.username}</h1>
+<a href="logout">Log out</a>
+  
 <form action="addRoom" method="post">
     Số lượng: <input type="number" value="1" name="txtQuantityRoom"> <br>
     Tên Phòng: <input type="text" value="1" name="txtRoomName"> <br>
@@ -184,7 +185,6 @@ Tổng tiền: <c:out value="${invoice.getTotalMoney()}"></c:out>vnđ <br>
         </c:otherwise>
     </c:choose>
 </select> <br>
-
     Máy lạnh: <input type="number" value="${infras.get(2).getQuantity()}" name="airConditionsQuantity">. Tình trạng:
     <select name="airConditionStatus">
         <c:choose>
@@ -202,7 +202,6 @@ Tổng tiền: <c:out value="${invoice.getTotalMoney()}"></c:out>vnđ <br>
     <button type="submit" value="updateRoom" name="action">Cập nhật phòng</button>
 </form>
 <br>
-
 </body>
 
 </html>
