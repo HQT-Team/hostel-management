@@ -1,8 +1,13 @@
 package com.hqt.happyhostel.filter;
 
+import com.hqt.happyhostel.dao.AccountDAO;
+import com.hqt.happyhostel.dto.Account;
+
 import javax.servlet.*;
 import javax.servlet.annotation.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Properties;
 

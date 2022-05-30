@@ -1,0 +1,431 @@
+@import "../../component_style/navbar";
+@import "../../component_style/sidebar";
+
+// Body
+.content-group {
+  min-height: var(--min-body-height);
+  margin-bottom: 24px;
+
+  .content-body {
+    padding: 16px 16px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  }
+}
+
+// Room Detail
+// Room Header
+.room-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.room-name {
+  font-size: 2.8rem;
+  line-height: 2.8rem;
+  font-weight: 700;
+  color: #ff0000;
+}
+
+.room-actions {
+  display: flex;
+  align-items: center;
+
+  .action-calculate-btn,
+  .action-create-account-link {
+    color: var(--primary-color);
+    background-color: transparent;
+    font-size: 1.6rem;
+    line-height: 1.6rem;
+    font-weight: 600;
+    display: block;
+    padding: 12px 12px;
+    border: 0.5px solid var(--primary-color);
+    border-radius: 6px;
+
+    &:first-child {
+      margin-right: 8px;
+    }
+
+    &:hover {
+      color: var(--white-color);
+      background-color: var(--primary-color);
+    }
+  }
+}
+
+// Room information
+.room-information {
+  margin: 16px 0;
+
+  .room-information__right {
+    text-align: right;
+  }
+}
+
+.infor-group {
+  font-weight: 600;
+  margin-bottom: 8px;
+
+  span {
+    font-weight: 400;
+  }
+}
+
+// Room consumed
+.room-consume {
+  padding: 16px 16px;
+  border-radius: 4px;
+  border: 0.5px solid rgb(0, 183, 255);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.consume-header {
+  font-size: 2rem;
+  font-weight: 600;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  border-bottom: 0.5px solid #ccc;
+  color: #6bcb77;
+}
+
+.consume-update-date {
+  font-weight: 600;
+  line-height: 2rem;
+  margin-bottom: 12px;
+
+  .date {
+    font-weight: 400;
+    color: #d90000;
+  }
+
+  .count-date {
+    color: var(--text-color);
+    font-style: italic;
+  }
+}
+
+.consume-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.consume-name {
+  width: 80px;
+  font-weight: 500;
+}
+
+.consume-quantity {
+  flex: 1;
+  color: #ff1700;
+  font-weight: 700;
+}
+
+.consume-actions {
+  text-align: right;
+  margin-top: 16px;
+}
+
+.consume-history-btn {
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Room invoice
+.room-invoice {
+  padding: 16px 16px;
+  border-radius: 4px;
+  border: 0.5px solid rgb(0, 183, 255);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  border-bottom: 0.5px solid #ccc;
+}
+
+.invoice-title {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 600;
+  color: #2d31fa;
+}
+
+.invoice-created {
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+.invoice-group {
+  margin-bottom: 8px;
+  display: flex;
+}
+
+.invoice-label {
+  font-weight: 600;
+  width: 170px;
+}
+
+.invoice-content.status.success {
+  color: #00b116;
+}
+
+.invoice-content.status.fail {
+  color: #ff0000;
+}
+
+.invoice-content.price {
+  color: #ff0000;
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 600;
+
+  span {
+    font-size: 1.6rem;
+    color: var(--text-color);
+    line-height: 1.6rem;
+    font-weight: 400;
+  }
+}
+
+.invoice-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.invoice-action-btn {
+  padding: 8px 12px;
+  border-radius: 4px;
+  color: var(--white-color);
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.left-actions {
+  width: 80px;
+}
+
+.invoice-detail-btn {
+  background-color: var(--black-color);
+}
+
+.right-actions {
+  flex: 1;
+  display: flex;
+  justify-content: end;
+}
+
+.list-invoices-btn {
+  background-color: var(--primary-color);
+  margin-right: 8px;
+}
+
+.invoice-confirm-paid-btn {
+  background-color: #009a13;
+}
+
+// Rooms members table
+.room-members {
+  padding: 16px 16px;
+  border-radius: 4px;
+  border: 0.5px solid rgb(0, 183, 255);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  margin-bottom: 16px;
+}
+
+.members-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.members-title {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 600;
+  color: #00b4d8;
+}
+
+.members-actions {
+  .add-member-btn {
+    padding: 12px 16px;
+    border-radius: 6px;
+    color: var(--white-color);
+    background-color: #205375;
+    font-weight: 600;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.dataTables_length,
+.dataTables_filter {
+  margin-bottom: 16px;
+}
+
+.members-detail-actions {
+  .member-detail-btn,
+  .member-update-btn {
+    font-size: 1.6rem;
+    line-height: 1.6rem;
+    width: 100px;
+    padding: 6px;
+    border-radius: 4px;
+    color: var(--white-color);
+    display: block;
+    margin: auto;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .member-detail-btn {
+    background-color: var(--primary-color);
+    margin-bottom: 6px;
+  }
+
+  .member-update-btn {
+    background-color: #ff0000;
+  }
+}
+
+// Account table
+.room-account {
+  padding: 16px 16px;
+  border-radius: 4px;
+  border: 0.5px solid rgb(0, 183, 255);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.account-header {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 600;
+  color: #2d31fa;
+  padding-bottom: 6px;
+  margin-bottom: 16px;
+  border-bottom: 0.5px solid #ccc;
+}
+
+.account-username {
+  font-weight: 600;
+  margin-bottom: 24px;
+
+  span {
+    font-weight: 400;
+  }
+}
+
+.account-action {
+  text-align: right;
+  .account-reset-password {
+    padding: 6px 8px;
+    background-color: #827397;
+    color: var(--white-color);
+    border-radius: 4px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .left-actions {
+    width: 155px;
+  }
+
+  .right-actions {
+    flex-direction: column;
+  }
+
+  .list-invoices-btn {
+    margin-right: 0px;
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 992px) {
+  .room-consume {
+    margin-bottom: 16px;
+  }
+
+  .left-actions {
+    width: 420px;
+  }
+}
+
+@media (max-width: 768px) {
+  .left-actions {
+    width: 254px;
+  }
+
+  .room-information {
+    .room-information__right {
+      text-align: left;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .content-group {
+    .content-history {
+      font-size: 1.5rem;
+    }
+  }
+
+  .invoice-header {
+    display: block;
+  }
+
+  .invoice-created-date {
+    margin-top: 8px;
+  }
+
+  .invoice-actions {
+    display: block;
+  }
+
+  .left-actions {
+    width: 100%;
+  }
+
+  .invoice-detail-btn {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .members-header {
+    display: block;
+
+    .members-actions {
+      .add-member-btn {
+        margin-top: 8px;
+      }
+    }
+  }
+
+  .mobile-display-none {
+    display: none;
+  }
+}
