@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 @WebFilter(urlPatterns={"/"})
-public class RoleFilter implements Filter {
+public class RoleRedirectFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }
 

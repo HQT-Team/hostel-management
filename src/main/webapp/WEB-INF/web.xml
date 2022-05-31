@@ -21,7 +21,7 @@
     </filter>
     <filter>
         <filter-name>RoleRedirectFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.RoleFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filter.RoleRedirectFilter</filter-class>
     </filter>
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
