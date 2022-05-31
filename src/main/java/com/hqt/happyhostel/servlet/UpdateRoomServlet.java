@@ -33,7 +33,6 @@ public class UpdateRoomServlet extends HttpServlet {
             int airConditionStatus = Integer.parseInt(request.getParameter("airConditionStatus"));
 
 
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

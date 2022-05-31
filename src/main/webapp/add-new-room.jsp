@@ -271,7 +271,7 @@
             <div class="row mb-5">
                 <div class="content-body col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-6 m-auto">
                     <!-- Form body -->
-                    <form actions="addRoom" method="post" class="custom-form add-room-form" id="add-hostel-form">
+                    <form action="addRoom" method="POST" class="custom-form add-room-form" id="add-hostel-form">
                         <!-- Title -->
                         <div class="form-header">
                             <div class="form-title main-title">Thêm phòng mới</div>
@@ -402,8 +402,8 @@
                         <div class="spacer"></div>
                         <!-- Action -->
                         <div class="add-room-action">
-                            <a href="#" class="form-submit">Hủy bỏ</a>
-                            <button class="form-submit" type="submit" name="action" value="createRoom">Tạo phòng</button>
+                            <a href="Owner.jsp" class="form-submit">Hủy bỏ</a>
+                            <button class="form-submit">Tạo phòng</button>
                         </div>
                     </form>
                 </div>

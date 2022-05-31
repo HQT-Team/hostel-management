@@ -18,7 +18,6 @@ public class AddRoomServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "AddRoomPage";
         int quantityRoom = Integer.parseInt(request.getParameter("room-quantity"));
-        int roomNumber = Integer.parseInt(request.getParameter("room-name"));
         int capacity = Integer.parseInt(request.getParameter("room-capacity"));
         double roomArea = Double.parseDouble(request.getParameter("room-area"));
         int attic = Integer.parseInt(request.getParameter("room-floor"));
@@ -28,6 +27,14 @@ public class AddRoomServlet extends HttpServlet {
         int windowsStatus = Integer.parseInt(request.getParameter("room-window-status"));
         int airConditions = Integer.parseInt(request.getParameter("room-air-conditioner"));
         int airConditionsStatus = Integer.parseInt(request.getParameter("room-air-conditioner-status"));
+//        int quantityRoom = Integer.parseInt(request.getParameter("txtQuantityRoom"));
+//        int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
+//        int attic = Integer.parseInt(request.getParameter("txtAttic"));
+//        double roomArea = Double.parseDouble(request.getParameter("txtRoomArea"));
+//        int restrooms = Integer.parseInt(request.getParameter("txtNumberRestrooms"));
+//        int windows = Integer.parseInt(request.getParameter("txtNumberWindows"));
+//        int airConditions = Integer.parseInt(request.getParameter("txtNumberAirConditions"));
+
         try {
             if (quantityRoom > 1) {
                 for (int i = 0; i < quantityRoom; i++) {
@@ -44,6 +51,8 @@ public class AddRoomServlet extends HttpServlet {
                     }
                 }
             } else {
+                int roomNumber = Integer.parseInt(request.getParameter("room-name"));
+
                 Boolean isSuccess = RoomDAO.addNewRoom(1, roomNumber, capacity, roomArea, 1,
                         "RestRoom", restrooms, 1,
                         "Windows", windows, 1,
