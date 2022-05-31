@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="assets/css/hostel_owner_style/room_detail_style/style.css">
     <!-- Simple Datatable CSS -->
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body>
