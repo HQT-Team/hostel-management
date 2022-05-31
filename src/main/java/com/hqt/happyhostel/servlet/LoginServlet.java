@@ -3,6 +3,7 @@ package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dto.Account;
+import com.hqt.happyhostel.utils.RandomStringGenerator;
 
 
 import javax.servlet.*;

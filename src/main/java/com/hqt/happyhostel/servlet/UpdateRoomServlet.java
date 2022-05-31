@@ -1,7 +1,5 @@
 package com.hqt.happyhostel.servlet;
 
-import com.hqt.happyhostel.dao.RoomDAO;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
