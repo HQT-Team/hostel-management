@@ -15,6 +15,6 @@
 <h1>Welcome ${sessionScope.USER.username}</h1>
 <a href="logout">Log out</a>
 <a href="AddRoomPage">AddRoom</a>
-<a href="RoomDetailPage">Detail Room</a>
+<a href="RoomDetailPage">DetailRoom</a>
 </body>
 </html>
