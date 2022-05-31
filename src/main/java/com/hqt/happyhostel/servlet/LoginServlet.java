@@ -31,24 +31,26 @@ public class LoginServlet extends HttpServlet {
                 if (session != null) {
                     session.setAttribute("USER", account);
                     if (save != null) {
-                        String token = RandomStringGenerator.randomToken(25,username);
+                        String token = RandomStringGenerator.randomToken(25, username);
                         //DAO add cookie
                         Cookie cookie = new Cookie("selector", token);
-                        cookie.setMaxAge(60*60*24*2);
+                        cookie.setMaxAge(60 * 60 * 24 * 2);
                         response.addCookie(cookie);
 
                         AccountDAO.updateTokenByUserName(token, username);
                     }
                 }
-            }else request.setAttribute("WARNING", "Your account has been banned");
-            if (account == null) request.setAttribute("WARNING", "Invalid username or password");
+                session.setAttribute("CURRENT_PAGE", "dashboard");
+            } else request.setAttribute("WARNING", "Tài khoản của bạn đã bị khóa hoặc chưa được kích hoạt!");
+            if (account == null)
+                request.setAttribute("WARNING", "Sai tài khoản hoặc mật khẩu. Vui lòng kiểm tra lại!");
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (account != null && account.getStatus() == 1) {
                 response.sendRedirect(url);
-            }else {
+            } else {
                 request.getRequestDispatcher(url).forward(request, response);
             }
         }

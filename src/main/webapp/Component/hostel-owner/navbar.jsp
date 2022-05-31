@@ -1,16 +1,24 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="main-nav bg-white">
     <div class="container">
         <div class="row main-nav-body">
             <div class="col-3 col-lg-3 col-xl-3 col-xxl-2">
                 <div class="main-nav__logo">
                     <a href="" class="main-nav__logo-link">
-                        <img class="main-nav__logo-img" src="../../assets/images/hql_logo.png" alt="Logo">
+                        <img class="main-nav__logo-img" src="./assets/images/hql_logo.png" alt="Logo">
                     </a>
                 </div>
             </div>
             <div class="col-9 col-lg-9 col-xl-9 col-xxl-10 wrapper">
                 <div class="main-nav__label">
-                    <h3 class="title">Khu trọ</h3>
+                    <h3 class="title">
+                        <c:choose>
+                            <c:when test="${sessionScope.CURRENT_PAGE eq 'dashboard'}">
+                                Tổng quan
+                            </c:when>
+                        </c:choose>
+                    </h3>
                 </div>
                 <div class="main-nav__action">
                     <div id="nav-notification-btn" class="notification">
@@ -21,11 +29,11 @@
                     </div>
                     <div id="nav-profile-btn" class="profile">
                         <div class="profile__infor">
-                            <h3 class="infor__name">Nguyễn Lâm Thảo Tâm</h3>
+                            <h3 class="infor__name">${sessionScope.USER.accountInfo.information.fullname}</h3>
                             <span class="infor__role">Chủ phòng trọ</span>
                         </div>
                         <div class="profile__avatar">
-                            <img class="avatar__img" src="../../assets/images/user-avatar.jpg" alt="User avatar image">
+                            <img class="avatar__img" src="./assets/images/user-avatar.jpg" alt="User avatar image">
                         </div>
                     </div>
                     <div id="menu-sidebar-btn" class="menu-sidebar-btn">
@@ -174,15 +182,15 @@
             <div id="nav-profile-dropdown" class="profile__actions">
                 <a href="" class="action__view-profile-link">
                     <div class="action__image">
-                        <img src="../../assets/images/user-avatar.jpg" alt="">
+                        <img src="./assets/images/user-avatar.jpg" alt="">
                     </div>
                     <div class="action__content">
-                        <div class="title">Nguyễn Lâm Thảo Tâm</div>
+                        <div class="title">${sessionScope.USER.accountInfo.information.fullname}</div>
                         <span class="subtitle">Xem trang cá nhân của bạn</span>
                     </div>
                 </a>
                 <div class="spacer"></div>
-                <a href="" class="action__logout">
+                <a href="logout" class="action__logout">
                     <div class="action__image">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     </div>
