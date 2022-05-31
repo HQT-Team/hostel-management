@@ -11,12 +11,12 @@ import java.io.IOException;
 public class AddRoomServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("./Layout/hostel-owner-layout/add-new-room.jsp");
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = "loginPage";
+        String url = "AddRoomPage";
         int quantityRoom = Integer.parseInt(request.getParameter("room-quantity"));
         int roomNumber = Integer.parseInt(request.getParameter("room-name"));
         int capacity = Integer.parseInt(request.getParameter("room-capacity"));
