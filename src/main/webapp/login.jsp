@@ -23,13 +23,6 @@
     <!-- Link your CSS here -->
     <link rel="stylesheet" href="./assets/css/login/login_style.css">
 </head>
-<body>
-    <h1>Login</h1>
-    <form action="login" METHOD="post">
-        <input type="text" name="txtemail">
-        <input type="password" name="txtpassword">
-        <button type="submit" value="Login" name="action">Submit</button>
-    </form>
 
 <body class="bg-light">
 
