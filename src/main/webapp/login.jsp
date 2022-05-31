@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-3">
                 <div class="main-nav__logo">
-                    <a href="" class="main-nav__logo-link">
+                    <a href="HomePage" class="main-nav__logo-link">
                         <img class="main-nav__logo-img" src="./assets/images/hql_logo.png" alt="Logo">
                     </a>
                 </div>
@@ -51,7 +51,7 @@
     <div class="row">
         <!-- Turn back -->
         <div class="col-12">
-            <a href="" class="turn-back__link">
+            <a href="HomePage" class="turn-back__link">
                 <i class="turn-back__link-icon fa-solid fa-caret-left"></i>
                 Quay về trang chủ
             </a>
@@ -96,7 +96,7 @@
                         </div>
                         <button class="form-submit">Đăng nhập</button>
                         <div class="spacer"></div>
-                        <div class="form-other-link">Chưa có tài khoản? <a href="register.jsp">Đăng ký ngay!</a>
+                        <div class="form-other-link">Chưa có tài khoản? <a href="registerPage">Đăng ký ngay!</a>
                         </div>
                     </form>
                 </div>
@@ -147,5 +147,4 @@
     });
 </script>
 </body>
-
 </html>

@@ -1,0 +1,438 @@
+// Home navbar
+.main-nav {
+  .nav-left-side {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+  }
+
+  .mobile-menu-btn {
+    width: 40px;
+    height: 40px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+
+  .mobile-menu-btn.active {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+  }
+
+  .main-nav__actions {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 100%;
+    flex: 1;
+  }
+
+  .action-link {
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 12px 16px;
+    background-color: transparent;
+    border-radius: 6px;
+  }
+
+  .about-us {
+    &:hover {
+      background-color: #eaf5ff;
+    }
+  }
+
+  .register {
+    background-color: #009a13;
+    color: var(--white-color);
+    margin: 0 8px;
+    position: relative;
+
+    &:hover {
+      background-color: #6bcb77;
+    }
+
+    &:hover .register-model {
+      display: flex;
+    }
+  }
+
+  .login {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+
+    &:hover {
+      background-color: rgb(0, 149, 255);
+    }
+  }
+}
+
+.register-model {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 1;
+  width: 180px;
+  height: 50px;
+  display: none;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--white-color);
+  animation: fadeIn 0.2s linear;
+
+  &::before {
+    content: "";
+    width: 91px;
+    height: 12px;
+    position: absolute;
+    top: -9px;
+    right: 0;
+  }
+}
+
+.register-owner,
+.register-renter {
+  font-weight: 500;
+}
+
+.register-owner {
+  &:hover {
+    color: red;
+  }
+}
+
+.register-renter {
+  &:hover {
+    color: var(--primary-color);
+  }
+}
+
+// Banner
+.banner-hostel-owner-wrapper {
+  padding: 32px 0;
+  background-image: linear-gradient(
+                  90.03deg,
+                  #3266d4 34.22%,
+                  rgba(50, 154, 212, 0.34) 99.96%,
+                  rgba(212, 50, 50, 0.1) 99.98%
+  );
+
+  .banner-title {
+    animation: fadeLeft 0.5s ease-in;
+  }
+
+  .banner-subtitle {
+    animation: fadeLeft 0.7s ease-in;
+  }
+
+  .banner-link {
+    animation: fadeUp 0.8s ease-in;
+  }
+
+  .banner-image {
+    animation: fadeRight 0.8s ease-in;
+  }
+}
+
+.banner-right,
+.banner-left {
+  padding: 0 80px;
+}
+
+.banner-left {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+.banner-title {
+  font-size: 4.8rem;
+  line-height: 6rem;
+  font-weight: 400;
+  color: var(--white-color);
+}
+
+.banner-subtitle {
+  margin: 16px 0 32px 0;
+  font-size: 2rem;
+  line-height: 2.4rem;
+  font-weight: 400;
+  color: var(--white-color);
+}
+
+.banner-link {
+  display: block;
+  background-color: #07d199;
+  width: 300px;
+  height: 60px;
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 4px;
+  text-transform: uppercase;
+  color: var(--white-color) !important;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+  rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
+  &:hover {
+    background-color: #2ac095;
+  }
+}
+
+.banner-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.banner-image {
+  width: 100%;
+}
+
+// Renter banner
+.banner-renter-wrapper {
+  padding: 32px 0;
+  background-image: linear-gradient(
+                  90.03deg,
+                  #000000 0.02%,
+                  #782f2f 50.67%,
+                  #d43232 99.98%
+  );
+}
+
+.renter-link {
+  background-color: var(--primary-color);
+
+  &:hover {
+    background-color: rgb(31, 143, 255);
+  }
+}
+
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1400px) {
+  .banner-title {
+    font-size: 4rem;
+    line-height: 5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .main-nav {
+    position: relative;
+
+    .mobile-menu-btn {
+      display: flex;
+    }
+
+    .main-nav__actions {
+      position: absolute;
+      display: none;
+      top: calc(var(--navbar-height));
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    }
+
+    .action-link {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 16px 0;
+      border-radius: 0;
+    }
+
+    .register {
+      margin: 0;
+      padding-bottom: 0;
+    }
+
+    .register-model {
+      position: unset;
+      display: flex;
+      width: 100%;
+      margin-top: 16px;
+    }
+  }
+}
+
+@media (min-width: 577px) {
+  .main-nav {
+    .main-nav__actions {
+      display: flex !important;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .banner-right,
+  .banner-left {
+    padding: 0 36px;
+  }
+}
+
+@media (max-width: 992px) {
+  .banner-right,
+  .banner-left {
+    padding: 0 20px;
+  }
+
+  .banner-title {
+    font-size: 3rem;
+    line-height: 4rem;
+  }
+  .banner-subtitle {
+    font-size: 1.6rem;
+  }
+  .banner-link {
+    width: 256px;
+    height: 54px;
+    line-height: 54px;
+    font-size: 1.6rem;
+  }
+}
+
+// Footer
+footer {
+  padding: 24px 8px 0 8px;
+}
+
+.footer-header {
+  color: var(--white-color);
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  font-weight: 500;
+  margin-top: 16px;
+}
+
+.footer-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 24px;
+}
+
+.footer-item {
+  color: var(--white-color);
+  font-weight: 300;
+  margin: 12px 0 12px 0;
+  display: block;
+}
+
+.footer-link {
+  color: var(--white-color) !important;
+  font-weight: 300;
+  margin: 12px 0 12px 0;
+  display: block;
+
+  &:hover {
+    color: #ccc !important;
+  }
+}
+
+.footer-socials {
+  display: flex;
+
+  .footer-link {
+    margin: 0 8px;
+  }
+
+  .footer-link:first-child {
+    margin-left: 0;
+  }
+
+  .footer-link:last-child {
+    margin-right: 0;
+  }
+
+  .footer-icon {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-hostel-owner-wrapper {
+    background-image: linear-gradient(
+                    180deg,
+                    #3266d4 34.22%,
+                    rgba(50, 154, 212, 0.34) 99.96%,
+                    rgba(212, 50, 50, 0.1) 99.98%
+    );
+  }
+
+  .banner-renter-wrapper {
+    background-image: linear-gradient(
+                    180deg,
+                    #000000 0.02%,
+                    #782f2f 50.67%,
+                    #d43232 99.98%
+    );
+  }
+
+  .banner-right,
+  .banner-left {
+    padding: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .banner-left {
+    padding: 0 16px;
+  }
+
+  .banner-title {
+    font-size: 4rem;
+    line-height: 5rem;
+  }
+
+  .banner-image {
+    width: 70%;
+  }
+
+  .mobile-mt {
+    margin-top: 16px;
+  }
+}
