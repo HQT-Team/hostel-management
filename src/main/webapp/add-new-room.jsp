@@ -346,9 +346,9 @@
                                     <input id="room-door" name="room-door" value="1" type="number"
                                            class="form-control fill-input">
                                     <span class="fill-unit">cái</span>
-                                    <select name="" class="fill-status">
-                                        <option value="true">Còn sử dụng</option>
-                                        <option value="false">Hư hỏng</option>
+                                    <select name="room-door-status" class="fill-status">
+                                        <option value="1">Còn sử dụng</option>
+                                        <option value="0">Hư hỏng</option>
                                     </select>
                                 </div>
                                 <span class="form-message"></span>

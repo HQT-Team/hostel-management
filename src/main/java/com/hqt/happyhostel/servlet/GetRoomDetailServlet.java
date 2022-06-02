@@ -9,12 +9,19 @@ import java.io.IOException;
 public class GetRoomDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int roomId = Integer.parseInt(request.getParameter("idroom"));
+        String url = "RoomDetailPage";
+        try {
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = "RoomDetailPage";
 
     }
 }

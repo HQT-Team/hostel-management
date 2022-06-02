@@ -248,7 +248,7 @@
                             <!-- Add room button -->
                             <div class="room-actions">
                                 <button class="action-calculate-btn">Tính tiền phòng</button>
-                                <a href="" class="action-create-account-link">Tạo tài khoản</a>
+                                <a href="roomDetail?idroom=13" class="action-create-account-link">Tạo tài khoản</a>
                             </div>
                         </div>
                         <!-- Room information -->

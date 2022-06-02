@@ -11,10 +11,11 @@ import java.util.ArrayList;
 
 public class RoomDAO {
 
-    public static boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic,
-                                     String infrastructure1, int quantity1, int status1,
-                                     String infrastructure2, int quantity2, int status2,
-                                     String infrastructure3, int quantity3, int status3) {
+    public static boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,
+                                     int quantity1, int status1,
+                                     int quantity2, int status2,
+                                     int quantity3, int status3,
+                                     int quantity4, int status4) {
         Connection cn = null;
         Boolean isInserted = false;
         PreparedStatement pst = null;
@@ -22,12 +23,18 @@ public class RoomDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
 
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 String sql = "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
-                        "VALUES (?, ?, ?, ?, ?, 1)\n" +
+                        "VALUES (?, ?, ?, ?, ?, ?)\n" +
                         "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
-                        "INSERT INTO Infrastructures (room_id, name, quantity, status) VALUES (@roomID, ?, ?, ?)\n" +
-                        "INSERT INTO Infrastructures (room_id, name, quantity, status) VALUES (@roomID, ?, ?, ?)\n" +
-                        "INSERT INTO Infrastructures (room_id, name, quantity, status) VALUES (@roomID, ?, ?, ?)";
+                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
+                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
+                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
+                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelID);
@@ -35,18 +42,19 @@ public class RoomDAO {
                 pst.setInt(3, capacity);
                 pst.setDouble(4, roomArea);
                 pst.setInt(5, attic);
+                pst.setInt(6, roomStatus);
 
-                pst.setString(6, infrastructure1);
                 pst.setInt(7, quantity1);
                 pst.setInt(8, status1);
 
-                pst.setString(9, infrastructure2);
-                pst.setInt(10, quantity2);
-                pst.setInt(11, status2);
+                pst.setInt(9, quantity2);
+                pst.setInt(10, status2);
 
-                pst.setString(12, infrastructure3);
-                pst.setInt(13, quantity3);
-                pst.setInt(14, status3);
+                pst.setInt(11, quantity3);
+                pst.setInt(12, status3);
+
+                pst.setInt(13, quantity4);
+                pst.setInt(14, status4);
 
                 int rows = pst.executeUpdate();
                 if (rows != 0) {
@@ -79,10 +87,11 @@ public class RoomDAO {
         return isInserted;
     }
 
-    public static boolean addNewManyRooms(int hostelID, int capacity, double roomArea, int attic,
-                                          String infrastructure1, int quantity1, int status1,
-                                          String infrastructure2, int quantity2, int status2,
-                                          String infrastructure3, int quantity3, int status3) {
+    public static boolean addNewManyRooms(int hostelID, int capacity, double roomArea, int attic, int roomStatus,
+                                          int quantity1, int status1,
+                                          int quantity2, int status2,
+                                          int quantity3, int status3,
+                                          int quantity4, int status4) {
         Connection cn = null;
         Boolean isInserted = false;
         PreparedStatement pst = null;
@@ -94,33 +103,39 @@ public class RoomDAO {
                         "\t\t\t\t\t\t\tFROM dbo.Rooms\n" +
                         "\t\t\t\t\t\t\tORDER BY room_number DESC)\n" +
                         "IF @room_number is NULL\n" +
-                        "    SET @room_number = 1\n" +
+                        "\tSET @room_number = 1\n" +
                         "ELSE\n" +
                         "\tSET @room_number = @room_number + 1\n" +
                         "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
-                        "VALUES (?, @room_number, ?, ?, ?, 1)\n" +
+                        "VALUES (?, @room_number, ?, ?, ?, ?)\n" +
                         "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
-                        "INSERT INTO Infrastructures (room_id, name, quantity, status) VALUES (@roomID, ?, ?, ?)\n" +
-                        "INSERT INTO Infrastructures (room_id, name, quantity, status) VALUES (@roomID, ?, ?, ?)\n" +
-                        "INSERT INTO Infrastructures (room_id, name, quantity, status) VALUES (@roomID, ?, ?, ?)";
+                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
+                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
+                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
+                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelID);
                 pst.setInt(2, capacity);
                 pst.setDouble(3, roomArea);
                 pst.setInt(4, attic);
+                pst.setInt(5, roomStatus);
 
-                pst.setString(5, infrastructure1);
                 pst.setInt(6, quantity1);
                 pst.setInt(7, status1);
 
-                pst.setString(8, infrastructure2);
-                pst.setInt(9, quantity2);
-                pst.setInt(10, status2);
+                pst.setInt(8, quantity2);
+                pst.setInt(9, status2);
 
-                pst.setString(11, infrastructure3);
-                pst.setInt(12, quantity3);
-                pst.setInt(13, status3);
+                pst.setInt(10, quantity3);
+                pst.setInt(11, status3);
+
+                pst.setInt(12, quantity4);
+                pst.setInt(13, status4);
 
                 int rows = pst.executeUpdate();
                 if (rows != 0) {

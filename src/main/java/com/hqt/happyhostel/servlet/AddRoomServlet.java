@@ -16,7 +16,7 @@ public class AddRoomServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = "AddRoomPage";
+        String url = "login.jsp";
         int quantityRoom = Integer.parseInt(request.getParameter("room-quantity"));
         int capacity = Integer.parseInt(request.getParameter("room-capacity"));
         double roomArea = Double.parseDouble(request.getParameter("room-area"));
@@ -27,15 +27,19 @@ public class AddRoomServlet extends HttpServlet {
         int windowsStatus = Integer.parseInt(request.getParameter("room-window-status"));
         int airConditions = Integer.parseInt(request.getParameter("room-air-conditioner"));
         int airConditionsStatus = Integer.parseInt(request.getParameter("room-air-conditioner-status"));
+        int roomDoors = Integer.parseInt(request.getParameter("room-door"));
+        int roomDoorsStatus = Integer.parseInt(request.getParameter("room-door-status"));
+
 
         try {
             if (quantityRoom > 1) {
                 for (int i = 0; i < quantityRoom; i++) {
-                    Boolean isSuccess = RoomDAO.addNewManyRooms(1, capacity, roomArea, attic,
-                            "RestRoom", restrooms, 1,
-                            "Windows", windows, 1,
-                            "AirCondition", airConditions, 1);
-                    url = "success";
+                    Boolean isSuccess = RoomDAO.addNewManyRooms(1, capacity, roomArea, attic, 1,
+                            restrooms, restroomStatus,
+                            windows, windowsStatus,
+                            roomDoors, roomDoorsStatus,
+                            airConditions, airConditionsStatus);
+                    url = "AddRoomPage";
                     if (isSuccess) {
                         request.setAttribute("isSuccess", "true");
                     } else {
@@ -46,11 +50,12 @@ public class AddRoomServlet extends HttpServlet {
             } else {
                 int roomNumber = Integer.parseInt(request.getParameter("room-name"));
 
-                Boolean isSuccess = RoomDAO.addNewRoom(1, roomNumber, capacity, roomArea, 1,
-                        "RestRoom", restrooms, 1,
-                        "Windows", windows, 1,
-                        "AirCondition", airConditions, 1);
-                url = "success";
+                Boolean isSuccess = RoomDAO.addNewRoom(1, roomNumber, capacity, roomArea, attic, 1,
+                        restrooms, restroomStatus,
+                        windows, windowsStatus,
+                        roomDoors, roomDoorsStatus,
+                        airConditions, airConditionsStatus);
+                url = "AddRoomPage";
                 if (isSuccess) {
                     request.setAttribute("isSuccess", "true");
                 } else {

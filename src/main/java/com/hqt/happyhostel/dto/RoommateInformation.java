@@ -20,3 +20,4 @@ public class RoommateInformation {
     String parentName;
     String parentPhone;
 }
+
