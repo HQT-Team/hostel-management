@@ -207,7 +207,7 @@ public class RoomDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "SELECT hostel_id, hostel_owner_account_id, name, address, ward, district, city\n" +
+                String sql = "SELECT hostel_id, account_id, name, address, ward, district, city\n" +
                         "FROM Hostels\n" +
                         "WHERE hostel_id = ?";
 
@@ -216,7 +216,7 @@ public class RoomDAO {
 
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
-                    int hostel_owner_account_id = rs.getInt("hostel_owner_account_id");
+                    int hostel_owner_account_id = rs.getInt("account_id");
                     String name = rs.getString("name");
                     String address = rs.getString("address");
                     String ward = rs.getString("ward");

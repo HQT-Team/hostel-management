@@ -7,7 +7,7 @@
         </a>
     </div>
     <div class="group-option ${sessionScope.CURRENT_PAGE eq "hostel" ? "active" : ""}">
-        <a href="" class="group-option__link">
+        <a href="AddRoomPage" class="group-option__link">
             <i class="group-option__icon fa-solid fa-hotel"></i>
             <div class="group-option__label">Khu trọ</div>
         </a>

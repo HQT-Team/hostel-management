@@ -13,7 +13,7 @@ public class DBUtils {
         String uid="sa";
         String pwd="Tanloc162";
 //        String pwd="0792596763";
-        String db="HostelManagement2";
+        String db="HostelManagement";
         String driver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
         String url="jdbc:sqlserver://" +IP+"\\"+ instanceName+":"+port
                 +";databasename="+db+";user="+uid+";password="+pwd+ ";encrypt=true;trustServerCertificate=true;";
