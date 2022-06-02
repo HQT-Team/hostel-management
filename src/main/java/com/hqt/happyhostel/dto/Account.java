@@ -14,9 +14,8 @@ public class Account {
     private int accId;
     private String username;
     private String createDate;
-    private String expiredDate;
     private int status;
     private int role;
     private AccountInfo accountInfo;
-    private ArrayList<RenterInfo> renterInfo;
+    private ArrayList<RoommateInfo> roommateInfo;
 }

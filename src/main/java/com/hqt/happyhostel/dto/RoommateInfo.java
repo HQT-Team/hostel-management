@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RenterInfo {
+public class RoommateInfo {
     private Information information;
     private String parentName;
     private String parentPhone;

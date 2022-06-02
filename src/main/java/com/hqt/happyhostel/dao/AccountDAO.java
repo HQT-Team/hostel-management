@@ -3,7 +3,7 @@ package com.hqt.happyhostel.dao;
 import com.hqt.happyhostel.dto.Account;
 import com.hqt.happyhostel.dto.AccountInfo;
 import com.hqt.happyhostel.dto.Information;
-import com.hqt.happyhostel.dto.RenterInfo;
+import com.hqt.happyhostel.dto.RoommateInfo;
 import com.hqt.happyhostel.utils.DBUtils;
 
 import java.sql.*;
@@ -14,8 +14,8 @@ public class AccountDAO {
     private static Account getAccount(ResultSet rs) {
         Account acc = null;
         AccountInfo inf = null;
-        RenterInfo renterInfo = null;
-        ArrayList<RenterInfo> renterInfoList = new ArrayList<>();
+        RoommateInfo renterInfo = null;
+        ArrayList<RoommateInfo> roommateInfoList = new ArrayList<>();
         try {
             int accId = rs.getInt("account_id");
             String username = rs.getString("username");
@@ -24,11 +24,11 @@ public class AccountDAO {
             int status = rs.getInt("status");
             int role = rs.getInt("role");
             if (role == 2) {//Renter
-                renterInfoList = getRenterAccountInformationById(accId);
-                acc = new Account(accId, username, createdate, expireddate, status, role, null, renterInfoList);
+                roommateInfoList = getRenterAccountInformationById(accId);
+                acc = new Account(accId, username, createdate, status, role, null, roommateInfoList);
             } else {
                 inf = getOwnerAccountInformationById(accId);
-                acc = new Account(accId, username, createdate, expireddate, status, role, inf, null);
+                acc = new Account(accId, username, createdate, status, role, inf, null);
             }
 
         } catch (Exception e) {
@@ -82,11 +82,11 @@ public class AccountDAO {
         return inf;
     }
 
-    private static ArrayList<RenterInfo> getRenterAccountInformationById(int accId) {
+    private static ArrayList<RoommateInfo> getRenterAccountInformationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
-        RenterInfo renterInfo = null;
-        ArrayList<RenterInfo> renterInfoList = new ArrayList<RenterInfo>();
+        RoommateInfo renterInfo = null;
+        ArrayList<RoommateInfo> roommateInfoList = new ArrayList<RoommateInfo>();
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
@@ -107,8 +107,8 @@ public class AccountDAO {
                     String parentName = rs.getString("parent_name");
                     String parentPhone = rs.getString("parent_phone");
 
-                    renterInfo = new RenterInfo(new Information(fullname, email, birthday, sex, phone, address, cccd), parentName, parentPhone);
-                    renterInfoList.add(renterInfo);
+                    renterInfo = new RoommateInfo(new Information(fullname, email, birthday, sex, phone, address, cccd), parentName, parentPhone);
+                    roommateInfoList.add(renterInfo);
                 }
             }
         } catch (Exception e) {
@@ -129,7 +129,7 @@ public class AccountDAO {
                 }
             }
         }
-        return renterInfoList;
+        return roommateInfoList;
     }
 
     public static Account getAccountByUsernameAndPassword(String username, String password) {
@@ -185,7 +185,7 @@ public class AccountDAO {
         PreparedStatement pst = null;
         Account acc = null;
         AccountInfo inf = null;
-        RenterInfo renterInfo = null;
+        RoommateInfo roommateInfo = null;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
