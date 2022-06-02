@@ -27,13 +27,6 @@ public class AddRoomServlet extends HttpServlet {
         int windowsStatus = Integer.parseInt(request.getParameter("room-window-status"));
         int airConditions = Integer.parseInt(request.getParameter("room-air-conditioner"));
         int airConditionsStatus = Integer.parseInt(request.getParameter("room-air-conditioner-status"));
-//        int quantityRoom = Integer.parseInt(request.getParameter("txtQuantityRoom"));
-//        int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
-//        int attic = Integer.parseInt(request.getParameter("txtAttic"));
-//        double roomArea = Double.parseDouble(request.getParameter("txtRoomArea"));
-//        int restrooms = Integer.parseInt(request.getParameter("txtNumberRestrooms"));
-//        int windows = Integer.parseInt(request.getParameter("txtNumberWindows"));
-//        int airConditions = Integer.parseInt(request.getParameter("txtNumberAirConditions"));
 
         try {
             if (quantityRoom > 1) {
