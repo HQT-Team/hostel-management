@@ -7,12 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Consume {
-    int consumeID;
-    int roomID;
-    int numberElectric;
-    int numberWater;
-    String startConsumeDate;
-    String endConsumeDate;
+public class RoommateInfo {
+    private Information information;
+    private String parentName;
+    private String parentPhone;
 }
-
