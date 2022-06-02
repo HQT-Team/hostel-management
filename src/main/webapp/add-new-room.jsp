@@ -371,7 +371,7 @@
                         <div class="spacer"></div>
                         <!-- Action -->
                         <div class="add-room-action">
-                            <a href="Owner.jsp" class="form-submit">Hủy bỏ</a>
+                            <a href="owner.jsp" class="form-submit">Hủy bỏ</a>
                             <button class="form-submit">Tạo phòng</button>
                         </div>
                     </form>
