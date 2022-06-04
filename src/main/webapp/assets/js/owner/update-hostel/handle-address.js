@@ -14,7 +14,7 @@ const renderSelect = (selectElement, datas, defaultOptionContent) => {
 
   let code = -1;
   if (selectElement.value !== "") {
-    code = Number(provinceElement.value.split("-")[0]);
+    code = Number(selectElement.value.split("-")[0]);
   }
 
   datas.forEach((value) => {
@@ -60,8 +60,8 @@ const districtElement = document.getElementById("hostel-district");
 const wardElement = document.getElementById("hostel-ward");
 
 getProvinces(provinceElement);
-getDistricts(districtElement, Number(districtElement.value.split("-")[0]));
-getWards(wardElement, Number(wardElement.value.split("-")[0]));
+getDistricts(districtElement, Number(provinceElement.value.split("-")[0]));
+getWards(wardElement, Number(districtElement.value.split("-")[0]));
 
 provinceElement.addEventListener("change", () => {
   if (provinceElement.value === "") {
