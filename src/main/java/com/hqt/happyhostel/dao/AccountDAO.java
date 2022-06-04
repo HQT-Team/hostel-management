@@ -19,16 +19,17 @@ public class AccountDAO {
         try {
             int accId = rs.getInt("account_id");
             String username = rs.getString("username");
+            String password = rs.getString("password");
             String createdate = rs.getString("create_date");
             String expireddate = rs.getString("expired_date");
             int status = rs.getInt("status");
             int role = rs.getInt("role");
             if (role == 2) {//Renter
                 roommateInfoList = getRenterAccountInformationById(accId);
-                acc = new Account(accId, username, createdate, status, role, null, roommateInfoList);
+                acc = new Account(accId, username, password, createdate, status, role, null, roommateInfoList);
             } else {
                 inf = getOwnerAccountInformationById(accId);
-                acc = new Account(accId, username, createdate, status, role, inf, null);
+                acc = new Account(accId, username, password, createdate, status, role, inf, null);
             }
 
         } catch (Exception e) {
@@ -293,4 +294,128 @@ public class AccountDAO {
         return result;
     }
 
+    // Handle register
+    private static final String IS_EXIST_USERNAME = "SELECT username FROM [dbo].[Accounts] Where username = ?";
+    private static final String ADD_AN_ACCOUNT = "INSERT INTO Accounts (username, password, create_date, status, role) \n" +
+                                                 "VALUES (?, ?, GETDATE(), ?, ?)";
+    private static final String ADD_ACCOUNT_INFORMATION = "INSERT INTO AccountInformations (account_id, fullname, email, identity_card_number) \n" +
+                                                          "VALUES (?, ?, ?, ?)";
+
+    public static boolean isExistUsername(String username) {
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(IS_EXIST_USERNAME);
+                pst.setString(1, username);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    check = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
+    public static boolean addAnAccount(Account account) {
+        boolean check = false;
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                // Stop auto commit for rollback if transaction insert data have any problem
+                cn.setAutoCommit(false);
+
+                // Add into Accounts table
+                pst = cn.prepareStatement(ADD_AN_ACCOUNT, Statement.RETURN_GENERATED_KEYS);
+                                                            // Return key Identity of data just inserted
+                pst.setString(1, account.getUsername());
+                pst.setString(2, account.getPassword());
+                pst.setInt(3, account.getStatus());
+                pst.setInt(4, account.getRole());
+
+                if (pst.executeUpdate() > 0) {
+
+                    int accountId = -1;
+                    rs = pst.getGeneratedKeys();
+
+                    if (rs.next()) {
+                        accountId = rs.getInt(1);
+                    }
+
+                    // Add into AccountInformations table
+                    pst = cn.prepareStatement(ADD_ACCOUNT_INFORMATION);
+                    pst.setInt(1, accountId);
+                    pst.setString(2, account.getAccountInfo().getInformation().getFullname());
+                    pst.setString(3, account.getAccountInfo().getInformation().getEmail());
+                    pst.setString(4, account.getAccountInfo().getInformation().getCccd());
+
+                    if (pst.executeUpdate() > 0) {
+                        check = true;
+                        cn.commit();
+                    } else {
+                        cn.rollback();
+                    }
+                    cn.setAutoCommit(true);
+                } else {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
 }
