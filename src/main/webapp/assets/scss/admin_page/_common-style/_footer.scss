@@ -1,0 +1,14 @@
+// Footer
+footer {
+  background-color: var(--footer-background-color);
+}
+
+.copyright-wrapper {
+  $copyright-height: 80px;
+  height: $copyright-height;
+
+  .copyright-content {
+    line-height: $copyright-height;
+    color: #a9b3bb;
+  }
+}

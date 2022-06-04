@@ -1,5 +1,6 @@
-@import "../../component_style/navbar";
-@import "../../component_style/sidebar";
+@import "../_common-style/navbar";
+@import "../_common-style/sidebar";
+@import "../_common-style/footer";
 
 // Body
 .content-group {
@@ -33,6 +34,7 @@
   align-items: center;
 
   .action-calculate-btn,
+  .action-update-btn,
   .action-create-account-link {
     color: var(--primary-color);
     background-color: transparent;
@@ -128,8 +130,19 @@
   margin-top: 16px;
 }
 
+.consume-update-btn {
+  padding: 8px 8px;
+  border-radius: 4px;
+  background-color: #ff0000;
+  color: var(--white-color);
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
 .consume-history-btn {
-  padding: 8px 12px;
+  padding: 8px 8px;
   border-radius: 4px;
   background-color: var(--primary-color);
   color: var(--white-color);
@@ -350,6 +363,101 @@
   }
 }
 
+// Infrastructure section
+.infrastructure-section {
+  padding: 16px 16px;
+  border-radius: 4px;
+  border: 0.5px solid rgb(0, 183, 255);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  margin-bottom: 16px;
+}
+
+.infrastructure-header {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 600;
+  color: #c70a80;
+  padding-bottom: 6px;
+  border-bottom: 0.5px solid #ccc;
+}
+
+.infrastructure-group,
+.infrastructure-title-group {
+  display: flex;
+}
+
+.infrastructure-name {
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+  font-weight: 500;
+  flex: 1;
+  padding: 12px 0 12px 0;
+}
+
+.infrastructure-quantity,
+.infrastructure-unit {
+  width: 70px;
+  text-align: center;
+  padding: 12px 0 12px 0;
+}
+
+.border-right {
+  border-right: 1px solid #ccc;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #ccc;
+}
+
+.infrastructure-status {
+  width: 100px;
+  color: #009a13;
+  text-align: center;
+  padding: 12px 0 12px 0;
+}
+
+.broken {
+  color: #ff0000;
+}
+
+.infrastructure-title-group {
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+}
+
+.infrastructure-title-name,
+.infrastructure-title-quantity,
+.infrastructure-title-unit,
+.infrastructure-title-status {
+  font-weight: 600;
+  text-align: center;
+  padding: 6px 0 6px 0;
+}
+
+.infrastructure-title-name {
+  flex: 1;
+}
+
+.infrastructure-title-quantity,
+.infrastructure-title-unit {
+  width: 70px;
+}
+
+.infrastructure-title-status {
+  width: 100px;
+}
+
+.infrastructure-btn {
+  padding: 6px 8px;
+  background-color: #a64b2a;
+  color: var(--white-color);
+  border-radius: 4px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
 @media (max-width: 1200px) {
   .left-actions {
     width: 155px;
@@ -384,6 +492,10 @@
     .room-information__right {
       text-align: left;
     }
+  }
+
+  .tablet-display-none {
+    display: none;
   }
 }
 

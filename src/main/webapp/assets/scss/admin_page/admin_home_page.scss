@@ -1,0 +1,261 @@
+@import "./_common-style/navbar";
+@import "./_common-style/sidebar";
+@import "./_common-style/footer";
+
+.content__left {
+  .content__left--first {
+    margin: 50px 0px 0px 50px;
+  }
+}
+.content__right {
+  text-align: center;
+  margin: auto;
+
+  h1 {
+    color: var(--primary-color);
+  }
+}
+
+.content__img {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.content__right-2 {
+  display: none;
+  text-align: center;
+
+  .button_search {
+    margin: 5px 0px 10px 5px;
+  }
+
+  div {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+
+    table {
+      border: 1px solid black;
+      margin: auto;
+
+      tr {
+        width: 100px;
+        height: 1px;
+
+        td {
+          padding: 10px 10px;
+          border: 1px solid black;
+
+          a {
+            color: var(--primary-color);
+            text-align: center;
+          }
+        }
+
+        th {
+          padding: 10px 10px;
+          font-size: 20px;
+          border: 1px solid black;
+        }
+      }
+    }
+  }
+
+  input {
+    border: 1px solid black;
+    padding: 5px 5px;
+    border-radius: 5px;
+  }
+}
+
+.popup {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+
+  tr {
+    border: 1px solid black;
+
+    td {
+      padding: 2px 5px;
+      border: 1px solid black;
+    }
+
+    th {
+      padding: 2px 5px;
+      border: 1px solid black;
+    }
+  }
+}
+
+.hide {
+  display: none;
+}
+
+#button_view {
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+@media screen and (min-width: 1025px) {
+  .content__right {
+    text-align: center;
+    h1 {
+      font-size: 40px;
+    }
+    #content--add {
+      display: block;
+      width: 600px;
+      color: rgb(105, 74, 230);
+      margin: auto;
+      padding: 20px;
+      font-size: 20px;
+      font-family: sans-serif;
+    }
+  }
+
+  .content__img {
+    img {
+      width: 800px;
+      height: 600px;
+      margin: auto;
+    }
+  }
+
+  .button-1 {
+    background-color: #ffffff;
+    height: 50px;
+    width: 250px;
+    margin: 40px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-color);
+    p {
+      margin: auto;
+      color: var(--primary-color);
+      font-size: 18px;
+    }
+  }
+
+  .button-2 {
+    border-radius: 8px;
+    height: 50px;
+    width: 250px;
+    margin: 10px;
+    background-color: #ffffff;
+    border: 1px solid var(--primary-color);
+    p {
+      margin: auto;
+      color: var(--primary-color);
+      font-size: 18px;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .content__right {
+    h1 {
+      font-size: 30px;
+    }
+  }
+  .content__img {
+    img {
+      width: 400px;
+      height: 300px;
+      margin: auto;
+    }
+  }
+  #content--add {
+    font-size: 15px;
+    width: 500px;
+    margin: auto;
+    color: rgb(105, 74, 230);
+    padding: 20px;
+  }
+  .button-1 {
+    border: 1px solid rgb(75, 74, 74);
+    border-radius: 8px;
+    margin: 20px 10px 20px 10px;
+    height: 50px;
+    width: 150px;
+    font-size: 14px;
+    padding: 10px;
+    background-color: #ffffff;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+  }
+
+  .button-2 {
+    padding: 10px;
+    margin: auto;
+    font-size: 14px;
+    color: var(--primary-color);
+    border: 1px solid rgb(75, 74, 74);
+    border-radius: 8px;
+    height: 50px;
+    width: 150px;
+    background-color: #ffffff;
+    border: 1px solid var(--primary-color);
+  }
+}
+
+#content__left--first-button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: var(--primary-color);
+}
+#content__left--second-button:hover {
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+@media screen and (min-width: 300px) and (max-width: 600px) {
+  .content__img {
+    img {
+      height: 300px;
+      width: 250px;
+      margin: auto;
+    }
+  }
+  #content--add {
+    font-size: 14px;
+    color: rgb(105, 74, 230);
+  }
+  .button-1 {
+    height: 30px;
+    width: 150px;
+    background-color: var(--primary-color);
+
+    #button-1__title {
+      font-size: 12px;
+      text-align: center;
+      margin: auto;
+    }
+  }
+
+  .button-2 {
+    height: 30px;
+    width: 150px;
+    background-color: var(--primary-color);
+
+    #button-2__title {
+      font-size: 12px;
+      text-align: center;
+      margin: auto;
+    }
+  }
+}
+#button_search {
+  margin: 10px;
+}
+
+#button_search:hover {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}

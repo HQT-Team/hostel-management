@@ -1,0 +1,209 @@
+@import "../_common-style/navbar";
+@import "../_common-style/sidebar";
+@import "../_common-style/footer";
+
+// Welcome
+.content-welcome {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.welcome-image {
+  width: 74px;
+  height: 74px;
+  border: 2px solid #0067ff;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.welcome-title {
+  font-size: 2.4rem;
+  line-height: 2.4rem;
+  margin-bottom: 8px;
+
+  span {
+    color: #ff6a00;
+  }
+}
+
+.welcome-paragraph {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+// Sumary
+.content-group {
+  min-height: var(--min-body-height);
+
+  .content-body {
+    padding: 24px 24px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  }
+}
+
+.summary-top-wrapper {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ccc;
+}
+
+.summary-header {
+  margin-bottom: 24px;
+}
+
+.summary-title {
+  font-size: 3rem;
+  line-height: 3rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.summary-income_title {
+  font-size: 1.8rem;
+  font-weight: 2.2rem;
+}
+
+.summary-income_money {
+  font-size: 3.6rem;
+  line-height: 3.6rem;
+  font-weight: 500;
+  margin: 16px 0;
+}
+
+.summary-income_compared {
+  font-weight: 400;
+}
+
+.summary-income_compared-percent {
+  color: #00d722;
+  font-weight: 500;
+}
+
+.summary-income_compared-prev-price {
+  font-weight: 500;
+}
+
+// Summary Bottom
+.summary-bottom-wrapper {
+  margin-top: 24px;
+}
+
+.summary-total-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.summary-total-img {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+.summary-total-img.success {
+  border: 3px solid rgba(0, 215, 34, 0.4);
+}
+
+.summary-total-img.error {
+  border: 3px solid rgba(217, 0, 0, 0.4);
+}
+
+.summary-total-icon {
+  font-size: 2rem;
+}
+
+.summary-total-icon.success {
+  color: rgba(0, 215, 34, 1);
+}
+
+.summary-total-icon.error {
+  color: rgba(217, 0, 0, 1);
+}
+
+.summary-total-content {
+  flex: 1;
+  height: 54px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.summary-total-price {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+// Report summary
+.report-summary-title {
+  font-size: 2.4rem;
+  line-height: 2.4rem;
+  font-weight: 500;
+}
+
+.report-summary-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 18px 0;
+}
+
+.report-summary-item {
+  width: 100px;
+  height: 100px;
+  border-radius: 16px;
+  padding: 10px;
+}
+
+.report-summary-item.new {
+  background-color: #d43232;
+  color: var(--white-color);
+}
+
+.report-summary-item.process {
+  background-color: #ff6a00;
+  color: var(--white-color);
+}
+
+.report-summary-item.finished {
+  background-color: #3b89fc;
+  color: var(--white-color);
+}
+
+.report-summary-status {
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.report-summary-count {
+  font-size: 2.8rem;
+  line-height: 2.8rem;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.report-summary-result-percent {
+  font-size: 1.8rem;
+
+  span {
+    font-size: 2.2rem;
+    font-weight: 600;
+  }
+
+  span.high {
+    color: #009a13;
+  }
+
+  span.medium {
+    color: #fac213;
+  }
+
+  span.low {
+    color: #f32424;
+  }
+}

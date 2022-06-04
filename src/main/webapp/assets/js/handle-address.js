@@ -65,10 +65,8 @@ provinceElement.addEventListener("change", () => {
     getDistricts(districtElement, Number(arrs[0]));
   }
 
-  if (wardElement.value !== "") {
-    wardElement.innerHTML = "<option value=''>Chọn phường/xã</option>";
-    wardElement.setAttribute("disabled", "true");
-  }
+  wardElement.innerHTML = "<option value=''>Chọn phường/xã</option>";
+  wardElement.setAttribute("disabled", "true");
 });
 
 districtElement.addEventListener("change", () => {

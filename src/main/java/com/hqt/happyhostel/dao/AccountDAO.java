@@ -45,7 +45,7 @@ public class AccountDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT *\n" +
-                        "FROM [dbo].[HostelOwnerInformations]\n" +
+                        "FROM [dbo].[AccountInformations]\n" +
                         "WHERE [account_id] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, accId);
@@ -57,7 +57,7 @@ public class AccountDAO {
                     int sex = rs.getInt("sex");
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
-                    String cccd = rs.getString("CCCD");
+                    String cccd = rs.getString("identity_card_number");
                     inf = new AccountInfo(new Information(fullname, email, birthday, sex, phone, address, cccd));
                 }
             }
