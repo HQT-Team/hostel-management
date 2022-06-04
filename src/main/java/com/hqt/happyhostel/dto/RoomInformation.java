@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Infrastructures {
-    int id;
-    String name;
-    int quantity;
-    int status;
+public class RoomInformation {
+    String hostelName;
+    String address;
+    String ward;
+    String district;
+    String city;
 }

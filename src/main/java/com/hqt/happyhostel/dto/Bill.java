@@ -6,13 +6,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Invoices {
-    int invoiceID;
+public class Bill {
+    int billID;
     int roomID;
     int totalMoney;
-    int consumeMonth;
-    int consumeYear;
     String createdDate;
     String expiredPaymentDate;
-    int paymentStatus;
+    int status;
+    Payment payment;
 }

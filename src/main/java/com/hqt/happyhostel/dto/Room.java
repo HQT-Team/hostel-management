@@ -14,7 +14,6 @@ public class Room {
     int capacity;
     int roomStatus;
     double roomArea;
-    String inviteCode;
-    String inviteUrl;
     int hasAttic;
+    RoomInformation roomInformation;
 }

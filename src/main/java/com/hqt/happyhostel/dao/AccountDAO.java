@@ -45,7 +45,7 @@ public class AccountDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT *\n" +
-                        "FROM [dbo].[HostelOwnerInformations]\n" +
+                        "FROM [dbo].[AccountInformations]\n" +
                         "WHERE [account_id] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, accId);
@@ -107,7 +107,7 @@ public class AccountDAO {
                     String parentName = rs.getString("parent_name");
                     String parentPhone = rs.getString("parent_phone");
 
-                    renterInfo = new RoommateInfo(new Information(fullname, email, birthday, sex, phone, address, cccd), parentName, parentPhone);
+                    renterInfo = new RoommateInfo(accId, new Information(fullname, email, birthday, sex, phone, address, cccd), parentName, parentPhone);
                     roommateInfoList.add(renterInfo);
                 }
             }
@@ -291,6 +291,43 @@ public class AccountDAO {
             }
         }
         return result;
+    }
+
+    public static String getUsernameRoomCurrently(int roomID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        String username = null;
+        int result = 0;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT username\n" +
+                        "FROM Accounts\n" +
+                        "WHERE account_id = (SELECT TOP 1 renter_id\n" +
+                        "\t\t\t\t\tFROM Rooms R, Contracts C\n" +
+                        "\t\t\t\t\tWHERE R.room_id = ?\n" +
+                        "\t\t\t\t\tAND R.room_id = C.room_id\n" +
+                        "\t\t\t\t\tORDER BY C.start_date DESC)";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    username = rs.getString("username");
+                }
+            }
+            cn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return username;
     }
 
 }

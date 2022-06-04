@@ -9,7 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Payment {
     int paymentID;
-    String paymentDate;
-    String paymentMethod;
-    int invoiceID;
+    String paymentName;
 }
