@@ -11,24 +11,24 @@ import java.util.ArrayList;
 
 public class AccountDAO {
 
-    private static Account getAccount(ResultSet rs) {
+    private final static Account getAccount(ResultSet rs) {
         Account acc = null;
-        AccountInfo inf = null;
+        AccountInfo accInf = null;
         RoommateInfo renterInfo = null;
         ArrayList<RoommateInfo> roommateInfoList = new ArrayList<>();
         try {
             int accId = rs.getInt("account_id");
             String username = rs.getString("username");
             String createdate = rs.getString("create_date");
-            String expireddate = rs.getString("expired_date");
             int status = rs.getInt("status");
             int role = rs.getInt("role");
             if (role == 2) {//Renter
-                roommateInfoList = getRenterAccountInformationById(accId);
-                acc = new Account(accId, username, createdate, status, role, null, roommateInfoList);
+                roommateInfoList = getRoommateInformationById(accId);
+                accInf = getAccountInformationById(accId);
+                acc = new Account(accId, username, createdate, status, role, accInf, roommateInfoList);
             } else {
-                inf = getOwnerAccountInformationById(accId);
-                acc = new Account(accId, username, createdate, status, role, inf, null);
+                accInf = getAccountInformationById(accId);
+                acc = new Account(accId, username, createdate, status, role, accInf, null);
             }
 
         } catch (Exception e) {
@@ -37,7 +37,7 @@ public class AccountDAO {
         return acc;
     }
 
-    private static AccountInfo getOwnerAccountInformationById(int accId) {
+    private final static AccountInfo getAccountInformationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
         AccountInfo inf = null;
@@ -45,7 +45,7 @@ public class AccountDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT *\n" +
-                        "FROM [dbo].[HostelOwnerInformations]\n" +
+                        "FROM [dbo].[AccountInformations]\n" +
                         "WHERE [account_id] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, accId);
@@ -57,7 +57,7 @@ public class AccountDAO {
                     int sex = rs.getInt("sex");
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
-                    String cccd = rs.getString("CCCD");
+                    String cccd = rs.getString("identity_card_number");
                     inf = new AccountInfo(new Information(fullname, email, birthday, sex, phone, address, cccd));
                 }
             }
@@ -82,7 +82,7 @@ public class AccountDAO {
         return inf;
     }
 
-    private static ArrayList<RoommateInfo> getRenterAccountInformationById(int accId) {
+    private final static ArrayList<RoommateInfo> getRoommateInformationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
         RoommateInfo renterInfo = null;
@@ -92,7 +92,7 @@ public class AccountDAO {
             if (cn != null) {
                 String sql = "SELECT *\n" +
                         "FROM [dbo].[RoomateInformations]\n" +
-                        "WHERE [account_id] = ?";
+                        "WHERE [account_renter_id] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, accId);
                 ResultSet rs = pst.executeQuery();
@@ -103,7 +103,7 @@ public class AccountDAO {
                     int sex = rs.getInt("sex");
                     String phone = rs.getString("phone");
                     String address = rs.getString("address");
-                    String cccd = rs.getString("CCCD");
+                    String cccd = rs.getString("identity_card_number");
                     String parentName = rs.getString("parent_name");
                     String parentPhone = rs.getString("parent_phone");
 
@@ -220,7 +220,87 @@ public class AccountDAO {
         return acc;
     }
 
+    public static ArrayList<Account> GetAll() {
+        Account acc = null;
+        ArrayList<Account> list = new ArrayList<Account>();
+        Connection cn = null;
+        Statement st = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT * FROM [dbo].[Accounts]";
+                st = cn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+                while (rs != null && rs.next()) {
+                    acc = getAccount(rs);
+                    list.add(acc);
+                }
+            }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (st != null) {
+                try {
+                    st.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return list;
+    }
+
+    public static ArrayList<Account> GetAllBy(String searchBy, String keyword) {
+        Account acc = null;
+        ArrayList<Account> list = new ArrayList<Account>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+        StringBuilder SearchBy = new StringBuilder("Where "+ searchBy+ " = ?");
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                StringBuilder sql = new StringBuilder("SELECT * FROM [dbo].[Accounts]\n");
+                if(!searchBy.isEmpty() || !searchBy.isEmpty()){
+                    sql = sql.append(SearchBy);
+                }
+
+                pst = cn.prepareStatement(sql.toString());
+                pst.setString(1, keyword);
+                ResultSet rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    acc = getAccount(rs);
+                    list.add(acc);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return list;
+    }
 
 
     /*-------------------------------------UPDATE-------------------------------------*/
