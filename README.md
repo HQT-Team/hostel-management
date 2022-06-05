@@ -4,27 +4,21 @@ The main project folder for the team to organize, manage and work
 
 Live Demo: :point_right: [here]()
 
-## You will find in this repo the following stuff:
-* 
-* .gitignore file and README.md file to manage the content of this repo
-* ...
-
-## About team members
-* 
-* Updating
-
-
 ## Table of Contents
 
 - [Description](#description)
 
 - [Preview Screenshot](#preview-screenshot)
 
+- [Install and run](#install-and-run)
+
 - [Technology](#technology)
 
 - [Functional requirements](#functional-requirements)
 
 - [Useful Resources](#useful-resources)
+
+- [Contributors](#contributors)
 
 - [Learn More](#learn-more)
 
@@ -39,6 +33,33 @@ Live Demo: :point_right: [here]()
 ## Preview Screenshot
 
 - Updating
+
+## Install and run
+
+### Required
+
+- Open source code with IntelliJ IDE
+- Installed JDK verison 11.x or above
+- Installed Tomcat server version 8.5.x or higher and below version 10
+- Installed Microsoft SQL Server Management Studio 18 and run the attached project script file in the source code folder
+- Installed NodeJS Latest Version and SASS
+
+### Install
+1. Clone the source code to your computer and open the source code with IntelliJ IDE
+2. Wait for the libraries configured in the dependencies of the POM.xml file to be downloaded
+3. Select Runs/Debug configuration
+4. Select Add New Configuration
+5. Select Tomcat Server Local version
+6. In the Server tab, in the Application server section, link to the folder where Tomcat is installed
+7. In the Server tab, in the JRE section, link to the folder where the JDK is installed
+8. On the Deployment tab, click Add, select Artifact and select HappyHostel:war
+9. Also in the Deployment tab, scroll down to see the Application context item is currently "/HappyHostel_war", delete "_war" and click Apply
+10. In the project's IntelliJ window, open Terminal with Command Prompt
+11. Run command "sass src/main/webapp/assets/scss:src/main/webapp/assets/css" to build SCSS files into CSS files to display styles for pages
+
+### Run
+1. Click run to let IntelliJ turn on tomcat, build the project into a .war file and deploy it to the server
+2. The web will automatically be turned on in the selected default browser or type "http://localhost:8080/HappyHostel/"
 
 ## Technology
 
@@ -97,12 +118,22 @@ Live Demo: :point_right: [here]()
 
 #| Name | Description
 -| ---- | -----------
-1| [web Folder]() | -----------
-2| [src Folder]() | -----------
-3| [Database File]() | -----------
-4| [META-INF Folder]() | -----------
-5| [WEB-INF Folder]() | -----------
-6| [libs Folder]() | -----------
+1| [Main Project Folder](https://github.com/HaiNam-FoodBoy/HappyHostel_SWP391_SUMMER2022) | -
+2| [Database Script]() | -
+2.1| [Database ERD Diagram](https://drive.google.com/file/d/1EWFwGAEFJI4Ijg2RoIbt_WtL_wtLur4R/view?usp=sharing) | -
+2.2| [Database Physical Diagram]() | -
+3| [UI Design](https://www.figma.com/file/2gRO4Afc88rHWHuuQlrR6g/Layout-Hostel?node-id=0%3A1) | -
+
+## Contributors
+- [Hoang Dang Khoa](https://github.com/khoahd7621) - SE150848 - **Front-end Developer | Back-end Developer | UI Designer**
+
+- [Nguyen Tan Loc](https://github.com/ngntanloc) - SE150877 - **Back-end Developer | Database Designer**
+
+- [Ho Hai Nam](https://github.com/HaiNam-FoodBoy) - SE150929 - **Back-end Developer | Database Designer**
+
+- [Thai Thanh Phat](https://github.com/ttphats) - SE150968 - **Back-end Developer**
+
+- [Tran Hoai Nam](https://github.com/namth1606) - SE150921 - **Front-end Developer | UI Designer**
 
 ## Learn More
 
@@ -110,6 +141,4 @@ Live Demo: :point_right: [here]()
 
 ## License & Copyright
 
-&copy; 2022 HQT-Group Licensed under the [GPL-3.0 LICENSE]().
-
-> :love_you_gesture: Feel free to use my repository and star it if you find something interesting :love_you_gesture:
+&copy; 2022 [HQT Team](https://github.com/HQT-Team) Licensed under the [GPL-3.0 LICENSE]().
