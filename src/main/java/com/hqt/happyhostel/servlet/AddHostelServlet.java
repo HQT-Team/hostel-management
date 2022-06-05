@@ -2,6 +2,7 @@ package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dto.Account;
+import com.hqt.happyhostel.dto.HostelService;
 import com.hqt.happyhostel.dto.Hostels;
 import com.hqt.happyhostel.dto.Services;
 
@@ -20,7 +21,7 @@ import java.util.List;
 @WebServlet(name = "AddHostelServlet", value = "/AddHostelServlet")
 public class AddHostelServlet extends HttpServlet {
     public static final String ERROR = "error.jsp";
-    public static final String SUCCESS = "ShowListHostel";
+    public static final String SUCCESS = "list-hostels";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,12 +31,16 @@ public class AddHostelServlet extends HttpServlet {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String validDate = dateObj.format(formatter);
         List<Services> servicesList = new ArrayList<>();
+        List<HostelService> hostelServiceList = new ArrayList<>();
         Account acc = new Account();
+
 
         try {
             req.setCharacterEncoding("UTF-8");
             HttpSession session = req.getSession();
-            acc = (Account)session.getAttribute("USER");
+            acc = (Account) session.getAttribute("USER");
+            HostelDAO dao = new HostelDAO();
+            servicesList = dao.getListServices();
 
             int accountId = acc.getAccId();
             String hostelName = req.getParameter("hostel-name");
@@ -44,22 +49,42 @@ public class AddHostelServlet extends HttpServlet {
             String hostelDistrict = req.getParameter("hostel-district");
             String hostelWard = req.getParameter("hostel-ward");
 
-            double electricityPrice = Double.parseDouble(req.getParameter("hostel-electric"));
-            servicesList.add(new Services("Electricity", electricityPrice, validDate));
-            double waterPrice = Double.parseDouble(req.getParameter("hostel-water"));
-            servicesList.add(new Services("Water", waterPrice, validDate));
-            double internetPrice = Double.parseDouble(req.getParameter("hostel-wifi"));
-            servicesList.add(new Services("Internet", internetPrice, validDate));
-            double managementPrice = Double.parseDouble(req.getParameter("hostel-manage"));
-            servicesList.add(new Services("Management", managementPrice, validDate));
-            double vehiclePrice = Double.parseDouble(req.getParameter("hostel-vehicle"));
-            servicesList.add(new Services("Vehicle", vehiclePrice, validDate));
-            double cleaningPrice = Double.parseDouble(req.getParameter("hostel-cleaning"));
-            servicesList.add(new Services("Cleaning", cleaningPrice, validDate));
+            if (servicesList.isEmpty()) {
+                servicesList.add(new Services("Electric"));
+                servicesList.add(new Services("Water"));
+                servicesList.add(new Services("Internet"));
+                servicesList.add(new Services("Management"));
+                servicesList.add(new Services("Vehicle"));
+                servicesList.add(new Services("Cleaning"));
+            }
 
-            Hostels hostel = new Hostels(accountId,hostelName,hostelAddress,hostelWard,hostelDistrict,hostelProvince);
-            HostelDAO dao = new HostelDAO();
-            boolean checkInsert = dao.addHostel(hostel, servicesList);
+
+            //electric
+            double electricityPrice = Double.parseDouble(req.getParameter("hostel-electric"));
+            hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(electricityPrice).build());
+            //water
+            double waterPrice = Double.parseDouble(req.getParameter("hostel-water"));
+            hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(waterPrice).build());
+
+            //wifi
+            double internetPrice = Double.parseDouble(req.getParameter("hostel-wifi"));
+            hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(internetPrice).build());
+
+            //Management
+            double managementPrice = Double.parseDouble(req.getParameter("hostel-manage"));
+            hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(managementPrice).build());
+
+            //Vehicle
+            double vehiclePrice = Double.parseDouble(req.getParameter("hostel-vehicle"));
+            hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(vehiclePrice).build());
+
+            //cleaning
+            double cleaningPrice = Double.parseDouble(req.getParameter("hostel-cleaning"));
+            hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(cleaningPrice).build());
+
+
+            Hostels hostel = new Hostels(accountId, hostelName, hostelAddress, hostelWard, hostelDistrict, hostelProvince);
+            boolean checkInsert = dao.addHostel(hostel, servicesList, hostelServiceList);
 
             if (checkInsert) {
                 url = SUCCESS;

@@ -1,5 +1,6 @@
 package com.hqt.happyhostel.dao;
 
+import com.hqt.happyhostel.dto.HostelService;
 import com.hqt.happyhostel.dto.Hostels;
 import com.hqt.happyhostel.dto.Services;
 import com.hqt.happyhostel.utils.DBUtils;
@@ -13,6 +14,8 @@ public class HostelDAO {
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels]";
     public static final String INSERT_HOSTEl =
             "INSERT INTO [dbo].[Hostels](owner_account_id, name, address, ward, district, city) values(?, ?, ?, ?, ?, ?)";
+    public static final String GET_SERVICE =
+            "SELECT service_id, service_name FROM [dbo].[Services]";
     public static final String INSERT_SERVICE =
             "INSERT INTO [dbo].[Services](service_name) values(?)";
     public static final String INSERT_HOSTEL_SERVICE =
@@ -22,7 +25,7 @@ public class HostelDAO {
     public static final String GET_HOSTEL_BY_ID =
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE hostel_id = ?";
 
-    public Hostels getHostelById(int hostelId) throws SQLException  {
+    public Hostels getHostelById(int hostelId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -97,7 +100,40 @@ public class HostelDAO {
         return listHostels;
     }
 
-    public boolean addHostel(Hostels hostel, List<Services> services) throws SQLException {
+    public List<Services> getListServices() throws SQLException {
+        List<Services> listServices = new ArrayList<>();
+        Connection cn = null;
+        Statement st = null;
+        ResultSet rs = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                st = cn.createStatement();
+                rs = st.executeQuery(GET_SERVICE);
+                while (rs != null && rs.next()) {
+                    int serviceID = rs.getInt("service_id");
+                    String serviceName = rs.getString("service_name");
+                    listServices.add(new Services(serviceID, serviceName));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return listServices;
+    }
+
+    public boolean addHostel(Hostels hostel, List<Services> services, List<HostelService> hostelServices) throws SQLException {
         boolean check = false;
         Connection cn = null;
         PreparedStatement ptm = null;
@@ -106,6 +142,7 @@ public class HostelDAO {
         try {
             cn = DBUtils.makeConnection();
             cn.setAutoCommit(false);
+            //Insert table Hostel
             if (cn != null) {
                 ptm = cn.prepareStatement(INSERT_HOSTEl, Statement.RETURN_GENERATED_KEYS);
                 ptm.setInt(1, hostel.getHostelOwnerAccountID());
@@ -123,6 +160,9 @@ public class HostelDAO {
 
                 ptm.close();
 
+
+                //Insert table Services
+                int index = 0;
                 for (Services ser : services
                 ) {
                     ptm = cn.prepareStatement(INSERT_SERVICE, Statement.RETURN_GENERATED_KEYS);
@@ -130,22 +170,23 @@ public class HostelDAO {
 
                     check = ptm.executeUpdate() > 0 ? true : false;
                     rs = ptm.getGeneratedKeys();
+                    int key;
                     if (rs.next()) {
                         ser.setServiceID(rs.getInt(1));
+                        key = rs.getInt(1);
                     }
 
-                    ptm.close();
+                    HostelService hostelService = hostelServices.get(index);
 
                     ptm = cn.prepareStatement(INSERT_HOSTEL_SERVICE);
                     ptm.setInt(1, hostel.getHostelID());
                     ptm.setInt(2, ser.getServiceID());
-                    ptm.setDouble(3, ser.getServicePrice());
-                    ptm.setString(4, ser.getValidDate());
+                    ptm.setDouble(3, hostelService.getServicePrice());
+                    ptm.setString(4, hostelService.getValidDate());
                     check = ptm.executeUpdate() > 0 ? true : false;
                     ptm.close();
-
+                    index++;
                 }
-
             }
             if (!check) {
                 cn.rollback();

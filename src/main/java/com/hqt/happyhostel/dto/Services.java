@@ -10,13 +10,9 @@ import lombok.NoArgsConstructor;
 public class Services {
     private int serviceID;
     private String serviceName;
-    private Double servicePrice;
-    private String validDate;
 
-    public Services(String serviceName, double servicePrice, String validDate) {
+    public Services(String serviceName) {
         this.serviceName = serviceName;
-        this.servicePrice = servicePrice;
-        this.validDate = validDate;
     }
 
     public int getServiceID() {
@@ -35,19 +31,4 @@ public class Services {
         this.serviceName = serviceName;
     }
 
-    public Double getServicePrice() {
-        return servicePrice;
-    }
-
-    public void setServicePrice(Double servicePrice) {
-        this.servicePrice = servicePrice;
-    }
-
-    public String getValidDate() {
-        return validDate;
-    }
-
-    public void setValidDate(String validDate) {
-        this.validDate = validDate;
-    }
 }
