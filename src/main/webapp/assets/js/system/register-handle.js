@@ -7,6 +7,8 @@ Validator({
     Validator.isRequired("#username", "Vui lòng nhập tên tài khoản"),
     Validator.isRequired("#cccd", "Vui lòng nhập số CMND hoặc CCCD của bạn"),
     Validator.isCCCD("#cccd"),
+    Validator.isRequired("#email", "Vui lòng nhập email của bạn"),
+    Validator.isEmail("#email"),
     Validator.minLength("#password", 6),
     Validator.isRequired("#confirm-password"),
     Validator.isConfirmed(
@@ -17,4 +19,11 @@ Validator({
       "Mật khẩu nhập lại không chính xác"
     ),
   ],
+  // onSubmit: function(data) {
+  //   axios({
+  //     method: 'post',
+  //     url: 'handle-register',
+  //     data: data
+  //   })
+  // }
 });
