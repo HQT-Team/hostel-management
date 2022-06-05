@@ -1,7 +1,7 @@
 package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.HostelDAO;
-import com.hqt.happyhostel.dto.Hostels;
+import com.hqt.happyhostel.dto.Hostel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -17,7 +17,7 @@ public class UpdateHostelServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             int hostelID = Integer.parseInt(req.getParameter("hostelID"));
-            Hostels hostel = new HostelDAO().getHostelById(hostelID);
+            Hostel hostel = new HostelDAO().getHostelById(hostelID);
             req.setAttribute("HOSTEL", hostel);
             req.getRequestDispatcher("update-hostel-page").forward(req, resp);
         } catch (Exception e) {
@@ -32,7 +32,6 @@ public class UpdateHostelServlet extends HttpServlet {
         String url = ERROR;
         req.setCharacterEncoding("UTF-8");
         try {
-            System.out.println("Day ne");
             int hostelID = Integer.parseInt(req.getParameter("hostelID"));
             String hostelName = req.getParameter("hostel-name");
             String hostelAddress = req.getParameter("hostel-address");
@@ -41,7 +40,7 @@ public class UpdateHostelServlet extends HttpServlet {
             String hostelProvince = req.getParameter("hostel-province");
 
             HostelDAO dao = new HostelDAO();
-            Hostels newHostel = new Hostels(hostelName, hostelAddress, hostelWard, hostelDistrict, hostelProvince);
+            Hostel newHostel = new Hostel(hostelName, hostelAddress, hostelWard, hostelDistrict, hostelProvince);
             boolean checkUpdate = dao.updateHostel(newHostel, hostelID);
             if (checkUpdate) {
                 url = SUCCESS;
@@ -50,7 +49,6 @@ public class UpdateHostelServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at UpdateHostel: " + e.toString());
         } finally {
-            System.out.println("Hello Post");
             req.getRequestDispatcher(url).forward(req, resp);
         }
     }

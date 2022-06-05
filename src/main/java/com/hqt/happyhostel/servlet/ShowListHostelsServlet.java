@@ -1,7 +1,7 @@
 package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.HostelDAO;
-import com.hqt.happyhostel.dto.Hostels;
+import com.hqt.happyhostel.dto.Hostel;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +23,7 @@ public class ShowListHostelsServlet extends HttpServlet {
         String url = ERROR;
         try {
             HostelDAO hostelDAO = new HostelDAO();
-            List<Hostels> listHostel = hostelDAO.getListHostels();
+            List<Hostel> listHostel = hostelDAO.getListHostels();
             if (listHostel.size() > 0) {
                 req.setAttribute("LIST_HOSTEL", listHostel);
                 url = SUCCESS;

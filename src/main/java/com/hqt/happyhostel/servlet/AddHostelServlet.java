@@ -3,7 +3,7 @@ package com.hqt.happyhostel.servlet;
 import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dto.Account;
 import com.hqt.happyhostel.dto.HostelService;
-import com.hqt.happyhostel.dto.Hostels;
+import com.hqt.happyhostel.dto.Hostel;
 import com.hqt.happyhostel.dto.Services;
 
 import javax.servlet.ServletException;
@@ -83,7 +83,7 @@ public class AddHostelServlet extends HttpServlet {
             hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(cleaningPrice).build());
 
 
-            Hostels hostel = new Hostels(accountId, hostelName, hostelAddress, hostelWard, hostelDistrict, hostelProvince);
+            Hostel hostel = new Hostel(accountId, hostelName, hostelAddress, hostelWard, hostelDistrict, hostelProvince);
             boolean checkInsert = dao.addHostel(hostel, servicesList, hostelServiceList);
 
             if (checkInsert) {

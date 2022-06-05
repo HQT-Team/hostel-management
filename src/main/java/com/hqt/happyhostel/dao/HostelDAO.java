@@ -1,7 +1,7 @@
 package com.hqt.happyhostel.dao;
 
 import com.hqt.happyhostel.dto.HostelService;
-import com.hqt.happyhostel.dto.Hostels;
+import com.hqt.happyhostel.dto.Hostel;
 import com.hqt.happyhostel.dto.Services;
 import com.hqt.happyhostel.utils.DBUtils;
 
@@ -25,11 +25,11 @@ public class HostelDAO {
     public static final String GET_HOSTEL_BY_ID =
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE hostel_id = ?";
 
-    public Hostels getHostelById(int hostelId) throws SQLException {
+    public Hostel getHostelById(int hostelId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        Hostels hostel = null;
+        Hostel hostel = null;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
@@ -43,7 +43,7 @@ public class HostelDAO {
                     String ward = rs.getString("ward");
                     String district = rs.getString("district");
                     String city = rs.getString("city");
-                    hostel = new Hostels(hostelId, hostelOwnerAccountID, name, address, ward, district, city);
+                    hostel = new Hostel(hostelId, hostelOwnerAccountID, name, address, ward, district, city);
                 }
             }
         } catch (Exception e) {
@@ -62,8 +62,8 @@ public class HostelDAO {
         return hostel;
     }
 
-    public List<Hostels> getListHostels() throws SQLException {
-        List<Hostels> listHostels = new ArrayList<>();
+    public List<Hostel> getListHostels() throws SQLException {
+        List<Hostel> listHostels = new ArrayList<>();
         Connection cn = null;
         Statement st = null;
         ResultSet rs = null;
@@ -80,7 +80,7 @@ public class HostelDAO {
                     String ward = rs.getString("ward");
                     String district = rs.getString("district");
                     String city = rs.getString("city");
-                    listHostels.add(new Hostels(hostelID, hostelOwnerAccountID, name, address, ward, district, city));
+                    listHostels.add(new Hostel(hostelID, hostelOwnerAccountID, name, address, ward, district, city));
                 }
             }
 
@@ -133,7 +133,7 @@ public class HostelDAO {
         return listServices;
     }
 
-    public boolean addHostel(Hostels hostel, List<Services> services, List<HostelService> hostelServices) throws SQLException {
+    public boolean addHostel(Hostel hostel, List<Services> services, List<HostelService> hostelServices) throws SQLException {
         boolean check = false;
         Connection cn = null;
         PreparedStatement ptm = null;
@@ -207,7 +207,7 @@ public class HostelDAO {
         return check;
     }
 
-    public boolean updateHostel(Hostels hostel, int hostelID) throws SQLException {
+    public boolean updateHostel(Hostel hostel, int hostelID) throws SQLException {
         boolean checkUpdate = false;
         Connection cn = null;
         PreparedStatement ptm = null;

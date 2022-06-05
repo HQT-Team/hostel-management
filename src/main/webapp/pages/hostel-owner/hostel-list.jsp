@@ -87,7 +87,7 @@
                                                     ${hostels.district.split('-')[1]}, ${hostels.city.split('-')[1]}
                                             </td>
                                             <td>
-                                                <a href=""
+                                                <a href="hostel-detail?hostelID=${hostels.hostelID}"
                                                    class="hostel-table__body-link-detail"
                                                 >
                                                     Chi tiết

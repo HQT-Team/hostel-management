@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Hostels {
+public class Hostel {
     private int hostelID;
     private int hostelOwnerAccountID;
     private String hostelName;
@@ -16,7 +16,7 @@ public class Hostels {
     private String district;
     private String city;
 
-    public Hostels(int hostelOwnerAccountID, String hostelName, String address, String ward, String district, String city) {
+    public Hostel(int hostelOwnerAccountID, String hostelName, String address, String ward, String district, String city) {
         this.hostelOwnerAccountID = hostelOwnerAccountID;
         this.hostelName = hostelName;
         this.address = address;
@@ -25,7 +25,7 @@ public class Hostels {
         this.city = city;
     }
 
-    public Hostels(String hostelName, String address, String ward, String district, String city) {
+    public Hostel(String hostelName, String address, String ward, String district, String city) {
         this.hostelName = hostelName;
         this.address = address;
         this.ward = ward;
