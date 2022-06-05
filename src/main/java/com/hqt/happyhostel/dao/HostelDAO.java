@@ -10,19 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HostelDAO {
-    public static final String GET_HOSTEL =
+    private static final String GET_HOSTEL =
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels]";
-    public static final String INSERT_HOSTEl =
+    private static final String INSERT_HOSTEl =
             "INSERT INTO [dbo].[Hostels](owner_account_id, name, address, ward, district, city) values(?, ?, ?, ?, ?, ?)";
-    public static final String GET_SERVICE =
+    private static final String GET_SERVICE =
             "SELECT service_id, service_name FROM [dbo].[Services]";
-    public static final String INSERT_SERVICE =
+    private static final String INSERT_SERVICE =
             "INSERT INTO [dbo].[Services](service_name) values(?)";
-    public static final String INSERT_HOSTEL_SERVICE =
+    private static final String INSERT_HOSTEL_SERVICE =
             "INSERT INTO [dbo].[HostelService](hostel_id, service_id, service_price, valid_date) values(?, ?, ?, ?)";
-    public static final String UPDATE_HOSTEL =
+    private static final String UPDATE_HOSTEL =
             "UPDATE Hostels SET name = ?, address = ?, ward = ?, district = ?, city = ? WHERE hostel_id = ?";
-    public static final String GET_HOSTEL_BY_ID =
+    private static final String GET_HOSTEL_BY_ID =
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE hostel_id = ?";
 
     public Hostel getHostelById(int hostelId) throws SQLException {
