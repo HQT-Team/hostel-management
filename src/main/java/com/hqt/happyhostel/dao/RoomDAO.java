@@ -58,10 +58,8 @@ public class RoomDAO {
 
                 int rows = pst.executeUpdate();
                 if (rows != 0) {
-                    cn.commit();
                     isInserted = true;
                 } else {
-                    cn.rollback();
                     isInserted = false;
                 }
             }

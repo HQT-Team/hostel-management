@@ -297,7 +297,6 @@ public class AccountDAO {
         Connection cn = null;
         PreparedStatement pst = null;
         String username = null;
-        int result = 0;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
