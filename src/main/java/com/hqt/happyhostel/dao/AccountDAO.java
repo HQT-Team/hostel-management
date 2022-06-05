@@ -26,10 +26,10 @@ public class AccountDAO {
             if (role == 2) {//Renter
                 roommateInfoList = getRoommateInformationById(accId);
                 accInf = getAccountInformationById(accId);
-                acc = new Account(accId, username, createdate, status, role, accInf, roommateInfoList);
+                acc = new Account(accId, username, password, createdate, status, role, accInf, roommateInfoList);
             } else {
                 accInf = getAccountInformationById(accId);
-                acc = new Account(accId, username, createdate, status, role, accInf, null);
+                acc = new Account(accId, username, password, createdate, status, role, accInf, null);
             }
 
         } catch (Exception e) {

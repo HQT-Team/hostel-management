@@ -4,6 +4,7 @@ package com.hqt.happyhostel.servlet;
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dto.Account;
 import com.hqt.happyhostel.utils.RandomStringGenerator;
+import com.hqt.happyhostel.utils.SecurityUtils;
 
 
 import javax.servlet.*;
@@ -23,7 +24,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "loginPage";
         String username = request.getParameter("txtemail");
-        String password = request.getParameter("txtpassword");
+        String password = SecurityUtils.hashMd5(request.getParameter("txtpassword"));
         String save = request.getParameter("savelogin");
         Account account = null;
         try {
