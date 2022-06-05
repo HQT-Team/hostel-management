@@ -216,7 +216,6 @@ Validator.isConfirmed = function (selector, getConfirmValue, message) {
   return {
     selector: selector,
     test: function (value) {
-      console.log(selector, getConfirmValue(), message);
       return value === getConfirmValue()
         ? undefined
         : message || "Giá trị nhập vào không chính xác";

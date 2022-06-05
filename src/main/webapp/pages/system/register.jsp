@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -77,7 +78,7 @@
                                 <label for="username" class="form-label">Tên tài khoản <span>*</span></label>
                                 <input id="username" name="username" type="text" value="${requestScope.username}" placeholder="Nhập tên tài khoản"
                                     class="form-control">
-                                <span class="form-message">${requestScope.ERROR}</span>
+                                <span class="form-message">${requestScope.ERROR_TYPE ne null && requestScope.ERROR_TYPE eq "username" && requestScope.ERROR ne null ? requestScope.ERROR : ""}</span>
                             </div>
                             <div class="row">
                                 <div class="form-group col-6">
@@ -92,6 +93,12 @@
                                         placeholder="Xác nhận mật khẩu" class="form-control">
                                     <span class="form-message"></span>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email <span>*</span></label>
+                                <input id="email" name="email" value="${requestScope.email}" type="text" placeholder="Nhập email của bạn"
+                                       class="form-control">
+                                <span class="form-message">${requestScope.ERROR_TYPE ne null && requestScope.ERROR_TYPE eq "email" && requestScope.ERROR ne null ? requestScope.ERROR : ""}</span>
                             </div>
                             <div class="form-group">
                                 <label for="cccd" class="form-label">CCCD/CMND <span>*</span></label>
@@ -130,12 +137,36 @@
         </div>
     </footer>
 
+    <!-- Toast element -->
+    <div id="toast">&nbsp;</div>
+
     <!-- Script Bootstrap -->
     <script src="./assets/js/bootstrap/bootstrap.bundle.min.js"></script>
 
     <!-- Link your script here -->
     <script src="./assets/js/valid-form.js" charset="UTF-8"></script>
-    <script src="./assets/js/system/register-handle.js" charset="UTF-8"></script>
+    <script type="module" src="./assets/js/system/register-handle.js" charset="UTF-8"></script>
+    <script src="./assets/js/toast-alert.js"></script>
+    <script>
+        <c:choose>
+            <c:when test="${requestScope.SUCCESS ne null}">
+                toast({
+                    title: 'Thành công',
+                    message: 'Đăng ký tài khoản thành công! Tài khoản sẽ được quản trị viên xem xét và thông báo kết quả qua email!',
+                    type: 'success',
+                    duration: 10000
+                });
+            </c:when>
+            <c:when test="${requestScope.ERROR ne null}">
+                toast({
+                    title: 'Lỗi',
+                    message: '${requestScope.ERROR}',
+                    type: 'error',
+                    duration: 10000
+                });
+        </c:when>
+        </c:choose>
+    </script>
 </body>
 
 </html>
