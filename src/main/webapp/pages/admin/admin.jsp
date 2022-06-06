@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -6,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="../../assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
 
     <!-- Title -->
     <title>Trang chủ</title>
@@ -16,10 +17,10 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/css/core_style/core.css">
+    <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
     <!-- Link your own CSS here -->
-    <link rel="stylesheet" href="../../assets/css/admin_page/admin_home_page.css">
+    <link rel="stylesheet" href="./assets/css/admin_page/admin_home_page.css">
 </head>
 
 <body>
@@ -30,7 +31,7 @@
                 <div class="col-3 col-lg-3 col-xl-3 col-xxl-2">
                     <div class="main-nav__logo">
                         <a href="" class="main-nav__logo-link">
-                            <img class="main-nav__logo-img" src="../../assets/images/logos/logo.png" alt="Logo">
+                            <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
                         </a>
                     </div>
                 </div>
@@ -51,7 +52,7 @@
                                 <span class="infor__role">Chủ phòng trọ</span>
                             </div>
                             <div class="profile__avatar">
-                                <img class="avatar__img" src="../../assets/images/avatars/user-avatar.jpg"
+                                <img class="avatar__img" src="./assets/images/avatars/user-avatar.jpg"
                                     alt="User avatar image">
                             </div>
 
@@ -202,7 +203,7 @@
                 <div id="nav-profile-dropdown" class="profile__actions">
                     <a href="" class="action__view-profile-link">
                         <div class="action__image">
-                            <img src="../../assets/images/avatars/user-avatar.jpg" alt="">
+                            <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                         </div>
                         <div class="action__content">
                             <div class="title">Nguyễn Lâm Thảo Tâm</div>
@@ -364,10 +365,10 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <!-- Jquery -->
-    <script src="../../assets/js/jquery-3.5.1.min.js"></script>
+    <script src="./assets/js/jquery-3.5.1.min.js"></script>
     <!-- Link your script here -->
-    <script src="../../assets/js/handle-main-navbar.js"></script>
-    <script src="../../assets/js/admin/admin_home_page.js"></script>
+    <script src="./assets/js/handle-main-navbar.js"></script>
+    <script src="./assets/js/admin/admin_home_page.js"></script>
 
 </body>
 
