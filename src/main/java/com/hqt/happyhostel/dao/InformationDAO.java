@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 
 public class InformationDAO {
 
-    public static final String IS_EXIST_EMAIL = "SELECT email FROM AccountInformations WHERE email = ? ";
+    private static final String IS_EXIST_EMAIL = "SELECT email FROM AccountInformations WHERE email = ? ";
 
     public boolean isExistEmail(String email) {
         boolean check = false;
