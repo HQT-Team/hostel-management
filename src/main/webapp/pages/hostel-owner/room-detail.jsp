@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -6,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="../../assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
 
     <!-- Title -->
     <title>Chi tiết phòng</title>
@@ -16,10 +18,10 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/css/core_style/core.css">
+    <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
     <!-- Link your CSS here -->
-    <link rel="stylesheet" href="../../assets/css/hostel_owner_style/room_detail_style/style.css">
+    <link rel="stylesheet" href="./assets/css/hostel_owner_style/room_detail_style/style.css">
 
 </head>
 
@@ -31,7 +33,7 @@
             <div class="col-3 col-lg-3 col-xl-3 col-xxl-2">
                 <div class="main-nav__logo">
                     <a href="" class="main-nav__logo-link">
-                        <img class="main-nav__logo-img" src="../../assets/images/logos/logo.png" alt="Logo">
+                        <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
                     </a>
                 </div>
             </div>
@@ -52,7 +54,7 @@
                             <span class="infor__role">Chủ phòng trọ</span>
                         </div>
                         <div class="profile__avatar">
-                            <img class="avatar__img" src="../../assets/images/avatars/user-avatar.jpg"
+                            <img class="avatar__img" src="./assets/images/avatars/user-avatar.jpg"
                                  alt="User avatar image">
                         </div>
                     </div>
@@ -202,7 +204,7 @@
             <div id="nav-profile-dropdown" class="profile__actions">
                 <a href="" class="action__view-profile-link">
                     <div class="action__image">
-                        <img src="../../assets/images/avatars/user-avatar.jpg" alt="">
+                        <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                     </div>
                     <div class="action__content">
                         <div class="title">Nguyễn Lâm Thảo Tâm</div>
@@ -267,23 +269,25 @@
             <div class="content-bar pt-5">
                 <!-- History link bar -->
                 <div class="content-history">
-                    <a href="./hostel.html" class="history-link">Danh sách khu trọ</a>
+                    <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a href="hostel-detail.jsp" class="history-link">NovaLand Sky</a>
+                    <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}"
+                       class="history-link">${sessionScope.hostel.hostelName}</a>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <div class="current">Phòng 11</div>
+                    <div class="current">Phòng ${requestScope.roomInformation.roomNumber}</div>
                 </div>
             </div>
             <!-- Infor box -->
             <div class="col-xxl-9 m-auto">
                 <div class="content-body">
                     <div class="room-header">
-                        <h2 class="room-name">Phòng 11</h2>
+                        <h2 class="room-name">Phòng ${requestScope.roomInformation.roomNumber}</h2>
                         <!-- Add room button -->
                         <div class="room-actions">
                             <!-- Start update room information button -->
                             <button class="action-update-btn" data-bs-toggle="modal"
-                                    data-bs-target="#update-room-infor-modal">Cập nhật</button>
+                                    data-bs-target="#update-room-infor-modal">Cập nhật
+                            </button>
                             <!-- Start update room modal -->
                             <div class="modal fade" id="update-room-infor-modal" tabindex="-1"
                                  aria-labelledby="update-room-infor-modal-label" aria-hidden="true">
@@ -297,7 +301,7 @@
                                                     aria-label="Close"></button>
                                         </div>
                                         <!-- Form update room -->
-                                        <form action="" method="" class="custom-form update-room-infor-form">
+                                        <form action="updateRoom" method="POST" class="custom-form update-room-infor-form">
                                             <div class="modal-body">
                                                 <!-- Room number -->
                                                 <div class="form-group">
@@ -310,7 +314,7 @@
                                                         </div>
                                                         <div class="col-6">
                                                             <input type="number" name="room-number"
-                                                                   id="update-room-infor__room-number" value=""
+                                                                   id="update-room-infor__room-number" value="${requestScope.roomInformation.roomNumber}"
                                                                    class="form-control m-0">
                                                         </div>
                                                     </div>
@@ -327,7 +331,7 @@
                                                         </div>
                                                         <div class="col-6">
                                                             <input type="number" name="room-capacity"
-                                                                   id="update-room-infor__room-capacity" value=""
+                                                                   id="update-room-infor__room-capacity" value="${requestScope.roomInformation.capacity}"
                                                                    class="form-control m-0">
                                                         </div>
                                                     </div>
@@ -344,7 +348,7 @@
                                                         </div>
                                                         <div class="col-4">
                                                             <input type="number" name="room-area"
-                                                                   id="update-room-infor__room-area" value=""
+                                                                   id="update-room-infor__room-area" value="${requestScope.roomInformation.roomArea}"
                                                                    class="form-control m-0">
                                                         </div>
                                                         <div class="col-2 text-center">
@@ -366,8 +370,16 @@
                                                             <select name="room-attic"
                                                                     id="update-room-infor__room-attic"
                                                                     class="form-control m-0">
-                                                                <option value="1">Có</option>
-                                                                <option value="0">Không</option>
+                                                                <c:choose>
+                                                                    <c:when test="${requestScope.roomInformation.hasAttic eq 1}">
+                                                                        <option value="1" selected>Có</option>
+                                                                        <option value="0">Không</option>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <option value="1">Có</option>
+                                                                        <option value="0"selected>Không</option>
+                                                                    </c:otherwise>
+                                                                </c:choose>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -375,7 +387,9 @@
                                             </div>
                                             <div class="modal-footer justify-content-between">
                                                 <button type="button" class="btn btn-danger"
-                                                        data-bs-dismiss="modal">Hủy bỏ</button>
+                                                        data-bs-dismiss="modal">Hủy bỏ
+                                                </button>
+                                                <input type="hidden" name="idRoom" value="${requestScope.roomInformation.roomId}">
                                                 <button type="submit" class="btn btn-primary">Cập nhật</button>
                                             </div>
                                         </form>
@@ -399,19 +413,44 @@
                     <div class="room-information">
                         <div class="row">
                             <div class="col-12 col-md-7 room-information__left">
-                                <div class="infor-group">Khu trọ trực thuộc: <span>NovaLand Sky</span></div>
-                                <div class="infor-group">Địa chỉ: <span>256 Lê Văn Việt, TP. Thủ Đức, TP. Hồ Chí
-                                            Minh</span></div>
-                                <div class="infor-group">Diện tích: <span>32 m2</span></div>
-                                <div class="infor-group">Gác: <span>Có</span></div>
-                                <div class="infor-group">Trạng thái: <span>Đã có người thuê</span></div>
+                                <div class="infor-group">Khu trọ trực thuộc:
+                                    <span>${sessionScope.hostel.hostelName}</span></div>
+                                <div class="infor-group">Địa chỉ:
+                                    <span>${sessionScope.hostel.address}, ${sessionScope.hostel.district.split('-')[1]}, ${sessionScope.hostel.city.split('-')[1]}</span>
+                                </div>
+                                <div class="infor-group">Diện tích: <span>${requestScope.roomInformation.roomArea} m2</span></div>
+                                <div class="infor-group">Gác: <span>
+                                    <c:choose>
+                                        <c:when test="${requestScope.roomInformation.hasAttic eq 1}">
+                                            <c:out value="Có"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:out value="Không"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </span></div>
+                                <div class="infor-group">Trạng thái: <span>
+                                    <c:choose>
+                                        <c:when test="${requestScope.roomInformation.roomStatus eq 1}">
+                                            <c:out value="Phòng sẵn sàng cho thuê"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:out value="Đã được thuê"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </span></div>
                             </div>
                             <div class="col-12 col-md-5 room-information__right">
-                                <div class="infor-group">Ngày bắt đầu hợp đồng: <span>19/12/2021</span></div>
-                                <div class="infor-group">Ngày kết thúc hợp đồng: <span>31/12/2022</span></div>
-                                <div class="infor-group">Tiền cọc: <span>2,500,000 vnđ</span></div>
-                                <div class="infor-group">Tiền phòng: <span>2,500,000 vnđ</span></div>
-                                <div class="infor-group">Số lượng thành viên <span>3/4</span></div>
+                                <div class="infor-group">Ngày bắt đầu hợp đồng:
+                                    <span>${requestScope.contractRoom.startDate}</span></div>
+                                <div class="infor-group">Ngày kết thúc hợp đồng:
+                                    <span>${requestScope.contractRoom.expiration}</span></div>
+                                <div class="infor-group">Tiền cọc: <span>${requestScope.contractRoom.deposit}</span>
+                                </div>
+                                <div class="infor-group">Tiền phòng: <span>${requestScope.contractRoom.price}</span>
+                                </div>
+                                <div class="infor-group">Số lượng thành viên
+                                    <span>${requestScope.quantityMember}/${requestScope.roomInformation.capacity}</span></div>
                             </div>
                         </div>
                     </div>
@@ -421,21 +460,20 @@
                             <div class="room-consume">
                                 <div class="consume-header">Số điện/nước tiêu thụ</div>
                                 <div class="consume-update-date">Ngày cập nhật gần nhất: <span
-                                        class="date">30/04/2022
-                                            <span class="count-date">(21 ngày
-                                                trước)</span></span></div>
+                                        class="date">${requestScope.consumeRoom.endConsumeDate}</span></div>
                                 <div class="consume-group">
                                     <div class="consume-name">Điện:</div>
-                                    <div class="consume-quantity">3290</div>
+                                    <div class="consume-quantity">${requestScope.consumeRoom.numberElectric}</div>
                                 </div>
                                 <div class="consume-group">
                                     <div class="consume-name">Nước:</div>
-                                    <div class="consume-quantity">3290</div>
+                                    <div class="consume-quantity">${requestScope.consumeRoom.numberWater}</div>
                                 </div>
                                 <div class="consume-actions">
                                     <!-- Start consume update button -->
                                     <button class="consume-update-btn" data-bs-toggle="modal"
-                                            data-bs-target="#update-consume-modal">Cập nhật</button>
+                                            data-bs-target="#update-consume-modal">Cập nhật
+                                    </button>
                                     <!-- Start consume update modal -->
                                     <div class="modal fade" id="update-consume-modal" tabindex="-1"
                                          aria-labelledby="update-consume-modal-label" aria-hidden="true">
@@ -512,7 +550,8 @@
                                                     </div>
                                                     <div class="modal-footer justify-content-between">
                                                         <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Hủy bỏ</button>
+                                                                data-bs-dismiss="modal">Hủy bỏ
+                                                        </button>
                                                         <button type="button" class="btn btn-danger">
                                                             Cập nhật
                                                         </button>
@@ -593,7 +632,8 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-primary"
-                                                            data-bs-dismiss="modal">Xong</button>
+                                                            data-bs-dismiss="modal">Xong
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -608,21 +648,29 @@
                             <div class="room-invoice">
                                 <div class="invoice-header">
                                     <div class="invoice-title">Hóa đơn gần nhất</div>
-                                    <div class="invoice-created-date">Ngày tạo: <span>30/04/2022</span></div>
+                                    <div class="invoice-created-date">Ngày tạo:
+                                        <span>${requestScope.billRoom.createdDate}</span></div>
                                 </div>
                                 <div class="invoice-body">
                                     <div class="invoice-group">
-                                        <div class="invoice-label">Trạng thái: </div>
+                                        <div class="invoice-label">Trạng thái:</div>
                                         <!-- Paid: success ~ Unpaid: fail -->
-                                        <div class="invoice-content status success">Đã thanh toán</div>
+                                        <div class="invoice-content status success">
+                                            <c:choose>
+                                            <c:when test="${requestScope.billRoom.status eq 1}">Đã thanh toán</c:when>
+                                            <c:otherwise>Chưa thanh toán</c:otherwise>
+                                        </c:choose>
+                                        </div>
                                     </div>
                                     <div class="invoice-group">
-                                        <div class="invoice-label">Hình thức thanh toán: </div>
-                                        <div class="invoice-content">Tiền mặt</div>
+                                        <div class="invoice-label">Hình thức thanh toán:</div>
+                                        <div class="invoice-content">
+                                            ${requestScope.billRoom.payment.paymentName}
+                                        </div>
                                     </div>
                                     <div class="invoice-group">
-                                        <div class="invoice-label">Tổng tiền: </div>
-                                        <div class="invoice-content price">2,230,000 <span>vnđ</span></div>
+                                        <div class="invoice-label">Tổng tiền:</div>
+                                        <div class="invoice-content price">${requestScope.billRoom.totalMoney} <span>VNĐ</span></div>
                                     </div>
                                 </div>
                                 <div class="invoice-actions">
@@ -634,9 +682,14 @@
                                             Danh sách hóa đơn
                                         </button>
                                         <!-- If this invoice has been paid, please hide this button -->
-                                        <button class="invoice-action-btn invoice-confirm-paid-btn">
-                                            Xác nhận đã thanh toán
-                                        </button>
+                                        <c:choose>
+                                            <c:when test="${requestScope.billRoom.status eq 1}"></c:when>
+                                            <c:otherwise>
+                                                <button class="invoice-action-btn invoice-confirm-paid-btn">Xác nhận đã
+                                                    thanh toán
+                                                </button>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>
@@ -655,33 +708,40 @@
                                 <table id="members-table"
                                        class="mt-4 mb-4 table table-hover table-bordered table-striped members-table">
                                     <thead class="table-dark">
-                                    <tr class="text-center">
+                                    <tr>
                                         <th class="mobile-display-none">STT</th>
                                         <th>Họ và tên</th>
-                                        <th class="mobile-display-none" style="width: 76px;">Giới tính</th>
-                                        <th class="mobile-display-none tablet-display-none">Địa chỉ</th>
+                                        <th class="mobile-display-none">Giới tính</th>
+                                        <th class="mobile-display-none">Địa chỉ</th>
                                         <th class="mobile-display-none">Số điện thoại</th>
-                                        <th class="table-col-action"></th>
+                                        <th>Hành động</th>
                                     </tr>
                                     </thead>
                                     <tbody class="table-light">
-                                    <tr>
-                                        <td class="mobile-display-none">1</td>
-                                        <td>Hoàng Đăng Khoa</td>
-                                        <td class="mobile-display-none">Nam</td>
-                                        <td class="mobile-display-none tablet-display-none">999 Nguyễn Văn Linh,
-                                            Quận 7, TP. Hồ Chí
-                                            Minh</td>
-                                        <td class="mobile-display-none">05123575923</td>
-                                        <td class="members-detail-actions">
-                                            <!-- member detail link -->
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <button class="member-detail-btn">Chi tiết</button>
+                                    <c:set var="count" value="0"></c:set>
+                                    <c:forEach var="roommateList" items="${requestScope.roommateInfo}">
+                                        <tr>
+                                            <c:set var="count" value="${count+1}"/>
+                                            <td class="mobile-display-none">${count}</td>
+                                            <td>${roommateList.information.fullname}</td>
+                                            <td class="mobile-display-none">
+                                                <c:choose>
+                                                    <c:when test="${roommateList.information.sex eq 1}">Nam</c:when>
+                                                    <c:otherwise>Nữ</c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                            <td class="mobile-display-none">${roommateList.information.address}</td>
+                                            <td class="mobile-display-none">${roommateList.information.phone}</td>
+                                            <td class="members-detail-actions">
+                                                <!-- member detail link -->
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <button class="member-detail-btn">Chi tiết</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -694,7 +754,7 @@
                                 <div class="account-header">
                                     Tài khoản truy cập
                                 </div>
-                                <div class="account-username">Tên tài khoản: <span>Ahihi</span></div>
+                                <div class="account-username">Tên tài khoản: <span>${requestScope.userNameRenterRoom}</span></div>
                                 <div class="account-action">
                                     <a href="" class="account-reset-password">Đặt lại mật khẩu</a>
                                 </div>
@@ -713,33 +773,23 @@
                                     <div class="infrastructure-title-status">Trạng thái</div>
                                 </div>
                                 <!-- Toilet -->
-                                <div class="infrastructure-group">
-                                    <div class="infrastructure-name border-right">Nhà vệ sinh:</div>
-                                    <div class="infrastructure-quantity border-right">1</div>
-                                    <div class="infrastructure-unit border-right">cái</div>
-                                    <div class="infrastructure-status">Còn sử dụng</div>
-                                </div>
-                                <!-- Window -->
-                                <div class="infrastructure-group">
-                                    <div class="infrastructure-name border-right">Cửa sổ:</div>
-                                    <div class="infrastructure-quantity border-right">1</div>
-                                    <div class="infrastructure-unit border-right">cái</div>
-                                    <div class="infrastructure-status">Còn sử dụng</div>
-                                </div>
-                                <!-- Door -->
-                                <div class="infrastructure-group">
-                                    <div class="infrastructure-name border-right">Cửa ra vào:</div>
-                                    <div class="infrastructure-quantity border-right">1</div>
-                                    <div class="infrastructure-unit border-right">cái</div>
-                                    <div class="infrastructure-status">Còn sử dụng</div>
-                                </div>
-                                <!-- Air condition -->
-                                <div class="infrastructure-group border-bottom mb-4">
-                                    <div class="infrastructure-name border-right">Máy lạnh:</div>
-                                    <div class="infrastructure-quantity border-right">1</div>
-                                    <div class="infrastructure-unit border-right">cái</div>
-                                    <div class="infrastructure-status broken">Hư hỏng</div>
-                                </div>
+                                <c:forEach var="infrastructures" items="${requestScope.infrastructures}">
+                                    <div class="infrastructure-group">
+                                        <div class="infrastructure-name border-right">${infrastructures.name}</div>
+                                        <div class="infrastructure-quantity border-right">${infrastructures.quantity}</div>
+                                        <div class="infrastructure-unit border-right">cái</div>
+                                        <div class="infrastructure-status">
+                                            <c:choose>
+                                                <c:when test="${infrastructures.status eq 1}">
+                                                    Còn sử dụng
+                                                </c:when>
+                                                <c:otherwise>
+                                                    Hư hỏng
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </div>
+                                </c:forEach>
                                 <div class="infrastructure-actions">
                                     <button class="infrastructure-btn update-btn">Cập nhật</button>
                                     <button class="infrastructure-btn add-btn">Thêm cở sở vật chất</button>
@@ -792,9 +842,9 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <!-- JQuery -->
-<script src="../../assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
+<script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <!-- Link your script here -->
-<script src="../../assets/js/handle-main-navbar.js"></script>
+<script src="./assets/js/handle-main-navbar.js"></script>
 </body>
 
 </html>

@@ -81,7 +81,7 @@ public class RoomDAO {
                 pst.setInt(1, hostelID);
 
                 ResultSet rs = pst.executeQuery();
-                if (rs!= null && rs.next()) {
+                if (rs != null && rs.next()) {
                     number = rs.getInt("quantity");
                 }
             }
@@ -128,7 +128,7 @@ public class RoomDAO {
                 pst.setInt(1, hostelID);
 
                 ResultSet rs = pst.executeQuery();
-                if (rs!= null) {
+                if (rs != null) {
                     while (rs.next()) {
                         int serviceID = rs.getInt("service_id");
                         String serviceName = rs.getString("service_name");
@@ -630,14 +630,54 @@ public class RoomDAO {
         }
         return roommateInformationArrayList;
     }
+    public static Integer getQuantityMember(int roomID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        int quantity = 0;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT COUNT(roomate_info_id) as 'quantityMember'\n" +
+                        "FROM RoomateInformations\n" +
+                        "WHERE account_renter_id = (SELECT TOP 1 account_id\n" +
+                        "\t\t\t\t\t\t\tFROM Accounts\n" +
+                        "\t\t\t\t\t\t\tWHERE room_id = ?\n" +
+                        "\t\t\t\t\t\t\tAND role = 2\n" +
+                        "\t\t\t\t\t\t\tAND status = 1\n" +
+                        "\t\t\t\t\t\t\tORDER BY create_date DESC)";
 
-    public static boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic,
-                                     int restroomQuantity, int restRoomStatus,
-                                     int windowQuantity, int windowsStatus,
-                                     int doorsQuantity, int doorStatus,
-                                     int airConditionQuantity, int airConditionStatus
-                                     )
-    {
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    quantity = rs.getInt("quantityMember");
+                }
+            }
+            cn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return quantity;
+    }
+
+    public static boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic
+    ) {
         Connection cn = null;
         PreparedStatement pst = null;
         Boolean isSuccess = false;
@@ -645,38 +685,9 @@ public class RoomDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
 
-                String sqlUpdateWindowsRoom = "UPDATE InfrastructuresRoom\n" +
-                        "SET quantity = ?, status = ?\n" +
-                        "WHERE room_id = ?\n" +
-                        "AND id_infrastructure_item = (SELECT id_infrastructure_item \n" +
-                        "\t\t\t\t\t\t\tFROM InfrastructureItem \n" +
-                        "\t\t\t\t\t\t\tWHERE infrastructure_name = N'Cửa sổ')";
-
-                String sqlUpdateDoorsRoom = "UPDATE InfrastructuresRoom\n" +
-                        "SET quantity = ?, status = ?\n" +
-                        "WHERE room_id = ?\n" +
-                        "AND id_infrastructure_item = (SELECT id_infrastructure_item \n" +
-                        "\t\t\t\t\t\t\tFROM InfrastructureItem \n" +
-                        "\t\t\t\t\t\t\tWHERE infrastructure_name = N'Cửa ra vào')";
-
-                String sqlUpdateAirConditionRoom = "UPDATE InfrastructuresRoom\n" +
-                        "SET quantity = ?, status = ?\n" +
-                        "WHERE room_id = ?\n" +
-                        "AND id_infrastructure_item = (SELECT id_infrastructure_item \n" +
-                        "\t\t\t\t\t\t\tFROM InfrastructureItem \n" +
-                        "\t\t\t\t\t\t\tWHERE infrastructure_name = N'Máy lạnh')";
-
-
                 String sqlUpdateRoom = "UPDATE Rooms\n" +
                         "SET room_number = ?, capacity = ?, room_area = ?, has_attic = ?\n" +
                         "WHERE room_id = ?";
-
-                String sqlUpdateRestRoom = "UPDATE InfrastructuresRoom\n" +
-                        "SET quantity = ?, status = ?\n" +
-                        "WHERE room_id = ?\n" +
-                        "AND id_infrastructure_item = (SELECT id_infrastructure_item \n" +
-                        "\t\t\t\t\t\t\tFROM InfrastructureItem \n" +
-                        "\t\t\t\t\t\t\tWHERE infrastructure_name = N'Nhà vệ sinh')";
 
                 pst = cn.prepareStatement(sqlUpdateRoom);
                 pst.setInt(1, roomNumber);
@@ -689,47 +700,8 @@ public class RoomDAO {
                 if (rows != 1) {
                     cn.rollback();
                 } else {
+                    isSuccess = true;
                     cn.commit();
-                    pst = cn.prepareStatement(sqlUpdateRestRoom);
-                    pst.setInt(1, restroomQuantity);
-                    pst.setInt(2, restRoomStatus);
-                    pst.setInt(3, roomID);
-                    int updateRestroom = pst.executeUpdate();
-                    if (updateRestroom != 1) {
-                        cn.rollback();
-                    } else {
-                        cn.commit();
-                        pst = cn.prepareStatement(sqlUpdateWindowsRoom);
-                        pst.setInt(1, windowQuantity);
-                        pst.setInt(2, windowsStatus);
-                        pst.setInt(3, roomID);
-                        int updateWindows = pst.executeUpdate();
-                        if (updateWindows != 1) {
-                            cn.rollback();
-                        } else {
-                            cn.commit();
-                            pst = cn.prepareStatement(sqlUpdateDoorsRoom);
-                            pst.setInt(1, doorsQuantity);
-                            pst.setInt(2, doorStatus);
-                            pst.setInt(3, roomID);
-                            int updateDoors = pst.executeUpdate();
-                            if (updateDoors != 1) {
-                                cn.rollback();
-                            } else {
-                                cn.commit();
-                                pst = cn.prepareStatement(sqlUpdateAirConditionRoom);
-                                pst.setInt(1, airConditionQuantity);
-                                pst.setInt(2, airConditionStatus);
-                                pst.setInt(3, roomID);
-                                int updateAirCondition = pst.executeUpdate();
-                                if (updateAirCondition != 1) {
-                                    cn.rollback();
-                                } else {
-                                    cn.commit();
-                                }
-                            }
-                        }
-                    }
                 }
             }
             cn.close();

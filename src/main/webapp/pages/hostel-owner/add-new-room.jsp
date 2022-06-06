@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -6,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="../../assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
 
     <!-- Title -->
     <title>Thêm phòng</title>
@@ -16,10 +17,10 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/css/core_style/core.css">
+    <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
     <!-- Link your CSS here -->
-    <link rel="stylesheet" href="../../assets/css/hostel_owner_style/add-new-room-style/style.css">
+    <link rel="stylesheet" href="./assets/css/hostel_owner_style/add-new-room-style/style.css">
 
 </head>
 
@@ -31,7 +32,7 @@
             <div class="col-3 col-lg-3 col-xl-3 col-xxl-2">
                 <div class="main-nav__logo">
                     <a href="" class="main-nav__logo-link">
-                        <img class="main-nav__logo-img" src="../../assets/images/logos/logo.png" alt="Logo">
+                        <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
                     </a>
                 </div>
             </div>
@@ -52,7 +53,7 @@
                             <span class="infor__role">Chủ phòng trọ</span>
                         </div>
                         <div class="profile__avatar">
-                            <img class="avatar__img" src="../../assets/images/avatars/user-avatar.jpg"
+                            <img class="avatar__img" src="./assets/images/avatars/user-avatar.jpg"
                                  alt="User avatar image">
                         </div>
                     </div>
@@ -202,7 +203,7 @@
             <div id="nav-profile-dropdown" class="profile__actions">
                 <a href="" class="action__view-profile-link">
                     <div class="action__image">
-                        <img src="../../assets/images/avatars/user-avatar.jpg" alt="">
+                        <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                     </div>
                     <div class="action__content">
                         <div class="title">Nguyễn Lâm Thảo Tâm</div>
@@ -267,9 +268,9 @@
             <!-- Content head bar -->
             <div class="content-bar pt-5">
                 <div class="content-history">
-                    <a href="" class="history-link">Danh sách khu trọ</a>
+                    <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a href="" class="history-link">Nova Land</a>
+                    <a href="detailHostel?hostelID=${requestScope.hostel.hostelID}" class="history-link">${requestScope.hostel.hostelName}</a>
                     <i class="fa-solid fa-chevron-right"></i>
                     <div class="current">Thêm phòng</div>
                 </div>
@@ -278,7 +279,7 @@
             <div class="row mb-5">
                 <div class="content-body col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-6 m-auto">
                     <!-- Form body -->
-                    <form action="" method="post" class="custom-form add-room-form" id="add-hostel-form">
+                    <form action="addRoom" method="post" class="custom-form add-room-form" id="add-hostel-form">
                         <!-- Title -->
                         <div class="form-header">
                             <div class="form-title main-title">Thêm phòng mới</div>
@@ -333,10 +334,10 @@
                                 <label for="room-floor" class="form-label fill-label">
                                     Gác <span>*</span>
                                 </label>
-                                <select id="room-floor" type="number" class="form-control fill-input"
-                                        name="room-attic">
-                                    <option value="1">Có</option>
-                                    <option value="2">Không</option>
+                                <select id="room-floor" class="form-control fill-input"
+                                        name="room-floor">
+                                    <option value="1" selected>Có</option>
+                                    <option value="0">Không</option>
                                 </select>
                                 <span class="fill-unit"></span>
                             </div>
@@ -354,9 +355,9 @@
                                     <input id="room-toilet" name="room-toilet" value="1" type="number"
                                            class="form-control fill-input">
                                     <span class="fill-unit">cái</span>
-                                    <select name="" class="fill-status">
-                                        <option value="true">Còn sử dụng</option>
-                                        <option value="false">Hư hỏng</option>
+                                    <select name="room-toilet-status" class="fill-status">
+                                        <option value="1" selected>Còn sử dụng</option>
+                                        <option value="0">Hư hỏng</option>
                                     </select>
                                 </div>
                                 <span class="form-message"></span>
@@ -368,9 +369,9 @@
                                     <input id="room-window" name="room-window" value="1" type="number"
                                            class="form-control fill-input">
                                     <span class="fill-unit">cái</span>
-                                    <select name="" class="fill-status">
-                                        <option value="true">Còn sử dụng</option>
-                                        <option value="false">Hư hỏng</option>
+                                    <select name="room-window-status" class="fill-status">
+                                        <option value="1" selected>Còn sử dụng</option>
+                                        <option value="0">Hư hỏng</option>
                                     </select>
                                 </div>
                                 <span class="form-message"></span>
@@ -382,9 +383,9 @@
                                     <input id="room-door" name="room-door" value="1" type="number"
                                            class="form-control fill-input">
                                     <span class="fill-unit">cái</span>
-                                    <select name="" class="fill-status">
-                                        <option value="true">Còn sử dụng</option>
-                                        <option value="false">Hư hỏng</option>
+                                    <select name="room-door-status" class="fill-status">
+                                        <option value="1">Còn sử dụng</option>
+                                        <option value="0">Hư hỏng</option>
                                     </select>
                                 </div>
                                 <span class="form-message"></span>
@@ -396,9 +397,9 @@
                                     <input id="room-air-conditioner" name="room-air-conditioner" value="1"
                                            type="number" class="form-control fill-input">
                                     <span class="fill-unit">cái</span>
-                                    <select name="" class="fill-status">
-                                        <option value="true">Còn sử dụng</option>
-                                        <option value="false">Hư hỏng</option>
+                                    <select name="room-air-conditioner-status" class="fill-status">
+                                        <option value="1" selected>Còn sử dụng</option>
+                                        <option value="0">Hư hỏng</option>
                                     </select>
                                 </div>
                                 <span class="form-message"></span>
@@ -408,6 +409,7 @@
                         <!-- Action -->
                         <div class="add-room-action">
                             <a href="#" class="form-submit">Hủy bỏ</a>
+                            <input type="hidden" name="hostelID" value="${requestScope.hostel.hostelID}">
                             <button class="form-submit">Tạo phòng</button>
                         </div>
                     </form>
@@ -435,12 +437,12 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <!-- Jquery -->
-<script src="../../assets/js/jquery-3.5.1.min.js"></script>
+<script src="./assets/js/jquery-3.5.1.min.js"></script>
 <!-- Axios -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- Link your script here -->
-<script src="../../assets/js/handle-main-navbar.js"></script>
-<script src="../../assets/js/valid-form.js"></script>
+<script src="./assets/js/handle-main-navbar.js"></script>
+<script src="./assets/js/valid-form.js"></script>
 <script>
 
     Validator({

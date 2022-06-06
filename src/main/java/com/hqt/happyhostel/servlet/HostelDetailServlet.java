@@ -22,10 +22,13 @@ public class HostelDetailServlet extends HttpServlet {
             Hostel hostel = new HostelDAO().getHostelById(hostelId);
             ArrayList<Room> rooms = RoomDAO.getListRoomByHostelID(hostelId);
             int numberRoom = RoomDAO.getNumberRoomSpecificHostel(hostelId);
+
             ArrayList<ServiceInfo> serviceList = RoomDAO.getServicesOfHostel(hostelId);
             if (hostel != null) {
                 url = "HostelDetailPage";
                 request.setAttribute("hostel", hostel);
+                HttpSession session = request.getSession(true);
+                session.setAttribute("hostel", hostel);
                 request.setAttribute("roomList", rooms);
                 request.setAttribute("roomQuantity", numberRoom);
                 request.setAttribute("serviceInfo", serviceList);

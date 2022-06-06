@@ -293,7 +293,7 @@
                             Thêm dịch vụ
                         </button>
                         <!-- Add room button -->
-                        <a href="./add-new-room.html" class="hostel-actions__btn hostel-actions__btn-room">
+                        <a href="addRoom?hostelID=${hostelInformation.hostelID}" class="hostel-actions__btn hostel-actions__btn-room">
                             Thêm phòng
                         </a>
                     </div>
@@ -313,7 +313,7 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Tên</th>
-                                        <th>Số lượng thành viên</th>
+                                        <th>Số lượng thành viên tối đa</th>
                                         <th>Hành động</th>
                                     </tr>
                                     </thead>
@@ -324,10 +324,10 @@
                                         <tr>
                                             <td>${count}</td>
                                             <td>${room.roomNumber}</td>
-                                            <td>?/${room.capacity}</td>
+                                            <td>${room.capacity}</td>
                                             <td>
                                                 <!-- Room detail link -->
-                                                <a href="./room-detail.html" class="room-detail-link">Chi tiết</a>
+                                                <a href="roomDetail?roomID=${room.roomId}" class="room-detail-link">Chi tiết</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
