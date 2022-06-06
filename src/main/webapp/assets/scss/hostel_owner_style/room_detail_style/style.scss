@@ -18,7 +18,6 @@
 // Room Header
 .room-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
 }
 
@@ -27,11 +26,14 @@
   line-height: 2.8rem;
   font-weight: 700;
   color: #ff0000;
+  width: 150px;
 }
 
 .room-actions {
+  flex: 1;
   display: flex;
   align-items: center;
+  justify-content: end;
 
   .action-calculate-btn,
   .action-update-btn,
@@ -296,8 +298,7 @@
 }
 
 .members-detail-actions {
-  .member-detail-btn,
-  .member-update-btn {
+  .member-detail-btn {
     font-size: 1.6rem;
     line-height: 1.6rem;
     width: 100px;
@@ -314,11 +315,6 @@
 
   .member-detail-btn {
     background-color: var(--primary-color);
-    margin-bottom: 6px;
-  }
-
-  .member-update-btn {
-    background-color: #ff0000;
   }
 }
 
@@ -378,7 +374,6 @@
   font-weight: 600;
   color: #c70a80;
   padding-bottom: 6px;
-  border-bottom: 0.5px solid #ccc;
 }
 
 .infrastructure-group,
@@ -447,9 +442,21 @@
   width: 100px;
 }
 
+.infrastructure-actions {
+  display: flex;
+  justify-content: space-between;
+
+  .update-btn {
+    background-color: #a64b2a;
+  }
+
+  .add-btn {
+    background-color: #36ae7c;
+  }
+}
+
 .infrastructure-btn {
   padding: 6px 8px;
-  background-color: #a64b2a;
   color: var(--white-color);
   border-radius: 4px;
 
@@ -539,5 +546,18 @@
 
   .mobile-display-none {
     display: none;
+  }
+}
+
+@media (max-width: 468px) {
+  .room-actions {
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
+  }
+
+  .action-update-btn {
+    margin-right: 0 !important;
+    margin-bottom: 8px;
   }
 }
