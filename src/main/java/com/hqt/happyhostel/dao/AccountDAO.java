@@ -98,6 +98,7 @@ public class AccountDAO {
                 pst.setInt(1, accId);
                 ResultSet rs = pst.executeQuery();
                 while (rs != null && rs.next()) {
+                    int roommateID = rs.getInt("roomate_info_id");
                     String fullname = rs.getString("fullname");
                     String email = rs.getString("email");
                     String birthday = rs.getString("birthday");
@@ -108,7 +109,7 @@ public class AccountDAO {
                     String parentName = rs.getString("parent_name");
                     String parentPhone = rs.getString("parent_phone");
 
-                    renterInfo = new RoommateInfo(new Information(fullname, email, birthday, sex, phone, address, cccd), parentName, parentPhone);
+                    renterInfo = new RoommateInfo(roommateID, new Information(fullname, email, birthday, sex, phone, address, cccd), parentName, parentPhone);
                     roommateInfoList.add(renterInfo);
                 }
             }

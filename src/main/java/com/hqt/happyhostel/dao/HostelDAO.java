@@ -15,9 +15,9 @@ public class HostelDAO {
     private static final String INSERT_HOSTEl =
             "INSERT INTO [dbo].[Hostels](owner_account_id, name, address, ward, district, city) values(?, ?, ?, ?, ?, ?)";
     private static final String GET_SERVICE =
-            "SELECT service_id, service_name FROM [dbo].[Services]";
+            "SELECT service_id, service_name, unit FROM [dbo].[Services]";
     private static final String INSERT_SERVICE =
-            "INSERT INTO [dbo].[Services](service_name) values(?)";
+            "INSERT INTO [dbo].[Services](service_name, unit) values(?, ?)";
     private static final String INSERT_HOSTEL_SERVICE =
             "INSERT INTO [dbo].[HostelService](hostel_id, service_id, service_price, valid_date) values(?, ?, ?, ?)";
     private static final String UPDATE_HOSTEL =
@@ -113,7 +113,8 @@ public class HostelDAO {
                 while (rs != null && rs.next()) {
                     int serviceID = rs.getInt("service_id");
                     String serviceName = rs.getString("service_name");
-                    listServices.add(new Services(serviceID, serviceName));
+                    String unit = rs.getString("unit");
+                    listServices.add(new Services(serviceID, serviceName, unit));
                 }
             }
 
@@ -160,21 +161,21 @@ public class HostelDAO {
 
                 ptm.close();
 
-
                 //Insert table Services
                 int index = 0;
                 for (Services ser : services
                 ) {
-                    ptm = cn.prepareStatement(INSERT_SERVICE, Statement.RETURN_GENERATED_KEYS);
-                    ptm.setString(1, ser.getServiceName());
-
-                    check = ptm.executeUpdate() > 0 ? true : false;
-                    rs = ptm.getGeneratedKeys();
-                    int key;
-                    if (rs.next()) {
-                        ser.setServiceID(rs.getInt(1));
-                        key = rs.getInt(1);
-                    }
+//                    ptm = cn.prepareStatement(INSERT_SERVICE, Statement.RETURN_GENERATED_KEYS);
+//                    ptm.setString(1, ser.getServiceName());
+//                    ptm.setString(2, ser.getUnit());
+//
+//                    check = ptm.executeUpdate() > 0 ? true : false;
+//                    rs = ptm.getGeneratedKeys();
+//                    int key;
+//                    if (rs.next()) {
+//                        ser.setServiceID(rs.getInt(1));
+//                        key = rs.getInt(1);
+//                    }
 
                     HostelService hostelService = hostelServices.get(index);
 
@@ -243,4 +244,6 @@ public class HostelDAO {
         }
         return checkUpdate;
     }
+
+
 }

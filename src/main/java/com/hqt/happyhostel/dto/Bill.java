@@ -1,5 +1,4 @@
 package com.hqt.happyhostel.dto;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,9 +6,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoommateInfo {
-    private int roommateID;
-    private Information information;
-    private String parentName;
-    private String parentPhone;
+public class Bill {
+    int billID;
+    int roomID;
+    int totalMoney;
+    String createdDate;
+    String expiredPaymentDate;
+    int status;
+    Payment payment;
 }

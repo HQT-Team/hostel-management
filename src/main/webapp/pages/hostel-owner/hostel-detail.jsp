@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -6,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="../../assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
 
     <!-- Title -->
     <title>Chi tiết khu trọ</title>
@@ -16,10 +19,10 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/css/core_style/core.css">
+    <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
     <!-- Link your CSS here -->
-    <link rel="stylesheet" href="../../assets/css/hostel_owner_style/hostel_detail_style/style.css">
+    <link rel="stylesheet" href="./assets/css/hostel_owner_style/hostel_detail_style/style.css">
 
     <!-- Simple Datatable CSS -->
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
@@ -34,7 +37,7 @@
             <div class="col-3 col-lg-3 col-xl-3 col-xxl-2">
                 <div class="main-nav__logo">
                     <a href="" class="main-nav__logo-link">
-                        <img class="main-nav__logo-img" src="../../assets/images/logos/logo.png" alt="Logo">
+                        <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
                     </a>
                 </div>
             </div>
@@ -55,7 +58,7 @@
                             <span class="infor__role">Chủ phòng trọ</span>
                         </div>
                         <div class="profile__avatar">
-                            <img class="avatar__img" src="../../assets/images/avatars/user-avatar.jpg"
+                            <img class="avatar__img" src="./assets/images/avatars/user-avatar.jpg"
                                  alt="User avatar image">
                         </div>
                     </div>
@@ -205,7 +208,7 @@
             <div id="nav-profile-dropdown" class="profile__actions">
                 <a href="" class="action__view-profile-link">
                     <div class="action__image">
-                        <img src="../../assets/images/avatars/user-avatar.jpg" alt="">
+                        <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                     </div>
                     <div class="action__content">
                         <div class="title">Nguyễn Lâm Thảo Tâm</div>
@@ -266,21 +269,22 @@
         </div>
 
         <!-- Content -->
+        <c:set var="hostelInformation" value="${requestScope.hostel}"/>
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
             <div class="content-bar pt-5">
                 <!-- History link bar -->
                 <div class="content-history">
-                    <a href="./hostel.html" class="history-link">Danh sách khu trọ</a>
+                    <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <div class="current">NovaLand Sky</div>
+                    <div class="current">${hostelInformation.hostelName}</div>
                 </div>
             </div>
             <div class="content-body">
                 <div class="hostel-header">
                     <!-- Hostel information -->
                     <div class="hostel-infor">
-                        <h2 class="hostel-name">NovaLand Sky</h2>
-                        <div class="hostel-address">256 Lê Văn Việt, TP Thủ Đức, TP Hồ Chí Minh</div>
+                        <h2 class="hostel-name">${hostelInformation.hostelName}</h2>
+                        <div class="hostel-address">${hostelInformation.address}, ${hostelInformation.district.split('-')[1]}, ${hostelInformation.city.split('-')[1]}</div>
                     </div>
                     <div class="hostel-actions">
                         <!-- Add infrastructure button -->
@@ -301,7 +305,7 @@
                             <div class="hostel-rooms">
                                 <div class="rooms-header">
                                     <div class="rooms-title">Danh sách phòng</div>
-                                    <div class="rooms-total">Tổng: <span>2</span></div>
+                                    <div class="rooms-total">Tổng: <span>${requestScope.roomQuantity}</span></div>
                                 </div>
                                 <table id="rooms-table"
                                        class="mt-4 mb-4 table table-hover table-bordered table-striped rooms-table">
@@ -314,15 +318,19 @@
                                     </tr>
                                     </thead>
                                     <tbody class="table-light">
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Nova Land</td>
-                                        <td>3 / 4</td>
-                                        <td>
-                                            <!-- Room detail link -->
-                                            <a href="./room-detail.html" class="room-detail-link">Chi tiết</a>
-                                        </td>
-                                    </tr>
+                                    <c:set var="count" value="0"/>
+                                    <c:forEach var="room" items="${requestScope.roomList}">
+                                        <c:set var="count" value="${count+1}"/>
+                                        <tr>
+                                            <td>${count}</td>
+                                            <td>${room.roomNumber}</td>
+                                            <td>?/${room.capacity}</td>
+                                            <td>
+                                                <!-- Room detail link -->
+                                                <a href="./room-detail.html" class="room-detail-link">Chi tiết</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -333,21 +341,16 @@
                                 <div class="services-header">
                                     <div class="service-title">Giá dịch vụ</div>
                                     <button class="service-update-btn" data-bs-toggle="modal"
-                                            data-bs-target="#updateServicesModel">Cập nhật</button>
+                                            data-bs-target="#updateServicesModel">Cập nhật
+                                    </button>
                                 </div>
-                                <div class="services-date">Áp dụng từ: <span>19/03/2022</span></div>
-                                <div class="service-group">
-                                    <div class="service-name">Điện</div>
-                                    <div class="service-price"><span>3500</span> vnđ/KwH</div>
-                                </div>
-                                <div class="service-group">
-                                    <div class="service-name">Nước</div>
-                                    <div class="service-price"><span>15000</span> vnđ/m3</div>
-                                </div>
-                                <div class="service-group">
-                                    <div class="service-name">...</div>
-                                    <div class="service-price"><span>...</span> vnđ/...</div>
-                                </div>
+                                <div class="services-date">Áp dụng từ: <span>${requestScope.serviceInfo[0].validDate}</span></div>
+                                <c:forEach var="serviceList" items="${requestScope.serviceInfo}">
+                                    <div class="service-group">
+                                        <div class="service-name">${serviceList.serviceName}</div>
+                                        <div class="service-price"><span>${serviceList.servicePrice}</span> VNĐ/${serviceList.unit}</div>
+                                    </div>
+                                </c:forEach>
                             </div>
                         </div>
                     </div>
@@ -439,7 +442,8 @@
             <div class="modal-footer updateServicesModel-action">
                 <button type="button" class="btn btn-secondary back-btn" data-bs-dismiss="modal">Quay lại</button>
                 <button data-bs-toggle="modal" data-bs-target="#updateServiceInputModal"
-                        class="btn btn-primary continue-btn">Đã rõ và tiếp tục</button>
+                        class="btn btn-primary continue-btn">Đã rõ và tiếp tục
+                </button>
             </div>
         </div>
     </div>
@@ -834,11 +838,11 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <!-- JQuery -->
-<script src="../../assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
+<script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <!-- Link your script here -->
-<script src="../../assets/js/handle-main-navbar.js"></script>
+<script src="./assets/js/handle-main-navbar.js"></script>
 <!-- Simple Datatable JS -->
-<script src="../../assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script>
     $(document).ready(function () {
         // Initial datatable
