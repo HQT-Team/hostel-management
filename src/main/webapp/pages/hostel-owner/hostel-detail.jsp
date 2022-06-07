@@ -136,6 +136,7 @@
 <!-- Footer -->
 <%@include file="components/footer.jsp"%>
 
+
 <!-- Add service modal -->
 <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel"
      aria-hidden="true">
