@@ -23,13 +23,14 @@ public class AccountDAO {
             String createdate = rs.getString("create_date");
             int status = rs.getInt("status");
             int role = rs.getInt("role");
+            int roomId = rs.getInt("room_id");
             if (role == 2) {//Renter
                 roommateInfoList = getRoommateInformationById(accId);
                 accInf = getAccountInformationById(accId);
-                acc = new Account(accId, username, password, createdate, status, role, accInf, roommateInfoList);
+                acc = new Account(accId, username, password, createdate, status, role, roomId, accInf, roommateInfoList);
             } else {
                 accInf = getAccountInformationById(accId);
-                acc = new Account(accId, username, password, createdate, status, role, accInf, null);
+                acc = new Account(accId, username, password, createdate, status, role, -1, accInf, null);
             }
 
         } catch (Exception e) {
