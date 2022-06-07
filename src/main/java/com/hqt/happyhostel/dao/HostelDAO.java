@@ -35,6 +35,8 @@ public class HostelDAO {
     private static final String GET_HOSTEL_BY_ID =
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE hostel_id = ?";
 
+    private static final String GET_HOSTEL_BY_OWNER_ID =
+            "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE owner_account_id = ?";
     public Hostel getHostelById(int hostelId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -71,7 +73,43 @@ public class HostelDAO {
         }
         return hostel;
     }
-
+    public List<Hostel> getHostelByOwnerId(int hostelOwnerAccountID) throws SQLException {
+        List<Hostel> listHostels = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Hostel hostel = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_HOSTEL_BY_OWNER_ID);
+                pst.setInt(1, hostelOwnerAccountID);
+                rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    int hostelID = rs.getInt("hostel_id");
+                    String name = rs.getString("name");
+                    String address = rs.getString("address");
+                    String ward = rs.getString("ward");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    listHostels.add(new Hostel(hostelID, hostelOwnerAccountID, name, address, ward, district, city));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return listHostels;
+    }
     public List<Hostel> getListHostels() throws SQLException {
         List<Hostel> listHostels = new ArrayList<>();
         Connection cn = null;

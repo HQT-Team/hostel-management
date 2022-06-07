@@ -78,7 +78,7 @@
                         <div class="form-group">
                             <div class="form-wrapper">
                                 <label for="room-name" class="form-label">Tên phòng: </label>
-                                <input id="room-name" name="room-name" type="text" class="form-control"
+                                <input id="room-name" name="room-name" type="number" class="form-control"
                                        placeholder="Phòng số ...">
                             </div>
                             <span class="form-message"></span>
@@ -215,8 +215,16 @@
         rules: [
             Validator.isRequired('#room-quantity', 'Vui lòng nhập số lượng phòng cần tạo'),
             Validator.minNumber('#room-quantity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
+            Validator.maxNumber('#room-quantity', 50, 'Vui lòng nhập số lượng dưới 50'),
             Validator.isRequired('#room-capacity', 'Vui lòng nhập số lượng thành viên tối đa'),
             Validator.minNumber('#room-capacity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
+            Validator.maxNumber('#room-capacity', 10, 'Vui lòng nhập số lượng dưới 10'),
+            Validator.maxNumber('#room-area', 1000, 'Vui lòng nhập giá trị dưới 1000'),
+            Validator.minNumber('#room-area', 1, 'Vui lòng nhập giá trị tối thiểu là 1'),
+            Validator.minNumber('#room-toilet', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
+            Validator.minNumber('#room-window', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
+            Validator.minNumber('#room-door', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
+            Validator.minNumber('#room-air-conditioner', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
         ]
     });
 </script>
