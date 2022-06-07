@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @WebServlet(name = "ShowListOwnerAccountServlet", value = "/ShowListOwnerAccountServlet")
 public class ShowListOwnerAccountServlet extends HttpServlet {
-    private static final String url = "AdminPage";
+    private static final String url = "show-list-account";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -27,6 +27,5 @@ public class ShowListOwnerAccountServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }
