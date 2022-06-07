@@ -117,15 +117,17 @@ public class RoomDAO {
 
                 String sql = "SELECT HostelService.service_id as 'service_id', Services.service_name as 'service_name', HostelService.valid_date as 'valid_date', HostelService.service_price as 'service_price', Services.unit as 'unit'\n" +
                         "FROM HostelService, Services\n" +
-                        "WHERE HostelService.service_id = Services.service_id\n" +
+                        "WHERE hostel_id = ?\n" +
+                        "AND HostelService.service_id = Services.service_id\n" +
                         "AND valid_date IN (SELECT TOP 1 valid_date\n" +
-                        "\t\t\t\tFROM HostelService\n" +
-                        "\t\t\t\tWHERE hostel_id = ?\n" +
-                        "\t\t\t\tAND valid_date < GETDATE()\n" +
-                        "\t\t\t\tORDER BY valid_date DESC)";
+                        "FROM HostelService\n" +
+                        "WHERE hostel_id = ?\n" +
+                        "AND valid_date < GETDATE()\n" +
+                        "ORDER BY valid_date DESC)";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelID);
+                pst.setInt(2, hostelID);
 
                 ResultSet rs = pst.executeQuery();
                 if (rs != null) {
