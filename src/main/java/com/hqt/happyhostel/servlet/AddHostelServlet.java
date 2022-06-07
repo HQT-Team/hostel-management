@@ -40,7 +40,7 @@ public class AddHostelServlet extends HttpServlet {
             HttpSession session = req.getSession();
             acc = (Account) session.getAttribute("USER");
             HostelDAO dao = new HostelDAO();
-            servicesList = dao.getListServices();
+//            servicesList = dao.getListServices();
 
             int accountId = acc.getAccId();
             String hostelName = req.getParameter("hostel-name");
@@ -48,15 +48,6 @@ public class AddHostelServlet extends HttpServlet {
             String hostelProvince = req.getParameter("hostel-province");
             String hostelDistrict = req.getParameter("hostel-district");
             String hostelWard = req.getParameter("hostel-ward");
-
-            if (servicesList.isEmpty()) {
-                servicesList.add(new Services("Điện", "KwH"));
-                servicesList.add(new Services("Nước", "cm3"));
-                servicesList.add(new Services("Mạng Internet", "phòng"));
-                servicesList.add(new Services("Phí quản lý", "phòng"));
-                servicesList.add(new Services("Phí giữ xe", "chiếc"));
-                servicesList.add(new Services("Giặt giũ", "phòng"));
-            }
 
             //electric
             double electricityPrice = Double.parseDouble(req.getParameter("hostel-electric"));
@@ -83,7 +74,7 @@ public class AddHostelServlet extends HttpServlet {
             hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(cleaningPrice).build());
 
             Hostel hostel = new Hostel(accountId, hostelName, hostelAddress, hostelWard, hostelDistrict, hostelProvince);
-            boolean checkInsert = dao.addHostel(hostel, servicesList, hostelServiceList);
+            boolean checkInsert = dao.addHostel(hostel, hostelServiceList);
 
             if (checkInsert) {
                 url = SUCCESS;

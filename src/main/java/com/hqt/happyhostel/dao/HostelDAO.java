@@ -14,12 +14,22 @@ public class HostelDAO {
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels]";
     private static final String INSERT_HOSTEl =
             "INSERT INTO [dbo].[Hostels](owner_account_id, name, address, ward, district, city) values(?, ?, ?, ?, ?, ?)";
+
     private static final String GET_SERVICE =
             "SELECT service_id, service_name, unit FROM [dbo].[Services]";
-    private static final String INSERT_SERVICE =
-            "INSERT INTO [dbo].[Services](service_name, unit) values(?, ?)";
     private static final String INSERT_HOSTEL_SERVICE =
-            "INSERT INTO [dbo].[HostelService](hostel_id, service_id, service_price, valid_date) values(?, ?, ?, ?)";
+            "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Điện'), ?, ?)\n" +
+                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Nước'), ?, ?)\n" +
+                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Wifi'), ?, ?)\n" +
+                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí quản lý'), ?, ?)\n" +
+                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí giữ xe'), ?, ?)\n" +
+                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí vệ sinh'), ?, ?)";;
     private static final String UPDATE_HOSTEL =
             "UPDATE Hostels SET name = ?, address = ?, ward = ?, district = ?, city = ? WHERE hostel_id = ?";
     private static final String GET_HOSTEL_BY_ID =
@@ -134,7 +144,7 @@ public class HostelDAO {
         return listServices;
     }
 
-    public boolean addHostel(Hostel hostel, List<Services> services, List<HostelService> hostelServices) throws SQLException {
+    public boolean addHostel(Hostel hostel, List<HostelService> hostelServices) throws SQLException {
         boolean check = false;
         Connection cn = null;
         PreparedStatement ptm = null;
@@ -161,33 +171,20 @@ public class HostelDAO {
 
                 ptm.close();
 
-                //Insert table Services
-                int index = 0;
-                for (Services ser : services
+                int c = 0;
+                ptm = cn.prepareStatement(INSERT_HOSTEL_SERVICE);
+                for (HostelService ser: hostelServices
                 ) {
-//                    ptm = cn.prepareStatement(INSERT_SERVICE, Statement.RETURN_GENERATED_KEYS);
-//                    ptm.setString(1, ser.getServiceName());
-//                    ptm.setString(2, ser.getUnit());
-//
-//                    check = ptm.executeUpdate() > 0 ? true : false;
-//                    rs = ptm.getGeneratedKeys();
-//                    int key;
-//                    if (rs.next()) {
-//                        ser.setServiceID(rs.getInt(1));
-//                        key = rs.getInt(1);
-//                    }
-
-                    HostelService hostelService = hostelServices.get(index);
-
-                    ptm = cn.prepareStatement(INSERT_HOSTEL_SERVICE);
-                    ptm.setInt(1, hostel.getHostelID());
-                    ptm.setInt(2, ser.getServiceID());
-                    ptm.setDouble(3, hostelService.getServicePrice());
-                    ptm.setString(4, hostelService.getValidDate());
-                    check = ptm.executeUpdate() > 0 ? true : false;
-                    ptm.close();
-                    index++;
+                    c++;
+                    ptm.setInt(c, hostel.getHostelID());
+                    c++;
+                    ptm.setDouble(c, ser.getServicePrice());
+                    c++;
+                    ptm.setString(c, ser.getValidDate());
+                    //index++;
                 }
+                check = ptm.executeUpdate() > 0 ? true : false;
+
             }
             if (!check) {
                 cn.rollback();
