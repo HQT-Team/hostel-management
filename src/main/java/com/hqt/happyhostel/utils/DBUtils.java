@@ -7,10 +7,10 @@ public class DBUtils {
     public static Connection makeConnection() throws Exception {
         Connection cn = null;
         String IP = "localhost";
-//        String instanceName = "CUTEPHOMAIQUE";
-//        String pwd = "OIUOiu12";
-        String instanceName = "DESKTOP-FDKP91N\\SQLEXPRESS";
-        String pwd = "sa123";
+        String instanceName = "CUTEPHOMAIQUE";
+        String pwd = "OIUOiu12";
+//        String instanceName = "DESKTOP-FDKP91N\\SQLEXPRESS";
+//        String pwd = "sa123";
         //String instanceName="KHOAHD7621\\KHOAHD";
        // String pwd="0792596763";
 //        String instanceName="TTPHATS\\TTPHATS";

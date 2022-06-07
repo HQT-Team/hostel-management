@@ -39,9 +39,7 @@
     <div class="content-left col-sm-3">
         <a href=""><button style="color: #ffffff; background-color: #2f4eff;">Trang Chủ</button></a>
         <br>
-        <form action="list-owner-account">
-            <button type="submit">Tài Khoản</button>
-        </form>
+        <a href="list-owner-account">Tài Khoản</a>
 
     </div>
     <div class="content-right col-sm-9">

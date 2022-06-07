@@ -19,6 +19,7 @@ public class Account {
     private String createDate;
     private int status;
     private int role;
+    private int roomId;
     private AccountInfo accountInfo;
     private ArrayList<RoommateInfo> roommateInfo;
 }

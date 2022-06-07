@@ -15,7 +15,6 @@ public class ShowListOwnerAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-
             ArrayList<Account> list = AccountDAO.GetAllByRole(1);
             request.setAttribute("OWNER_LIST", list);
         }catch (Exception e){
@@ -27,5 +26,13 @@ public class ShowListOwnerAccountServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            ArrayList<Account> list = AccountDAO.GetAllByRole(1);
+            request.setAttribute("OWNER_LIST", list);
+        }catch (Exception e){
+            log("Error at DashboardServlet: " + e.toString());
+        }finally {
+            request.getRequestDispatcher(url).forward(request,response);
+        }
     }
 }
