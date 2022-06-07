@@ -31,8 +31,8 @@ public class UpdateRoomServlet extends HttpServlet {
             Boolean isSuccessUpdate = RoomDAO.updateRoom(roomID, roomNumber, capacity, roomArea, attic);
 
             if (isSuccessUpdate) {
-//                url = "roomDetail?roomID=" + roomID;
-//                request.setAttribute("roomID", roomID);
+                url = "roomDetail";
+                request.setAttribute("roomID", roomID);
                 request.setAttribute("updateSuccess", true);
             } else {
                 request.setAttribute("updateSuccess", false);
