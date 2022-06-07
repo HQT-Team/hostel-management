@@ -181,7 +181,7 @@
                         <div class="spacer"></div>
                         <!-- Action -->
                         <div class="add-room-action">
-                            <a href="#" class="form-submit">Hủy bỏ</a>
+                            <a href="detailHostel?hostelID=${requestScope.hostel.hostelID}" class="form-submit">Hủy bỏ</a>
                             <input type="hidden" name="hostelID" value="${requestScope.hostel.hostelID}">
                             <button class="form-submit">Tạo phòng</button>
                         </div>
