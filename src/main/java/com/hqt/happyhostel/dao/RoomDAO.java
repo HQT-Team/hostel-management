@@ -251,8 +251,9 @@ public class RoomDAO {
             if (cn != null) {
 
                 String sql = "DECLARE @room_number int = (SELECT TOP 1 room_number\n" +
-                        "\t\t\t\t\t\t\tFROM dbo.Rooms\n" +
-                        "\t\t\t\t\t\t\tORDER BY room_number DESC)\n" +
+                        "FROM dbo.Rooms\n" +
+                        "WHERE hostel_id = ?\n" +
+                        "ORDER BY room_number DESC)\n" +
                         "IF @room_number is NULL\n" +
                         "\tSET @room_number = 1\n" +
                         "ELSE\n" +
@@ -271,22 +272,23 @@ public class RoomDAO {
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelID);
-                pst.setInt(2, capacity);
-                pst.setDouble(3, roomArea);
-                pst.setInt(4, attic);
-                pst.setInt(5, roomStatus);
+                pst.setInt(2, hostelID);
+                pst.setInt(3, capacity);
+                pst.setDouble(4, roomArea);
+                pst.setInt(5, attic);
+                pst.setInt(6, roomStatus);
 
-                pst.setInt(6, quantity1);
-                pst.setInt(7, status1);
+                pst.setInt(7, quantity1);
+                pst.setInt(8, status1);
 
-                pst.setInt(8, quantity2);
-                pst.setInt(9, status2);
+                pst.setInt(9, quantity2);
+                pst.setInt(10, status2);
 
-                pst.setInt(10, quantity3);
-                pst.setInt(11, status3);
+                pst.setInt(11, quantity3);
+                pst.setInt(12, status3);
 
-                pst.setInt(12, quantity4);
-                pst.setInt(13, status4);
+                pst.setInt(13, quantity4);
+                pst.setInt(14, status4);
 
                 int rows = pst.executeUpdate();
                 if (rows != 0) {
