@@ -23,6 +23,12 @@ public class HostelDetailServlet extends HttpServlet {
             ArrayList<Room> rooms = RoomDAO.getListRoomByHostelID(hostelId);
             int numberRoom = RoomDAO.getNumberRoomSpecificHostel(hostelId);
 
+            ArrayList<Integer> quantityMembers = new ArrayList<>();
+            for (Room roomItem: rooms) {
+                int quantityMember = RoomDAO.getQuantityMember(roomItem.getRoomId());
+                quantityMembers.add(quantityMember);
+            }
+
             ArrayList<ServiceInfo> serviceList = RoomDAO.getServicesOfHostel(hostelId);
             if (hostel != null) {
                 url = "HostelDetailPage";
@@ -32,6 +38,7 @@ public class HostelDetailServlet extends HttpServlet {
                 request.setAttribute("roomList", rooms);
                 request.setAttribute("roomQuantity", numberRoom);
                 request.setAttribute("serviceInfo", serviceList);
+                request.setAttribute("quantityMembers", quantityMembers);
             }
         }catch (Exception e){
             log("Error at HostelDetailServlet: " + e.toString());

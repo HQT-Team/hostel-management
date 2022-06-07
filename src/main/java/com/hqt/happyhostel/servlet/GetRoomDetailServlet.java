@@ -34,7 +34,9 @@ public class GetRoomDetailServlet extends HttpServlet {
             request.setAttribute("userNameRenterRoom", username);
             ArrayList<Infrastructures> infrastructures = RoomDAO.getInfrastructures(roomId);
             request.setAttribute("infrastructures", infrastructures);
+
             int quantityMember = RoomDAO.getQuantityMember(roomId);
+
             request.setAttribute("quantityMember", quantityMember);
         } catch (Exception e) {
             e.printStackTrace();

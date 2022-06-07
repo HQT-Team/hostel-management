@@ -301,7 +301,8 @@
                                                     aria-label="Close"></button>
                                         </div>
                                         <!-- Form update room -->
-                                        <form action="updateRoom" method="POST" class="custom-form update-room-infor-form">
+                                        <form action="updateRoom" method="POST"
+                                              class="custom-form update-room-infor-form">
                                             <div class="modal-body">
                                                 <!-- Room number -->
                                                 <div class="form-group">
@@ -314,7 +315,8 @@
                                                         </div>
                                                         <div class="col-6">
                                                             <input type="number" name="room-number"
-                                                                   id="update-room-infor__room-number" value="${requestScope.roomInformation.roomNumber}"
+                                                                   id="update-room-infor__room-number"
+                                                                   value="${requestScope.roomInformation.roomNumber}"
                                                                    class="form-control m-0">
                                                         </div>
                                                     </div>
@@ -331,7 +333,8 @@
                                                         </div>
                                                         <div class="col-6">
                                                             <input type="number" name="room-capacity"
-                                                                   id="update-room-infor__room-capacity" value="${requestScope.roomInformation.capacity}"
+                                                                   id="update-room-infor__room-capacity"
+                                                                   value="${requestScope.roomInformation.capacity}"
                                                                    class="form-control m-0">
                                                         </div>
                                                     </div>
@@ -348,7 +351,8 @@
                                                         </div>
                                                         <div class="col-4">
                                                             <input type="number" name="room-area"
-                                                                   id="update-room-infor__room-area" value="${requestScope.roomInformation.roomArea}"
+                                                                   id="update-room-infor__room-area"
+                                                                   value="${requestScope.roomInformation.roomArea}"
                                                                    class="form-control m-0">
                                                         </div>
                                                         <div class="col-2 text-center">
@@ -377,7 +381,7 @@
                                                                     </c:when>
                                                                     <c:otherwise>
                                                                         <option value="1">Có</option>
-                                                                        <option value="0"selected>Không</option>
+                                                                        <option value="0" selected>Không</option>
                                                                     </c:otherwise>
                                                                 </c:choose>
                                                             </select>
@@ -389,7 +393,8 @@
                                                 <button type="button" class="btn btn-danger"
                                                         data-bs-dismiss="modal">Hủy bỏ
                                                 </button>
-                                                <input type="hidden" name="idRoom" value="${requestScope.roomInformation.roomId}">
+                                                <input type="hidden" name="idRoom"
+                                                       value="${requestScope.roomInformation.roomId}">
                                                 <button type="submit" class="btn btn-primary">Cập nhật</button>
                                             </div>
                                         </form>
@@ -400,12 +405,19 @@
                             <!-- End update room information button -->
 
                             <!-- Start calculate button button -->
-                            <button class="action-calculate-btn">Tính tiền phòng</button>
+                            <c:choose>
+                                <c:when test="${requestScope.roomInformation.roomStatus eq 1 || requestScope.userNameRenterRoom eq null}">
+                                    <a href="" class="action-create-account-link">Tạo tài khoản</a>
+                                </c:when>
+                                <c:when test="${requestScope.billRoom ne null}">
+                                    <button class="action-calculate-btn">Tính tiền phòng</button>
+                                </c:when>
+                            </c:choose>
                             <!-- End calculate button button -->
 
                             <!-- Hide this button when room already rented -->
                             <!-- Start create account button -->
-                            <a href="" class="action-create-account-link d-none">Tạo tài khoản</a>
+
                             <!-- End create account button -->
                         </div>
                     </div>
@@ -418,7 +430,8 @@
                                 <div class="infor-group">Địa chỉ:
                                     <span>${sessionScope.hostel.address}, ${sessionScope.hostel.district.split('-')[1]}, ${sessionScope.hostel.city.split('-')[1]}</span>
                                 </div>
-                                <div class="infor-group">Diện tích: <span>${requestScope.roomInformation.roomArea} m2</span></div>
+                                <div class="infor-group">Diện tích:
+                                    <span>${requestScope.roomInformation.roomArea} m2</span></div>
                                 <div class="infor-group">Gác: <span>
                                     <c:choose>
                                         <c:when test="${requestScope.roomInformation.hasAttic eq 1}">
@@ -449,8 +462,9 @@
                                 </div>
                                 <div class="infor-group">Tiền phòng: <span>${requestScope.contractRoom.price}</span>
                                 </div>
-                                <div class="infor-group">Số lượng thành viên
-                                    <span>${requestScope.quantityMember}/${requestScope.roomInformation.capacity}</span></div>
+                                <div class="infor-group">Số lượng thành viên:
+                                    <span>${requestScope.quantityMember}/${requestScope.roomInformation.capacity}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -657,9 +671,9 @@
                                         <!-- Paid: success ~ Unpaid: fail -->
                                         <div class="invoice-content status success">
                                             <c:choose>
-                                            <c:when test="${requestScope.billRoom.status eq 1}">Đã thanh toán</c:when>
-                                            <c:otherwise>Chưa thanh toán</c:otherwise>
-                                        </c:choose>
+                                                <c:when test="${requestScope.billRoom.status eq 1}">Đã thanh toán</c:when>
+                                                <c:when test="${requestScope.billRoom.status eq 0}">Chưa thanh toán</c:when>
+                                            </c:choose>
                                         </div>
                                     </div>
                                     <div class="invoice-group">
@@ -670,7 +684,10 @@
                                     </div>
                                     <div class="invoice-group">
                                         <div class="invoice-label">Tổng tiền:</div>
-                                        <div class="invoice-content price">${requestScope.billRoom.totalMoney} <span>VNĐ</span></div>
+                                        <c:choose>
+                                            <c:when test="${requestScope.billRoom ne null}"><div class="invoice-content price">${requestScope.billRoom.totalMoney}
+                                                <span>VNĐ</span></div></c:when>
+                                        </c:choose>
                                     </div>
                                 </div>
                                 <div class="invoice-actions">
@@ -683,11 +700,13 @@
                                         </button>
                                         <!-- If this invoice has been paid, please hide this button -->
                                         <c:choose>
-                                            <c:when test="${requestScope.billRoom.status eq 1}"></c:when>
-                                            <c:otherwise>
+                                            <c:when test="${requestScope.billRoom.status eq 0 && requestScope.billRoom ne null}">
                                                 <button class="invoice-action-btn invoice-confirm-paid-btn">Xác nhận đã
                                                     thanh toán
                                                 </button>
+                                            </c:when>
+                                            <c:otherwise>
+
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
@@ -702,7 +721,14 @@
                                 <div class="members-header">
                                     <div class="members-title">Danh sách thành viên</div>
                                     <div class="members-actions">
-                                        <button class="add-member-btn">Thêm thành viên</button>
+                                        <c:choose>
+                                            <c:when test="${requestScope.billRoom.status eq 1}">
+                                                <button class="add-member-btn">Thêm thành viên</button>
+                                            </c:when>
+                                            <c:otherwise>
+
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                                 <table id="members-table"
@@ -754,7 +780,8 @@
                                 <div class="account-header">
                                     Tài khoản truy cập
                                 </div>
-                                <div class="account-username">Tên tài khoản: <span>${requestScope.userNameRenterRoom}</span></div>
+                                <div class="account-username">Tên tài khoản:
+                                    <span>${requestScope.userNameRenterRoom}</span></div>
                                 <div class="account-action">
                                     <a href="" class="account-reset-password">Đặt lại mật khẩu</a>
                                 </div>

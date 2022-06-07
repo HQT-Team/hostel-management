@@ -313,7 +313,7 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Tên</th>
-                                        <th>Số lượng thành viên tối đa</th>
+                                        <th>Số lượng thành viên</th>
                                         <th>Hành động</th>
                                     </tr>
                                     </thead>
@@ -324,7 +324,7 @@
                                         <tr>
                                             <td>${count}</td>
                                             <td>${room.roomNumber}</td>
-                                            <td>${room.capacity}</td>
+                                            <td>${requestScope.quantityMembers.get(count-1)}/${room.capacity}</td>
                                             <td>
                                                 <!-- Room detail link -->
                                                 <a href="roomDetail?roomID=${room.roomId}" class="room-detail-link">Chi tiết</a>
