@@ -1,5 +1,4 @@
 package com.hqt.happyhostel.dto;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,11 +6,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Contract {
-    int contract_id;
-    int room_id;
-    int price;
-    String startDate;
-    String expiration;
-    int deposit;
+public class Bill {
+    int billID;
+    int roomID;
+    int totalMoney;
+    String createdDate;
+    String expiredPaymentDate;
+    int status;
+    Payment payment;
 }

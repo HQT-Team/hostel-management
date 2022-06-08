@@ -99,6 +99,7 @@ public class AccountDAO {
                 pst.setInt(1, accId);
                 ResultSet rs = pst.executeQuery();
                 while (rs != null && rs.next()) {
+                    int roommateID = rs.getInt("roomate_info_id");
                     String fullname = rs.getString("fullname");
                     String email = rs.getString("email");
                     String birthday = rs.getString("birthday");
@@ -109,7 +110,7 @@ public class AccountDAO {
                     String parentName = rs.getString("parent_name");
                     String parentPhone = rs.getString("parent_phone");
 
-                    renterInfo = new RoommateInfo(new Information(fullname, email, birthday, sex, phone, address, cccd), parentName, parentPhone);
+                    renterInfo = new RoommateInfo(roommateID, new Information(fullname, email, birthday, sex, phone, address, cccd), parentName, parentPhone);
                     roommateInfoList.add(renterInfo);
                 }
             }
@@ -260,21 +261,58 @@ public class AccountDAO {
         return list;
     }
 
-    public static ArrayList<Account> GetAllByRole(int role) {
+    public static String getUsernameRoomCurrently(int roomID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        String username = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT username\n" +
+                        "FROM Accounts\n" +
+                        "WHERE account_id = (SELECT TOP 1 renter_id\n" +
+                        "\t\t\t\t\tFROM Rooms R, Contracts C\n" +
+                        "\t\t\t\t\tWHERE R.room_id = ?\n" +
+                        "\t\t\t\t\tAND R.room_id = C.room_id\n" +
+                        "\t\t\t\t\tORDER BY C.start_date DESC)";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    username = rs.getString("username");
+                }
+            }
+            cn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return username;
+    }
+
+    public static ArrayList<Account> GetAllBy(String searchBy, String keyword) {
         Account acc = null;
         ArrayList<Account> list = new ArrayList<Account>();
         Connection cn = null;
         PreparedStatement pst = null;
-
+        StringBuilder SearchBy = new StringBuilder("Where "+ searchBy+ " = ?");
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "SELECT * \n" +
-                        "FROM [dbo].[Accounts] \n" +
-                        "WHERE Role = ?";
+                StringBuilder sql = new StringBuilder("SELECT * FROM [dbo].[Accounts]\n");
+                if(!searchBy.isEmpty() || !searchBy.isEmpty()){
+                    sql = sql.append(SearchBy);
+                }
 
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, role);
+                pst = cn.prepareStatement(sql.toString());
+                pst.setString(1, keyword);
                 ResultSet rs = pst.executeQuery();
                 while (rs != null && rs.next()) {
                     acc = getAccount(rs);
@@ -343,7 +381,7 @@ public class AccountDAO {
     }
 
 
-    public static int updateAccountStatus(int id, int status) {
+    public static int updateAccountStatus(String username, int status) {
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;
@@ -353,10 +391,10 @@ public class AccountDAO {
             if (cn != null) {
                 String sql = "Update [dbo].[Accounts]\n" +
                         "Set status = ?\n" +
-                        "Where account_id = ?";
+                        "Where username = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, status);
-                pst.setInt(2, id);
+                pst.setString(2, username);
                 result = pst.executeUpdate();
             }
 

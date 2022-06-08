@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Contract {
-    int contract_id;
-    int room_id;
-    int price;
-    String startDate;
-    String expiration;
-    int deposit;
+public class ServiceInfo {
+    int hostelID;
+    int serviceID;
+    String serviceName;
+    String validDate;
+    int servicePrice;
+    String unit;
 }

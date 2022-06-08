@@ -40,7 +40,7 @@ public class AddHostelServlet extends HttpServlet {
             HttpSession session = req.getSession();
             acc = (Account) session.getAttribute("USER");
             HostelDAO dao = new HostelDAO();
-            servicesList = dao.getListServices();
+//            servicesList = dao.getListServices();
 
             int accountId = acc.getAccId();
             String hostelName = req.getParameter("hostel-name");
@@ -49,19 +49,10 @@ public class AddHostelServlet extends HttpServlet {
             String hostelDistrict = req.getParameter("hostel-district");
             String hostelWard = req.getParameter("hostel-ward");
 
-            if (servicesList.isEmpty()) {
-                servicesList.add(new Services("Electric"));
-                servicesList.add(new Services("Water"));
-                servicesList.add(new Services("Internet"));
-                servicesList.add(new Services("Management"));
-                servicesList.add(new Services("Vehicle"));
-                servicesList.add(new Services("Cleaning"));
-            }
-
-
             //electric
             double electricityPrice = Double.parseDouble(req.getParameter("hostel-electric"));
             hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(electricityPrice).build());
+
             //water
             double waterPrice = Double.parseDouble(req.getParameter("hostel-water"));
             hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(waterPrice).build());
@@ -82,9 +73,8 @@ public class AddHostelServlet extends HttpServlet {
             double cleaningPrice = Double.parseDouble(req.getParameter("hostel-cleaning"));
             hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(cleaningPrice).build());
 
-
             Hostel hostel = new Hostel(accountId, hostelName, hostelAddress, hostelWard, hostelDistrict, hostelProvince);
-            boolean checkInsert = dao.addHostel(hostel, servicesList, hostelServiceList);
+            boolean checkInsert = dao.addHostel(hostel, hostelServiceList);
 
             if (checkInsert) {
                 url = SUCCESS;
