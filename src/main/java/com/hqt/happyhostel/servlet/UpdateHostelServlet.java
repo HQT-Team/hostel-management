@@ -23,7 +23,7 @@ public class UpdateHostelServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Hello Get");
+//            System.out.println("Hello Get");
         }
     }
 
