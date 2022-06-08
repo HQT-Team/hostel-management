@@ -14,17 +14,29 @@ public class HostelDAO {
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels]";
     private static final String INSERT_HOSTEl =
             "INSERT INTO [dbo].[Hostels](owner_account_id, name, address, ward, district, city) values(?, ?, ?, ?, ?, ?)";
+
     private static final String GET_SERVICE =
-            "SELECT service_id, service_name FROM [dbo].[Services]";
-    private static final String INSERT_SERVICE =
-            "INSERT INTO [dbo].[Services](service_name) values(?)";
+            "SELECT service_id, service_name, unit FROM [dbo].[Services]";
     private static final String INSERT_HOSTEL_SERVICE =
-            "INSERT INTO [dbo].[HostelService](hostel_id, service_id, service_price, valid_date) values(?, ?, ?, ?)";
+            "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Điện'), ?, ?)\n" +
+                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Nước'), ?, ?)\n" +
+                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Wifi'), ?, ?)\n" +
+                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí quản lý'), ?, ?)\n" +
+                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí giữ xe'), ?, ?)\n" +
+                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí vệ sinh'), ?, ?)";;
     private static final String UPDATE_HOSTEL =
             "UPDATE Hostels SET name = ?, address = ?, ward = ?, district = ?, city = ? WHERE hostel_id = ?";
     private static final String GET_HOSTEL_BY_ID =
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE hostel_id = ?";
 
+    private static final String GET_HOSTEL_BY_OWNER_ID =
+            "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE owner_account_id = ?";
     public Hostel getHostelById(int hostelId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -61,7 +73,43 @@ public class HostelDAO {
         }
         return hostel;
     }
-
+    public List<Hostel> getHostelByOwnerId(int hostelOwnerAccountID) throws SQLException {
+        List<Hostel> listHostels = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Hostel hostel = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_HOSTEL_BY_OWNER_ID);
+                pst.setInt(1, hostelOwnerAccountID);
+                rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    int hostelID = rs.getInt("hostel_id");
+                    String name = rs.getString("name");
+                    String address = rs.getString("address");
+                    String ward = rs.getString("ward");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    listHostels.add(new Hostel(hostelID, hostelOwnerAccountID, name, address, ward, district, city));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return listHostels;
+    }
     public List<Hostel> getListHostels() throws SQLException {
         List<Hostel> listHostels = new ArrayList<>();
         Connection cn = null;
@@ -113,7 +161,8 @@ public class HostelDAO {
                 while (rs != null && rs.next()) {
                     int serviceID = rs.getInt("service_id");
                     String serviceName = rs.getString("service_name");
-                    listServices.add(new Services(serviceID, serviceName));
+                    String unit = rs.getString("unit");
+                    listServices.add(new Services(serviceID, serviceName, unit));
                 }
             }
 
@@ -133,7 +182,7 @@ public class HostelDAO {
         return listServices;
     }
 
-    public boolean addHostel(Hostel hostel, List<Services> services, List<HostelService> hostelServices) throws SQLException {
+    public boolean addHostel(Hostel hostel, List<HostelService> hostelServices) throws SQLException {
         boolean check = false;
         Connection cn = null;
         PreparedStatement ptm = null;
@@ -160,33 +209,20 @@ public class HostelDAO {
 
                 ptm.close();
 
-
-                //Insert table Services
-                int index = 0;
-                for (Services ser : services
+                int c = 0;
+                ptm = cn.prepareStatement(INSERT_HOSTEL_SERVICE);
+                for (HostelService ser: hostelServices
                 ) {
-                    ptm = cn.prepareStatement(INSERT_SERVICE, Statement.RETURN_GENERATED_KEYS);
-                    ptm.setString(1, ser.getServiceName());
-
-                    check = ptm.executeUpdate() > 0 ? true : false;
-                    rs = ptm.getGeneratedKeys();
-                    int key;
-                    if (rs.next()) {
-                        ser.setServiceID(rs.getInt(1));
-                        key = rs.getInt(1);
-                    }
-
-                    HostelService hostelService = hostelServices.get(index);
-
-                    ptm = cn.prepareStatement(INSERT_HOSTEL_SERVICE);
-                    ptm.setInt(1, hostel.getHostelID());
-                    ptm.setInt(2, ser.getServiceID());
-                    ptm.setDouble(3, hostelService.getServicePrice());
-                    ptm.setString(4, hostelService.getValidDate());
-                    check = ptm.executeUpdate() > 0 ? true : false;
-                    ptm.close();
-                    index++;
+                    c++;
+                    ptm.setInt(c, hostel.getHostelID());
+                    c++;
+                    ptm.setDouble(c, ser.getServicePrice());
+                    c++;
+                    ptm.setString(c, ser.getValidDate());
+                    //index++;
                 }
+                check = ptm.executeUpdate() > 0 ? true : false;
+
             }
             if (!check) {
                 cn.rollback();
@@ -243,4 +279,6 @@ public class HostelDAO {
         }
         return checkUpdate;
     }
+
+
 }

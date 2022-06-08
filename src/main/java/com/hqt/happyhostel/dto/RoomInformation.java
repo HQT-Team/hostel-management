@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoommateInfo {
-    private int roommateID;
-    private Information information;
-    private String parentName;
-    private String parentPhone;
+public class RoomInformation {
+    String hostelName;
+    String address;
+    String ward;
+    String district;
+    String city;
 }

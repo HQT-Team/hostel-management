@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoommateInfo {
-    private int roommateID;
-    private Information information;
-    private String parentName;
-    private String parentPhone;
+public class Infrastructures {
+    int id;
+    String name;
+    int quantity;
+    int status;
 }

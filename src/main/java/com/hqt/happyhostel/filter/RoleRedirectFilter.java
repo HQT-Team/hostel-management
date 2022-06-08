@@ -52,6 +52,5 @@ public class RoleRedirectFilter implements Filter {
         }
         else
             chain.doFilter(request, response);
-
     }
 }
