@@ -13,6 +13,8 @@ public class DBUtils {
 //        String pwd = "sa123";
         //String instanceName="KHOAHD7621\\KHOAHD";
        // String pwd="0792596763";
+//        String instanceName="KHOAHD7621\\KHOAHD";
+//        String pwd="0792596763";
 //        String instanceName="TTPHATS\\TTPHATS";
 //        String pwd="12345";
         String port = "1433";
