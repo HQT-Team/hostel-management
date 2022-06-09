@@ -25,9 +25,8 @@ public class RandomStringGenerator {
         return sb.toString();
     }
 
-    public static String randomInviteCode(int len, String hostelId, String roomId){
+    public static String randomInviteCode(int len, String roomId){
         StringBuilder sb = new StringBuilder(len);
-        sb.append(hostelId);
         for (int i = 0; i < len; i++){
             sb.append(AB.charAt(rnd.nextInt( AB.length() )));
         }

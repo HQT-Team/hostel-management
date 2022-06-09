@@ -396,7 +396,6 @@ public class AccountDAO {
                 pst.setInt(2, id);
                 result = pst.executeUpdate();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
