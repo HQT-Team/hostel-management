@@ -9,6 +9,7 @@
 //import javax.servlet.*;
 //import javax.servlet.http.*;
 //import javax.servlet.annotation.*;
+//import java.awt.image.BufferedImage;
 //import java.io.IOException;
 //import java.nio.file.FileSystems;
 //import java.nio.file.Path;
@@ -20,12 +21,12 @@
 //        try {
 //            String inviteCode = (String) request.getAttribute("INVITE_CODE");
 //            String inviteUrl = "RenterRegisterPage?invitecode=1234";
-//            QRCodeWriter qrCodeWriter = new QRCodeWriter();
-//            BitMatrix matrix = qrCodeWriter.encode(inviteUrl, BarcodeFormat.QR_CODE, 200, 200);
-//            String outputFile = "HappyHostel\\src\\main\\webapp\\assets\\images\\QR\\image.png";
-//            Path path = FileSystems.getDefault().getPath(outputFile).normalize().toAbsolutePath();
-//            MatrixToImageWriter.writeToPath(matrix, "PNG", path);
 //
+//            QRCodeWriter barcodeWriter = new QRCodeWriter();
+//            BitMatrix bitMatrix = barcodeWriter.encode(inviteUrl, BarcodeFormat.QR_CODE, 200, 200);
+//
+//            BufferedImage qrImg = MatrixToImageWriter.toBufferedImage(bitMatrix);
+//            request.setAttribute("qrImg", qrImg);
 //        }catch (Exception e){
 //            log("Error at QRServlet: " + e.toString());
 //        }
