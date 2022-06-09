@@ -4,7 +4,6 @@ import lombok.*;
 
 import java.util.ArrayList;
 
-
 @Builder
 @Data
 @AllArgsConstructor
