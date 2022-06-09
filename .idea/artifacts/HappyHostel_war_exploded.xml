@@ -16,6 +16,10 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
           <element id="library" level="project" name="Maven: com.microsoft.sqlserver:mssql-jdbc:10.2.0.jre11" />
+          <element id="library" level="project" name="Maven: com.google.zxing:core:3.3.1" />
+          <element id="library" level="project" name="Maven: com.google.zxing:javase:3.3.1" />
+          <element id="library" level="project" name="Maven: com.beust:jcommander:1.72" />
+          <element id="library" level="project" name="Maven: com.github.jai-imageio:jai-imageio-core:1.3.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

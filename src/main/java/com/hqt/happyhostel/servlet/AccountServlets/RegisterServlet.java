@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet;
+package com.hqt.happyhostel.servlet.AccountServlets;
 
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dao.InformationDAO;

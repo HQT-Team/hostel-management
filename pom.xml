@@ -48,7 +48,7 @@
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
             <scope>provided</scope>
-        </dependency>       
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
@@ -62,7 +62,17 @@
             <artifactId>mssql-jdbc</artifactId>
             <version>10.2.0.jre11</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.zxing/javase -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.3.1</version>
+        </dependency>
     </dependencies>
 
     <build>

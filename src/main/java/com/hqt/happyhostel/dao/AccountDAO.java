@@ -340,50 +340,6 @@ public class AccountDAO {
         return username;
     }
 
-    public static ArrayList<Account> GetAllBy(String searchBy, String keyword) {
-        Account acc = null;
-        ArrayList<Account> list = new ArrayList<Account>();
-        Connection cn = null;
-        PreparedStatement pst = null;
-        StringBuilder SearchBy = new StringBuilder("Where "+ searchBy+ " = ?");
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                StringBuilder sql = new StringBuilder("SELECT * FROM [dbo].[Accounts]\n");
-                if(!searchBy.isEmpty() || !searchBy.isEmpty()){
-                    sql = sql.append(SearchBy);
-                }
-
-                pst = cn.prepareStatement(sql.toString());
-                pst.setString(1, keyword);
-                ResultSet rs = pst.executeQuery();
-                while (rs != null && rs.next()) {
-                    acc = getAccount(rs);
-                    list.add(acc);
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return list;
-    }
-
 
     /*-------------------------------------UPDATE-------------------------------------*/
 
@@ -423,6 +379,7 @@ public class AccountDAO {
         return result;
     }
 
+
     public static int updateAccountStatus(int id, int status) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -453,7 +410,6 @@ public class AccountDAO {
         }
         return result;
     }
-
 
     // Handle register
     private static final String IS_EXIST_USERNAME = "SELECT username FROM [dbo].[Accounts] Where username = ?";

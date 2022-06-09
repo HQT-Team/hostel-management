@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet;
+package com.hqt.happyhostel.servlet.AccountServlets;
 
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dto.Account;
@@ -29,7 +29,7 @@ public class LogoutServlet extends HttpServlet {
             }
             url = "loginPage";
         }catch (Exception e){
-            e.printStackTrace();
+            log("Error at LogoutServlet: " + e.toString());
         }finally {
             response.sendRedirect(url);
         }

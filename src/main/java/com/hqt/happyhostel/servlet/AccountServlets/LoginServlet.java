@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet;
+package com.hqt.happyhostel.servlet.AccountServlets;
 
 
 import com.hqt.happyhostel.dao.AccountDAO;
@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("WARNING", "Sai tài khoản hoặc mật khẩu. Vui lòng kiểm tra lại!");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log("Error at LoginServlet: " + e.toString());
         } finally {
             if (account != null && account.getStatus() == 1) {
                 response.sendRedirect(url);
