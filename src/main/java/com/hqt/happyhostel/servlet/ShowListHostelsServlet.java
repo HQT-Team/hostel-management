@@ -16,7 +16,7 @@ import java.util.List;
 
 @WebServlet(name = "ShowListHostelsServlet", value = "/ShowListHostelsServlet")
 public class ShowListHostelsServlet extends HttpServlet {
-    public static final String ERROR = "error.jsp";
+    public static final String ERROR = "list-hostel-page";
     public static final String SUCCESS = "list-hostel-page";
 
     @Override

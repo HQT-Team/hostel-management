@@ -38,7 +38,7 @@
 </div>
 <div class="content row">
     <div class="content-left col-sm-3">
-        <a href="./admin.jsp"><button>Trang Chủ</button></a>
+        <a href="./AdminPage"><button>Trang Chủ</button></a>
         <br>
         <a href=""><button style="color: #ffffff; background-color: #2f4eff;">Tài Khoản</button></a>
 
