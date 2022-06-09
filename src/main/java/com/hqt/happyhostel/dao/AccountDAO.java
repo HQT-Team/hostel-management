@@ -261,6 +261,49 @@ public class AccountDAO {
         return list;
     }
 
+    public static ArrayList<Account> GetAllByRole(int role) {
+        Account acc = null;
+        ArrayList<Account> list = new ArrayList<Account>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT * \n" +
+                        "FROM [dbo].[Accounts] \n" +
+                        "WHERE Role = ?";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, role);
+                ResultSet rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    acc = getAccount(rs);
+                    list.add(acc);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return list;
+    }
+
     public static String getUsernameRoomCurrently(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -295,50 +338,6 @@ public class AccountDAO {
             }
         }
         return username;
-    }
-
-    public static ArrayList<Account> GetAllBy(String searchBy, String keyword) {
-        Account acc = null;
-        ArrayList<Account> list = new ArrayList<Account>();
-        Connection cn = null;
-        PreparedStatement pst = null;
-        StringBuilder SearchBy = new StringBuilder("Where "+ searchBy+ " = ?");
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                StringBuilder sql = new StringBuilder("SELECT * FROM [dbo].[Accounts]\n");
-                if(!searchBy.isEmpty() || !searchBy.isEmpty()){
-                    sql = sql.append(SearchBy);
-                }
-
-                pst = cn.prepareStatement(sql.toString());
-                pst.setString(1, keyword);
-                ResultSet rs = pst.executeQuery();
-                while (rs != null && rs.next()) {
-                    acc = getAccount(rs);
-                    list.add(acc);
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return list;
     }
 
 
@@ -381,7 +380,7 @@ public class AccountDAO {
     }
 
 
-    public static int updateAccountStatus(String username, int status) {
+    public static int updateAccountStatus(int id, int status) {
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;
@@ -391,10 +390,10 @@ public class AccountDAO {
             if (cn != null) {
                 String sql = "Update [dbo].[Accounts]\n" +
                         "Set status = ?\n" +
-                        "Where username = ?";
+                        "Where account_id = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, status);
-                pst.setString(2, username);
+                pst.setInt(2, id);
                 result = pst.executeUpdate();
             }
 
