@@ -133,7 +133,7 @@
 }
 
 .consume-update-btn {
-  padding: 8px 8px;
+  padding: 8px 4px;
   border-radius: 4px;
   background-color: #ff0000;
   color: var(--white-color);
@@ -376,33 +376,7 @@
   padding-bottom: 6px;
 }
 
-.infrastructure-group,
-.infrastructure-title-group {
-  display: flex;
-}
-
-.infrastructure-name {
-  font-size: 1.6rem;
-  line-height: 1.6rem;
-  font-weight: 500;
-  flex: 1;
-  padding: 12px 0 12px 0;
-}
-
-.infrastructure-quantity,
-.infrastructure-unit {
-  width: 70px;
-  text-align: center;
-  padding: 12px 0 12px 0;
-}
-
-.border-right {
-  border-right: 1px solid #ccc;
-}
-
-.border-bottom {
-  border-bottom: 1px solid #ccc;
-}
+// Table infrastructure
 
 .infrastructure-status {
   width: 100px;
@@ -413,33 +387,6 @@
 
 .broken {
   color: #ff0000;
-}
-
-.infrastructure-title-group {
-  border-bottom: 1px solid #ccc;
-  border-top: 1px solid #ccc;
-}
-
-.infrastructure-title-name,
-.infrastructure-title-quantity,
-.infrastructure-title-unit,
-.infrastructure-title-status {
-  font-weight: 600;
-  text-align: center;
-  padding: 6px 0 6px 0;
-}
-
-.infrastructure-title-name {
-  flex: 1;
-}
-
-.infrastructure-title-quantity,
-.infrastructure-title-unit {
-  width: 70px;
-}
-
-.infrastructure-title-status {
-  width: 100px;
 }
 
 .infrastructure-actions {
@@ -560,4 +507,77 @@
     margin-right: 0 !important;
     margin-bottom: 8px;
   }
+}
+
+// Invoice detail modal
+.invoice-detail__wrapper {
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+  rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.invoice-detail__title {
+  text-align: center;
+  font-size: 2.4rem;
+  line-height: 2.4rem;
+  font-weight: 600;
+  margin: 16px 0;
+}
+
+.invoice-detail__infor-right {
+  text-align: right;
+}
+
+.invoice-detail__infor-detail {
+  font-weight: 500;
+  line-height: 2rem;
+  margin: 8px 0;
+
+  span {
+    font-weight: 400;
+  }
+}
+
+.invoice-detail__consumed-group {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.invoice-detail__consumed-group > span span {
+  font-weight: 400;
+}
+
+.invoice-detail__table {
+  margin: 10px 0 20px 0;
+
+  table {
+    width: 100%;
+  }
+
+  .total {
+    font-size: 1.8rem;
+    font-weight: 500;
+  }
+}
+
+.invoice-detail__signature-title {
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.invoice-detail__signature-name {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+// Member detail modal
+.member-detail-modal-label {
+  font-weight: 600;
+  line-height: 2rem;
+}
+
+.member-detail-modal-content {
+  line-height: 2rem;
 }

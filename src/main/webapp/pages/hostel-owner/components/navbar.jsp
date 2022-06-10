@@ -5,7 +5,7 @@
         <div class="row main-nav-body">
             <div class="col-3 col-lg-3 col-xl-3 col-xxl-2">
                 <div class="main-nav__logo">
-                    <a href="HostelOwnerPage" class="main-nav__logo-link">
+                    <a href="dashboard" class="main-nav__logo-link">
                         <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
                     </a>
                 </div>
