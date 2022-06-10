@@ -38,7 +38,7 @@ public class InviteCodeServlet extends HttpServlet {
             Date endTime = null;
             Room roomInvite = null;
             int ownerId = Integer.parseInt(request.getParameter("owner_id"));
-            if(//*roomID khong thuoc hostel cua owner*/){
+            if(/*roomID khong thuoc hostel cua owner*/){
                 url = "HostelOwnerPage";
             }else{
                //check xem trên databse có inviteCode của roomId này chưa
