@@ -157,29 +157,18 @@ public class AccountDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (pst != null) {
+            if (cn != null && pst != null && rs != null) {
                 try {
                     pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (rs != null) {
-                try {
                     rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
                     cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
+            return acc;
         }
-        return acc;
     }
 
 
@@ -205,22 +194,16 @@ public class AccountDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
+            if (cn != null && pst != null) {
                 try {
                     cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
+            return acc;
         }
-        return acc;
     }
 
     public static ArrayList<Account> GetAll() {
@@ -243,22 +226,17 @@ public class AccountDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (st != null) {
+            if (cn != null && st != null) {
                 try {
                     st.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
                     cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
+            return list;
         }
-        return list;
     }
 
     public static ArrayList<Account> GetAllByRole(int role) {
@@ -286,22 +264,16 @@ public class AccountDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (pst != null) {
+            if (cn != null && pst != null) {
                 try {
                     pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
                     cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
+            return list;
         }
-        return list;
     }
 
     public static String getUsernameRoomCurrently(int roomID) {
@@ -329,15 +301,17 @@ public class AccountDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (cn != null) {
+            if (cn != null && pst != null) {
                 try {
+                    pst.close();
                     cn.close();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+            return username;
         }
-        return username;
     }
 
 
@@ -361,22 +335,16 @@ public class AccountDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (cn != null) {
+            if (cn != null && pst != null) {
                 try {
+                    pst.close();
                     cn.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            return result;
         }
-        return result;
     }
 
 
@@ -400,8 +368,9 @@ public class AccountDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (cn != null) {
+            if (cn != null && pst != null) {
                 try {
+                    pst.close();
                     cn.close();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -410,6 +379,7 @@ public class AccountDAO {
         }
         return result;
     }
+
 
     // Handle register
     private static final String IS_EXIST_USERNAME = "SELECT username FROM [dbo].[Accounts] Where username = ?";
