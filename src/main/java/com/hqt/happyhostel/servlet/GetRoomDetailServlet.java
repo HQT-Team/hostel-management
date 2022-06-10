@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "GetRoomDetailServlet", value = "/GetRoomDetailServlet")
 public class GetRoomDetailServlet extends HttpServlet {
@@ -35,6 +36,8 @@ public class GetRoomDetailServlet extends HttpServlet {
                 request.setAttribute("contractRoom", contract);
                 Consume consume = RoomDAO.getNearestConsume(roomId);
                 request.setAttribute("consumeRoom", consume);
+                List<Consume> consumeList = RoomDAO.getConsumeHistory(roomId);
+                request.setAttribute("consumeList", consumeList);
                 Bill bill = RoomDAO.getLastBill(roomId);
                 request.setAttribute("billRoom", bill);
                 ArrayList<RoommateInfo> roommateInfo = RoomDAO.getRoommateInformation(roomId);
@@ -62,7 +65,7 @@ public class GetRoomDetailServlet extends HttpServlet {
         String url = "RoomDetailPage";
 
         HttpSession session = request.getSession();
-        int hostelID = (Integer) session.getAttribute("hostelID");
+        int hostelID = ((Hostel) session.getAttribute("hostel")).getHostelID();
         int accID = ((Account) session.getAttribute("USER")).getAccId();
         try {
             Room room = RoomDAO.getRoomInformationByRoomID(roomId, hostelID, accID);
@@ -71,6 +74,8 @@ public class GetRoomDetailServlet extends HttpServlet {
             request.setAttribute("contractRoom", contract);
             Consume consume = RoomDAO.getNearestConsume(roomId);
             request.setAttribute("consumeRoom", consume);
+            List<Consume> consumeList = RoomDAO.getConsumeHistory(roomId);
+            request.setAttribute("consumeList", consumeList);
             Bill bill = RoomDAO.getLastBill(roomId);
             request.setAttribute("billRoom", bill);
             ArrayList<RoommateInfo> roommateInfo = RoomDAO.getRoommateInformation(roomId);

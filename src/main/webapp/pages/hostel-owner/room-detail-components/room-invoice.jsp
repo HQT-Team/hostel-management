@@ -4,7 +4,7 @@
   <div class="invoice-header">
     <div class="invoice-title">Hóa đơn gần nhất</div>
     <div class="invoice-created-date">Ngày tạo:
-      <span>${requestScope.billRoom.createdDate}</span></div>
+      <span>${requestScope.billRoom.createdDate.split("-")[2]}-${requestScope.billRoom.createdDate.split("-")[1]}-${requestScope.billRoom.createdDate.split("-")[0]}</span></div>
   </div>
   <div class="invoice-body">
     <div class="invoice-group">
@@ -26,7 +26,7 @@
     <div class="invoice-group">
       <div class="invoice-label">Tổng tiền:</div>
       <c:choose>
-        <c:when test="${requestScope.billRoom ne null}"><div class="invoice-content price">${requestScope.billRoom.totalMoney}
+        <c:when test="${requestScope.billRoom ne null}"><div class="invoice-content price">${String.format("%,d",requestScope.billRoom.totalMoney)}
           <span>VNĐ</span></div></c:when>
       </c:choose>
     </div>

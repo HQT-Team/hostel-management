@@ -1,8 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="room-consume">
     <div class="consume-header">Số điện/nước tiêu thụ</div>
-    <div class="consume-update-date">Ngày cập nhật gần nhất: <span
-            class="date">${requestScope.consumeRoom.endConsumeDate}</span></div>
+    <div class="consume-update-date">Ngày cập nhật gần nhất:
+        <span
+                class="date">${requestScope.consumeRoom.endConsumeDate.split("-")[2]}-${requestScope.consumeRoom.endConsumeDate.split("-")[1]}-${requestScope.consumeRoom.endConsumeDate.split("-")[0]}
+        </span>
+    </div>
     <div class="consume-group">
         <div class="consume-name">Điện:</div>
         <div class="consume-quantity">${requestScope.consumeRoom.numberElectric}</div>
@@ -111,7 +114,7 @@
         <!-- Start consume history list button -->
         <button class="consume-history-btn" data-bs-toggle="modal"
                 data-bs-target="#history-update-consume-modal">
-            Lịch sử cập nhật
+            Lịch sử tiêu thụ
         </button>
         <!-- Start consume history list modal -->
         <div class="modal fade" id="history-update-consume-modal" tabindex="-1"
@@ -120,7 +123,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="history-update-consume-modal-label">
-                            Lịch sử cập nhật số điện/nước
+                            Lịch sử số điện/nước tiêu thụ
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
@@ -136,43 +139,38 @@
                                 <div class="col-3">
                                     <div class="form-label">Nước</div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-label">Ngày cập nhật</div>
+                                <div class="col-3">
+                                    <div class="form-label">Ngày bắt đầu tiêu thụ</div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-label">Ngày kết thúc tiêu thụ</div>
                                 </div>
                             </div>
                         </div>
                         <!-- Items -->
                         <div class="form-group">
-                            <div class="row">
-                                <div class="col-3">
-                                    <input type="text" value="12521"
-                                           class="form-control" disabled>
+                            <c:forEach var="consumeList" items="${requestScope.consumeList}">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <input type="text" value="${consumeList.numberElectric}"
+                                               class="form-control" disabled>
+                                    </div>
+                                    <div class="col-3">
+                                        <input type="text" value="${consumeList.numberWater}"
+                                               class="form-control" disabled>
+                                    </div>
+                                    <div class="col-3">
+                                        <input type="text"
+                                               value="${consumeList.startConsumeDate.split("-")[2]}-${consumeList.startConsumeDate.split("-")[1]}-${consumeList.startConsumeDate.split("-")[0]}"
+                                               class="form-control" disabled>
+                                    </div>
+                                    <div class="col-3">
+                                        <input type="text"
+                                               value="${consumeList.endConsumeDate.split("-")[2]}-${consumeList.endConsumeDate.split("-")[1]}-${consumeList.endConsumeDate.split("-")[0]}"
+                                               class="form-control" disabled>
+                                    </div>
                                 </div>
-                                <div class="col-3">
-                                    <input type="text" value="123213"
-                                           class="form-control" disabled>
-                                </div>
-                                <div class="col-6">
-                                    <input type="text" value="20/10/2021"
-                                           class="form-control" disabled>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-3">
-                                    <input type="text" value="12521"
-                                           class="form-control" disabled>
-                                </div>
-                                <div class="col-3">
-                                    <input type="text" value="123213"
-                                           class="form-control" disabled>
-                                </div>
-                                <div class="col-6">
-                                    <input type="text" value="20/10/2021"
-                                           class="form-control" disabled>
-                                </div>
-                            </div>
+                            </c:forEach>
                         </div>
                     </div>
                     <div class="modal-footer">

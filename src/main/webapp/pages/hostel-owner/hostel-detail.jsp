@@ -117,11 +117,11 @@
                                             data-bs-target="#updateServicesModel">Cập nhật
                                     </button>
                                 </div>
-                                <div class="services-date">Áp dụng từ: <span>${requestScope.serviceInfo[0].validDate}</span></div>
+                                <div class="services-date">Áp dụng từ: <span>${requestScope.serviceInfo[0].validDate.split('-')[2]}-${requestScope.serviceInfo[0].validDate.split('-')[1]}-${requestScope.serviceInfo[0].validDate.split('-')[0]}</span></div>
                                 <c:forEach var="serviceList" items="${requestScope.serviceInfo}">
                                     <div class="service-group">
                                         <div class="service-name">${serviceList.serviceName}</div>
-                                        <div class="service-price"><span>${serviceList.servicePrice}</span> VNĐ/${serviceList.unit}</div>
+                                        <div class="service-price"><span>${String.format("%,d", serviceList.servicePrice)}</span> VNĐ/${serviceList.unit}</div>
                                     </div>
                                 </c:forEach>
                             </div>

@@ -45,6 +45,8 @@ public class RoomDAO {
                                 .hostelId(hostelID)
                                 .roomNumber(roomNumber)
                                 .roomArea(roomArea)
+                                .capacity(capacity)
+                                .roomStatus(roomStatus)
                                 .hasAttic(hasAttic)
                                 .roomInformation(roomInformation)
                                 .build());
@@ -419,6 +421,8 @@ public class RoomDAO {
                             .roomId(roomID)
                             .hostelId(hostelId)
                             .roomNumber(roomNumber)
+                            .capacity(capacity)
+                            .roomStatus(roomStatus)
                             .roomArea(roomArea)
                             .hasAttic(hasAttic)
                             .roomInformation(roomInformation)
@@ -605,6 +609,55 @@ public class RoomDAO {
         return consume;
     }
 
+    public static List<Consume> getConsumeHistory(int roomID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ArrayList<Consume> consumesList = new ArrayList();
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT consume_id, number_electric, number_water, start_consume_date, end_consume_date\n" +
+                        "FROM Consumes\n" +
+                        "WHERE room_id = ?\n" +
+                        "ORDER BY end_consume_date DESC";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+
+                ResultSet rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int consumeID = rs.getInt("consume_id");
+                        int numberElectric = rs.getInt("number_electric");
+                        int numberWater = rs.getInt("number_water");
+                        String startConsumeDate = rs.getString("start_consume_date");
+                        String endConsumeDate = rs.getString("end_consume_date");
+                        consumesList.add(new Consume(consumeID, roomID, numberElectric, numberWater, startConsumeDate, endConsumeDate));
+                    }
+                }
+            }
+            cn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return consumesList;
+    }
+
     public static ArrayList<RoommateInfo> getRoommateInformation(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -663,6 +716,7 @@ public class RoomDAO {
         }
         return roommateInformationArrayList;
     }
+
     public static Integer getQuantityMember(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -730,7 +784,7 @@ public class RoomDAO {
                 pst.setInt(5, roomID);
 
                 int rows = pst.executeUpdate();
-                if (rows != 1) {
+                if (rows == 0) {
                     cn.rollback();
                 } else {
                     isSuccess = true;
@@ -776,7 +830,7 @@ public class RoomDAO {
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, idRoom);
                 rs = pst.executeQuery();
-                if (rs!= null && rs.next()){
+                if (rs != null && rs.next()) {
                     int roomId = rs.getInt("[room_id]");
                     int hostelId = rs.getInt("[hostel_id]");
                     String inviteCode = rs.getString("[invite_code]");
@@ -810,7 +864,6 @@ public class RoomDAO {
         }
         return room;
     }
-
 
 
     public static int updateRoomInviteCode(int idRoom, String inviteCode, String QRCode, String endTime) {
