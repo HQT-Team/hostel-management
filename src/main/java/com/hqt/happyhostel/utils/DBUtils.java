@@ -11,10 +11,12 @@ public class DBUtils {
 //        String pwd = "OIUOiu12";
 //        String instanceName = "DESKTOP-FDKP91N\\SQLEXPRESS";
 //        String pwd = "sa123";
-        String instanceName="KHOAHD7621\\KHOAHD";
-        String pwd="0792596763";
+//        String instanceName="KHOAHD7621\\KHOAHD";
+//        String pwd="0792596763";
 //        String instanceName="TTPHATS\\TTPHATS";
 //        String pwd="12345";
+        String instanceName="DESKTOP-0D7MP1Q\\TANLOC";
+        String pwd="Tanloc162";
         String port = "1433";
         String uid = "sa";
         String db = "HostelManagement";

@@ -367,7 +367,7 @@ public class RoomDAO {
         return infrastructures;
     }
 
-    public static Room getRoomInformationByRoomID(int roomID) {
+    public static Room getRoomInformationByRoomID(int roomID, int hostelID, int accountOwnerID) {
         Connection cn = null;
         PreparedStatement pst = null;
         Room room = null;
@@ -377,10 +377,14 @@ public class RoomDAO {
                 String sql = "SELECT room_id, H.hostel_id as 'hostel_id', room_number, capacity, room_status, room_area, has_attic, name, address, ward, district, city\n" +
                         "FROM Rooms R, Hostels H\n" +
                         "WHERE R.room_id = ?\n" +
+                        "AND R.hostel_id = ?\n" +
+                        "AND H.owner_account_id = ?\n" +
                         "AND R.hostel_id = H.hostel_id";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
+                pst.setInt(2, hostelID);
+                pst.setInt(3, accountOwnerID);
 
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
@@ -550,8 +554,10 @@ public class RoomDAO {
                     int consumeElectricNumber = consumesList.get(0).getNumberElectric() - consumesList.get(1).getNumberElectric();
                     int consumeWaterNumber = consumesList.get(0).getNumberWater() - consumesList.get(1).getNumberWater();
                     consume = new Consume(consumeID, roomID, consumeElectricNumber, consumeWaterNumber, startDate, endDate);
-                } else {
+                } else if (consumesList.size() == 1) {
                     consume = consumesList.get(0);
+                } else {
+                    consume = null;
                 }
             }
             cn.close();

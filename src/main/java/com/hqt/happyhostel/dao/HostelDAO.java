@@ -35,8 +35,12 @@ public class HostelDAO {
     private static final String GET_HOSTEL_BY_ID =
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE hostel_id = ?";
 
+    private static final String GET_HOSTEL_BY_ID_WITH_CONSTRAINT =
+            "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM Hostels WHERE hostel_id = ? AND owner_account_id = ?";
+
     private static final String GET_HOSTEL_BY_OWNER_ID =
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE owner_account_id = ?";
+
     public Hostel getHostelById(int hostelId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -73,6 +77,47 @@ public class HostelDAO {
         }
         return hostel;
     }
+
+    public Hostel getHostelByIdWithConstraint(int hostelId, int ownerAccountID) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Hostel hostel = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_HOSTEL_BY_ID_WITH_CONSTRAINT);
+                pst.setInt(1, hostelId);
+                pst.setInt(2, ownerAccountID);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int hostelOwnerAccountID = rs.getInt("owner_account_id");
+                    String name = rs.getString("name");
+                    String address = rs.getString("address");
+                    String ward = rs.getString("ward");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    hostel = new Hostel(hostelId, hostelOwnerAccountID, name, address, ward, district, city);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return hostel;
+    }
+
+
+
     public List<Hostel> getHostelByOwnerId(int hostelOwnerAccountID) throws SQLException {
         List<Hostel> listHostels = new ArrayList<>();
         Connection cn = null;
@@ -110,6 +155,7 @@ public class HostelDAO {
         }
         return listHostels;
     }
+
     public List<Hostel> getListHostels() throws SQLException {
         List<Hostel> listHostels = new ArrayList<>();
         Connection cn = null;

@@ -17,30 +17,39 @@ public class HostelDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "ListHostelPage";
+        Account acc = new Account();
+
         try {
+            HttpSession session = request.getSession();
+            acc = (Account) session.getAttribute("USER");
+            int accountId = acc.getAccId();
+
             int hostelId = Integer.parseInt(request.getParameter("hostelID"));
-            Hostel hostel = new HostelDAO().getHostelById(hostelId);
-            ArrayList<Room> rooms = RoomDAO.getListRoomByHostelID(hostelId);
-            int numberRoom = RoomDAO.getNumberRoomSpecificHostel(hostelId);
 
-            ArrayList<Integer> quantityMembers = new ArrayList<>();
-            for (Room roomItem: rooms) {
-                int quantityMember = RoomDAO.getQuantityMember(roomItem.getRoomId());
-                quantityMembers.add(quantityMember);
-            }
+            Hostel hostel = new HostelDAO().getHostelByIdWithConstraint(hostelId, accountId);
+            if (hostel == null) {
+                url = "list-hostels";
+            } else {
+                ArrayList<Room> rooms = RoomDAO.getListRoomByHostelID(hostelId);
+                int numberRoom = RoomDAO.getNumberRoomSpecificHostel(hostelId);
 
-            ArrayList<ServiceInfo> serviceList = RoomDAO.getServicesOfHostel(hostelId);
-            if (hostel != null) {
+                ArrayList<Integer> quantityMembers = new ArrayList<>();
+                for (Room roomItem : rooms) {
+                    int quantityMember = RoomDAO.getQuantityMember(roomItem.getRoomId());
+                    quantityMembers.add(quantityMember);
+                }
+
+                ArrayList<ServiceInfo> serviceList = RoomDAO.getServicesOfHostel(hostelId);
                 url = "HostelDetailPage";
                 request.setAttribute("hostel", hostel);
-                HttpSession session = request.getSession(true);
                 session.setAttribute("hostel", hostel);
                 request.setAttribute("roomList", rooms);
                 request.setAttribute("roomQuantity", numberRoom);
                 request.setAttribute("serviceInfo", serviceList);
                 request.setAttribute("quantityMembers", quantityMembers);
             }
-        }catch (Exception e){
+
+        } catch (Exception e) {
             log("Error at HostelDetailServlet: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
