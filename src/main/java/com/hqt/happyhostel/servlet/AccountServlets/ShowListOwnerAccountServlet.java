@@ -11,28 +11,31 @@ import java.util.ArrayList;
 
 @WebServlet(name = "ShowListOwnerAccountServlet", value = "/ShowListOwnerAccountServlet")
 public class ShowListOwnerAccountServlet extends HttpServlet {
+
     private static final String url = "show-list-account";
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            HttpSession session = request.getSession();
+
             ArrayList<Account> list = AccountDAO.GetAllByRole(1);
+
             request.setAttribute("OWNER_LIST", list);
-        }catch (Exception e){
-            log("Error at DashboardServlet: " + e.toString());
-        }finally {
+            session.setAttribute("CURRENT_PAGE", "account");
+        } catch (Exception e){
+            log("Error at ShowListOwnerAccountServlet: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request,response);
         }
     }
 
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            ArrayList<Account> list = AccountDAO.GetAllByRole(1);
-            request.setAttribute("OWNER_LIST", list);
-        }catch (Exception e){
-            log("Error at DashboardServlet: " + e.toString());
-        }finally {
-            request.getRequestDispatcher(url).forward(request,response);
-        }
+        processRequest(request, response);
     }
 }
