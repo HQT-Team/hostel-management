@@ -182,7 +182,6 @@ public class AccountDAO {
         return acc;
     }
 
-
     public static Account getAccountByToken(String token) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -533,5 +532,39 @@ public class AccountDAO {
             }
         }
         return check;
+    }
+
+    // Handle add roommate
+    private static final String GET_ACCOUNT_ID_BY_USERNAME = "SELECT account_id FROM Accounts WHERE username = ?";
+
+    public static int getAccountIdByUserName(String userName) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+
+        int accountId = -1;
+
+        try {
+
+            conn = DBUtils.makeConnection();
+
+            if (conn != null) {
+                psm = conn.prepareStatement(GET_ACCOUNT_ID_BY_USERNAME);
+                psm.setString(1, userName);
+                rs = psm.executeQuery();
+
+                if (rs != null && rs.next()) {
+                    accountId = rs.getInt("account_id");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) { rs.close(); }
+            if (psm != null) { psm.close(); }
+            if (conn != null) { conn.close(); }
+        }
+        return accountId;
     }
 }
