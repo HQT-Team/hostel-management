@@ -1,7 +1,7 @@
 package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.AccountDAO;
-import com.hqt.happyhostel.dao.HostelDAO;
+import com.hqt.happyhostel.dao.ConsumeDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
 import com.hqt.happyhostel.dto.*;
 
@@ -34,8 +34,12 @@ public class GetRoomDetailServlet extends HttpServlet {
                 request.setAttribute("roomInformation", room);
                 Contract contract = RoomDAO.getContract(roomId);
                 request.setAttribute("contractRoom", contract);
-                Consume consume = RoomDAO.getNearestConsume(roomId);
+                Consume consume = ConsumeDAO.getNearestConsumeNumber(roomId);
                 request.setAttribute("consumeRoom", consume);
+
+                Consume consumeNumber = ConsumeDAO.getNearestConsume(roomId);
+                request.setAttribute("consumeNumber", consumeNumber);
+
                 List<Consume> consumeList = RoomDAO.getConsumeHistory(roomId);
                 request.setAttribute("consumeList", consumeList);
                 Bill bill = RoomDAO.getLastBill(roomId);
@@ -72,8 +76,12 @@ public class GetRoomDetailServlet extends HttpServlet {
             request.setAttribute("roomInformation", room);
             Contract contract = RoomDAO.getContract(roomId);
             request.setAttribute("contractRoom", contract);
-            Consume consume = RoomDAO.getNearestConsume(roomId);
+            Consume consume = ConsumeDAO.getNearestConsumeNumber(roomId);
             request.setAttribute("consumeRoom", consume);
+
+            Consume consumeNumber = ConsumeDAO.getNearestConsume(roomId);
+            request.setAttribute("consumeNumber", consumeNumber);
+
             List<Consume> consumeList = RoomDAO.getConsumeHistory(roomId);
             request.setAttribute("consumeList", consumeList);
             Bill bill = RoomDAO.getLastBill(roomId);

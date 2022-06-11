@@ -31,7 +31,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                     </div>
-                    <form action="" method=""
+                    <form action="updateConsume" method="POST"
                           class="custom-form update-consume-modal-form"
                           id="update-consume-modal-form">
                         <div class="modal-body">
@@ -57,7 +57,7 @@
                                                class="form-label">Điện</label>
                                     </div>
                                     <div class="col-5">
-                                        <input type="number" value="2423" disabled
+                                        <input type="number" value="${requestScope.consumeNumber.numberElectric}" disabled
                                                class="form-control m-0"
                                                id="form-update-consume__electric-old">
                                     </div>
@@ -80,7 +80,7 @@
                                                class="form-label">Nước</label>
                                     </div>
                                     <div class="col-5">
-                                        <input type="number" value="2423" disabled
+                                        <input type="number" value="${requestScope.consumeNumber.numberWater}" disabled
                                                class="form-control m-0"
                                                id="form-update-consume__water-old">
                                     </div>
@@ -100,6 +100,7 @@
                             <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Hủy bỏ
                             </button>
+                            <input type="hidden" name="roomID" value="${requestScope.roomInformation.roomId}">
                             <button type="submit" class="btn btn-danger">
                                 Cập nhật
                             </button>
