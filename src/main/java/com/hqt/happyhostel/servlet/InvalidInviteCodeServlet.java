@@ -1,6 +1,9 @@
 package com.hqt.happyhostel.servlet;
 
+import com.hqt.happyhostel.dao.HostelOwnerDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
+import com.hqt.happyhostel.dao.RoomInviteDAO;
+import com.hqt.happyhostel.dto.Account;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -9,12 +12,30 @@ import java.io.IOException;
 
 @WebServlet(name = "InvalidInviteCodeServlet", value = "/InvalidInviteCodeServlet")
 public class InvalidInviteCodeServlet extends HttpServlet {
+    private String url = "CreateInvitationPage";
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String roomId = request.getParameter("room_id");
-        int roomID = Integer.parseInt(roomId);
-        RoomDAO.updateRoomInviteCode(roomID, null, null, null);
-        response.sendRedirect();
+        try {
+            String roomId = request.getParameter("room_id");
+            Account owner = null;
+
+            HttpSession session = request.getSession(false);
+            if (session != null) owner = (Account) session.getAttribute("USER");
+
+            if (roomId != null && owner != null) {
+                int roomID = Integer.parseInt(roomId);
+                if (HostelOwnerDAO.checkOwnerRoom(owner.getAccId(), roomID)) {
+                    RoomInviteDAO.updateRoomInviteCode(roomID, null, null, null);
+                    response.sendRedirect(url);
+                } else url = "denied";
+            }
+        } catch (Exception e) {
+            log("Error at InviteCodeServlet: " + e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+
     }
 
     @Override

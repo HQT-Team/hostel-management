@@ -4,7 +4,10 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.hqt.happyhostel.dao.HostelOwnerDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
+import com.hqt.happyhostel.dao.RoomInviteDAO;
+import com.hqt.happyhostel.dto.Account;
 import com.hqt.happyhostel.dto.Room;
 import com.hqt.happyhostel.utils.EncodeBase64Utils;
 import com.hqt.happyhostel.utils.RandomStringGenerator;
@@ -15,7 +18,6 @@ import javax.servlet.annotation.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,53 +29,59 @@ public class InviteCodeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            StringBuilder inviteUrl = new StringBuilder("RenterRegisterPage?inviteCode=");
             String roomId = request.getParameter("room_id");
-            int roomID = Integer.parseInt(roomId);
+            Account owner = null;
+            int ownerId = -1;
 
-            String hostelId = request.getParameter("hostel_id");
-            int hostelID = Integer.parseInt(hostelId);
+            HttpSession session = request.getSession(false);
+            if(session != null) owner = (Account) session.getAttribute("USER");
 
-            String endTimeStr = request.getParameter("startTime");
-            Date endTime = null;
-            Room roomInvite = null;
-            int ownerId = Integer.parseInt(request.getParameter("owner_id"));
-            if(/*roomID khong thuoc hostel cua owner*/){
-                url = "HostelOwnerPage";
-            }else{
-               //check xem trên databse có inviteCode của roomId này chưa
-                if(RoomDAO.getRoomInviteById(roomID).getInviteCode() != null){
-                    roomInvite = RoomDAO.getRoomInviteById(roomID);
-                    inviteUrl = inviteUrl.append(roomInvite.getInviteCode()) ;
-                }else {
-                    //Create invite link
-                    String inviteCode = RandomStringGenerator.randomInviteCode(5,roomId);
-                    inviteUrl = inviteUrl.append(inviteCode) ;
+            //check request parameter
+            if(owner != null && roomId != null){
+                int roomID = Integer.parseInt(roomId);
+                ownerId = owner.getAccId();
 
-                    //Create QR Code
-                    QRCodeWriter barcodeWriter = new QRCodeWriter();
-                    BitMatrix bitMatrix = barcodeWriter.encode(inviteUrl.toString(), BarcodeFormat.QR_CODE, 200, 200);
-                    BufferedImage qrImg = MatrixToImageWriter.toBufferedImage(bitMatrix);
-                    String QRBase64 =  EncodeBase64Utils.imageToBase64(qrImg);
+                //check xem roomID có thuộc ownerID không
+                if(HostelOwnerDAO.checkOwnerRoom(ownerId, roomID)){
+                    Date endTime = null;
+                    Room roomInvite = null;
 
-                    //Create endTime
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                    Calendar startTime = Calendar.getInstance();
-                    long timeInSecs = startTime.getTimeInMillis();
-                    endTime = new Date(timeInSecs + (30 * 60 * 1000));
+                    //check xem trên databse có inviteCode của roomId này chưa
+                    if(RoomInviteDAO.getRoomInviteById(roomID).getInviteCode() != null){
+                        roomInvite = RoomInviteDAO.getRoomInviteById(roomID);
+                        inviteUrl = inviteUrl.append(roomInvite.getInviteCode()) ;
+                    }else {
+                        //Create invite link
+                        String inviteCode = RandomStringGenerator.randomInviteCode(5,roomId);
+                        inviteUrl = inviteUrl.append(inviteCode) ;
 
-                    RoomDAO.updateRoomInviteCode(roomID, inviteCode, QRBase64, sdf.format(endTime));
-                    roomInvite = Room.builder()
-                            .roomId(roomID)
-                            .hostelId(hostelID)
-                            .inviteCode(inviteCode)
-                            .QRCode(QRBase64)
-                            .expiredTimeCode(endTime)
-                            .build();
+                        //Create QR Code
+                        QRCodeWriter barcodeWriter = new QRCodeWriter();
+                        BitMatrix bitMatrix = barcodeWriter.encode(inviteUrl.toString(), BarcodeFormat.QR_CODE, 200, 200);
+                        BufferedImage qrImg = MatrixToImageWriter.toBufferedImage(bitMatrix);
+                        String QRBase64 =  EncodeBase64Utils.imageToBase64(qrImg);
+
+                        //Create endTime
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                        Calendar startTime = Calendar.getInstance();
+                        long timeInSecs = startTime.getTimeInMillis();
+                        endTime = new Date(timeInSecs + (30 * 60 * 1000));
+
+                        RoomInviteDAO.updateRoomInviteCode(roomID, inviteCode, QRBase64, sdf.format(endTime));
+                        roomInvite = Room.builder()
+                                .roomId(roomID)
+                                .inviteCode(inviteCode)
+                                .QRCode(QRBase64)
+                                .expiredTimeCode(endTime)
+                                .build();
+                    }
+                    request.setAttribute("ROOM_INVITE", roomInvite);
+                    request.setAttribute("URL_INVITE", inviteUrl);
+
+                }else{
+                    url = "ErrorPage";
                 }
-                request.setAttribute("ROOM_INVITE", roomInvite);
-                request.setAttribute("URL_INVITE", inviteUrl);
-            }
+            }else url = "ErrorPage";
 
         }catch (Exception e){
             log("Error at InviteCodeServlet: " + e.toString());
