@@ -48,7 +48,7 @@
                 </div>
                 <div class="row mb-5">
                     <div class="content-body col-12 col-md-10 col-lg-9 col-xl-8 m-auto">
-                        <form action="add-new-hostel" method="get" class="custom-form add-hostel-form" id="add-hostel-form">
+                        <form action="add-new-hostel" method="POST" class="custom-form add-hostel-form" id="add-hostel-form">
                             <div class="form-header">
                                 <div class="form-title main-title">Thêm khu trọ mới</div>
                             </div>

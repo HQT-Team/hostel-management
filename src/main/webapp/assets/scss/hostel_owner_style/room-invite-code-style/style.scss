@@ -1,0 +1,159 @@
+@import "../_common-style/navbar";
+@import "../_common-style/sidebar";
+@import "../_common-style/footer";
+
+// Style here
+.content-group {
+  min-height: var(--min-body-height);
+
+  .content-body {
+    padding: 24px 24px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  }
+}
+
+.invite-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.invite-countdown {
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  font-weight: 600;
+  flex: 1;
+
+  span {
+    color: red;
+  }
+
+  .invite-countdown-success {
+    color: rgb(0, 214, 0);
+  }
+}
+
+.invite-recreate-btn {
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  background-color: var(--white-color);
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  width: 188px;
+  height: 46px;
+  margin-left: 8px;
+
+  &:hover {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+  }
+}
+
+.invite-group {
+  margin: 24px 0;
+}
+
+.invite-title {
+  font-size: 2.2rem;
+  line-height: 2.2rem;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.invite-content {
+  margin-bottom: 16px;
+}
+
+.invite-qr-img {
+  width: 100%;
+}
+
+.code-fragment {
+  background-color: var(--black-color);
+  border-radius: 4px;
+  padding: 8px 12px;
+  position: relative;
+}
+
+.invite-copy {
+  display: none;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 1rem;
+  padding: 4px 6px;
+  border-radius: 2px;
+  border: 0.5px solid rgb(103, 103, 103);
+  background-color: rgba(79, 31, 3, 0.5);
+  color: rgb(255, 255, 255);
+
+  &:hover {
+    background-color: rgba(137, 50, 0, 0.5);
+  }
+}
+
+.invite-content__code {
+  &:hover {
+    .invite-copy__code {
+      display: block;
+    }
+  }
+}
+
+.invite-content__link {
+  &:hover {
+    .invite-copy__link {
+      display: block;
+    }
+  }
+}
+
+.invite-code {
+  font-size: 2.6rem;
+  line-height: 3.6rem;
+  font-weight: 600;
+}
+
+.invite-url {
+  color: rgb(0, 214, 0);
+  font-size: 2rem;
+  line-height: 3rem;
+}
+
+.invite-notices {
+  color: #ff0000;
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.invite-notices-items {
+  margin-bottom: 4px;
+}
+
+.invite-action {
+  display: block;
+  margin-top: 24px;
+
+  &:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 768px) {
+  .invite-header {
+    flex-direction: column;
+  }
+
+  .invite-recreate-btn {
+    margin-left: 0;
+    margin-top: 16px;
+  }
+
+  .invite-qr-img {
+    width: 200px;
+  }
+}

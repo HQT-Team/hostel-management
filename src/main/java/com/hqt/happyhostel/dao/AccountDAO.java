@@ -370,7 +370,6 @@ public class AccountDAO {
         } finally {
             if (cn != null && pst != null) {
                 try {
-                    pst.close();
                     cn.close();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -379,7 +378,6 @@ public class AccountDAO {
         }
         return result;
     }
-
 
     // Handle register
     private static final String IS_EXIST_USERNAME = "SELECT username FROM [dbo].[Accounts] Where username = ?";
@@ -505,6 +503,4 @@ public class AccountDAO {
         }
         return check;
     }
-
-
 }

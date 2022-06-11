@@ -16,12 +16,11 @@ import java.util.List;
 
 @WebServlet(name = "ShowListHostelsServlet", value = "/ShowListHostelsServlet")
 public class ShowListHostelsServlet extends HttpServlet {
-    public static final String ERROR = "error.jsp";
     public static final String SUCCESS = "list-hostel-page";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String url = ERROR;
+        String url = SUCCESS;
         Account acc = new Account();
 
         try {
@@ -31,10 +30,8 @@ public class ShowListHostelsServlet extends HttpServlet {
             int accountId = acc.getAccId();
             List<Hostel> listHostel = hostelDAO.getHostelByOwnerId(accountId);
 
-            if (listHostel.size() > 0) {
-                req.setAttribute("LIST_HOSTEL", listHostel);
-                url = SUCCESS;
-            }
+            req.setAttribute("LIST_HOSTEL", listHostel);
+
             session.setAttribute("CURRENT_PAGE", "hostel");
         } catch (SQLException e) {
             throw new RuntimeException(e);

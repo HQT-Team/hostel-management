@@ -17,17 +17,8 @@
                             <c:when test="${sessionScope.CURRENT_PAGE eq 'dashboard'}">
                                 Tổng quan
                             </c:when>
-                            <c:when test="${sessionScope.CURRENT_PAGE eq 'hostel'}">
-                                Khu trọ
-                            </c:when>
-                            <c:when test="${sessionScope.CURRENT_PAGE eq 'room'}">
-                                Phòng trọ
-                            </c:when>
-                            <c:when test="${sessionScope.CURRENT_PAGE eq 'notification'}">
-                                Thông báo
-                            </c:when>
-                            <c:when test="${sessionScope.CURRENT_PAGE eq 'report'}">
-                                Báo cáo
+                            <c:when test="${sessionScope.CURRENT_PAGE eq 'account'}">
+                                Quản lý tài khoản
                             </c:when>
                         </c:choose>
                     </h3>
@@ -37,12 +28,13 @@
                         <i class="notification__icon fa-solid fa-bell"></i>
 
                         <!-- Remove class "active" when don't have any new notification -->
-                        <span class="notification__warning active"><i class="fa-solid fa-exclamation"></i></span>
+                        <span class="notification__warning active"><i
+                                class="fa-solid fa-exclamation"></i></span>
                     </div>
                     <div id="nav-profile-btn" class="profile">
                         <div class="profile__infor">
                             <h3 class="infor__name">${sessionScope.USER.accountInfo.information.fullname}</h3>
-                            <span class="infor__role">Chủ phòng trọ</span>
+                            <span class="infor__role">Quản trị viên</span>
                         </div>
                         <div class="profile__avatar">
                             <img class="avatar__img" src="./assets/images/avatars/user-avatar.jpg"
