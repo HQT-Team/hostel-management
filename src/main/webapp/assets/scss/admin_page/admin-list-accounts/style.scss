@@ -1,0 +1,59 @@
+@import "../_common-style/navbar";
+@import "../_common-style/sidebar";
+@import "../_common-style/footer";
+
+// Main css
+.content-group {
+  min-height: var(--min-body-height);
+}
+
+// Welcome
+.content-welcome {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.welcome-image {
+  width: 74px;
+  height: 74px;
+  border: 2px solid #0067ff;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.welcome-title {
+  font-size: 2.4rem;
+  line-height: 2.4rem;
+  margin-bottom: 8px;
+
+  span {
+    color: #ff6a00;
+  }
+}
+
+.welcome-paragraph {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+// Content body css
+.uncheck-acc,
+.checked-acc {
+  padding: 16px 16px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+
+  .uncheck-acc__title,
+  .checked-acc__title {
+    font-size: 2.8rem;
+    line-height: 2.8rem;
+    font-weight: 700;
+    margin: 8px 0 24px;
+  }
+}
+
+.dataTables_filter,
+.dataTables_length {
+  margin-bottom: 16px;
+}
