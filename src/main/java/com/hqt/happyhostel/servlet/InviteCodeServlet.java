@@ -23,7 +23,9 @@ import java.util.Date;
 
 @WebServlet(name = "InviteCodeServlet", value = "/InviteCodeServlet")
 public class InviteCodeServlet extends HttpServlet {
-    private String url = "CreateInvitationPage";
+    private final String success = "CreateInvitationPage";
+    private final String denied = "denied";
+    private String url;
     private StringBuilder inviteUrl = new StringBuilder("RenterRegisterPage?inviteCode=");
 
     @Override
@@ -77,11 +79,11 @@ public class InviteCodeServlet extends HttpServlet {
                     }
                     request.setAttribute("ROOM_INVITE", roomInvite);
                     request.setAttribute("URL_INVITE", inviteUrl);
-
+                    url = success;
                 }else{
-                    url = "ErrorPage";
+                    url = denied;
                 }
-            }else url = "ErrorPage";
+            }else url = denied;
 
         }catch (Exception e){
             log("Error at InviteCodeServlet: " + e.toString());

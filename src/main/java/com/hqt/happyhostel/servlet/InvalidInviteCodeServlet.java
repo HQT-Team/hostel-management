@@ -12,7 +12,9 @@ import java.io.IOException;
 
 @WebServlet(name = "InvalidInviteCodeServlet", value = "/InvalidInviteCodeServlet")
 public class InvalidInviteCodeServlet extends HttpServlet {
-    private String url = "CreateInvitationPage";
+    private final String success = "CreateInvitationPage";
+    private final String denied = "denied";
+    private String url;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,8 +29,9 @@ public class InvalidInviteCodeServlet extends HttpServlet {
                 int roomID = Integer.parseInt(roomId);
                 if (HostelOwnerDAO.checkOwnerRoom(owner.getAccId(), roomID)) {
                     RoomInviteDAO.updateRoomInviteCode(roomID, null, null, null);
+                    url = success;
                     response.sendRedirect(url);
-                } else url = "denied";
+                } else url = denied;
             }
         } catch (Exception e) {
             log("Error at InviteCodeServlet: " + e.toString());
