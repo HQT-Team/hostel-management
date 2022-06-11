@@ -85,40 +85,42 @@
                             <%@include file="./room-detail-components/room-infrastructure.jsp"%>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-md4">
-                            <button class="btn btn-outline-dark d-none" data-bs-toggle="modal"
-                                    data-bs-target="#change-room-status-modal"
-                                    style="font-size: 1.6rem; font-weight: 600; padding: 8px 12px;">
-                                Cập nhật trạng thái phòng
-                            </button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="change-room-status-modal" tabindex="-1"
-                                 aria-labelledby="change-room-status-modalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title text-warning" id="change-room-status-modalLabel">
-                                                Cảnh báo
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body mt-5 mb-5"
-                                             style="font-size: 1.8rem; line-height: 2.8rem;">
-                                            Phòng chưa tới hạn trả phòng, bạn có chắc là muốn cập nhật trạng thái về
-                                            "<span style="font-weight: 600;">Sẵn sàng cho thuê</span>" không?
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Hủy bỏ</button>
-                                            <a href="" class="btn btn-danger">Đồng ý</a>
+                    <c:if test="${requestScope.roomInformation.roomStatus == 0}">
+                        <div class="row">
+                            <div class="col-12 col-md4">
+                                <button class="btn btn-outline-dark d-none" data-bs-toggle="modal"
+                                        data-bs-target="#change-room-status-modal"
+                                        style="font-size: 1.6rem; font-weight: 600; padding: 8px 12px;">
+                                    Cập nhật trạng thái phòng
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="change-room-status-modal" tabindex="-1"
+                                     aria-labelledby="change-room-status-modalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title text-warning" id="change-room-status-modalLabel">
+                                                    Cảnh báo
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body mt-5 mb-5"
+                                                 style="font-size: 1.8rem; line-height: 2.8rem;">
+                                                Phòng chưa tới hạn trả phòng, bạn có chắc là muốn cập nhật trạng thái về
+                                                "<span style="font-weight: 600;">Sẵn sàng cho thuê</span>" không?
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Hủy bỏ</button>
+                                                <a href="" class="btn btn-danger">Đồng ý</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
                 </div>
             </div>
         </div>
