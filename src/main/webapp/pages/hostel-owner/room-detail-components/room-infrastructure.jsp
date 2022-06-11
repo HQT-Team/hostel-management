@@ -134,11 +134,10 @@
                                     </div>
                                     <div id="add-new-infrastructure-type" class="col-6">
                                         <select class="form-control m-0" name="">
-                                            <option value="">Chọn loại cơ sở vật chất
-                                            </option>
-                                            <option value="1">Tivi</option>
-                                            <option value="2">Tủ lạnh</option>
-                                            <option value="3">Máy giặt</option>
+                                            <option value="0">Chọn loại cơ sở vật chất</option>
+                                            <c:forEach var="infrastructureItem" items="${requestScope.infrastructureList}">
+                                                <option value="${infrastructureItem.idInfrastructureItem}">${infrastructureItem.infrastructureName}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>

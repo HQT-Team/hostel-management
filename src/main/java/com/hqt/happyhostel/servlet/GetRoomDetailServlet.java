@@ -2,6 +2,7 @@ package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dao.ConsumeDAO;
+import com.hqt.happyhostel.dao.InfrastructureDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
 import com.hqt.happyhostel.dto.*;
 
@@ -42,13 +43,18 @@ public class GetRoomDetailServlet extends HttpServlet {
 
                 List<Consume> consumeList = RoomDAO.getConsumeHistory(roomId);
                 request.setAttribute("consumeList", consumeList);
+
+                List<InfrastructureItem> infrastructureItemList = InfrastructureDAO.getAllInfrastructure(roomId);
+                request.setAttribute("infrastructureList", infrastructureItemList);
+
                 Bill bill = RoomDAO.getLastBill(roomId);
                 request.setAttribute("billRoom", bill);
+
                 ArrayList<RoommateInfo> roommateInfo = RoomDAO.getRoommateInformation(roomId);
                 request.setAttribute("roommateInfo", roommateInfo);
                 String username = AccountDAO.getUsernameRoomCurrently(roomId);
                 request.setAttribute("userNameRenterRoom", username);
-                ArrayList<Infrastructures> infrastructures = RoomDAO.getInfrastructures(roomId);
+                ArrayList<Infrastructures> infrastructures = InfrastructureDAO.getInfrastructures(roomId);
                 request.setAttribute("infrastructures", infrastructures);
 
                 int quantityMember = RoomDAO.getQuantityMember(roomId);
@@ -84,13 +90,17 @@ public class GetRoomDetailServlet extends HttpServlet {
 
             List<Consume> consumeList = RoomDAO.getConsumeHistory(roomId);
             request.setAttribute("consumeList", consumeList);
+
+            List<InfrastructureItem> infrastructureItemList = InfrastructureDAO.getAllInfrastructure(roomId);
+            request.setAttribute("infrastructureList", infrastructureItemList);
+
             Bill bill = RoomDAO.getLastBill(roomId);
             request.setAttribute("billRoom", bill);
             ArrayList<RoommateInfo> roommateInfo = RoomDAO.getRoommateInformation(roomId);
             request.setAttribute("roommateInfo", roommateInfo);
             String username = AccountDAO.getUsernameRoomCurrently(roomId);
             request.setAttribute("userNameRenterRoom", username);
-            ArrayList<Infrastructures> infrastructures = RoomDAO.getInfrastructures(roomId);
+            ArrayList<Infrastructures> infrastructures = InfrastructureDAO.getInfrastructures(roomId);
             request.setAttribute("infrastructures", infrastructures);
             int quantityMember = RoomDAO.getQuantityMember(roomId);
             request.setAttribute("quantityMember", quantityMember);

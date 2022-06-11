@@ -330,53 +330,6 @@ public class RoomDAO {
         return isInserted;
     }
 
-    public static ArrayList<Infrastructures> getInfrastructures(int roomID) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ArrayList<Infrastructures> infrastructures = new ArrayList<>();
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "SELECT id_infrastructure, quantity, status, infrastructure_name\n" +
-                        "FROM InfrastructuresRoom I, InfrastructureItem IT\n" +
-                        "WHERE I.room_id = ?\n" +
-                        "AND I.id_infrastructure_item = IT.id_infrastructure_item";
-
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, roomID);
-
-                ResultSet rs = pst.executeQuery();
-                if (rs != null) {
-                    while (rs.next()) {
-                        int id = rs.getInt("id_infrastructure");
-                        String name = rs.getString("infrastructure_name");
-                        int quantity = rs.getInt("quantity");
-                        int status = rs.getInt("status");
-                        infrastructures.add(new Infrastructures(id, name, quantity, status));
-                    }
-                }
-            }
-            cn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return infrastructures;
-    }
 
     public static Room getRoomInformationByRoomID(int roomID, int hostelID, int accountOwnerID) {
         Connection cn = null;
