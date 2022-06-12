@@ -44,7 +44,7 @@ public class GetRoomDetailServlet extends HttpServlet {
                 List<Consume> consumeList = RoomDAO.getConsumeHistory(roomId);
                 request.setAttribute("consumeList", consumeList);
 
-                List<InfrastructureItem> infrastructureItemList = InfrastructureDAO.getAllInfrastructure(roomId);
+                List<InfrastructureItem> infrastructureItemList = InfrastructureDAO.getAllInfrastructure();
                 request.setAttribute("infrastructureList", infrastructureItemList);
 
                 Bill bill = RoomDAO.getLastBill(roomId);
@@ -91,7 +91,7 @@ public class GetRoomDetailServlet extends HttpServlet {
             List<Consume> consumeList = RoomDAO.getConsumeHistory(roomId);
             request.setAttribute("consumeList", consumeList);
 
-            List<InfrastructureItem> infrastructureItemList = InfrastructureDAO.getAllInfrastructure(roomId);
+            List<InfrastructureItem> infrastructureItemList = InfrastructureDAO.getAllInfrastructure();
             request.setAttribute("infrastructureList", infrastructureItemList);
 
             Bill bill = RoomDAO.getLastBill(roomId);

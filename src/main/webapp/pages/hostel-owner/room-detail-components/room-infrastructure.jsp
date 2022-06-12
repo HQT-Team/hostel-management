@@ -17,7 +17,7 @@
                 <c:choose>
                     <c:when test="${infrastructures.status eq 1}">
                         <td class="infrastructure-status">
-                            Còn sử dụng
+                            Sử dụng tốt
                         </td>
                     </c:when>
                     <c:otherwise>
@@ -74,11 +74,11 @@
                                             <select name="status" class="form-control">
                                                 <c:choose>
                                                     <c:when test="${infrastructures.status eq 1}">
-                                                        <option value="1" selected>Còn sử dụng</option>
+                                                        <option value="1" selected>Sử dụng tốt</option>
                                                         <option value="0">Hư hỏng</option>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <option value="1">Còn sử dụng</option>
+                                                        <option value="1">Sử dụng tốt</option>
                                                         <option value="0" selected>Hư hỏng</option>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -122,7 +122,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                     </div>
-                    <form action="" method=""
+                    <form action="addInfrastructureServlet" method="post"
                           class="custom-form add-new-infrastructure-form">
                         <div class="modal-body">
                             <div class="form-group">
@@ -133,9 +133,10 @@
                                             chất <span>*</span></label>
                                     </div>
                                     <div id="add-new-infrastructure-type" class="col-6">
-                                        <select class="form-control m-0" name="">
+                                        <select class="form-control m-0" name="idNewInfrastructure">
                                             <option value="0">Chọn loại cơ sở vật chất</option>
-                                            <c:forEach var="infrastructureItem" items="${requestScope.infrastructureList}">
+                                            <c:forEach var="infrastructureItem"
+                                                       items="${requestScope.infrastructureList}">
                                                 <option value="${infrastructureItem.idInfrastructureItem}">${infrastructureItem.infrastructureName}</option>
                                             </c:forEach>
                                         </select>
@@ -153,8 +154,8 @@
                                     </div>
                                     <div id="add-new-infrastructure-status"
                                          class="col-6">
-                                        <select class="form-control m-0">
-                                            <option value="1">Còn sử dụng</option>
+                                        <select class="form-control m-0" name="statusNewInfrastructure">
+                                            <option value="1">Sử dụng tốt</option>
                                             <option value="2">Hư hỏng</option>
                                         </select>
                                     </div>
@@ -166,7 +167,8 @@
                             <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Quay về
                             </button>
-                            <button type="button" class="btn btn-primary">
+                            <input type="hidden" name="roomID" value="${requestScope.roomInformation.roomId}">
+                            <button type="submit" class="btn btn-primary">
                                 Thêm
                             </button>
                         </div>

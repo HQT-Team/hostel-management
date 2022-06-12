@@ -33,6 +33,7 @@ public class UpdateInfrastructureStatusServlet extends HttpServlet {
                 Boolean update = InfrastructureDAO.updateInfrastructureStatus(idInfrastructure, status);
                 if (!update) {
                     url = "list-hostels";
+                    request.setAttribute("roomID", roomID);
                     request.setAttribute("updateSuccess", false);
                     break;
                 } else {

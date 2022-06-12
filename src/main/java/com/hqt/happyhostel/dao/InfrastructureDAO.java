@@ -103,24 +103,19 @@ public class InfrastructureDAO {
         return infrastructures;
     }
 
-
-    public static ArrayList<InfrastructureItem> getAllInfrastructure(int roomID) {
+    public static ArrayList<InfrastructureItem> getAllInfrastructure() {
         Connection cn = null;
-        PreparedStatement pst = null;
+        Statement pst = null;
         ArrayList<InfrastructureItem> infrastructureItems = new ArrayList<>();
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT id_infrastructure_item, infrastructure_name\n" +
-                        "FROM InfrastructureItem\n" +
-                        "WHERE id_infrastructure_item NOT IN (SELECT id_infrastructure_item \n" +
-                        "\t\t\t\t\t\t\t\t\tFROM InfrastructuresRoom\n" +
-                        "\t\t\t\t\t\t\t\t\tWHERE room_id = ?)";
+                        "FROM InfrastructureItem\n";
 
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, roomID);
+                pst = cn.createStatement();
 
-                ResultSet rs = pst.executeQuery();
+                ResultSet rs = pst.executeQuery(sql);
                 if (rs != null) {
                     while (rs.next()) {
                         int idInfrastructureItem = rs.getInt("id_infrastructure_item");
@@ -150,6 +145,51 @@ public class InfrastructureDAO {
         }
 
         return infrastructureItems;
+    }
+
+    public static Boolean addNewInfrastructure(int roomID, int quantity, int status, int idInfrastructureItem) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Boolean isSuccess = false;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "VALUES (?, ?, ?, ?)";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+                pst.setInt(2, quantity);
+                pst.setInt(3, status);
+                pst.setInt(4, idInfrastructureItem);
+
+                int rows = pst.executeUpdate();
+                if (rows == 0) {
+                    isSuccess = false;
+                } else {
+                    isSuccess = true;
+                }
+            }
+            cn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return isSuccess;
     }
 
 }
