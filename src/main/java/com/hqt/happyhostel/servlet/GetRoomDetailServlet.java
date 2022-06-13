@@ -1,9 +1,6 @@
 package com.hqt.happyhostel.servlet;
 
-import com.hqt.happyhostel.dao.AccountDAO;
-import com.hqt.happyhostel.dao.HostelDAO;
-import com.hqt.happyhostel.dao.RoomDAO;
-import com.hqt.happyhostel.dao.RoommateInfoDAO;
+import com.hqt.happyhostel.dao.*;
 import com.hqt.happyhostel.dto.*;
 
 import javax.servlet.ServletException;
@@ -27,7 +24,7 @@ public class GetRoomDetailServlet extends HttpServlet {
             Room room = RoomDAO.getRoomInformationByRoomID(roomId);
             request.setAttribute("roomInformation", room);
 
-            Contract contract = RoomDAO.getContract(roomId);
+            Contract contract = ContractDAO.getContract(roomId);
             request.setAttribute("contractRoom", contract);
 
             Consume consume = RoomDAO.getNearestConsume(roomId);

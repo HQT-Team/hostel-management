@@ -411,6 +411,8 @@ public class RoomDAO {
                             .roomId(roomID)
                             .hostelId(hostelId)
                             .roomNumber(roomNumber)
+                            .roomStatus(roomStatus)
+                            .capacity(capacity)
                             .roomArea(roomArea)
                             .hasAttic(hasAttic)
                             .roomInformation(roomInformation)
@@ -439,51 +441,7 @@ public class RoomDAO {
         return room;
     }
 
-    public static Contract getContract(int roomID) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        Contract contract = null;
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "SELECT contract_id, room_id, price, start_date, expiration, deposit\n" +
-                        "FROM Contracts\n" +
-                        "WHERE room_id = ?";
 
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, roomID);
-
-                ResultSet rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    int contract_id = rs.getInt("contract_id");
-                    int price = rs.getInt("price");
-                    String startDate = rs.getString("start_date");
-                    String expiration = rs.getString("expiration");
-                    int deposit = rs.getInt("deposit");
-                    contract = new Contract(contract_id, roomID, price, startDate, expiration, deposit);
-                }
-            }
-            cn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return contract;
-    }
 
     public static Bill getLastBill(int roomID) {
         Connection cn = null;
@@ -708,7 +666,7 @@ public class RoomDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-
+                cn.setAutoCommit(false);
                 String sqlUpdateRoom = "UPDATE Rooms\n" +
                         "SET room_number = ?, capacity = ?, room_area = ?, has_attic = ?\n" +
                         "WHERE room_id = ?";
@@ -752,5 +710,50 @@ public class RoomDAO {
 
 
     //Phan nay Nam moi them vao
+    public static boolean updateRoomStatus(int roomID, int status) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Boolean isSuccess = false;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+
+                String sqlUpdateRoom = "UPDATE Rooms\n" +
+                        "SET room_status = ?\n" +
+                        "WHERE room_id = ?";
+
+                pst = cn.prepareStatement(sqlUpdateRoom);
+                pst.setInt(1, status);
+                pst.setInt(2, roomID);
+
+                int rows = pst.executeUpdate();
+                if (rows < 1) {
+                    cn.rollback();
+                } else {
+                    isSuccess = true;
+                    cn.commit();
+                }
+            }
+            cn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return isSuccess;
+    }
 
 }

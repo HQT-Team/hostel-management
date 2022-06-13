@@ -17,23 +17,30 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+
 
 @WebServlet(name = "InviteCodeServlet", value = "/InviteCodeServlet")
 public class InviteCodeServlet extends HttpServlet {
-    private final String success = "CreateInvitationPage";
+    private final String success = "invite-code-page";
     private final String denied = "denied";
     private String url;
-    private StringBuilder inviteUrl = new StringBuilder("RenterRegisterPage?inviteCode=");
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String roomId = request.getParameter("room_id");
             Account owner = null;
             int ownerId = -1;
+            StringBuilder inviteUrl = new StringBuilder("RenterRegisterPage?inviteCode=");
 
             HttpSession session = request.getSession(false);
             if(session != null) owner = (Account) session.getAttribute("USER");
@@ -45,7 +52,7 @@ public class InviteCodeServlet extends HttpServlet {
 
                 //check xem roomID có thuộc ownerID không
                 if(HostelOwnerDAO.checkOwnerRoom(ownerId, roomID)){
-                    Date endTime = null;
+                    Timestamp endTime = null;
                     Room roomInvite = null;
 
                     //check xem trên databse có inviteCode của roomId này chưa
@@ -67,15 +74,13 @@ public class InviteCodeServlet extends HttpServlet {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                         Calendar startTime = Calendar.getInstance();
                         long timeInSecs = startTime.getTimeInMillis();
-                        endTime = new Date(timeInSecs + (30 * 60 * 1000));
+                        endTime = new Timestamp(timeInSecs + (30 * 60 * 1000));
 
-                        RoomInviteDAO.updateRoomInviteCode(roomID, inviteCode, QRBase64, sdf.format(endTime));
-                        roomInvite = Room.builder()
-                                .roomId(roomID)
-                                .inviteCode(inviteCode)
-                                .QRCode(QRBase64)
-                                .expiredTimeCode(endTime)
-                                .build();
+                        if(RoomInviteDAO.updateRoomInviteCode(roomID, inviteCode, QRBase64, sdf.format(endTime))){
+                            RoomDAO.updateRoomStatus(roomID, 0);
+                            roomInvite = RoomInviteDAO.getRoomInviteById(roomID);
+                        } else url = denied;
+
                     }
                     request.setAttribute("ROOM_INVITE", roomInvite);
                     request.setAttribute("URL_INVITE", inviteUrl);
@@ -90,10 +95,5 @@ public class InviteCodeServlet extends HttpServlet {
         }finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

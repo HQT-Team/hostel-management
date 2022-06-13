@@ -118,7 +118,7 @@
         <c:choose>
             <c:when test="${requestScope.roomInformation.roomStatus eq 1 || requestScope.userNameRenterRoom eq null}">
                 <!-- Start create account button -->
-                <a href="" class="action-create-account-link">Tạo tài khoản</a>
+                <a href="create-room-account?room_id=${requestScope.roomInformation.roomId}" class="action-create-account-link">Tạo tài khoản</a>
                 <!-- End create account button -->
             </c:when>
             <c:when test="${requestScope.billRoom ne null}">

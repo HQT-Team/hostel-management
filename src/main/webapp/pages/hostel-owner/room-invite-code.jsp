@@ -79,7 +79,7 @@
                                 <div id="invite-content__code"
                                      class="invite-content code-fragment invite-content__code">
                                     <code id="invite-code" class="invite-code">
-                                        aLgdsfjOIlkafgjlnsldfkLJKGF430
+                                        ${requestScope.ROOM_INVITE.inviteCode}
                                     </code>
                                     <button id="invite-copy__code" class="invite-copy invite-copy__code">Sao
                                         chép</button>
@@ -93,7 +93,7 @@
                                 <div id="invite-content__link"
                                      class="invite-content code-fragment invite-content__link">
                                     <code id="invite-link" class="invite-url">
-                                        https://www.google.com/search?q
+                                        ${requestScope.URL_INVITE}
                                     </code>
                                     <button id="invite-copy__link" class="invite-copy invite-copy__link">Sao
                                         chép</button>
@@ -137,15 +137,15 @@
 <script src="./assets/js/owner/room-invite-code/handle-countdown.js"></script>
 <script>
     // Handle encode and render QR image
-    const imgBase64Code = 'iVBORw0KGgoAAAANSUhEUgAAAMgAAADIAQAAAACFI5MzAAABe0lEQVR4Xu2XQW6DQAxFHWUxS44wNyEXiwQSF4Ob+AgsZ4Fw/T0RSRO67KeVsBSEeSws5vvbEfsp5P3BFic5CeJvEBWRq5VWJIs0vWcNm/hv0HKbRcrNBrOVToo0yOWebWwGlfYQgrzPaT2OWDJbZK82BjGcTxqR287JEQg0qqX1svzyoV4CqSEXCDUe1pxINLozTX6bpvme445KUJZVpyj+aSRt50MjCcqEU2SIQ/GIS9AWS4ZTIFukqpVJzD2yz3AKHNKSy9anLKLJ5g5O4e+EVp5Vs4jEnBibRaR10453qMSQ48MAu2fwiabVe8OmKo4le6lsUrxP1TV6RcfG2GATi9rM+zShVcqzNhYpl7nzZpUO60MH46ATzCy3KW8QVPni5CQSoXGFSdQ7KlFBbT64HrvLy/mwiMXGMrllYm4/thgqwf6msOp6PmiaI0j0KWr7rlEiEfyTsGl+Uy+HWOywMbdXTAw+CY3GDhtu+a7e3yf7cZKTIP4n+QKa4GQH8+Of1AAAAABJRU5ErkJggg==';
+    const imgBase64Code ='${requestScope.ROOM_INVITE.QRCode}';
     const image = new Image();
-    image.src = `data:image/png;base64,${imgBase64Code}`;
+    image.src = 'data:image/png;base64,'+imgBase64Code;
     image.classList.add("invite-qr-img");
     $('#invite-content__image').append(image);
 
     // Handle Countdown time
     handleCountDown({
-        targetDate: "2022-6-10 07:51:00"
+        targetDate: "${requestScope.ROOM_INVITE.expiredTimeCode}"
     });
 </script>
 

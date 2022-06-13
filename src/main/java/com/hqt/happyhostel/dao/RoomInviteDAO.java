@@ -33,7 +33,6 @@ public class RoomInviteDAO {
                     String inviteCode = rs.getString("invite_code");
                     String QRCode = rs.getString("QRcode");
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                     Timestamp endTime = rs.getTimestamp("expiredTimeCode");
                     room = Room.builder()
                             .roomId(roomId)
@@ -114,23 +113,31 @@ public class RoomInviteDAO {
     }
 
 
-    public static int updateRoomInviteCode(int idRoom, String inviteCode, String QRCode, String endTime) {
+    public static boolean updateRoomInviteCode(int idRoom, String inviteCode, String QRCode, String endTime) {
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;
+        Boolean isSuccess = false;
         int result = 0;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
+                cn.setAutoCommit(false);
                 String sql = "Update [dbo].[Rooms]\n" +
                         "Set  [invite_code] = ?, [QRcode] = ? , [expiredTimeCode] = ?\n" +
-                        "Where [room_id] = ? AND [room_status] = 0";
+                        "Where [room_id] = ? AND [room_status] = 1";
                 pst = cn.prepareStatement(sql);
                 pst.setString(1, inviteCode);
                 pst.setString(2, QRCode);
                 pst.setString(3, endTime);
                 pst.setInt(4, idRoom);
                 result = pst.executeUpdate();
+                if (result < 1) {
+                    cn.rollback();
+                } else {
+                    isSuccess = true;
+                    cn.commit();
+                }
             }
 
         } catch (Exception e) {
@@ -145,6 +152,6 @@ public class RoomInviteDAO {
                 }
             }
         }
-        return result;
+        return isSuccess;
     }
 }
