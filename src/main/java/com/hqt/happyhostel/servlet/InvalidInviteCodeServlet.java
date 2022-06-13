@@ -36,8 +36,6 @@ public class InvalidInviteCodeServlet extends HttpServlet {
             }else url = denied;
         } catch (Exception e) {
             log("Error at InviteCodeServlet: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
         }
 
     }

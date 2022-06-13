@@ -126,9 +126,14 @@
                 <button class="action-calculate-btn">Tính tiền phòng</button>
                 <!-- End calculate button button -->
             </c:when>
+            <c:when test="${requestScope.roomInformation.roomStatus eq 0}">
+                <!-- Start view QR Code button -->
+                <form action="createInvite" method="post">
+                    <input type="hidden" name="room_id" value="${requestScope.roomInformation.roomId}" >
+                    <button type="submit" class="action-create-account-link">Xem mã tham gia</button>
+                </form>
+                <!-- End view QR Code button -->
+            </c:when>
         </c:choose>
-        <!-- Start view QR Code button -->
-        <a href="" class="action-create-account-link d-none">Xem mã tham gia</a>
-        <!-- End view QR Code button -->
     </div>
 </div>

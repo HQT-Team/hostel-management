@@ -31,11 +31,11 @@ public class CreateRenterAccountServlet extends HttpServlet {
         String url = null;
         try {
             String roomId = req.getParameter("room_id");
-            String username = req.getParameter("username");
-            String price = req.getParameter("price");
-            String deposit = req.getParameter("deposit");
-            String startDate = req.getParameter("startDate");
-            String endDate = req.getParameter("endDate");
+            String username = req.getParameter("room-username");
+            String price = req.getParameter("room-fee");
+            String deposit = req.getParameter("room-deposit");
+            String startDate = req.getParameter("room-startdate");
+            String endDate = req.getParameter("room-enddate");
             if (!AccountDAO.isExistUsername(username)) {
                 String password = SecurityUtils.hashMd5(RandomStringGenerator.randomPassword(12, username));
                 Account renterAccount = Account.builder()
@@ -43,6 +43,7 @@ public class CreateRenterAccountServlet extends HttpServlet {
                         .password(password)
                         .status(0)
                         .role(2)
+                        .roomId(Integer.parseInt(roomId))
                         .build();
 
                 int renterId = AccountDAO.createRenterAccount(renterAccount);

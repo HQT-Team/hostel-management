@@ -381,8 +381,8 @@ public class AccountDAO {
 
     // Handle register
     private static final String IS_EXIST_USERNAME = "SELECT username FROM [dbo].[Accounts] Where username = ?";
-    private static final String ADD_AN_ACCOUNT = "INSERT INTO Accounts (username, password, create_date, status, role) \n" +
-                                                 "VALUES (?, ?, GETDATE(), ?, ?)";
+    private static final String ADD_AN_ACCOUNT = "INSERT INTO Accounts (username, password, create_date, status, role, room_id) \n" +
+                                                 "VALUES (?, ?, GETDATE(), ?, ?, ?)";
     private static final String ADD_ACCOUNT_INFORMATION = "INSERT INTO AccountInformations (account_id, fullname, email, identity_card_number) \n" +
                                                           "VALUES (?, ?, ?, ?)";
 
@@ -521,8 +521,9 @@ public class AccountDAO {
                 pst.setString(2, account.getPassword());
                 pst.setInt(3, account.getStatus());
                 pst.setInt(4, account.getRole());
-                rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
+                pst.setInt(5, account.getRoomId());
+
+                if (pst.executeUpdate() > 0) {
 
                     rs = pst.getGeneratedKeys();
                     if (rs.next()) {

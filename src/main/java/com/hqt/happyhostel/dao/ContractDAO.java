@@ -8,7 +8,7 @@ import java.sql.*;
 
 public class ContractDAO {
     private static final String ADD_AN_CONTRACT = "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id])\n" +
-            "VALUES ?, ?, ?, ?, ?, ?, ?";
+            "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     public static boolean addContract(Contract contract) {
         boolean check = false;
