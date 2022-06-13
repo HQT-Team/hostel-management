@@ -188,17 +188,49 @@ public class RoomDAO {
             if (cn != null) {
 
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+//                String sql = "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
+//                        "VALUES (?, ?, ?, ?, ?, ?)\n" +
+//                        "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
+//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
+//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
+//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
+//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))";
+
                 String sql = "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
                         "VALUES (?, ?, ?, ?, ?, ?)\n" +
                         "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
-                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
-                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
-                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
-                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))";
+                        "DECLARE @restQuantity int = ?\n" +
+                        "WHILE ( @restQuantity > 0 )\n" +
+                        "BEGIN\n" +
+                        "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
+                        "\tSET @restQuantity = @restQuantity - 1\n" +
+                        "END\n" +
+                        "DECLARE @windowQuantity int = ?\n" +
+                        "WHILE ( @windowQuantity > 0 )\n" +
+                        "BEGIN\n" +
+                        "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
+                        "\tSET @windowQuantity = @windowQuantity - 1\n" +
+                        "END\n" +
+                        "DECLARE @doorQuantity int = ?\n" +
+                        "WHILE ( @doorQuantity > 0 )\n" +
+                        "BEGIN\n" +
+                        "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
+                        "\tSET @doorQuantity = @doorQuantity - 1\n" +
+                        "END\n" +
+                        "DECLARE @airConditionQuantity int = ?\n" +
+                        "WHILE ( @airConditionQuantity > 0 )\n" +
+                        "BEGIN\n" +
+                        "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))\n" +
+                        "\tSET @airConditionQuantity = @airConditionQuantity - 1\n" +
+                        "END";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelID);
@@ -261,6 +293,26 @@ public class RoomDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
 
+//                String sql = "DECLARE @room_number int = (SELECT TOP 1 room_number\n" +
+//                        "FROM dbo.Rooms\n" +
+//                        "WHERE hostel_id = ?\n" +
+//                        "ORDER BY room_number DESC)\n" +
+//                        "IF @room_number is NULL\n" +
+//                        "\tSET @room_number = 1\n" +
+//                        "ELSE\n" +
+//                        "\tSET @room_number = @room_number + 1\n" +
+//                        "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
+//                        "VALUES (?, @room_number, ?, ?, ?, ?)\n" +
+//                        "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
+//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
+//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
+//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
+//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))";
+
                 String sql = "DECLARE @room_number int = (SELECT TOP 1 room_number\n" +
                         "FROM dbo.Rooms\n" +
                         "WHERE hostel_id = ?\n" +
@@ -272,14 +324,34 @@ public class RoomDAO {
                         "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
                         "VALUES (?, @room_number, ?, ?, ?, ?)\n" +
                         "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
-                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
-                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
-                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
-                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))";
+                        "DECLARE @restQuantity int = ?\n" +
+                        "WHILE ( @restQuantity > 0 )\n" +
+                        "BEGIN\n" +
+                        "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
+                        "\tSET @restQuantity = @restQuantity - 1\n" +
+                        "END\n" +
+                        "DECLARE @windowQuantity int = ?\n" +
+                        "WHILE ( @windowQuantity > 0 )\n" +
+                        "BEGIN\n" +
+                        "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
+                        "\tSET @windowQuantity = @windowQuantity - 1\n" +
+                        "END\n" +
+                        "DECLARE @doorQuantity int = ?\n" +
+                        "WHILE ( @doorQuantity > 0 )\n" +
+                        "BEGIN\n" +
+                        "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
+                        "\tSET @doorQuantity = @doorQuantity - 1\n" +
+                        "END\n" +
+                        "DECLARE @airConditionQuantity int = ?\n" +
+                        "WHILE ( @airConditionQuantity > 0 )\n" +
+                        "BEGIN\n" +
+                        "\tINSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
+                        "\tVALUES (@roomID, 1, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))\n" +
+                        "\tSET @airConditionQuantity = @airConditionQuantity - 1\n" +
+                        "END";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelID);
