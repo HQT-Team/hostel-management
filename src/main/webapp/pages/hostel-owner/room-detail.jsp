@@ -27,14 +27,14 @@
 
 <body>
 <!-- Navbar -->
-<%@include file="components/navbar.jsp"%>
+<%@include file="components/navbar.jsp" %>
 
 <!-- Body -->
 <div class="container">
     <div class="row position-relative">
         <!-- Side bar -->
         <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
-            <%@include file="components/sidebar.jsp"%>
+            <%@include file="components/sidebar.jsp" %>
         </div>
 
         <!-- Content -->
@@ -54,41 +54,41 @@
             <div class="col-xxl-9 m-auto">
                 <div class="content-body">
                     <!-- Room header -->
-                    <%@include file="./room-detail-components/room-header.jsp"%>
+                    <%@include file="./room-detail-components/room-header.jsp" %>
                     <!-- Room information -->
                     <div class="room-information">
-                    <%@include file="./room-detail-components/room-information.jsp"%>
+                        <%@include file="./room-detail-components/room-information.jsp" %>
                     </div>
                     <div class="row mb-4">
                         <div class="col-12 col-lg-5 col-xl-4">
                             <!-- Consume session -->
-                            <%@include file="./room-detail-components/room-consume.jsp"%>
+                            <%@include file="./room-detail-components/room-consume.jsp" %>
                         </div>
                         <div class="col-12 col-lg-7 col-xl-8">
                             <!-- Invoice session -->
-                            <%@include file="./room-detail-components/room-invoice.jsp"%>
+                            <%@include file="./room-detail-components/room-invoice.jsp" %>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <!-- Member session -->
-                            <%@include file="./room-detail-components/room-member.jsp"%>
+                            <%@include file="./room-detail-components/room-member.jsp" %>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-5 col-xxl-4">
                             <!-- Account session -->
-                            <%@include file="./room-detail-components/room-account.jsp"%>
+                            <%@include file="./room-detail-components/room-account.jsp" %>
                         </div>
                         <div class="col-12 col-md-7 col-xxl-6">
                             <!-- Infrastructure session -->
-                            <%@include file="./room-detail-components/room-infrastructure.jsp"%>
+                            <%@include file="./room-detail-components/room-infrastructure.jsp" %>
                         </div>
                     </div>
                     <c:if test="${requestScope.roomInformation.roomStatus == 0}">
                         <div class="row">
                             <div class="col-12 col-md4">
-                                <button class="btn btn-outline-dark d-none" data-bs-toggle="modal"
+                                <button class="btn btn-outline-dark" data-bs-toggle="modal"
                                         data-bs-target="#change-room-status-modal"
                                         style="font-size: 1.6rem; font-weight: 600; padding: 8px 12px;">
                                     Cập nhật trạng thái phòng
@@ -112,7 +112,8 @@
                                             </div>
                                             <div class="modal-footer justify-content-between">
                                                 <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Hủy bỏ</button>
+                                                        data-bs-dismiss="modal">Hủy bỏ
+                                                </button>
                                                 <a href="" class="btn btn-danger">Đồng ý</a>
                                             </div>
                                         </div>
@@ -128,7 +129,7 @@
 </div>
 
 <!-- Footer -->
-<%@include file="components/footer.jsp"%>
+<%@include file="components/footer.jsp" %>
 
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

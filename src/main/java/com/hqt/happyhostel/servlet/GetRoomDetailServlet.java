@@ -60,7 +60,7 @@ public class GetRoomDetailServlet extends HttpServlet {
             List<RoommateInfo> listRoommatesInfo = RoommateInfoDAO.getListRoommatesOfAnAccount(accountId);
             request.setAttribute("listRoommatesInfo", listRoommatesInfo);
 
-            ArrayList<Infrastructures> infrastructures = RoomDAO.getInfrastructures(roomId);
+            ArrayList<Infrastructures> infrastructures = InfrastructureDAO.getInfrastructures(roomId);
             request.setAttribute("infrastructures", infrastructures);
 
 //            int quantityMember = RoomDAO.getQuantityMember(roomId);

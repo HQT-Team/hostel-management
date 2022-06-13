@@ -13,14 +13,14 @@
     </div>
     <div class="col-12 col-md-5 room-information__right">
         <div class="infor-group">Ngày bắt đầu hợp đồng:
-            <span>${requestScope.contractRoom.startDate.split('-')[2]}-${requestScope.contractRoom.startDate.split('-')[1]}-${requestScope.contractRoom.startDate.split('-')[0]}</span>
+            <span>${requestScope.contractRoom.startDate ne null ? (requestScope.contractRoom.startDate.split('-')[2]+requestScope.contractRoom.startDate.split('-')[1]+requestScope.contractRoom.startDate.split('-')[0]) : "Trống"}</span>
         </div>
         <div class="infor-group">Ngày kết thúc hợp đồng:
-            <span>${requestScope.contractRoom.expiration.split('-')[2]}-${requestScope.contractRoom.expiration.split('-')[1]}-${requestScope.contractRoom.expiration.split('-')[0]}</span>
+            <span>${requestScope.contractRoom.expiration ne null ? (requestScope.contractRoom.expiration.split('-')[2]+requestScope.contractRoom.expiration.split('-')[1]+requestScope.contractRoom.expiration.split('-')[0]) : "Trống"}</span>
         </div>
-        <div class="infor-group">Tiền cọc: <span>${String.format("%,d", requestScope.contractRoom.deposit)}</span>
+        <div class="infor-group">Tiền cọc: <span>${requestScope.contractRoom.deposit ne null ?  String.format("%,d", requestScope.contractRoom.deposit) : "Trống"}</span>
         </div>
-        <div class="infor-group">Tiền phòng: <span>${String.format("%,d", requestScope.contractRoom.price)}</span>
+        <div class="infor-group">Tiền phòng: <span>${requestScope.contractRoom.price ne null ? String.format("%,d", requestScope.contractRoom.price) : "Trống"}</span>
         </div>
         <div class="infor-group">Số lượng thành viên:
             <span>${requestScope.listRoommatesInfo.size()}/${requestScope.roomInformation.capacity}</span>
