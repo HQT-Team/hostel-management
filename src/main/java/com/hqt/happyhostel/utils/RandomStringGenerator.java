@@ -33,4 +33,11 @@ public class RandomStringGenerator {
         sb.append(roomId);
         return sb.toString();
     }
+    public static String randomPassword(int len,String username){
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++){
+            sb.append(AB.charAt(rnd.nextInt( AB.length() ))).append(username.charAt(rnd.nextInt( username.length() )));
+        }
+        return sb.toString();
+    }
 }

@@ -1,0 +1,57 @@
+@import "../_common-style/navbar";
+@import "../_common-style/sidebar";
+@import "../_common-style/footer";
+
+// Main css
+.content-group {
+  min-height: var(--min-body-height);
+}
+
+// Welcome
+.content-welcome {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.welcome-image {
+  width: 74px;
+  height: 74px;
+  border: 2px solid #0067ff;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.welcome-title {
+  font-size: 2.4rem;
+  line-height: 2.4rem;
+  margin-bottom: 8px;
+
+  span {
+    color: #ff6a00;
+  }
+}
+
+.welcome-paragraph {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+// Content body css
+.content__body {
+  padding: 0 140px;
+
+  @media (max-width: 992px) {
+    padding: 0 10px;
+  }
+}
+
+.content__body-title {
+  color: var(--primary-color);
+}
+
+.content__body-intro {
+  text-align: center;
+  line-height: 2.4rem;
+  font-weight: 500;
+}

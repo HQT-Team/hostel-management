@@ -52,8 +52,9 @@
             </div>
             <div class="row mb-5">
                 <div class="content-body col-12 col-md-10 col-lg-9 col-xl-6 m-auto">
-                    <form actions="" method="post" class="custom-form create-room-account-form"
+                    <form action="createRenter" method="post" class="custom-form create-room-account-form"
                           id="create-room-account-form">
+                        <input type="hidden" name="room_id" value="${param.room_id}">
                         <div class="form-header">
                             <div class="form-title main-title">Tạo tài khoản</div>
                         </div>
@@ -67,6 +68,32 @@
                                 <div class="col-6">
                                     <input id="room-username" name="room-username" type="text"
                                            class="form-control m-0" placeholder="Nhập tên tài khoản truy cập phòng">
+                                </div>
+                            </div>
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <label for="room-electric" class="form-label">Số điện hiện tại:
+                                        <span>*</span></label>
+                                </div>
+                                <div class="col-6">
+                                    <input id="room-electric" name="room-electric" type="number"
+                                           class="form-control m-0" placeholder="Nhập số điện mới nhất của phòng">
+                                </div>
+                            </div>
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <label for="room-water" class="form-label">Số nước hiện tại:
+                                        <span>*</span></label>
+                                </div>
+                                <div class="col-6">
+                                    <input id="room-water" name="room-water" type="number"
+                                           class="form-control m-0" placeholder="Nhập số nước mới nhất của phòng">
                                 </div>
                             </div>
                             <span class="form-message"></span>
@@ -126,7 +153,7 @@
                         <div class="spacer"></div>
                         <div class="create-room-account-actions">
                             <a href="./hostel.html" class="form-submit">Hủy bỏ</a>
-                            <button class="form-submit">Xác nhận và tạo mã tham gia</button>
+                            <button type="submit" class="form-submit">Xác nhận và tạo mã tham gia</button>
                         </div>
                     </form>
                 </div>

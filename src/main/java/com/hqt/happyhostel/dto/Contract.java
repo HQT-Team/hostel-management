@@ -1,12 +1,14 @@
 package com.hqt.happyhostel.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Contract {
     int contract_id;
     int room_id;
@@ -14,4 +16,6 @@ public class Contract {
     String startDate;
     String expiration;
     int deposit;
+    int hostelOwnerId;
+    int renterId;
 }

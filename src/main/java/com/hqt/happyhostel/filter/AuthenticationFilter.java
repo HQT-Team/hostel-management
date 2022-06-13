@@ -55,6 +55,7 @@ public class AuthenticationFilter implements Filter {
                     ((HttpServletResponse) response).sendRedirect("loginPage");
                 }
                 else {
+                    session.setAttribute("CURRENT_PAGE", "dashboard");
                     session.setAttribute("USER", acc);
                     chain.doFilter(request, response);
                 }
