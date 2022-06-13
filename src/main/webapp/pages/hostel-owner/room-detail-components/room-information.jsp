@@ -24,6 +24,7 @@
         </div>
         <div class="infor-group">Số lượng thành viên:
             <span>${requestScope.listRoommatesInfo.size()}/${requestScope.roomInformation.capacity}</span>
+
         </div>
     </div>
 </div>
