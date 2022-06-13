@@ -129,7 +129,7 @@
                                            class="form-control fill-input">
                                     <span class="fill-unit">cái</span>
                                     <select name="room-toilet-status" class="fill-status">
-                                        <option value="1" selected>Còn sử dụng</option>
+                                        <option value="1" selected>Sử dụng tốt</option>
                                         <option value="0">Hư hỏng</option>
                                     </select>
                                 </div>
@@ -143,7 +143,7 @@
                                            class="form-control fill-input">
                                     <span class="fill-unit">cái</span>
                                     <select name="room-window-status" class="fill-status">
-                                        <option value="1" selected>Còn sử dụng</option>
+                                        <option value="1" selected>Sử dụng tốt</option>
                                         <option value="0">Hư hỏng</option>
                                     </select>
                                 </div>
@@ -157,7 +157,7 @@
                                            class="form-control fill-input">
                                     <span class="fill-unit">cái</span>
                                     <select name="room-door-status" class="fill-status">
-                                        <option value="1">Còn sử dụng</option>
+                                        <option value="1" selected>Sử dụng tốt</option>
                                         <option value="0">Hư hỏng</option>
                                     </select>
                                 </div>
@@ -171,7 +171,7 @@
                                            type="number" class="form-control fill-input">
                                     <span class="fill-unit">cái</span>
                                     <select name="room-air-conditioner-status" class="fill-status">
-                                        <option value="1" selected>Còn sử dụng</option>
+                                        <option value="1" selected>Sử dụng tốt</option>
                                         <option value="0">Hư hỏng</option>
                                     </select>
                                 </div>
