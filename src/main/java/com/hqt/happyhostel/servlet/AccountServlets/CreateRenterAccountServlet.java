@@ -3,6 +3,7 @@ package com.hqt.happyhostel.servlet.AccountServlets;
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dao.ContractDAO;
 import com.hqt.happyhostel.dao.InformationDAO;
+import com.hqt.happyhostel.dao.RoomInviteDAO;
 import com.hqt.happyhostel.dto.Account;
 import com.hqt.happyhostel.dto.AccountInfo;
 import com.hqt.happyhostel.dto.Contract;
@@ -31,58 +32,62 @@ public class CreateRenterAccountServlet extends HttpServlet {
         String url = null;
         try {
             String roomId = req.getParameter("room_id");
-            String username = req.getParameter("room-username");
-            String price = req.getParameter("room-fee");
-            String deposit = req.getParameter("room-deposit");
-            String startDate = req.getParameter("room-startdate");
-            String endDate = req.getParameter("room-enddate");
-            if (!AccountDAO.isExistUsername(username)) {
-                String password = SecurityUtils.hashMd5(RandomStringGenerator.randomPassword(12, username));
-                Account renterAccount = Account.builder()
-                        .username(username)
-                        .password(password)
-                        .status(0)
-                        .role(2)
-                        .roomId(Integer.parseInt(roomId))
-                        .build();
+            if (RoomInviteDAO.getRoomInviteById(Integer.parseInt(roomId)).getInviteCode() == null){
+                String username = req.getParameter("room-username");
+                String price = req.getParameter("room-fee");
+                String deposit = req.getParameter("room-deposit");
+                String startDate = req.getParameter("room-startdate");
+                String endDate = req.getParameter("room-enddate");
+                if (!AccountDAO.isExistUsername(username)) {
+                    String password = SecurityUtils.hashMd5(RandomStringGenerator.randomPassword(12, username));
+                    Account renterAccount = Account.builder()
+                            .username(username)
+                            .password(password)
+                            .status(0)
+                            .role(2)
+                            .roomId(Integer.parseInt(roomId))
+                            .build();
 
-                int renterId = AccountDAO.createRenterAccount(renterAccount);
-                if (renterId > 0) {
+                    int renterId = AccountDAO.createRenterAccount(renterAccount);
+                    if (renterId > 0) {
 
-                    HttpSession session = req.getSession(false);
-                    if (session != null) {
-                        Account owner = (Account) session.getAttribute("USER");
+                        HttpSession session = req.getSession(false);
+                        if (session != null) {
+                            Account owner = (Account) session.getAttribute("USER");
 
-                        Contract contract = Contract.builder()
-                                .room_id(Integer.parseInt(roomId))
-                                .price(Integer.parseInt(price))
-                                .startDate(startDate)
-                                .expiration(endDate)
-                                .deposit(Integer.parseInt(deposit))
-                                .renterId(renterId)
-                                .hostelOwnerId(owner.getAccId())
-                                .build();
-                        url = success;
+                            Contract contract = Contract.builder()
+                                    .room_id(Integer.parseInt(roomId))
+                                    .price(Integer.parseInt(price))
+                                    .startDate(startDate)
+                                    .expiration(endDate)
+                                    .deposit(Integer.parseInt(deposit))
+                                    .renterId(renterId)
+                                    .hostelOwnerId(owner.getAccId())
+                                    .build();
+                            url = success;
 //                    req.setAttribute("SUCCESS", "Đăng ký tài khoản thành công! Tài khoản sẽ được quản trị viên xem xét và thông báo kết quả qua email!");
-                        if (ContractDAO.addContract(contract)) url = success;
-                        else url = fail;
-                    }
+                            if (ContractDAO.addContract(contract)) url = success;
+                            else url = fail;
+                        }
 
+                    } else {
+                        url = fail;
+                        req.setAttribute("ERROR", "Đã có lỗi xảy ra, vui lòng thử lại sau!");
+                    }
                 } else {
+                    // username has been existed
                     url = fail;
-                    req.setAttribute("ERROR", "Đã có lỗi xảy ra, vui lòng thử lại sau!");
+                    req.setAttribute("ERROR_TYPE", "username");
+                    req.setAttribute("ERROR", "Tài khoản đã tồn tại trong hệ thống!");
+                    req.setAttribute("username", username);
+                    req.setAttribute("price", price);
+                    req.setAttribute("deposit", deposit);
+                    req.setAttribute("startDate", startDate);
+                    req.setAttribute("endDate", endDate);
                 }
-            } else {
-                // username has been existed
-                url = fail;
-                req.setAttribute("ERROR_TYPE", "username");
-                req.setAttribute("ERROR", "Tài khoản đã tồn tại trong hệ thống!");
-                req.setAttribute("username", username);
-                req.setAttribute("price", price);
-                req.setAttribute("deposit", deposit);
-                req.setAttribute("startDate", startDate);
-                req.setAttribute("endDate", endDate);
-            }
+            }else url = success;
+
+
         } catch (Exception e) {
             log("Error at LoginServlet: " + e.toString());
         } finally {
