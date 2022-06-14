@@ -1,0 +1,200 @@
+@import "./_common-style/_navbar";
+@import "./_common-style/_footer";
+@import "./_common-style/_sidebar";
+
+@media screen and (min-width: 1024px) {
+  body {
+    position: relative;
+  }
+
+  .dropdown {
+    display: none;
+  }
+
+  .main-body {
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .content {
+    width: 70%;
+    margin: 0px;
+    padding: 0px;
+
+    table {
+      margin: 100px auto;
+      width: 500px;
+      text-align: center;
+      font-size: 25px;
+
+      h2 {
+        color: rgb(119, 0, 255);
+        font-size: 26px;
+      }
+
+      tr {
+        th {
+          border: 1px solid black;
+        }
+
+        td {
+          border: 1px solid black;
+
+          button {
+            width: 60px;
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
+
+  .modal {
+    position: absolute;
+    top: 50px;
+
+    .modal-header {
+      background-color: rgb(119, 0, 255);
+    }
+
+    .modal-body {
+      h3 {
+        display: block;
+        padding-left: 20px;
+        font-size: 23px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 740px) and (max-width: 1024px) {
+  .link{
+    display: none;
+  }
+
+  .dropdown {
+    display: block;
+
+    button {
+      width: 100px;
+      height: 40px;
+      background-color: rgb(0, 102, 255);
+    }
+  }
+
+  .dashboard {
+    display: none;
+  }
+
+  .content {
+    width: 100%;
+    margin: 0px;
+
+    table {
+      margin: 100px auto;
+      width: 500px;
+      text-align: center;
+      font-size: 25px;
+
+      h2 {
+        color: rgb(119, 0, 255);
+        font-size: 26px;
+      }
+
+      tr {
+        th {
+          border: 1px solid black;
+        }
+
+        td {
+          border: 1px solid black;
+
+          button {
+            width: 60px;
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
+
+
+  .modal {
+    width: 100%;
+    position: absolute;
+    top: 50px;
+
+    .modal-header {
+      background-color: rgb(119, 0, 255);
+    }
+
+    .modal-body {
+      h3 {
+        display: block;
+        padding-left: 20px;
+        font-size: 23px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .dropdown {
+    display: block;
+  }
+
+  .link {
+    display: none;
+  }
+
+  .dashboard {
+    display: none;
+  }
+
+  .navbar {
+    height: 60px;
+
+    .navbar-left {
+      width: 20%;
+    }
+
+    .main-body {
+      padding: 0px;
+      margin: 0px;
+    }
+
+    .navbar-center {
+      width: 60%;
+
+      a {
+        img {
+          width: 100px;
+          height: 30px;
+        }
+      }
+    }
+
+    .navbar-right {
+      width: 20%;
+      padding: 0px;
+
+      a {
+        font-size: 15px;
+
+        img {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .content {
+    padding: 0px;
+    width: 100%;
+
+    .table {
+      width: 162px;
+      margin: 20px 34%;
+    }
+  }
+}

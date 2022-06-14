@@ -38,7 +38,7 @@ public class AccountDAO {
         return acc;
     }
 
-    private static AccountInfo getAccountInformationById(int accId) {
+    public static AccountInfo getAccountInformationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
         AccountInfo inf = null;
@@ -83,7 +83,7 @@ public class AccountDAO {
         return inf;
     }
 
-    private static ArrayList<RoommateInfo> getRoommateInformationById(int accId) {
+    public static ArrayList<RoommateInfo> getRoommateInformationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
         RoommateInfo renterInfo = null;

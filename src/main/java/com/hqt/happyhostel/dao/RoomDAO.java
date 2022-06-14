@@ -830,4 +830,51 @@ public class RoomDAO {
         return isSuccess;
     }
 
+    // Renter handler
+    private static final String GET_HOSTEL_ROOM_INFOR_BY_RENTER_ID =
+            "SELECT Rooms.room_number,Rooms.room_area, COUNT(RoomateInformations.roomate_info_id) AS numberOfMembers\n" +
+                    "FROM Rooms INNER JOIN Contracts ON Rooms.room_id=Contracts.room_id \n" +
+                    "INNER JOIN Accounts ON Contracts.renter_id=Accounts.account_id \n" +
+                    "INNER JOIN RoomateInformations ON Accounts.account_id=RoomateInformations.account_renter_id\n" +
+                    "WHERE Accounts.account_id = ?\n" +
+                    "GROUP BY Rooms.room_number,Rooms.room_area";
+    public static Room getHostelRoomInforByRenterId(int renterId) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Room roomInfor = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_HOSTEL_ROOM_INFOR_BY_RENTER_ID);
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int roomNumber = rs.getInt("room_number");
+                    double roomArea = rs.getInt("room_area");
+                    int numberOfMembers = rs.getInt("numberOfMembers");
+                    roomInfor = Room
+                            .builder()
+                            .roomNumber(roomNumber)
+                            .roomArea(roomArea)
+                            .capacity(numberOfMembers)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return roomInfor;
+    }
+
 }
