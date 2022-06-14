@@ -41,17 +41,17 @@
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 content-group">
             <div class="content-bar pt-5">
                 <div class="content-history">
-                    <a href="./hostel.html" class="history-link">Danh sách khu trọ</a>
+                    <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a href="./room-detail.html" class="history-link">NovaLand Sky</a>
+                    <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}" class="history-link">${sessionScope.hostel.hostelName}</a>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a href="./room-detail.html" class="history-link">Phòng 11</a>
+                    <a href="roomDetail?roomID=${param.room_id}" class="history-link">Phòng ${param.room_number}</a>
                     <i class="fa-solid fa-chevron-right"></i>
                     <div class="current">Tạo tài khoản</div>
                 </div>
             </div>
             <div class="row mb-5">
-                <div class="content-body col-12 col-md-10 col-lg-9 col-xl-6 m-auto">
+                <div class="content-body col-12 col-md-10 col-lg-9 col-xl-7 col-xxl-6 m-auto">
                     <form action="createRenter" method="post" class="custom-form create-room-account-form"
                           id="create-room-account-form">
                         <input type="hidden" name="room_id" value="${param.room_id}">
@@ -152,7 +152,7 @@
                         </div>
                         <div class="spacer"></div>
                         <div class="create-room-account-actions">
-                            <a href="./hostel.html" class="form-submit">Hủy bỏ</a>
+                            <a href="roomDetail?roomID=${param.room_id}" class="form-submit">Hủy bỏ</a>
                             <button type="submit" class="form-submit">Xác nhận và tạo mã tham gia</button>
                         </div>
                     </form>

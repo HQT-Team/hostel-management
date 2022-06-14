@@ -17,13 +17,12 @@ public class RoomInviteDAO {
         PreparedStatement pst = null;
         ResultSet rs = null;
         Room room = null;
-        int result = 0;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "Select [room_id], [hostel_id], [invite_code], [QRcode], [expiredTimeCode]\n" +
-                        "From [dbo].[Rooms]\n" +
-                        "Where [room_id] = ?";
+                             "From [dbo].[Rooms]\n" +
+                             "Where [room_id] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, idRoom);
                 rs = pst.executeQuery();
@@ -41,17 +40,27 @@ public class RoomInviteDAO {
                             .QRCode(QRCode)
                             .expiredTimeCode(endTime)
                             .build();
-
                 }
-
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (cn != null && pst != null) {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
                 try {
                     pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
                     cn.close();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -66,13 +75,12 @@ public class RoomInviteDAO {
         PreparedStatement pst = null;
         ResultSet rs = null;
         Room room = null;
-        int result = 0;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "Select [room_id], [hostel_id], [invite_code], [QRcode], [expiredTimeCode], [room_status]\n" +
-                        "From [dbo].[Rooms]\n" +
-                        "Where [invite_code] = ?";
+                             "From [dbo].[Rooms]\n" +
+                             "Where [invite_code] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setString(1, inviteCode);
                 rs = pst.executeQuery();
@@ -94,15 +102,26 @@ public class RoomInviteDAO {
                             .roomStatus(status)
                             .build();
                 }
-
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (cn != null && pst != null) {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
                 try {
                     pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
                     cn.close();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -112,40 +131,44 @@ public class RoomInviteDAO {
         return room;
     }
 
-
     public static boolean updateRoomInviteCode(int idRoom, String inviteCode, String QRCode, String endTime) {
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;
-        Boolean isSuccess = false;
-        int result = 0;
+        boolean isSuccess = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 cn.setAutoCommit(false);
                 String sql = "Update [dbo].[Rooms]\n" +
-                        "Set  [invite_code] = ?, [QRcode] = ? , [expiredTimeCode] = ?\n" +
-                        "Where [room_id] = ? AND [room_status] = 1";
+                             "Set  [invite_code] = ?, [QRcode] = ? , [expiredTimeCode] = ?\n" +
+                             "Where [room_id] = ? AND [room_status] = 1";
                 pst = cn.prepareStatement(sql);
                 pst.setString(1, inviteCode);
                 pst.setString(2, QRCode);
                 pst.setString(3, endTime);
                 pst.setInt(4, idRoom);
-                result = pst.executeUpdate();
-                if (result < 1) {
+                if (pst.executeUpdate() < 1) {
                     cn.rollback();
                 } else {
                     isSuccess = true;
                     cn.commit();
                 }
+                cn.setAutoCommit(true);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (cn != null && pst != null) {
+            if (pst != null) {
                 try {
                     pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
                     cn.close();
                 } catch (Exception e) {
                     e.printStackTrace();

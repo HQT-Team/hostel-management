@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class AccountDAO {
 
-    private final static Account getAccount(ResultSet rs) {
+    private static Account getAccount(ResultSet rs) {
         Account acc = null;
         AccountInfo accInf = null;
         RoommateInfo renterInfo = null;
@@ -32,14 +32,13 @@ public class AccountDAO {
                 accInf = getAccountInformationById(accId);
                 acc = new Account(accId, username, password, createdate, status, role, -1, accInf, null);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return acc;
     }
 
-    private final static AccountInfo getAccountInformationById(int accId) {
+    private static AccountInfo getAccountInformationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
         AccountInfo inf = null;
@@ -47,8 +46,8 @@ public class AccountDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT *\n" +
-                        "FROM [dbo].[AccountInformations]\n" +
-                        "WHERE [account_id] = ?";
+                             "FROM [dbo].[AccountInformations]\n" +
+                             "WHERE [account_id] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, accId);
                 ResultSet rs = pst.executeQuery();
@@ -84,7 +83,7 @@ public class AccountDAO {
         return inf;
     }
 
-    private final static ArrayList<RoommateInfo> getRoommateInformationById(int accId) {
+    private static ArrayList<RoommateInfo> getRoommateInformationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
         RoommateInfo renterInfo = null;
@@ -93,8 +92,8 @@ public class AccountDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT *\n" +
-                        "FROM [dbo].[RoomateInformations]\n" +
-                        "WHERE [account_renter_id] = ?";
+                             "FROM [dbo].[RoomateInformations]\n" +
+                             "WHERE [account_renter_id] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, accId);
                 ResultSet rs = pst.executeQuery();
@@ -144,8 +143,8 @@ public class AccountDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT *\n" +
-                        "FROM [dbo].[Accounts]\n" +
-                        "WHERE [username] = ? AND [password] = ?";
+                             "FROM [dbo].[Accounts]\n" +
+                             "WHERE [username] = ? AND [password] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setString(1, username);
                 pst.setString(2, password);
@@ -157,18 +156,29 @@ public class AccountDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (cn != null && pst != null && rs != null) {
+            if (rs != null) {
                 try {
-                    pst.close();
                     rs.close();
-                    cn.close();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
             }
-            return acc;
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
+        return acc;
     }
 
 
@@ -182,8 +192,8 @@ public class AccountDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT *\n" +
-                        "FROM [dbo].[Accounts]\n" +
-                        "WHERE [token] = ?";
+                             "FROM [dbo].[Accounts]\n" +
+                             "WHERE [token] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setString(1, token);
                 ResultSet rs = pst.executeQuery();
@@ -194,49 +204,22 @@ public class AccountDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (cn != null && pst != null) {
+            if (pst != null) {
                 try {
-                    cn.close();
                     pst.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
             }
-            return acc;
-        }
-    }
-
-    public static ArrayList<Account> GetAll() {
-        Account acc = null;
-        ArrayList<Account> list = new ArrayList<Account>();
-        Connection cn = null;
-        Statement st = null;
-        try {
-            cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "SELECT * FROM [dbo].[Accounts]";
-                st = cn.createStatement();
-                ResultSet rs = st.executeQuery(sql);
-                while (rs != null && rs.next()) {
-                    acc = getAccount(rs);
-                    list.add(acc);
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cn != null && st != null) {
                 try {
-                    st.close();
                     cn.close();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
             }
-            return list;
         }
+        return acc;
     }
 
     public static ArrayList<Account> GetAllByRole(int role) {
@@ -249,9 +232,8 @@ public class AccountDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT * \n" +
-                        "FROM [dbo].[Accounts] \n" +
-                        "WHERE Role = ?";
-
+                             "FROM [dbo].[Accounts] \n" +
+                             "WHERE Role = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, role);
                 ResultSet rs = pst.executeQuery();
@@ -260,20 +242,25 @@ public class AccountDAO {
                     list.add(acc);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (cn != null && pst != null) {
+            if (pst != null) {
                 try {
                     pst.close();
-                    cn.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
             }
-            return list;
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
+        return list;
     }
 
     public static String getUsernameRoomCurrently(int roomID) {
@@ -284,12 +271,12 @@ public class AccountDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT username\n" +
-                        "FROM Accounts\n" +
-                        "WHERE account_id = (SELECT TOP 1 renter_id\n" +
-                        "\t\t\t\t\tFROM Rooms R, Contracts C\n" +
-                        "\t\t\t\t\tWHERE R.room_id = ?\n" +
-                        "\t\t\t\t\tAND R.room_id = C.room_id\n" +
-                        "\t\t\t\t\tORDER BY C.start_date DESC)";
+                             "FROM Accounts\n" +
+                             "WHERE account_id = (SELECT TOP 1 renter_id\n" +
+                             "\t\t\t\t\tFROM Rooms R, Contracts C\n" +
+                             "\t\t\t\t\tWHERE R.room_id = ?\n" +
+                             "\t\t\t\t\tAND R.room_id = C.room_id\n" +
+                             "\t\t\t\t\tORDER BY C.start_date DESC)";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
                 ResultSet rs = pst.executeQuery();
@@ -297,26 +284,28 @@ public class AccountDAO {
                     username = rs.getString("username");
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (cn != null && pst != null) {
+            if (pst != null) {
                 try {
                     pst.close();
-                    cn.close();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
             }
-            return username;
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
+        return username;
     }
 
-
-    /*-------------------------------------UPDATE-------------------------------------*/
-
+    // Update token
     public static int updateTokenByUserName(String token, String username) {
         int result = 0;
         Connection cn = null;
@@ -347,7 +336,6 @@ public class AccountDAO {
         }
     }
 
-
     public static int updateAccountStatus(int id, int status) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -357,8 +345,8 @@ public class AccountDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "Update [dbo].[Accounts]\n" +
-                        "Set status = ?\n" +
-                        "Where account_id = ?";
+                             "Set status = ?\n" +
+                             "Where account_id = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, status);
                 pst.setInt(2, id);

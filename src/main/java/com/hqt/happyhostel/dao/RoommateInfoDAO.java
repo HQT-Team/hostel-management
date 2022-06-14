@@ -17,12 +17,10 @@ public class RoommateInfoDAO {
             "INSERT INTO [dbo].[RoomateInformations] (fullname, email, birthday, \n" +
                     "sex, phone, address, CCCD, parent_name, parent_phone, account_renter_id) \n" +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
     private static final String GET_LIST_ROOMMATES_OF_AN_ACCOUNT =
             "SELECT roomate_info_id, fullname, email, birthday, sex, phone, address, \n" +
                     "CCCD, parent_name, parent_phone FROM [dbo].[RoomateInformations] \n" +
                     "WHERE account_renter_id = ?";
-
     private static final String UPDATE_ROOMMATE_INFO =
             "UPDATE [dbo].[RoomateInformations]\n" +
                     "SET fullname = ?, email = ?, birthday = ?, sex = ?, phone = ?,\n" +
@@ -32,9 +30,7 @@ public class RoommateInfoDAO {
     public static boolean UpdateRoommateInfo(RoommateInfo roommateInfo) throws SQLException {
         Connection conn = null;
         PreparedStatement psm = null;
-
         boolean check = false;
-
         try {
             conn = DBUtils.makeConnection();
             if (conn != null) {
@@ -105,9 +101,7 @@ public class RoommateInfoDAO {
     public static boolean AddRoommateInformationOfAnAccount(RoommateInfo roommateInfo, int accountId) throws SQLException {
         Connection conn = null;
         PreparedStatement psm = null;
-
         boolean check = false;
-
         try {
             conn = DBUtils.makeConnection();
             if (conn != null) {

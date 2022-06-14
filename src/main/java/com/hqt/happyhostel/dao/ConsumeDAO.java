@@ -13,20 +13,21 @@ public class ConsumeDAO {
     public static Consume getNearestConsumeNumber(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
+        ResultSet rs = null;
         Consume consume = null;
         ArrayList<Consume> consumesList = new ArrayList();
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT TOP 2 consume_id, number_electric, number_water, start_consume_date, end_consume_date\n" +
-                        "FROM Consumes\n" +
-                        "WHERE room_id = ?\n" +
-                        "ORDER BY end_consume_date DESC";
+                             "FROM Consumes\n" +
+                             "WHERE room_id = ?\n" +
+                             "ORDER BY end_consume_date DESC";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
 
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
                         int consumeID = rs.getInt("consume_id");
@@ -50,10 +51,16 @@ public class ConsumeDAO {
                     consume = null;
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -75,19 +82,20 @@ public class ConsumeDAO {
     public static Consume getNearestConsume(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
+        ResultSet rs = null;
         Consume consume = null;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT TOP 1 consume_id, number_electric, number_water, start_consume_date , end_consume_date\n" +
-                        "FROM Consumes\n" +
-                        "WHERE room_id = ?\n" +
-                        "ORDER BY end_consume_date DESC";
+                             "FROM Consumes\n" +
+                             "WHERE room_id = ?\n" +
+                             "ORDER BY end_consume_date DESC";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
 
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     int consumeID = rs.getInt("consume_id");
                     int numberElectric = rs.getInt("number_electric");
@@ -97,10 +105,16 @@ public class ConsumeDAO {
                     consume = new Consume(consumeID, roomID, numberElectric, numberWater, startConsumeDate, endConsumeDate);
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -122,24 +136,23 @@ public class ConsumeDAO {
     public static Boolean updateConsumeNumber(int roomID, int numberElectric, int numberWater) {
         Connection cn = null;
         PreparedStatement pst = null;
-        Boolean isSuccess = false;
+        boolean isSuccess = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "UPDATE Consumes\n" +
-                        "SET number_electric = ?, number_water = ?, end_consume_date = GETDATE()\n" +
-                        "WHERE consume_id = (SELECT TOP 1 consume_id\n" +
-                        "\t\t\t\t\tFROM Consumes\n" +
-                        "\t\t\t\t\tWHERE room_id = ?\n" +
-                        "\t\t\t\t\tORDER BY end_consume_date DESC)";
+                             "SET number_electric = ?, number_water = ?, end_consume_date = GETDATE()\n" +
+                             "WHERE consume_id = (SELECT TOP 1 consume_id\n" +
+                             "\t\t\t\t\tFROM Consumes\n" +
+                             "\t\t\t\t\tWHERE room_id = ?\n" +
+                             "\t\t\t\t\tORDER BY end_consume_date DESC)";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, numberElectric);
                 pst.setInt(2, numberWater);
                 pst.setInt(3, roomID);
 
-                int row = pst.executeUpdate();
-                if (row == 0) {
+                if (pst.executeUpdate() == 0) {
                     isSuccess = false;
                     cn.rollback();
                 } else {
@@ -147,7 +160,6 @@ public class ConsumeDAO {
                 }
 
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -168,6 +180,5 @@ public class ConsumeDAO {
         }
         return isSuccess;
     }
-
 
 }

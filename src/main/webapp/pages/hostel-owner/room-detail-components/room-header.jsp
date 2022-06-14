@@ -104,7 +104,7 @@
                             <button type="button" class="btn btn-danger"
                                     data-bs-dismiss="modal">Hủy bỏ
                             </button>
-                            <input type="hidden" name="idRoom"
+                            <input type="hidden" name="roomID"
                                    value="${requestScope.roomInformation.roomId}">
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
                         </div>
@@ -118,7 +118,7 @@
         <c:choose>
             <c:when test="${requestScope.roomInformation.roomStatus eq 1 || requestScope.userNameRenterRoom eq null}">
                 <!-- Start create account button -->
-                <a href="create-room-account?room_id=${requestScope.roomInformation.roomId}" class="action-create-account-link">Tạo tài khoản</a>
+                <a href="create-room-account?room_id=${requestScope.roomInformation.roomId}&room_number=${requestScope.roomInformation.roomNumber}" class="action-create-account-link">Tạo tài khoản</a>
                 <!-- End create account button -->
             </c:when>
             <c:when test="${requestScope.billRoom ne null}">
@@ -129,7 +129,7 @@
             <c:when test="${requestScope.roomInformation.roomStatus eq 0}">
                 <!-- Start view QR Code button -->
                 <form action="createInvite" method="post">
-                    <input type="hidden" name="room_id" value="${requestScope.roomInformation.roomId}" >
+                    <input type="hidden" name="room_id" value="${requestScope.roomInformation.roomId}">
                     <button type="submit" class="action-create-account-link">Xem mã tham gia</button>
                 </form>
                 <!-- End view QR Code button -->

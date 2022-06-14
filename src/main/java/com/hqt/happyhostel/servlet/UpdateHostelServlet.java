@@ -40,7 +40,12 @@ public class UpdateHostelServlet extends HttpServlet {
             String hostelProvince = req.getParameter("hostel-province");
 
             HostelDAO dao = new HostelDAO();
-            Hostel newHostel = new Hostel(hostelName, hostelAddress, hostelWard, hostelDistrict, hostelProvince);
+            Hostel newHostel = Hostel.builder()
+                    .hostelName(hostelName)
+                    .address(hostelAddress)
+                    .ward(hostelWard)
+                    .district(hostelDistrict)
+                    .city(hostelProvince).build();
             boolean checkUpdate = dao.updateHostel(newHostel, hostelID);
             if (checkUpdate) {
                 url = SUCCESS;

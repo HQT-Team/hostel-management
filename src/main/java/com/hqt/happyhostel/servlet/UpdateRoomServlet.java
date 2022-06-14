@@ -21,8 +21,8 @@ public class UpdateRoomServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = "list-hostels";
-        int roomID = Integer.parseInt(request.getParameter("idRoom"));
+        String url = "roomDetail";
+        int roomID = Integer.parseInt(request.getParameter("roomID"));
         int roomNumber = Integer.parseInt(request.getParameter("room-number"));
         int capacity = Integer.parseInt(request.getParameter("room-capacity"));
         double roomArea = Double.parseDouble(request.getParameter("room-area"));
@@ -31,13 +31,10 @@ public class UpdateRoomServlet extends HttpServlet {
             Boolean isSuccessUpdate = RoomDAO.updateRoom(roomID, roomNumber, capacity, roomArea, attic);
 
             if (isSuccessUpdate) {
-                url = "roomDetail";
-                request.setAttribute("roomID", roomID);
                 request.setAttribute("updateSuccess", true);
             } else {
                 request.setAttribute("updateSuccess", false);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

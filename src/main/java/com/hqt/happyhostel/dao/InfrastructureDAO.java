@@ -14,26 +14,22 @@ public class InfrastructureDAO {
     public static boolean updateInfrastructureStatus(int idInfrastructureRoom, int status) {
         Connection cn = null;
         PreparedStatement pst = null;
-        Boolean isSuccess = false;
+        boolean isSuccess = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "UPDATE InfrastructuresRoom\n" +
-                        "SET status = ?\n" +
-                        "WHERE id_infrastructure = ?";
+                             "SET status = ?\n" +
+                             "WHERE id_infrastructure = ?";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, status);
                 pst.setInt(2, idInfrastructureRoom);
 
-                int rows = pst.executeUpdate();
-                if (rows == 0) {
-                    isSuccess = false;
-                } else {
+                if (pst.executeUpdate() > 0) {
                     isSuccess = true;
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -58,19 +54,18 @@ public class InfrastructureDAO {
     public static ArrayList<Infrastructures> getInfrastructures(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
+        ResultSet rs = null;
         ArrayList<Infrastructures> infrastructures = new ArrayList<>();
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT id_infrastructure, quantity, status, infrastructure_name\n" +
-                        "FROM InfrastructuresRoom I, InfrastructureItem IT\n" +
-                        "WHERE I.room_id = ?\n" +
-                        "AND I.id_infrastructure_item = IT.id_infrastructure_item";
-
+                             "FROM InfrastructuresRoom I, InfrastructureItem IT\n" +
+                             "WHERE I.room_id = ?\n" +
+                             "AND I.id_infrastructure_item = IT.id_infrastructure_item";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
-
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
                         int id = rs.getInt("id_infrastructure");
@@ -81,10 +76,16 @@ public class InfrastructureDAO {
                     }
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -106,6 +107,7 @@ public class InfrastructureDAO {
     public static ArrayList<InfrastructureItem> getAllInfrastructure() {
         Connection cn = null;
         Statement pst = null;
+        ResultSet rs = null;
         ArrayList<InfrastructureItem> infrastructureItems = new ArrayList<>();
         try {
             cn = DBUtils.makeConnection();
@@ -115,7 +117,7 @@ public class InfrastructureDAO {
 
                 pst = cn.createStatement();
 
-                ResultSet rs = pst.executeQuery(sql);
+                rs = pst.executeQuery(sql);
                 if (rs != null) {
                     while (rs.next()) {
                         int idInfrastructureItem = rs.getInt("id_infrastructure_item");
@@ -124,10 +126,16 @@ public class InfrastructureDAO {
                     }
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -150,27 +158,22 @@ public class InfrastructureDAO {
     public static Boolean addNewInfrastructure(int roomID, int quantity, int status, int idInfrastructureItem) {
         Connection cn = null;
         PreparedStatement pst = null;
-        Boolean isSuccess = false;
+        boolean isSuccess = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-                        "VALUES (?, ?, ?, ?)";
-
+                             "VALUES (?, ?, ?, ?)";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
                 pst.setInt(2, quantity);
                 pst.setInt(3, status);
                 pst.setInt(4, idInfrastructureItem);
 
-                int rows = pst.executeUpdate();
-                if (rows == 0) {
-                    isSuccess = false;
-                } else {
+                if (pst.executeUpdate() > 0) {
                     isSuccess = true;
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

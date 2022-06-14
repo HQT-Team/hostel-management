@@ -2,7 +2,6 @@ package com.hqt.happyhostel.dto;
 
 import lombok.*;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

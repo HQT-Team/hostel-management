@@ -19,21 +19,22 @@ public class RoomDAO {
 
     public static ArrayList<Room> getListRoomByHostelID(int hostelID) {
         Connection cn = null;
-        ArrayList<Room> rooms = new ArrayList<>();
         PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Room> rooms = new ArrayList<>();
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
 
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 String sql = "SELECT room_id, hostel_id, room_number, capacity, room_area, has_attic, room_status\n" +
-                        "FROM Rooms\n" +
-                        "WHERE hostel_id = ?";
+                             "FROM Rooms\n" +
+                             "WHERE hostel_id = ?";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelID);
 
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
                         int roomID = rs.getInt("room_id");
@@ -56,10 +57,16 @@ public class RoomDAO {
                     }
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -80,12 +87,12 @@ public class RoomDAO {
 
     public static int getNumberRoomSpecificHostel(int hostelID) {
         Connection cn = null;
-        int number = 0;
         PreparedStatement pst = null;
+        ResultSet rs = null;
+        int number = 0;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 String sql = "SELECT COUNT(room_id) as 'quantity'\n" +
                         "FROM Rooms\n" +
@@ -94,15 +101,21 @@ public class RoomDAO {
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelID);
 
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     number = rs.getInt("quantity");
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -123,27 +136,28 @@ public class RoomDAO {
 
     public static ArrayList<ServiceInfo> getServicesOfHostel(int hostelID) {
         Connection cn = null;
-        ArrayList<ServiceInfo> servicesList = new ArrayList<>();
         PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<ServiceInfo> servicesList = new ArrayList<>();
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
 
                 String sql = "SELECT HostelService.service_id as 'service_id', Services.service_name as 'service_name', HostelService.valid_date as 'valid_date', HostelService.service_price as 'service_price', Services.unit as 'unit'\n" +
-                        "FROM HostelService, Services\n" +
-                        "WHERE hostel_id = ?\n" +
-                        "AND HostelService.service_id = Services.service_id\n" +
-                        "AND valid_date IN (SELECT TOP 1 valid_date\n" +
-                        "FROM HostelService\n" +
-                        "WHERE hostel_id = ?\n" +
-                        "AND valid_date < GETDATE()\n" +
-                        "ORDER BY valid_date DESC)";
+                             "FROM HostelService, Services\n" +
+                             "WHERE hostel_id = ?\n" +
+                             "AND HostelService.service_id = Services.service_id\n" +
+                             "AND valid_date IN (SELECT TOP 1 valid_date\n" +
+                             "FROM HostelService\n" +
+                             "WHERE hostel_id = ?\n" +
+                             "AND valid_date < GETDATE()\n" +
+                             "ORDER BY valid_date DESC)";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelID);
                 pst.setInt(2, hostelID);
 
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
                         int serviceID = rs.getInt("service_id");
@@ -155,10 +169,16 @@ public class RoomDAO {
                     }
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -177,19 +197,17 @@ public class RoomDAO {
         return servicesList;
     }
 
-
     public static boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,
                                      int quantity1, int status1,
                                      int quantity2, int status2,
                                      int quantity3, int status3,
                                      int quantity4, int status4) {
         Connection cn = null;
-        Boolean isInserted = false;
         PreparedStatement pst = null;
+        boolean isInserted = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
 //                String sql = "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
 //                        "VALUES (?, ?, ?, ?, ?, ?)\n" +
@@ -255,14 +273,10 @@ public class RoomDAO {
                 pst.setInt(13, quantity4);
                 pst.setInt(14, status4);
 
-                int rows = pst.executeUpdate();
-                if (rows != 0) {
+                if (pst.executeUpdate() > 0) {
                     isInserted = true;
-                } else {
-                    isInserted = false;
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -290,8 +304,8 @@ public class RoomDAO {
                                           int quantity3, int status3,
                                           int quantity4, int status4) {
         Connection cn = null;
-        Boolean isInserted = false;
         PreparedStatement pst = null;
+        boolean isInserted = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
@@ -377,13 +391,10 @@ public class RoomDAO {
                 pst.setInt(14, status4);
 
                 int rows = pst.executeUpdate();
-                if (rows != 0) {
+                if (pst.executeUpdate() > 0) {
                     isInserted = true;
-                } else {
-                    isInserted = false;
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -405,27 +416,27 @@ public class RoomDAO {
         return isInserted;
     }
 
-
     public static Room getRoomInformationByRoomID(int roomID, int hostelID, int accountOwnerID) {
         Connection cn = null;
         PreparedStatement pst = null;
+        ResultSet rs = null;
         Room room = null;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT room_id, H.hostel_id as 'hostel_id', room_number, capacity, room_status, room_area, has_attic, name, address, ward, district, city\n" +
-                        "FROM Rooms R, Hostels H\n" +
-                        "WHERE R.room_id = ?\n" +
-                        "AND R.hostel_id = ?\n" +
-                        "AND H.owner_account_id = ?\n" +
-                        "AND R.hostel_id = H.hostel_id";
+                             "FROM Rooms R, Hostels H\n" +
+                             "WHERE R.room_id = ?\n" +
+                             "AND R.hostel_id = ?\n" +
+                             "AND H.owner_account_id = ?\n" +
+                             "AND R.hostel_id = H.hostel_id";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
                 pst.setInt(2, hostelID);
                 pst.setInt(3, accountOwnerID);
 
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     int hostelId = rs.getInt("hostel_id");
                     int roomNumber = rs.getInt("room_number");
@@ -457,10 +468,16 @@ public class RoomDAO {
                             .build();
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -479,11 +496,10 @@ public class RoomDAO {
         return room;
     }
 
-
-
     public static Bill getLastBill(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
+        ResultSet rs = null;
         Bill bill = null;
         try {
             cn = DBUtils.makeConnection();
@@ -497,7 +513,7 @@ public class RoomDAO {
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
 
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     int billID = rs.getInt("bill_id");
                     int totalMoney = rs.getInt("total_money");
@@ -509,10 +525,16 @@ public class RoomDAO {
                     bill = new Bill(billID, roomID, totalMoney, createdDate, expiredPaymentDate, status, new Payment(paymentID, paymentName));
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -531,10 +553,10 @@ public class RoomDAO {
         return bill;
     }
 
-
     public static List<Consume> getConsumeHistory(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
+        ResultSet rs = null;
         ArrayList<Consume> consumesList = new ArrayList();
         try {
             cn = DBUtils.makeConnection();
@@ -547,7 +569,7 @@ public class RoomDAO {
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
 
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
                         int consumeID = rs.getInt("consume_id");
@@ -559,10 +581,16 @@ public class RoomDAO {
                     }
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -584,6 +612,7 @@ public class RoomDAO {
     public static ArrayList<RoommateInfo> getRoommateInformation(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
+        ResultSet rs = null;
         ArrayList<RoommateInfo> roommateInformationArrayList = new ArrayList();
         try {
             cn = DBUtils.makeConnection();
@@ -600,7 +629,7 @@ public class RoomDAO {
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
 
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
                         int roommateInfoID = rs.getInt("roomate_info_id");
@@ -614,14 +643,19 @@ public class RoomDAO {
                         String parent_name = rs.getString("parent_name");
                         String parent_phone = rs.getString("parent_phone");
                         roommateInformationArrayList.add(new RoommateInfo(roommateInfoID, new Information(fullName, email, birthday, sex, phone, address, CCCD), parent_name, parent_phone));
-                        roommateInformationArrayList.size();
                     }
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -643,6 +677,7 @@ public class RoomDAO {
     public static Integer getQuantityMember(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
+        ResultSet rs = null;
         int quantity = 0;
         try {
             cn = DBUtils.makeConnection();
@@ -659,15 +694,21 @@ public class RoomDAO {
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
 
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     quantity = rs.getInt("quantityMember");
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -686,11 +727,10 @@ public class RoomDAO {
         return quantity;
     }
 
-    public static boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic
-    ) {
+    public static boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic) {
         Connection cn = null;
         PreparedStatement pst = null;
-        Boolean isSuccess = false;
+        boolean isSuccess = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
@@ -706,15 +746,14 @@ public class RoomDAO {
                 pst.setInt(4, hasAttic);
                 pst.setInt(5, roomID);
 
-                int rows = pst.executeUpdate();
-                if (rows == 0) {
+                if (pst.executeUpdate() == 0) {
                     cn.rollback();
                 } else {
                     isSuccess = true;
                     cn.commit();
                 }
+                cn.setAutoCommit(true);
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -736,16 +775,14 @@ public class RoomDAO {
         return isSuccess;
     }
 
-
-    //Phan nay Nam moi them vao
     public static boolean updateRoomStatus(int roomID, int status) {
         Connection cn = null;
         PreparedStatement pst = null;
-        Boolean isSuccess = false;
+        boolean isSuccess = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-
+                cn.setAutoCommit(false);
                 String sqlUpdateRoom = "UPDATE Rooms\n" +
                         "SET room_status = ?\n" +
                         "WHERE room_id = ?";
@@ -754,15 +791,14 @@ public class RoomDAO {
                 pst.setInt(1, status);
                 pst.setInt(2, roomID);
 
-                int rows = pst.executeUpdate();
-                if (rows < 1) {
+                if (pst.executeUpdate() <= 0) {
                     cn.rollback();
                 } else {
                     isSuccess = true;
                     cn.commit();
                 }
+                cn.setAutoCommit(true);
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -784,90 +820,4 @@ public class RoomDAO {
         return isSuccess;
     }
 
-
-    //Phan nay Nam moi them vao
-    public static Room getRoomInviteById(int idRoom) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        Room room = null;
-        int result = 0;
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "Select [room_id], [hostel_id], [invite_code], [QRcode], [expiredTimeCode]\n" +
-                        "From [dbo].[Rooms]\n" +
-                        "Where [room_id] = ?";
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, idRoom);
-                rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    int roomId = rs.getInt("[room_id]");
-                    int hostelId = rs.getInt("[hostel_id]");
-                    String inviteCode = rs.getString("[invite_code]");
-                    String QRCode = rs.getString("[QRcode]");
-
-//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                    Date endTime = rs.getDate("[expiredTimeCode]");
-                    room = Room.builder()
-                            .roomId(roomId)
-                            .hostelId(hostelId)
-                            .inviteCode(inviteCode)
-                            .QRCode(QRCode)
-                            .expiredTimeCode(endTime)
-                            .build();
-
-                }
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cn != null && pst != null) {
-                try {
-                    pst.close();
-                    cn.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return room;
-    }
-
-
-    public static int updateRoomInviteCode(int idRoom, String inviteCode, String QRCode, String endTime) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        Account acc = null;
-        int result = 0;
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "Update [dbo].[Rooms]\n" +
-                        "Set  [invite_code] = ?, [QRcode] = ? , [expiredTimeCode] = ?\n" +
-                        "Where [room_id] = ?";
-                pst = cn.prepareStatement(sql);
-                pst.setString(1, inviteCode);
-                pst.setString(2, QRCode);
-                pst.setString(3, endTime);
-                pst.setInt(4, idRoom);
-                result = pst.executeUpdate();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cn != null && pst != null) {
-                try {
-                    pst.close();
-                    cn.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return result;
-    }
 }

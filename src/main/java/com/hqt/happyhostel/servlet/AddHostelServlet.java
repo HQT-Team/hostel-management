@@ -78,7 +78,13 @@ public class AddHostelServlet extends HttpServlet {
             double cleaningPrice = Double.parseDouble(req.getParameter("hostel-cleaning"));
             hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(cleaningPrice).build());
 
-            Hostel hostel = new Hostel(accountId, hostelName, hostelAddress, hostelWard, hostelDistrict, hostelProvince);
+            Hostel hostel = Hostel.builder()
+                    .hostelOwnerAccountID(accountId)
+                    .hostelName(hostelName)
+                    .address(hostelAddress)
+                    .ward(hostelWard)
+                    .district(hostelDistrict)
+                    .city(hostelProvince).build();
             boolean checkInsert = dao.addHostel(hostel, hostelServiceList);
 
             if (checkInsert) {

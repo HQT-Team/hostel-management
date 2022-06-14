@@ -7,7 +7,8 @@ import com.hqt.happyhostel.utils.DBUtils;
 import java.sql.*;
 
 public class ContractDAO {
-    private static final String ADD_AN_CONTRACT = "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id])\n" +
+    private static final String ADD_AN_CONTRACT =
+            "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id])\n" +
             "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     public static boolean addContract(Contract contract) {
@@ -72,18 +73,19 @@ public class ContractDAO {
     public static Contract getContract(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
+        ResultSet rs = null;
         Contract contract = null;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT contract_id, room_id, price, start_date, expiration, deposit\n" +
-                        "FROM Contracts\n" +
-                        "WHERE room_id = ?";
+                             "FROM Contracts\n" +
+                             "WHERE room_id = ?";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
 
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     int contract_id = rs.getInt("contract_id");
                     int price = rs.getInt("price");
@@ -100,10 +102,16 @@ public class ContractDAO {
                             .build();
                 }
             }
-            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (pst != null) {
                 try {
                     pst.close();
