@@ -26,7 +26,12 @@ public class UpdateConsumeServlet extends HttpServlet {
             int numberElectric = Integer.parseInt(request.getParameter("number-electric"));
             int numberWater = Integer.parseInt(request.getParameter("number-water"));
             int roomID = Integer.parseInt(request.getParameter("roomID"));
-            Boolean isSuccess = ConsumeDAO.updateConsumeNumber(roomID, numberElectric, numberWater);
+            Consume consume = Consume.builder()
+                    .numberWater(numberWater)
+                    .numberElectric(numberElectric)
+                    .status(0)
+                    .roomID(roomID).build();
+            boolean isSuccess = ConsumeDAO.updateConsumeNumber(consume);
             if (isSuccess) {
                 url = "roomDetail";
                 request.setAttribute("roomID", roomID);

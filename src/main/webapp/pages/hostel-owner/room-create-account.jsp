@@ -45,7 +45,7 @@
                     <i class="fa-solid fa-chevron-right"></i>
                     <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}" class="history-link">${sessionScope.hostel.hostelName}</a>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a href="roomDetail?roomID=${param.room_id}" class="history-link">Phòng ${param.room_number}</a>
+                    <a href="roomDetail?roomID=${sessionScope.room.roomId}" class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
                     <i class="fa-solid fa-chevron-right"></i>
                     <div class="current">Tạo tài khoản</div>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="content-body col-12 col-md-10 col-lg-9 col-xl-7 col-xxl-6 m-auto">
                     <form action="createRenter" method="post" class="custom-form create-room-account-form"
                           id="create-room-account-form">
-                        <input type="hidden" name="room_id" value="${param.room_id}">
+                        <input type="hidden" name="room_id" value="${sessionScope.room.roomId}">
                         <div class="form-header">
                             <div class="form-title main-title">Tạo tài khoản</div>
                         </div>
@@ -152,7 +152,7 @@
                         </div>
                         <div class="spacer"></div>
                         <div class="create-room-account-actions">
-                            <a href="roomDetail?roomID=${param.room_id}" class="form-submit">Hủy bỏ</a>
+                            <a href="roomDetail?roomID=${sessionScope.room.roomId}" class="form-submit">Hủy bỏ</a>
                             <button type="submit" class="form-submit">Xác nhận và tạo mã tham gia</button>
                         </div>
                     </form>

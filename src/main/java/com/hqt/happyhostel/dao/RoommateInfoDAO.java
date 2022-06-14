@@ -15,16 +15,16 @@ public class RoommateInfoDAO {
 
     private static final String ADD_ROOMMATE_INFORMATION_OF_AN_ACCOUNT =
             "INSERT INTO [dbo].[RoomateInformations] (fullname, email, birthday, \n" +
-                    "sex, phone, address, CCCD, parent_name, parent_phone, account_renter_id) \n" +
+                    "sex, phone, address, identity_card_number, parent_name, parent_phone, account_renter_id) \n" +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String GET_LIST_ROOMMATES_OF_AN_ACCOUNT =
             "SELECT roomate_info_id, fullname, email, birthday, sex, phone, address, \n" +
-                    "CCCD, parent_name, parent_phone FROM [dbo].[RoomateInformations] \n" +
+                    "identity_card_number, parent_name, parent_phone FROM [dbo].[RoomateInformations] \n" +
                     "WHERE account_renter_id = ?";
     private static final String UPDATE_ROOMMATE_INFO =
             "UPDATE [dbo].[RoomateInformations]\n" +
                     "SET fullname = ?, email = ?, birthday = ?, sex = ?, phone = ?,\n" +
-                    "address = ?, CCCD = ?, parent_name = ?, parent_phone = ?\n" +
+                    "address = ?, identity_card_number = ?, parent_name = ?, parent_phone = ?\n" +
                     "WHERE roomate_info_id = ?";
 
     public static boolean UpdateRoommateInfo(RoommateInfo roommateInfo) throws SQLException {
@@ -78,7 +78,7 @@ public class RoommateInfoDAO {
                             .sex(rs.getInt("sex"))
                             .phone(rs.getString("phone"))
                             .address(rs.getString("address"))
-                            .cccd(rs.getString("CCCD"))
+                            .cccd(rs.getString("identity_card_number"))
                             .build();
                     RoommateInfo roommateInfo = RoommateInfo.builder()
                             .roommateID(rs.getInt("roomate_info_id"))

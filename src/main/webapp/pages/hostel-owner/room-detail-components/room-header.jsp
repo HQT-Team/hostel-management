@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="room-header">
-    <h2 class="room-name">Phòng ${requestScope.roomInformation.roomNumber}</h2>
+    <h2 class="room-name">Phòng ${sessionScope.room.roomNumber}</h2>
     <div class="room-actions">
         <!-- Start update room information button -->
         <button class="action-update-btn" data-bs-toggle="modal"
@@ -35,7 +35,7 @@
                                     <div class="col-6">
                                         <input type="number" name="room-number"
                                                id="update-room-infor__room-number"
-                                               value="${requestScope.roomInformation.roomNumber}"
+                                               value="${sessionScope.room.roomNumber}"
                                                class="form-control m-0">
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                     <div class="col-6">
                                         <input type="number" name="room-capacity"
                                                id="update-room-infor__room-capacity"
-                                               value="${requestScope.roomInformation.capacity}"
+                                               value="${sessionScope.room.capacity}"
                                                class="form-control m-0">
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                                     <div class="col-4">
                                         <input type="number" name="room-area"
                                                id="update-room-infor__room-area"
-                                               value="${requestScope.roomInformation.roomArea}"
+                                               value="${sessionScope.room.roomArea}"
                                                class="form-control m-0">
                                     </div>
                                     <div class="col-2 text-center">
@@ -93,8 +93,8 @@
                                         <select name="room-attic"
                                                 id="update-room-infor__room-attic"
                                                 class="form-control m-0">
-                                            <option value="1" ${requestScope.roomInformation.hasAttic eq 1 ? "selected" : ""}>Có</option>
-                                            <option value="0" ${requestScope.roomInformation.hasAttic eq 0 ? "selected" : ""}>Không</option>
+                                            <option value="1" ${sessionScope.room.hasAttic eq 1 ? "selected" : ""}>Có</option>
+                                            <option value="0" ${sessionScope.room.hasAttic eq 0 ? "selected" : ""}>Không</option>
                                         </select>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                     data-bs-dismiss="modal">Hủy bỏ
                             </button>
                             <input type="hidden" name="roomID"
-                                   value="${requestScope.roomInformation.roomId}">
+                                   value="${sessionScope.room.roomId}">
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
                         </div>
                     </form>
@@ -116,9 +116,9 @@
         <!-- End update room information button -->
 
         <c:choose>
-            <c:when test="${requestScope.roomInformation.roomStatus eq 1 || requestScope.userNameRenterRoom eq null}">
+            <c:when test="${sessionScope.room.roomStatus eq 1 || requestScope.userNameRenterRoom eq null}">
                 <!-- Start create account button -->
-                <a href="create-room-account?room_id=${requestScope.roomInformation.roomId}&room_number=${requestScope.roomInformation.roomNumber}" class="action-create-account-link">Tạo tài khoản</a>
+                <a href="create-room-account" class="action-create-account-link">Tạo tài khoản</a>
                 <!-- End create account button -->
             </c:when>
             <c:when test="${requestScope.billRoom ne null}">
@@ -126,10 +126,10 @@
                 <button class="action-calculate-btn">Tính tiền phòng</button>
                 <!-- End calculate button button -->
             </c:when>
-            <c:when test="${requestScope.roomInformation.roomStatus eq 0}">
+            <c:when test="${sessionScope.room.roomStatus eq 0}">
                 <!-- Start view QR Code button -->
                 <form action="createInvite" method="post">
-                    <input type="hidden" name="room_id" value="${requestScope.roomInformation.roomId}">
+                    <input type="hidden" name="room_id" value="${sessionScope.room.roomId}">
                     <button type="submit" class="action-create-account-link">Xem mã tham gia</button>
                 </form>
                 <!-- End view QR Code button -->

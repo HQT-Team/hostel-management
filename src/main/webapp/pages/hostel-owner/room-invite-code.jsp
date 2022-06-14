@@ -41,11 +41,11 @@
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 content-group">
             <div class="content-bar pt-5">
                 <div class="content-history">
-                    <a href="./hostel.html" class="history-link">Danh sách khu trọ</a>
+                    <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a href="./room-detail.html" class="history-link">NovaLand Sky</a>
+                    <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}" class="history-link">${sessionScope.hostel.hostelName}</a>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a href="./room-detail.html" class="history-link">Phòng 11</a>
+                    <a href="roomDetail?roomID=${sessionScope.room.roomId}" class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
                     <i class="fa-solid fa-chevron-right"></i>
                     <div class="current">Mã tham gia</div>
                 </div>
@@ -113,7 +113,7 @@
                             Trong một ngày chỉ có thể tạo tối đa 3 lần mã tham gia
                         </li>
                     </ul>
-                    <a href="" class="invite-action"><i class="fa-solid fa-arrow-left"></i> Quay về</a>
+                    <a href="roomDetail?roomID=${sessionScope.room.roomId}" class="invite-action"><i class="fa-solid fa-arrow-left"></i> Quay về</a>
                 </div>
             </div>
         </div>

@@ -3,7 +3,7 @@
 <div class="room-members">
         <div class="members-header">
             <div class="members-title">Danh sách thành viên</div>
-            <c:if test="${(requestScope.roomInformation.roomStatus ne 1) && (requestScope.listRoommatesInfo.size() < requestScope.roomInformation.capacity)}">
+            <c:if test="${(sessionScope.room.roomStatus ne 1) && (requestScope.listRoommatesInfo.size() < sessionScope.room.capacity)}">
                 <div class="members-actions">
                     <button class="add-member-btn" data-bs-toggle="modal"
                             data-bs-target="#add-new-member-modal">Thêm thành viên
@@ -22,8 +22,8 @@
                                 </div>
                                 <form action="ow-add-new-roommate" method="POST" id="add-new-member-form"
                                       class="custom-form add-new-member-form">
-                                    <input type="hidden" name="roomID" value="${requestScope.roomInformation.roomId}" />
-                                    <input type="hidden" name="room-capacity" value="${requestScope.roomInformation.capacity}" />
+                                    <input type="hidden" name="roomID" value="${sessionScope.room.roomId}" />
+                                    <input type="hidden" name="room-capacity" value="${sessionScope.room.capacity}" />
                                     <input type="hidden" name="current-room-username" value="${requestScope.userNameRenterRoom}" />
                                     <div class="modal-body ps-5 pe-5">
                                         <div class="form-group">
@@ -175,7 +175,7 @@
             </c:if>
         </div>
         <c:choose>
-            <c:when test="${(requestScope.roomInformation.roomStatus ne 1) && (requestScope.listRoommatesInfo.size() > 0)}">
+            <c:when test="${(sessionScope.room.roomStatus ne 1) && (requestScope.listRoommatesInfo.size() > 0)}">
                 <table id="members-table"
                        class="mt-4 mb-4 table table-hover table-bordered table-striped members-table">
                     <thead class="table-dark">
@@ -372,7 +372,7 @@
                                                     <form action="ow-update-roommate" method="POST"
                                                           id="update-member-infor-form"
                                                           class="custom-form update-member-infor-form">
-                                                        <input type="hidden" name="roomID" value="${requestScope.roomInformation.roomId}" />
+                                                        <input type="hidden" name="roomID" value="${sessionScope.room.roomId}" />
                                                         <input type="hidden" name="roommate-id" value="${roommateList.roommateID}" />
                                                         <div class="modal-body">
                                                             <div class="form-group">

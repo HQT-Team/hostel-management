@@ -14,7 +14,7 @@ public class Consume {
     int roomID;
     int numberElectric;
     int numberWater;
-    String startConsumeDate;
-    String endConsumeDate;
+    String updateDate;
+    int status;
 }
 

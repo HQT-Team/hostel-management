@@ -224,6 +224,8 @@ public class RoomDAO {
                 String sql = "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
                         "VALUES (?, ?, ?, ?, ?, ?)\n" +
                         "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
+                        "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
+                        "VALUES (0, 0, GETDATE(), 1, @roomID)" +
                         "DECLARE @restQuantity int = ?\n" +
                         "WHILE ( @restQuantity > 0 )\n" +
                         "BEGIN\n" +
@@ -341,6 +343,8 @@ public class RoomDAO {
                         "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
                         "VALUES (?, @room_number, ?, ?, ?, ?)\n" +
                         "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
+                        "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
+                        "VALUES (0, 0, GETDATE(), 1, @roomID)" +
                         "DECLARE @restQuantity int = ?\n" +
                         "WHILE ( @restQuantity > 0 )\n" +
                         "BEGIN\n" +
@@ -561,10 +565,10 @@ public class RoomDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "SELECT consume_id, number_electric, number_water, start_consume_date, end_consume_date\n" +
+                String sql = "SELECT consume_id, number_electric, number_water, update_date, status\n" +
                         "FROM Consumes\n" +
                         "WHERE room_id = ?\n" +
-                        "ORDER BY end_consume_date DESC";
+                        "ORDER BY update_date DESC";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
@@ -575,9 +579,15 @@ public class RoomDAO {
                         int consumeID = rs.getInt("consume_id");
                         int numberElectric = rs.getInt("number_electric");
                         int numberWater = rs.getInt("number_water");
-                        String startConsumeDate = rs.getString("start_consume_date");
-                        String endConsumeDate = rs.getString("end_consume_date");
-                        consumesList.add(new Consume(consumeID, roomID, numberElectric, numberWater, startConsumeDate, endConsumeDate));
+                        String updateDate = rs.getString("update_date");
+                        int status = rs.getInt("status");
+                        consumesList.add(Consume.builder()
+                                .consumeID(consumeID)
+                                .roomID(roomID)
+                                .numberElectric(numberElectric)
+                                .numberWater(numberWater)
+                                .updateDate(updateDate)
+                                .status(status).build());
                     }
                 }
             }

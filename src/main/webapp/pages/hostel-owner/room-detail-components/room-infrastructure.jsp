@@ -93,7 +93,7 @@
                             <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Đóng
                             </button>
-                            <input type="hidden" name="roomID" value="${requestScope.roomInformation.roomId}">
+                            <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
                             <button type="submit" class="btn btn-danger">
                                 Cập nhật
                             </button>
@@ -167,7 +167,7 @@
                             <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Quay về
                             </button>
-                            <input type="hidden" name="roomID" value="${requestScope.roomInformation.roomId}">
+                            <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
                             <button type="submit" class="btn btn-primary">
                                 Thêm
                             </button>

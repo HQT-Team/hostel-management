@@ -55,7 +55,7 @@ public class AddRoomServlet extends HttpServlet {
             request.setAttribute("hostel", hostel);
             if (quantityRoom > 1) {
                 for (int i = 0; i < quantityRoom; i++) {
-                    Boolean isSuccess = RoomDAO.addNewManyRooms(hostelId, capacity, roomArea, attic, 1,
+                    boolean isSuccess = RoomDAO.addNewManyRooms(hostelId, capacity, roomArea, attic, 1,
                             restrooms, restroomStatus,
                             windows, windowsStatus,
                             roomDoors, roomDoorsStatus,
@@ -71,7 +71,7 @@ public class AddRoomServlet extends HttpServlet {
             } else {
                 int roomNumber = Integer.parseInt(request.getParameter("room-name"));
 
-                Boolean isSuccess = RoomDAO.addNewRoom(hostelId, roomNumber, capacity, roomArea, attic, 1,
+                boolean isSuccess = RoomDAO.addNewRoom(hostelId, roomNumber, capacity, roomArea, attic, 1,
                         restrooms, restroomStatus,
                         windows, windowsStatus,
                         roomDoors, roomDoorsStatus,

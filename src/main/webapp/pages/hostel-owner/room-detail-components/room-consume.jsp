@@ -2,17 +2,18 @@
 <div class="room-consume">
     <div class="consume-header">Số điện/nước tiêu thụ</div>
     <div class="consume-update-date">Ngày cập nhật gần nhất:
-        <span
-                class="date">${requestScope.consumeRoom.endConsumeDate.split("-")[2]}-${requestScope.consumeRoom.endConsumeDate.split("-")[1]}-${requestScope.consumeRoom.endConsumeDate.split("-")[0]}
+        <span class="date d-lg-block">
+            <fmt:parseDate pattern="yyyy-MM-dd" value="${requestScope.consumeNumber.updateDate}" var="updateDateStr" />
+            <fmt:formatDate pattern = "dd/MM/yyyy" value="${updateDateStr}" />
         </span>
     </div>
     <div class="consume-group">
         <div class="consume-name">Điện:</div>
-        <div class="consume-quantity">${requestScope.consumeRoom.numberElectric}</div>
+        <div class="consume-quantity">${requestScope.consumeNumber.numberElectric}</div>
     </div>
     <div class="consume-group">
         <div class="consume-name">Nước:</div>
-        <div class="consume-quantity">${requestScope.consumeRoom.numberWater}</div>
+        <div class="consume-quantity">${requestScope.consumeNumber.numberWater}</div>
     </div>
     <div class="consume-actions">
         <!-- Start consume update button -->
@@ -100,7 +101,7 @@
                             <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Hủy bỏ
                             </button>
-                            <input type="hidden" name="roomID" value="${requestScope.roomInformation.roomId}">
+                            <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
                             <button type="submit" class="btn btn-danger">
                                 Cập nhật
                             </button>
@@ -140,11 +141,8 @@
                                 <div class="col-3">
                                     <div class="form-label">Nước</div>
                                 </div>
-                                <div class="col-3">
-                                    <div class="form-label">Ngày bắt đầu tiêu thụ</div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="form-label">Ngày kết thúc tiêu thụ</div>
+                                <div class="col-6">
+                                    <div class="form-label">Ngày cập nhật</div>
                                 </div>
                             </div>
                         </div>
@@ -153,22 +151,15 @@
                             <c:forEach var="consumeList" items="${requestScope.consumeList}">
                                 <div class="row">
                                     <div class="col-3">
-                                        <input type="text" value="${consumeList.numberElectric}"
-                                               class="form-control" disabled>
+                                        <input type="text" value="${consumeList.numberElectric}" class="form-control" disabled>
                                     </div>
                                     <div class="col-3">
-                                        <input type="text" value="${consumeList.numberWater}"
-                                               class="form-control" disabled>
+                                        <input type="text" value="${consumeList.numberWater}" class="form-control" disabled>
                                     </div>
-                                    <div class="col-3">
-                                        <input type="text"
-                                               value="${consumeList.startConsumeDate.split("-")[2]}-${consumeList.startConsumeDate.split("-")[1]}-${consumeList.startConsumeDate.split("-")[0]}"
-                                               class="form-control" disabled>
-                                    </div>
-                                    <div class="col-3">
-                                        <input type="text"
-                                               value="${consumeList.endConsumeDate.split("-")[2]}-${consumeList.endConsumeDate.split("-")[1]}-${consumeList.endConsumeDate.split("-")[0]}"
-                                               class="form-control" disabled>
+                                    <div class="col-6">
+                                        <fmt:parseDate pattern="yyyy-MM-dd" value="${consumeList.updateDate}" var="updateDateFormat" />
+                                        <fmt:formatDate pattern = "dd/MM/yyyy" value="${updateDateFormat}" var="updateDate" />
+                                        <input type="text" value="${updateDate}" class="form-control" disabled>
                                     </div>
                                 </div>
                             </c:forEach>

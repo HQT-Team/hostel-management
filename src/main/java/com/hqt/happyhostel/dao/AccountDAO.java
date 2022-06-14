@@ -369,8 +369,10 @@ public class AccountDAO {
 
     // Handle register
     private static final String IS_EXIST_USERNAME = "SELECT username FROM [dbo].[Accounts] Where username = ?";
-    private static final String ADD_AN_ACCOUNT = "INSERT INTO Accounts (username, password, create_date, status, role, room_id) \n" +
-                                                 "VALUES (?, ?, GETDATE(), ?, ?, ?)";
+    private static final String ADD_AN_ACCOUNT = "INSERT INTO Accounts (username, password, create_date, status, role) \n" +
+                                                 "VALUES (?, ?, GETDATE(), ?, ?)";
+    private static final String ADD_A_RENTER_ACCOUNT = "INSERT INTO Accounts (username, password, create_date, status, role, room_id) \n" +
+            "VALUES (?, ?, GETDATE(), ?, ?, ?)";
     private static final String ADD_ACCOUNT_INFORMATION = "INSERT INTO AccountInformations (account_id, fullname, email, identity_card_number) \n" +
                                                           "VALUES (?, ?, ?, ?)";
 
@@ -504,7 +506,7 @@ public class AccountDAO {
                 cn.setAutoCommit(false);
 
                 // Add into Accounts table
-                pst = cn.prepareStatement(ADD_AN_ACCOUNT, Statement.RETURN_GENERATED_KEYS);
+                pst = cn.prepareStatement(ADD_A_RENTER_ACCOUNT, Statement.RETURN_GENERATED_KEYS);
                 pst.setString(1, account.getUsername());
                 pst.setString(2, account.getPassword());
                 pst.setInt(3, account.getStatus());

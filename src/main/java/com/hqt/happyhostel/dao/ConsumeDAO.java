@@ -19,10 +19,10 @@ public class ConsumeDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "SELECT TOP 2 consume_id, number_electric, number_water, start_consume_date, end_consume_date\n" +
+                String sql = "SELECT TOP 2 consume_id, number_electric, number_water, update_date, status\n" +
                              "FROM Consumes\n" +
                              "WHERE room_id = ?\n" +
-                             "ORDER BY end_consume_date DESC";
+                             "ORDER BY update_date DESC";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
@@ -33,18 +33,30 @@ public class ConsumeDAO {
                         int consumeID = rs.getInt("consume_id");
                         int numberElectric = rs.getInt("number_electric");
                         int numberWater = rs.getInt("number_water");
-                        String startConsumeDate = rs.getString("start_consume_date");
-                        String endConsumeDate = rs.getString("end_consume_date");
-                        consumesList.add(new Consume(consumeID, roomID, numberElectric, numberWater, startConsumeDate, endConsumeDate));
+                        String updateConsumeDate = rs.getString("update_date");
+                        int status = rs.getInt("status");
+                        consumesList.add(Consume.builder()
+                                .consumeID(consumeID)
+                                .roomID(roomID)
+                                .numberElectric(numberElectric)
+                                .numberWater(numberWater)
+                                .updateDate(updateConsumeDate)
+                                .status(status).build());
                     }
                 }
                 if (consumesList.size() == 2) {
                     int consumeID = consumesList.get(0).getConsumeID();
-                    String startDate = consumesList.get(0).getStartConsumeDate();
-                    String endDate = consumesList.get(0).getEndConsumeDate();
+                    String updateConsumeDate = consumesList.get(0).getUpdateDate();
+                    int status = consumesList.get(0).getStatus();
                     int consumeElectricNumber = consumesList.get(0).getNumberElectric() - consumesList.get(1).getNumberElectric();
                     int consumeWaterNumber = consumesList.get(0).getNumberWater() - consumesList.get(1).getNumberWater();
-                    consume = new Consume(consumeID, roomID, consumeElectricNumber, consumeWaterNumber, startDate, endDate);
+                    consume = Consume.builder()
+                            .consumeID(consumeID)
+                            .roomID(roomID)
+                            .numberElectric(consumeElectricNumber)
+                            .numberWater(consumeWaterNumber)
+                            .updateDate(updateConsumeDate)
+                            .status(status).build();
                 } else if (consumesList.size() == 1) {
                     consume = consumesList.get(0);
                 } else {
@@ -87,10 +99,10 @@ public class ConsumeDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "SELECT TOP 1 consume_id, number_electric, number_water, start_consume_date , end_consume_date\n" +
+                String sql = "SELECT TOP 1 consume_id, number_electric, number_water, update_date, status \n" +
                              "FROM Consumes\n" +
                              "WHERE room_id = ?\n" +
-                             "ORDER BY end_consume_date DESC";
+                             "ORDER BY update_date DESC";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
@@ -100,9 +112,15 @@ public class ConsumeDAO {
                     int consumeID = rs.getInt("consume_id");
                     int numberElectric = rs.getInt("number_electric");
                     int numberWater = rs.getInt("number_water");
-                    String startConsumeDate = rs.getString("start_consume_date");
-                    String endConsumeDate = rs.getString("end_consume_date");
-                    consume = new Consume(consumeID, roomID, numberElectric, numberWater, startConsumeDate, endConsumeDate);
+                    String updateConsumeDate = rs.getString("update_date");
+                    int status = rs.getInt("status");
+                    consume = Consume.builder()
+                            .consumeID(consumeID)
+                            .roomID(roomID)
+                            .numberElectric(numberElectric)
+                            .numberWater(numberWater)
+                            .updateDate(updateConsumeDate)
+                            .status(status).build();
                 }
             }
         } catch (Exception e) {
@@ -133,32 +151,29 @@ public class ConsumeDAO {
         return consume;
     }
 
-    public static Boolean updateConsumeNumber(int roomID, int numberElectric, int numberWater) {
+    public static Boolean updateConsumeNumber(Consume consume) {
         Connection cn = null;
         PreparedStatement pst = null;
         boolean isSuccess = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "UPDATE Consumes\n" +
-                             "SET number_electric = ?, number_water = ?, end_consume_date = GETDATE()\n" +
-                             "WHERE consume_id = (SELECT TOP 1 consume_id\n" +
-                             "\t\t\t\t\tFROM Consumes\n" +
-                             "\t\t\t\t\tWHERE room_id = ?\n" +
-                             "\t\t\t\t\tORDER BY end_consume_date DESC)";
+                cn.setAutoCommit(false);
+                String sql = "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
+                             "VALUES (?, ?, GETDATE(), ?, ?)";
 
                 pst = cn.prepareStatement(sql);
-                pst.setInt(1, numberElectric);
-                pst.setInt(2, numberWater);
-                pst.setInt(3, roomID);
+                pst.setInt(1, consume.getNumberElectric());
+                pst.setInt(2, consume.getNumberWater());
+                pst.setInt(3, consume.getStatus());
+                pst.setInt(4, consume.getRoomID());
 
-                if (pst.executeUpdate() == 0) {
-                    isSuccess = false;
-                    cn.rollback();
-                } else {
+                if (pst.executeUpdate() > 0) {
                     isSuccess = true;
+                } else {
+                    cn.rollback();
                 }
-
+                cn.setAutoCommit(true);
             }
         } catch (Exception e) {
             e.printStackTrace();

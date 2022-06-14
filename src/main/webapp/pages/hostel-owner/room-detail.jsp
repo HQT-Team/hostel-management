@@ -47,7 +47,7 @@
                     <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}"
                        class="history-link">${sessionScope.hostel.hostelName}</a>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <div class="current">Phòng ${requestScope.roomInformation.roomNumber}</div>
+                    <div class="current">Phòng ${sessionScope.room.roomNumber}</div>
                 </div>
             </div>
             <!-- Infor box -->
@@ -85,7 +85,7 @@
                             <%@include file="./room-detail-components/room-infrastructure.jsp" %>
                         </div>
                     </div>
-                    <c:if test="${requestScope.roomInformation.roomStatus == 0}">
+                    <c:if test="${sessionScope.room.roomStatus == 0}">
                         <div class="row">
                             <div class="col-12 col-md4">
                                 <button class="btn btn-outline-dark" data-bs-toggle="modal"

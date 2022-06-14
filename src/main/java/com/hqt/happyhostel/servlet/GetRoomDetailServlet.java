@@ -31,13 +31,10 @@ public class GetRoomDetailServlet extends HttpServlet {
             int roomId = Integer.parseInt(request.getParameter("roomID"));
 
             Room room = RoomDAO.getRoomInformationByRoomID(roomId, hostelID, accID);
-            request.setAttribute("roomInformation", room);
+            session.setAttribute("room", room);
 
             Contract contract = ContractDAO.getContract(roomId);
             request.setAttribute("contractRoom", contract);
-
-            Consume consume = ConsumeDAO.getNearestConsumeNumber(roomId);
-            request.setAttribute("consumeRoom", consume);
 
             List<Consume> consumeList = RoomDAO.getConsumeHistory(roomId);
             request.setAttribute("consumeList", consumeList);
