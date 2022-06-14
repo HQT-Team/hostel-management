@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -121,7 +123,10 @@
                                 <c:forEach var="serviceList" items="${requestScope.serviceInfo}">
                                     <div class="service-group">
                                         <div class="service-name">${serviceList.serviceName}</div>
-                                        <div class="service-price"><span>${String.format("%,d", serviceList.servicePrice)}</span> VNĐ/${serviceList.unit}</div>
+                                        <div class="service-price">
+                                            <span>
+                                                <fmt:formatNumber value="${serviceList.servicePrice}" type="currency" />
+                                            </span> VNĐ/${serviceList.unit}</div>
                                     </div>
                                 </c:forEach>
                             </div>

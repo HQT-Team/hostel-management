@@ -14,6 +14,6 @@ public class ServiceInfo {
     int serviceID;
     String serviceName;
     String validDate;
-    int servicePrice;
+    double servicePrice;
     String unit;
 }
