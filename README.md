@@ -55,7 +55,7 @@ Live Demo: :point_right: [here]()
 8. On the Deployment tab, click Add, select Artifact and select HappyHostel:war
 9. Also in the Deployment tab, scroll down to see the Application context item is currently "/HappyHostel_war", delete "_war" and click Apply
 10. In the project's IntelliJ window, open Terminal with Command Prompt
-11. Run command "sass src/main/webapp/assets/scss:src/main/webapp/assets/css" to build SCSS files into CSS files to display styles for pages
+11. Run command ``` sass --watch src/main/webapp/assets/scss:src/main/webapp/assets/css ``` to build SCSS files into CSS files to display styles for pages
 
 ### Run
 1. Click run to let IntelliJ turn on tomcat, build the project into a .war file and deploy it to the server
