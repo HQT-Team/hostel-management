@@ -10,7 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ConsumeDAO {
-    public static Consume getNearestConsumeNumber(int roomID) {
+
+    public Consume getNearestConsumeNumber(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -91,7 +92,7 @@ public class ConsumeDAO {
         return consume;
     }
 
-    public static Consume getNearestConsume(int roomID) {
+    public Consume getNearestConsume(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -151,7 +152,7 @@ public class ConsumeDAO {
         return consume;
     }
 
-    public static Boolean updateConsumeNumber(Consume consume) {
+    public Boolean updateConsumeNumber(Consume consume) {
         Connection cn = null;
         PreparedStatement pst = null;
         boolean isSuccess = false;

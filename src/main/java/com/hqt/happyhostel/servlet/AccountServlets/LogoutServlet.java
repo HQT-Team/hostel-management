@@ -13,6 +13,7 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "success";
+        AccountDAO accountDAO = new AccountDAO();
         try {
             HttpSession session = request.getSession(true);
             Account acc = (Account) session.getAttribute("USER");
@@ -24,7 +25,7 @@ public class LogoutServlet extends HttpServlet {
                     c.setMaxAge(0);
                     c.setValue(null);
                     response.addCookie(c);
-                    AccountDAO.updateTokenByUserName(null, username);
+                    accountDAO.updateTokenByUserName(null, username);
                 }
             }
             url = "loginPage";

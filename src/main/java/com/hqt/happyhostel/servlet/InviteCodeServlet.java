@@ -43,32 +43,34 @@ public class InviteCodeServlet extends HttpServlet {
             StringBuilder inviteUrl = new StringBuilder("RenterRegisterPage?inviteCode=");
 
             HttpSession session = request.getSession(false);
-            if(session != null) owner = (Account) session.getAttribute("USER");
+            if (session != null) owner = (Account) session.getAttribute("USER");
+
+            RoomInviteDAO roomInviteDAO = new RoomInviteDAO();
 
             //check request parameter
-            if(owner != null && roomId != null){
+            if (owner != null && roomId != null) {
                 int roomID = Integer.parseInt(roomId);
                 ownerId = owner.getAccId();
 
                 //check xem roomID có thuộc ownerID không
-                if(HostelOwnerDAO.checkOwnerRoom(ownerId, roomID)){
+                if (new HostelOwnerDAO().checkOwnerRoom(ownerId, roomID)) {
                     Timestamp endTime = null;
                     Room roomInvite = null;
 
                     //check xem trên databse có inviteCode của roomId này chưa
-                    if(RoomInviteDAO.getRoomInviteById(roomID).getInviteCode() != null){
-                        roomInvite = RoomInviteDAO.getRoomInviteById(roomID);
-                        inviteUrl = inviteUrl.append(roomInvite.getInviteCode()) ;
-                    }else {
+                    if (roomInviteDAO.getRoomInviteById(roomID).getInviteCode() != null) {
+                        roomInvite = roomInviteDAO.getRoomInviteById(roomID);
+                        inviteUrl = inviteUrl.append(roomInvite.getInviteCode());
+                    } else {
                         //Create invite link
-                        String inviteCode = RandomStringGenerator.randomInviteCode(5,roomId);
-                        inviteUrl = inviteUrl.append(inviteCode) ;
+                        String inviteCode = RandomStringGenerator.randomInviteCode(5, roomId);
+                        inviteUrl = inviteUrl.append(inviteCode);
 
                         //Create QR Code
                         QRCodeWriter barcodeWriter = new QRCodeWriter();
                         BitMatrix bitMatrix = barcodeWriter.encode(inviteUrl.toString(), BarcodeFormat.QR_CODE, 200, 200);
                         BufferedImage qrImg = MatrixToImageWriter.toBufferedImage(bitMatrix);
-                        String QRBase64 =  EncodeBase64Utils.imageToBase64(qrImg);
+                        String QRBase64 = EncodeBase64Utils.imageToBase64(qrImg);
 
                         //Create endTime
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -76,23 +78,23 @@ public class InviteCodeServlet extends HttpServlet {
                         long timeInSecs = startTime.getTimeInMillis();
                         endTime = new Timestamp(timeInSecs + (30 * 60 * 1000));
 
-                        if(RoomInviteDAO.updateRoomInviteCode(roomID, inviteCode, QRBase64, sdf.format(endTime))){
-                            RoomDAO.updateRoomStatus(roomID, 0);
-                            roomInvite = RoomInviteDAO.getRoomInviteById(roomID);
+                        if (roomInviteDAO.updateRoomInviteCode(roomID, inviteCode, QRBase64, sdf.format(endTime))) {
+                            new RoomDAO().updateRoomStatus(roomID, 0);
+                            roomInvite = roomInviteDAO.getRoomInviteById(roomID);
                         } else url = denied;
 
                     }
                     request.setAttribute("ROOM_INVITE", roomInvite);
                     request.setAttribute("URL_INVITE", inviteUrl);
                     url = success;
-                }else{
+                } else {
                     url = denied;
                 }
-            }else url = denied;
+            } else url = denied;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             log("Error at InviteCodeServlet: " + e.toString());
-        }finally {
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

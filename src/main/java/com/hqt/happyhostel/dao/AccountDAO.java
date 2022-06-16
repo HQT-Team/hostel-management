@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class AccountDAO {
 
-    private static Account getAccount(ResultSet rs) {
+    private Account getAccount(ResultSet rs) {
         Account acc = null;
         AccountInfo accInf = null;
         RoommateInfo renterInfo = null;
@@ -38,7 +38,7 @@ public class AccountDAO {
         return acc;
     }
 
-    public static AccountInfo getAccountInformationById(int accId) {
+    public AccountInfo getAccountInformationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
         AccountInfo inf = null;
@@ -83,7 +83,7 @@ public class AccountDAO {
         return inf;
     }
 
-    public static ArrayList<RoommateInfo> getRoommateInformationById(int accId) {
+    public ArrayList<RoommateInfo> getRoommateInformationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
         RoommateInfo renterInfo = null;
@@ -134,7 +134,7 @@ public class AccountDAO {
         return roommateInfoList;
     }
 
-    public static Account getAccountByUsernameAndPassword(String username, String password) {
+    public Account getAccountByUsernameAndPassword(String username, String password) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -182,7 +182,7 @@ public class AccountDAO {
     }
 
 
-    public static Account getAccountByToken(String token) {
+    public Account getAccountByToken(String token) {
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;
@@ -222,7 +222,7 @@ public class AccountDAO {
         return acc;
     }
 
-    public static ArrayList<Account> GetAllByRole(int role) {
+    public ArrayList<Account> GetAllByRole(int role) {
         Account acc = null;
         ArrayList<Account> list = new ArrayList<Account>();
         Connection cn = null;
@@ -263,7 +263,7 @@ public class AccountDAO {
         return list;
     }
 
-    public static String getUsernameRoomCurrently(int roomID) {
+    public String getUsernameRoomCurrently(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         String username = null;
@@ -306,7 +306,7 @@ public class AccountDAO {
     }
 
     // Update token
-    public static int updateTokenByUserName(String token, String username) {
+    public int updateTokenByUserName(String token, String username) {
         int result = 0;
         Connection cn = null;
         PreparedStatement pst = null;
@@ -336,7 +336,7 @@ public class AccountDAO {
         }
     }
 
-    public static int updateAccountStatus(int id, int status) {
+    public int updateAccountStatus(int id, int status) {
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;
@@ -376,7 +376,7 @@ public class AccountDAO {
     private static final String ADD_ACCOUNT_INFORMATION = "INSERT INTO AccountInformations (account_id, fullname, email, identity_card_number) \n" +
                                                           "VALUES (?, ?, ?, ?)";
 
-    public static boolean isExistUsername(String username) {
+    public boolean isExistUsername(String username) {
         boolean check = false;
         Connection cn = null;
         PreparedStatement pst = null;
@@ -419,7 +419,7 @@ public class AccountDAO {
         return check;
     }
 
-    public static boolean addAnAccount(Account account) {
+    public boolean addAnAccount(Account account) {
         boolean check = false;
         Connection cn = null;
         PreparedStatement pst = null;
@@ -494,7 +494,7 @@ public class AccountDAO {
         return check;
     }
 
-    public static int createRenterAccount(Account account) {
+    public int createRenterAccount(Account account) {
         int accountId = -1;
         Connection cn = null;
         PreparedStatement pst = null;
@@ -557,7 +557,7 @@ public class AccountDAO {
     // Handle add roommate
     private static final String GET_ACCOUNT_ID_BY_USERNAME = "SELECT account_id FROM Accounts WHERE username = ?";
 
-    public static int getAccountIdByUserName(String userName) throws SQLException {
+    public int getAccountIdByUserName(String userName) throws SQLException {
         Connection conn = null;
         PreparedStatement psm = null;
         ResultSet rs = null;

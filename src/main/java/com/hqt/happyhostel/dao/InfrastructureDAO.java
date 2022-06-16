@@ -11,7 +11,7 @@ import java.util.List;
 
 public class InfrastructureDAO {
 
-    public static boolean updateInfrastructureStatus(int idInfrastructureRoom, int status) {
+    public boolean updateInfrastructureStatus(int idInfrastructureRoom, int status) {
         Connection cn = null;
         PreparedStatement pst = null;
         boolean isSuccess = false;
@@ -51,7 +51,7 @@ public class InfrastructureDAO {
         return isSuccess;
     }
 
-    public static ArrayList<Infrastructures> getInfrastructures(int roomID) {
+    public ArrayList<Infrastructures> getInfrastructures(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -104,7 +104,7 @@ public class InfrastructureDAO {
         return infrastructures;
     }
 
-    public static ArrayList<InfrastructureItem> getAllInfrastructure() {
+    public ArrayList<InfrastructureItem> getAllInfrastructure() {
         Connection cn = null;
         Statement pst = null;
         ResultSet rs = null;
@@ -155,7 +155,7 @@ public class InfrastructureDAO {
         return infrastructureItems;
     }
 
-    public static Boolean addNewInfrastructure(int roomID, int quantity, int status, int idInfrastructureItem) {
+    public Boolean addNewInfrastructure(int roomID, int quantity, int status, int idInfrastructureItem) {
         Connection cn = null;
         PreparedStatement pst = null;
         boolean isSuccess = false;
@@ -203,7 +203,7 @@ public class InfrastructureDAO {
                     "INNER JOIN InfrastructuresRoom ON Rooms.room_id=InfrastructuresRoom.room_id\n" +
                     "INNER JOIN InfrastructureItem ON InfrastructuresRoom.id_infrastructure_item=InfrastructureItem.id_infrastructure_item\n" +
                     "WHERE Accounts.account_id = ?";
-    public static List<Infrastructures> getHostelInfrastructuresByRenterId(int renterId) throws SQLException {
+    public List<Infrastructures> getHostelInfrastructuresByRenterId(int renterId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;

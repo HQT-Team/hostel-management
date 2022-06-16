@@ -23,10 +23,10 @@ public class GetRenterInforServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = ERROR;
-        Account acc = new Account();
+        Account acc;
         List<Infrastructures> infrastructures = new ArrayList<>();
         List<ServiceInfo> serviceInfo = new ArrayList<>();
-        Information accInfo = new Information();
+        Information accInfo;
         try {
             HttpSession session = req.getSession();
             acc = (Account)session.getAttribute("USER");

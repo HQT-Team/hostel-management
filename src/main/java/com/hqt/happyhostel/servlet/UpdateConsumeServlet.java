@@ -31,7 +31,7 @@ public class UpdateConsumeServlet extends HttpServlet {
                     .numberElectric(numberElectric)
                     .status(0)
                     .roomID(roomID).build();
-            boolean isSuccess = ConsumeDAO.updateConsumeNumber(consume);
+            boolean isSuccess = new ConsumeDAO().updateConsumeNumber(consume);
             if (isSuccess) {
                 url = "roomDetail";
                 request.setAttribute("roomID", roomID);

@@ -22,6 +22,10 @@ public class AddRoommateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+
+        AccountDAO accountDAO = new AccountDAO();
+        RoommateInfoDAO roommateInfoDAO = new RoommateInfoDAO();
+
         String roomId = request.getParameter("roomID");
         try {
             // Get parameters from client (room details -> Add roommate member button -> Form)
@@ -38,11 +42,11 @@ public class AddRoommateServlet extends HttpServlet {
             String parentPhone = request.getParameter("parent-phone");
 
             // Get AccountID of Current Renter by currentRenterAccountUsername
-            int accountId = AccountDAO.getAccountIdByUserName(currentRenterAccountUsername);
+            int accountId = accountDAO.getAccountIdByUserName(currentRenterAccountUsername);
 
             // Check get accountId is true or false
             if (accountId >= 0)  {
-                List<RoommateInfo> listCurrentRoommate = RoommateInfoDAO.getListRoommatesOfAnAccount(accountId);
+                List<RoommateInfo> listCurrentRoommate = roommateInfoDAO.getListRoommatesOfAnAccount(accountId);
 
                 if (listCurrentRoommate.size() < roomCapacity) {
                     Information information = Information.builder()
@@ -59,7 +63,7 @@ public class AddRoommateServlet extends HttpServlet {
                             .parentPhone(parentPhone).build();
 
                     // Insert into RoommateInformation table
-                    boolean check = RoommateInfoDAO.AddRoommateInformationOfAnAccount(roommateInfo, accountId);
+                    boolean check = roommateInfoDAO.AddRoommateInformationOfAnAccount(roommateInfo, accountId);
 
                     if (check) {
                         request.setAttribute("SUCCESS", "Thêm thành viên mới vào phòng thành công");

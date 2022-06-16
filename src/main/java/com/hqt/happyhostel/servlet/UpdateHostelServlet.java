@@ -22,8 +22,6 @@ public class UpdateHostelServlet extends HttpServlet {
             req.getRequestDispatcher("update-hostel-page").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-//            System.out.println("Hello Get");
         }
     }
 

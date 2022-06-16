@@ -21,7 +21,7 @@ public class ServicesDAO {
                     "INNER JOIN Services ON HostelService.service_id =Services.service_id\n" +
                     "WHERE Accounts.account_id = ?";
 
-    public static List<ServiceInfo> getHostelServicesByRenterId(int renterId) throws SQLException {
+    public List<ServiceInfo> getHostelServicesByRenterId(int renterId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;

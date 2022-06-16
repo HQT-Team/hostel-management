@@ -17,7 +17,7 @@ import java.util.List;
 
 public class RoomDAO {
 
-    public static ArrayList<Room> getListRoomByHostelID(int hostelID) {
+    public ArrayList<Room> getListRoomByHostelID(int hostelID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -85,7 +85,7 @@ public class RoomDAO {
         return rooms;
     }
 
-    public static int getNumberRoomSpecificHostel(int hostelID) {
+    public int getNumberRoomSpecificHostel(int hostelID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -134,7 +134,7 @@ public class RoomDAO {
         return number;
     }
 
-    public static ArrayList<ServiceInfo> getServicesOfHostel(int hostelID) {
+    public ArrayList<ServiceInfo> getServicesOfHostel(int hostelID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -197,7 +197,7 @@ public class RoomDAO {
         return servicesList;
     }
 
-    public static boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,
+    public boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,
                                      int quantity1, int status1,
                                      int quantity2, int status2,
                                      int quantity3, int status3,
@@ -300,7 +300,7 @@ public class RoomDAO {
         return isInserted;
     }
 
-    public static boolean addNewManyRooms(int hostelID, int capacity, double roomArea, int attic, int roomStatus,
+    public boolean addNewManyRooms(int hostelID, int capacity, double roomArea, int attic, int roomStatus,
                                           int quantity1, int status1,
                                           int quantity2, int status2,
                                           int quantity3, int status3,
@@ -420,7 +420,7 @@ public class RoomDAO {
         return isInserted;
     }
 
-    public static Room getRoomInformationByRoomID(int roomID, int hostelID, int accountOwnerID) {
+    public Room getRoomInformationByRoomID(int roomID, int hostelID, int accountOwnerID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -500,7 +500,7 @@ public class RoomDAO {
         return room;
     }
 
-    public static Bill getLastBill(int roomID) {
+    public Bill getLastBill(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -557,7 +557,7 @@ public class RoomDAO {
         return bill;
     }
 
-    public static List<Consume> getConsumeHistory(int roomID) {
+    public List<Consume> getConsumeHistory(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -619,7 +619,7 @@ public class RoomDAO {
         return consumesList;
     }
 
-    public static ArrayList<RoommateInfo> getRoommateInformation(int roomID) {
+    public ArrayList<RoommateInfo> getRoommateInformation(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -684,7 +684,7 @@ public class RoomDAO {
         return roommateInformationArrayList;
     }
 
-    public static Integer getQuantityMember(int roomID) {
+    public Integer getQuantityMember(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -737,7 +737,7 @@ public class RoomDAO {
         return quantity;
     }
 
-    public static boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic) {
+    public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic) {
         Connection cn = null;
         PreparedStatement pst = null;
         boolean isSuccess = false;
@@ -785,7 +785,7 @@ public class RoomDAO {
         return isSuccess;
     }
 
-    public static boolean updateRoomStatus(int roomID, int status) {
+    public boolean updateRoomStatus(int roomID, int status) {
         Connection cn = null;
         PreparedStatement pst = null;
         boolean isSuccess = false;
@@ -838,7 +838,7 @@ public class RoomDAO {
                     "INNER JOIN RoomateInformations ON Accounts.account_id=RoomateInformations.account_renter_id\n" +
                     "WHERE Accounts.account_id = ?\n" +
                     "GROUP BY Rooms.room_number,Rooms.room_area";
-    public static Room getHostelRoomInforByRenterId(int renterId) throws SQLException {
+    public Room getHostelRoomInforByRenterId(int renterId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;

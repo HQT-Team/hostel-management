@@ -14,10 +14,11 @@ import java.io.IOException;
 public class InvalidInviteCodeServlet extends HttpServlet {
     private final String success = "CreateInvitationPage";
     private final String denied = "denied";
-    private String url;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url;
+
         try {
             String roomId = request.getParameter("room_id");
             Account owner = null;
@@ -27,13 +28,13 @@ public class InvalidInviteCodeServlet extends HttpServlet {
 
             if (roomId != null && owner != null) {
                 int roomID = Integer.parseInt(roomId);
-                if (HostelOwnerDAO.checkOwnerRoom(owner.getAccId(), roomID)) {
-                    if(RoomInviteDAO.updateRoomInviteCode(roomID, null, null, null)){
-                        RoomDAO.updateRoomStatus(roomID, 1);
+                if (new HostelOwnerDAO().checkOwnerRoom(owner.getAccId(), roomID)) {
+                    if (new RoomInviteDAO().updateRoomInviteCode(roomID, null, null, null)) {
+                        new RoomDAO().updateRoomStatus(roomID, 1);
                         url = success;
                     } else url = denied;
                 } else url = denied;
-            }else url = denied;
+            } else url = denied;
         } catch (Exception e) {
             log("Error at InviteCodeServlet: " + e.toString());
         }

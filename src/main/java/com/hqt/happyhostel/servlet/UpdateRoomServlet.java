@@ -28,7 +28,7 @@ public class UpdateRoomServlet extends HttpServlet {
         double roomArea = Double.parseDouble(request.getParameter("room-area"));
         int attic = Integer.parseInt(request.getParameter("room-attic"));
         try {
-            Boolean isSuccessUpdate = RoomDAO.updateRoom(roomID, roomNumber, capacity, roomArea, attic);
+            boolean isSuccessUpdate = new RoomDAO().updateRoom(roomID, roomNumber, capacity, roomArea, attic);
 
             if (isSuccessUpdate) {
                 request.setAttribute("updateSuccess", true);

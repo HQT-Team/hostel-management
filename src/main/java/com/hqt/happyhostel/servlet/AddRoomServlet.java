@@ -49,13 +49,15 @@ public class AddRoomServlet extends HttpServlet {
         int roomDoors = Integer.parseInt(request.getParameter("room-door"));
         int roomDoorsStatus = Integer.parseInt(request.getParameter("room-door-status"));
 
+        RoomDAO roomDao = new RoomDAO();
+
         try {
             int hostelId = Integer.parseInt(request.getParameter("hostelID"));
             Hostel hostel = new HostelDAO().getHostelById(hostelId);
             request.setAttribute("hostel", hostel);
             if (quantityRoom > 1) {
                 for (int i = 0; i < quantityRoom; i++) {
-                    boolean isSuccess = RoomDAO.addNewManyRooms(hostelId, capacity, roomArea, attic, 1,
+                    boolean isSuccess = roomDao.addNewManyRooms(hostelId, capacity, roomArea, attic, 1,
                             restrooms, restroomStatus,
                             windows, windowsStatus,
                             roomDoors, roomDoorsStatus,
@@ -71,7 +73,7 @@ public class AddRoomServlet extends HttpServlet {
             } else {
                 int roomNumber = Integer.parseInt(request.getParameter("room-name"));
 
-                boolean isSuccess = RoomDAO.addNewRoom(hostelId, roomNumber, capacity, roomArea, attic, 1,
+                boolean isSuccess = roomDao.addNewRoom(hostelId, roomNumber, capacity, roomArea, attic, 1,
                         restrooms, restroomStatus,
                         windows, windowsStatus,
                         roomDoors, roomDoorsStatus,

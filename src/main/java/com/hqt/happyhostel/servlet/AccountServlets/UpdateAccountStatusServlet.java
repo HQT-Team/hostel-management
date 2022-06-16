@@ -17,11 +17,14 @@ public class UpdateAccountStatusServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "list-owner-account";
+
+        AccountDAO accountDAO = new AccountDAO();
+
         try {
 
             int id = Integer.parseInt(request.getParameter("owner_id"));
             int status = Integer.parseInt(request.getParameter("status"));
-            int i = status == 0 ? AccountDAO.updateAccountStatus(id, 1) : AccountDAO.updateAccountStatus(id, 0);
+            int i = status == 0 ? accountDAO.updateAccountStatus(id, 1) : accountDAO.updateAccountStatus(id, 0);
             if (i < 0) {
                 request.setAttribute("ERROR", "UPDATE FAILED");
             } else {

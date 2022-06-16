@@ -40,7 +40,7 @@ public class RoleRedirectFilter implements Filter {
                 }
             }
 
-            acc = (token != null) ? AccountDAO.getAccountByToken(token) : (Account) session.getAttribute("USER");
+            acc = (token != null) ? new AccountDAO().getAccountByToken(token) : (Account) session.getAttribute("USER");
             if(acc != null && acc.getRole() != 69) {
                 int role = acc.getRole();
                 if (role == 0) url = "AdminPage";

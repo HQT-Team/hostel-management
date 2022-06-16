@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 
 public class RoomInviteDAO {
 
-    public static Room getRoomInviteById(int idRoom) {
+    public Room getRoomInviteById(int idRoom) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -70,7 +70,7 @@ public class RoomInviteDAO {
         return room;
     }
 
-    public static Room getRoomIdByInviteCode(String inviteCode) {
+    public Room getRoomIdByInviteCode(String inviteCode) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -131,7 +131,7 @@ public class RoomInviteDAO {
         return room;
     }
 
-    public static boolean updateRoomInviteCode(int idRoom, String inviteCode, String QRCode, String endTime) {
+    public boolean updateRoomInviteCode(int idRoom, String inviteCode, String QRCode, String endTime) {
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;

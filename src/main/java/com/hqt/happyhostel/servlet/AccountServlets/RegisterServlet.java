@@ -25,6 +25,8 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
 
+        AccountDAO accountDAO = new AccountDAO();
+
         String url = "registerPage";
 
         try {
@@ -37,7 +39,7 @@ public class RegisterServlet extends HttpServlet {
                 String password = SecurityUtils.hashMd5(req.getParameter("password"));
                 String cccd = req.getParameter("cccd");
 
-                if (!AccountDAO.isExistUsername(username)) {
+                if (!accountDAO.isExistUsername(username)) {
 
                     if (!new InformationDAO().isExistEmail(email)) {
                         Information information = Information.builder()
@@ -55,7 +57,7 @@ public class RegisterServlet extends HttpServlet {
                                 .role(1)
                                 .accountInfo(accountInfo).build();
 
-                        boolean check = AccountDAO.addAnAccount(registerAccount);
+                        boolean check = accountDAO.addAnAccount(registerAccount);
                         if (check) {
                             req.setAttribute("SUCCESS", "Đăng ký tài khoản thành công! Tài khoản sẽ được quản trị viên xem xét và thông báo kết quả qua email!");
                             req.getRequestDispatcher(url).forward(req, resp);

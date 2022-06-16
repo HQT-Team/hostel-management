@@ -20,8 +20,11 @@ public class UpdateInfrastructureStatusServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Boolean updateWrong = false;
+        boolean updateWrong = false;
         String url = "list-hostels";
+
+        InfrastructureDAO infrastructureDAO = new InfrastructureDAO();
+
         try {
             List<String> statusList = Arrays.asList(request.getParameterValues("status"));
             List<String> idListInfrastructureRoom = Arrays.asList(request.getParameterValues("infrastructureId"));
@@ -30,7 +33,7 @@ public class UpdateInfrastructureStatusServlet extends HttpServlet {
             for (String id: idListInfrastructureRoom) {
                 int idInfrastructure = Integer.parseInt(id);
                 int status = Integer.parseInt(statusList.get(count));
-                Boolean update = InfrastructureDAO.updateInfrastructureStatus(idInfrastructure, status);
+                boolean update = infrastructureDAO.updateInfrastructureStatus(idInfrastructure, status);
                 if (!update) {
                     url = "list-hostels";
                     request.setAttribute("roomID", roomID);

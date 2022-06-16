@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 
 public class HostelOwnerDAO {
 
-    public static boolean checkOwnerHostel(int accId, int hostelId) {
+    public boolean checkOwnerHostel(int accId, int hostelId) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -56,7 +56,7 @@ public class HostelOwnerDAO {
         return result;
     }
 
-    public static boolean checkOwnerRoom(int accId, int roomId) {
+    public boolean checkOwnerRoom(int accId, int roomId) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;

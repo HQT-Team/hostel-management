@@ -7,11 +7,12 @@ import com.hqt.happyhostel.utils.DBUtils;
 import java.sql.*;
 
 public class ContractDAO {
+
     private static final String ADD_AN_CONTRACT =
             "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id])\n" +
             "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    public static boolean addContract(Contract contract) {
+    public boolean addContract(Contract contract) {
         boolean check = false;
         Connection cn = null;
         PreparedStatement pst = null;
@@ -70,7 +71,7 @@ public class ContractDAO {
     }
 
 
-    public static Contract getContract(int roomID) {
+    public Contract getContract(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -129,4 +130,5 @@ public class ContractDAO {
         }
         return contract;
     }
+
 }

@@ -27,7 +27,7 @@ public class RoommateInfoDAO {
                     "address = ?, identity_card_number = ?, parent_name = ?, parent_phone = ?\n" +
                     "WHERE roomate_info_id = ?";
 
-    public static boolean UpdateRoommateInfo(RoommateInfo roommateInfo) throws SQLException {
+    public boolean UpdateRoommateInfo(RoommateInfo roommateInfo) throws SQLException {
         Connection conn = null;
         PreparedStatement psm = null;
         boolean check = false;
@@ -57,7 +57,7 @@ public class RoommateInfoDAO {
         return check;
     }
 
-    public static List<RoommateInfo> getListRoommatesOfAnAccount(int accountId) throws SQLException {
+    public List<RoommateInfo> getListRoommatesOfAnAccount(int accountId) throws SQLException {
         Connection conn = null;
         PreparedStatement psm = null;
         ResultSet rs = null;
@@ -98,7 +98,7 @@ public class RoommateInfoDAO {
         return list;
     }
 
-    public static boolean AddRoommateInformationOfAnAccount(RoommateInfo roommateInfo, int accountId) throws SQLException {
+    public boolean AddRoommateInformationOfAnAccount(RoommateInfo roommateInfo, int accountId) throws SQLException {
         Connection conn = null;
         PreparedStatement psm = null;
         boolean check = false;
@@ -127,4 +127,5 @@ public class RoommateInfoDAO {
         }
         return check;
     }
+
 }

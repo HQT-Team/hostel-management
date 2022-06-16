@@ -15,9 +15,11 @@ public class GetRoomateAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+
         Account account = (Account)session.getAttribute("USER");
-        ArrayList<RoommateInfo> list = new ArrayList<>();
-        list = AccountDAO.getRoommateInformationById(account.getAccId());
+
+        ArrayList<RoommateInfo> list = new AccountDAO().getRoommateInformationById(account.getAccId());
+
         session.setAttribute("listroommateinfor", list);
         request.getRequestDispatcher("Renter-roommate").forward(request, response);
     }

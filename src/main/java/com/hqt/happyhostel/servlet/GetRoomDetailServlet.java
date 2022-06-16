@@ -30,34 +30,38 @@ public class GetRoomDetailServlet extends HttpServlet {
 
             int roomId = Integer.parseInt(request.getParameter("roomID"));
 
-            Room room = RoomDAO.getRoomInformationByRoomID(roomId, hostelID, accID);
+            RoomDAO roomDAO = new RoomDAO();
+            AccountDAO accountDAO = new AccountDAO();
+            InfrastructureDAO infrastructureDAO = new InfrastructureDAO();
+
+            Room room = roomDAO.getRoomInformationByRoomID(roomId, hostelID, accID);
             session.setAttribute("room", room);
 
-            Contract contract = ContractDAO.getContract(roomId);
+            Contract contract = new ContractDAO().getContract(roomId);
             request.setAttribute("contractRoom", contract);
 
-            List<Consume> consumeList = RoomDAO.getConsumeHistory(roomId);
+            List<Consume> consumeList = roomDAO.getConsumeHistory(roomId);
             request.setAttribute("consumeList", consumeList);
 
-            Consume consumeNumber = ConsumeDAO.getNearestConsume(roomId);
+            Consume consumeNumber = new ConsumeDAO().getNearestConsume(roomId);
             request.setAttribute("consumeNumber", consumeNumber);
 
-            List<InfrastructureItem> infrastructureItemList = InfrastructureDAO.getAllInfrastructure();
+            List<InfrastructureItem> infrastructureItemList = infrastructureDAO.getAllInfrastructure();
             request.setAttribute("infrastructureList", infrastructureItemList);
 
-            Bill bill = RoomDAO.getLastBill(roomId);
+            Bill bill = roomDAO.getLastBill(roomId);
             request.setAttribute("billRoom", bill);
 
-            String username = AccountDAO.getUsernameRoomCurrently(roomId);
+            String username = accountDAO.getUsernameRoomCurrently(roomId);
             request.setAttribute("userNameRenterRoom", username);
 
-            int accountId = AccountDAO.getAccountIdByUserName(username);
+            int accountId = accountDAO.getAccountIdByUserName(username);
             request.setAttribute("renterAccountId", accountId);
 
-            List<RoommateInfo> listRoommatesInfo = RoommateInfoDAO.getListRoommatesOfAnAccount(accountId);
+            List<RoommateInfo> listRoommatesInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(accountId);
             request.setAttribute("listRoommatesInfo", listRoommatesInfo);
 
-            ArrayList<Infrastructures> infrastructures = InfrastructureDAO.getInfrastructures(roomId);
+            ArrayList<Infrastructures> infrastructures = infrastructureDAO.getInfrastructures(roomId);
             request.setAttribute("infrastructures", infrastructures);
 
         } catch (Exception e) {

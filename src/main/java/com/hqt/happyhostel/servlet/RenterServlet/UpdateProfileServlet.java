@@ -34,7 +34,7 @@ public class UpdateProfileServlet extends HttpServlet {
         try {
             HttpSession session = req.getSession();
             acc = (Account) session.getAttribute("USER");
-            AccountInfo accountInfor = AccountDAO.getAccountInformationById(acc.getAccId());
+            AccountInfo accountInfor = new AccountDAO().getAccountInformationById(acc.getAccId());
             int accId = acc.getAccId();
             String profileName = req.getParameter("new-name") != null ? req.getParameter("new-name") : accountInfor.getInformation().getFullname();
             String profileEmail = req.getParameter("new-email") != null ? req.getParameter("new-email") : accountInfor.getInformation().getEmail();

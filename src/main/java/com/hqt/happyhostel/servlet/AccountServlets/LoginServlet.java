@@ -23,12 +23,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "loginPage";
+        AccountDAO accountDAO = new AccountDAO();
         String username = request.getParameter("txtemail");
         String password = SecurityUtils.hashMd5(request.getParameter("txtpassword"));
         String save = request.getParameter("savelogin");
         Account account = null;
         try {
-            account = AccountDAO.getAccountByUsernameAndPassword(username, password);
+            account = accountDAO.getAccountByUsernameAndPassword(username, password);
             if (account != null && account.getStatus() == 1) {
                 url = "success";
                 HttpSession session = request.getSession(true);
@@ -40,7 +41,7 @@ public class LoginServlet extends HttpServlet {
                         Cookie cookie = new Cookie("selector", token);
                         cookie.setMaxAge(60 * 60 * 24 * 2);
                         response.addCookie(cookie);
-                        AccountDAO.updateTokenByUserName(token, username);
+                        accountDAO.updateTokenByUserName(token, username);
                     }
                 }
                 session.setAttribute("CURRENT_PAGE", "dashboard");

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HostelDAO {
+
     private static final String GET_HOSTEL =
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels]";
     private static final String INSERT_HOSTEl =
@@ -317,4 +318,5 @@ public class HostelDAO {
         }
         return hostel;
     }
+
 }

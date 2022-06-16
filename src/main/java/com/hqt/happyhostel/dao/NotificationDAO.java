@@ -20,7 +20,7 @@ public class NotificationDAO {
                     "INNER JOIN Notifications ON Hostels.hostel_id=Notifications.hostel_id\n" +
                     "WHERE Accounts.account_id = ?";
 
-    public static List<Notification> getNotificationById(int accId) {
+    public List<Notification> getNotificationById(int accId) {
         Connection cn = null;
         PreparedStatement pst = null;
         List<Notification> noti = new ArrayList<>();

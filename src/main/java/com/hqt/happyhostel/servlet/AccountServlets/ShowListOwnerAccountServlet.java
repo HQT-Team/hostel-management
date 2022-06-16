@@ -15,10 +15,12 @@ public class ShowListOwnerAccountServlet extends HttpServlet {
     private static final String url = "show-list-account";
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        AccountDAO accountDAO = new AccountDAO();
+
         try {
             HttpSession session = request.getSession();
 
-            ArrayList<Account> list = AccountDAO.GetAllByRole(1);
+            ArrayList<Account> list = accountDAO.GetAllByRole(1);
 
             request.setAttribute("OWNER_LIST", list);
             session.setAttribute("CURRENT_PAGE", "account");

@@ -28,17 +28,19 @@ public class CreateRenterAccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-
+        RoomInviteDAO roomInviteDAO = new RoomInviteDAO();
+        AccountDAO accountDAO = new AccountDAO();
+        ContractDAO contractDAO = new ContractDAO();
         String url = null;
         try {
             String roomId = req.getParameter("room_id");
-            if (RoomInviteDAO.getRoomInviteById(Integer.parseInt(roomId)).getInviteCode() == null){
+            if (roomInviteDAO.getRoomInviteById(Integer.parseInt(roomId)).getInviteCode() == null){
                 String username = req.getParameter("room-username");
                 String price = req.getParameter("room-fee");
                 String deposit = req.getParameter("room-deposit");
                 String startDate = req.getParameter("room-startdate");
                 String endDate = req.getParameter("room-enddate");
-                if (!AccountDAO.isExistUsername(username)) {
+                if (!accountDAO.isExistUsername(username)) {
                     String password = SecurityUtils.hashMd5(RandomStringGenerator.randomPassword(12, username));
                     Account renterAccount = Account.builder()
                             .username(username)
@@ -48,7 +50,7 @@ public class CreateRenterAccountServlet extends HttpServlet {
                             .roomId(Integer.parseInt(roomId))
                             .build();
 
-                    int renterId = AccountDAO.createRenterAccount(renterAccount);
+                    int renterId = accountDAO.createRenterAccount(renterAccount);
                     if (renterId > 0) {
 
                         HttpSession session = req.getSession(false);
@@ -66,7 +68,7 @@ public class CreateRenterAccountServlet extends HttpServlet {
                                     .build();
                             url = success;
 //                    req.setAttribute("SUCCESS", "Đăng ký tài khoản thành công! Tài khoản sẽ được quản trị viên xem xét và thông báo kết quả qua email!");
-                            if (ContractDAO.addContract(contract)) url = success;
+                            if (contractDAO.addContract(contract)) url = success;
                             else url = fail;
                         }
 

@@ -27,19 +27,22 @@ public class HostelDetailServlet extends HttpServlet {
             int hostelId = Integer.parseInt(request.getParameter("hostelID"));
 
             Hostel hostel = new HostelDAO().getHostelByIdWithConstraint(hostelId, accountId);
+
+            RoomDAO roomDao = new RoomDAO();
+
             if (hostel == null) {
                 url = "list-hostels";
             } else {
-                ArrayList<Room> rooms = RoomDAO.getListRoomByHostelID(hostelId);
-                int numberRoom = RoomDAO.getNumberRoomSpecificHostel(hostelId);
+                ArrayList<Room> rooms = roomDao.getListRoomByHostelID(hostelId);
+                int numberRoom = roomDao.getNumberRoomSpecificHostel(hostelId);
 
                 ArrayList<Integer> quantityMembers = new ArrayList<>();
                 for (Room roomItem : rooms) {
-                    int quantityMember = RoomDAO.getQuantityMember(roomItem.getRoomId());
+                    int quantityMember = roomDao.getQuantityMember(roomItem.getRoomId());
                     quantityMembers.add(quantityMember);
                 }
 
-                ArrayList<ServiceInfo> serviceList = RoomDAO.getServicesOfHostel(hostelId);
+                ArrayList<ServiceInfo> serviceList = roomDao.getServicesOfHostel(hostelId);
                 url = "HostelDetailPage";
                 request.setAttribute("hostel", hostel);
                 session.setAttribute("hostel", hostel);

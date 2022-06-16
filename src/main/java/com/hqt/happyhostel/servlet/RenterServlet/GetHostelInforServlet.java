@@ -22,10 +22,10 @@ public class GetHostelInforServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = ERROR;
-        Account acc = new Account();
-        List<Infrastructures> infrastructures = new ArrayList<>();
-        List<ServiceInfo> serviceInfo = new ArrayList<>();
-        Information accInfo = new Information();
+        Account acc;
+        List<Infrastructures> infrastructures;
+        List<ServiceInfo> serviceInfo;
+        Information accInfo;
         try {
             HttpSession session = req.getSession();
             acc = (Account)session.getAttribute("USER");
@@ -45,20 +45,20 @@ public class GetHostelInforServlet extends HttpServlet {
                 url = SUCCESS;
             }
             //Get Room Info
-            Room roomInfo = RoomDAO.getHostelRoomInforByRenterId(renterId);
+            Room roomInfo = new RoomDAO().getHostelRoomInforByRenterId(renterId);
             if (roomInfo!=null){
                 req.setAttribute("ROOM_INFOR", roomInfo);
                 url = SUCCESS;
             }
 
             //Get Infrastructure
-            infrastructures = InfrastructureDAO.getHostelInfrastructuresByRenterId(renterId);
+            infrastructures = new InfrastructureDAO().getHostelInfrastructuresByRenterId(renterId);
             if (infrastructures.size() > 0){
                 req.setAttribute("INFRASTRUCTURES", infrastructures);
                 url = SUCCESS;
             }
             //Get Service
-            serviceInfo = ServicesDAO.getHostelServicesByRenterId(renterId);
+            serviceInfo = new ServicesDAO().getHostelServicesByRenterId(renterId);
             if (serviceInfo!=null){
                 req.setAttribute("SERVICES", serviceInfo);
                 url = SUCCESS;

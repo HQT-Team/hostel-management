@@ -20,6 +20,8 @@ public class UpdateRoommateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RoommateInfoDAO roommateInfoDAO = new RoommateInfoDAO();
+
         String roomId = request.getParameter("roomID");
         try {
             int roommateId = Integer.parseInt(request.getParameter("roommate-id"));
@@ -47,7 +49,7 @@ public class UpdateRoommateServlet extends HttpServlet {
                     .parentName(parentName)
                     .parentPhone(parentPhone).build();
 
-            boolean check = RoommateInfoDAO.UpdateRoommateInfo(roommateInfo);
+            boolean check = roommateInfoDAO.UpdateRoommateInfo(roommateInfo);
         } catch (Exception e) {
             log("Error at UpdateRoommateServlet: " + e.toString());
         } finally {

@@ -25,6 +25,9 @@ public class RenterRegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
 
+        AccountDAO accountDAO = new AccountDAO();
+        RoomInviteDAO roomInviteDAO = new RoomInviteDAO();
+
         String url = "registerPage";
 
         try {
@@ -40,10 +43,10 @@ public class RenterRegisterServlet extends HttpServlet {
                     String inviteCode = req.getParameter("inviteCode");
 
 
-                    if (!AccountDAO.isExistUsername(username)) {
+                    if (!accountDAO.isExistUsername(username)) {
 
                         if (!new InformationDAO().isExistEmail(email)) {
-                            Room roomInvite = RoomInviteDAO.getRoomIdByInviteCode(inviteCode);
+                            Room roomInvite = roomInviteDAO.getRoomIdByInviteCode(inviteCode);
                             Information information = Information.builder()
                                     .fullname(fullname)
                                     .email(email)
@@ -60,7 +63,7 @@ public class RenterRegisterServlet extends HttpServlet {
                                     .roomId(roomInvite.getRoomId())
                                     .accountInfo(accountInfo).build();
 
-                            boolean check = AccountDAO.addAnAccount(registerAccount);
+                            boolean check = accountDAO.addAnAccount(registerAccount);
                             if (check) {
                                 req.setAttribute("SUCCESS", "Đăng ký tài khoản thành công! Tài khoản sẽ được quản trị viên xem xét và thông báo kết quả qua email!");
                                 req.getRequestDispatcher(url).forward(req, resp);

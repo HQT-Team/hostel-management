@@ -26,7 +26,7 @@ public class AuthenticationFilter implements Filter {
         try {
             //get resource name
             int lastIndex = uri.lastIndexOf("/");
-            String resource = uri.substring(lastIndex+1);
+            String resource = uri.substring(lastIndex + 1);
 
             //get authentication properties
             ServletContext context = request.getServletContext();
@@ -39,7 +39,7 @@ public class AuthenticationFilter implements Filter {
 
             //check resource authentication
             String rule = (String) authProperties.getProperty(resource);
-            if(rule != null && rule.equals("restricted") && session.getAttribute("USER") == null) {
+            if (rule != null && rule.equals("restricted") && session.getAttribute("USER") == null) {
                 //CHECK COOKIE
                 Account acc = null;
                 if (c != null) {
@@ -48,22 +48,21 @@ public class AuthenticationFilter implements Filter {
                             token = cookie.getValue();
                         }
                     }
-                    if (token != null) acc = AccountDAO.getAccountByToken(token);
+                    if (token != null) acc = new AccountDAO().getAccountByToken(token);
                 }
                 //NO COOKIE => LOGIN
                 if (acc == null) {
                     ((HttpServletResponse) response).sendRedirect("loginPage");
-                }
-                else {
+                } else {
                     session.setAttribute("CURRENT_PAGE", "dashboard");
                     session.setAttribute("USER", acc);
                     chain.doFilter(request, response);
                 }
 
-            }else {
+            } else {
                 chain.doFilter(request, response);
             }
-        }catch (Throwable t) {
+        } catch (Throwable t) {
             t.getMessage();
         }
 

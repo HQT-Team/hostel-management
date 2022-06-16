@@ -19,11 +19,14 @@ public class AddNewInfrastructureServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "list-hostels";
+
+        InfrastructureDAO infrastructureDAO = new InfrastructureDAO();
+
         try {
             int idNewInfrastructure = Integer.parseInt(request.getParameter("idNewInfrastructure"));
             int statusNewInfrastructure = Integer.parseInt(request.getParameter("statusNewInfrastructure"));
             int roomID = Integer.parseInt(request.getParameter("roomID"));
-            Boolean insertStatus = InfrastructureDAO.addNewInfrastructure(roomID, 1, statusNewInfrastructure, idNewInfrastructure);
+            Boolean insertStatus = infrastructureDAO.addNewInfrastructure(roomID, 1, statusNewInfrastructure, idNewInfrastructure);
             if (insertStatus) {
                 request.setAttribute("roomID", roomID);
                 request.setAttribute("updateSuccess", true);
