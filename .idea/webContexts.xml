@@ -6,6 +6,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/home.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/login.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/admin/show-list-account-watting.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/hostel-owner/hostel-detail.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/hostel-owner" />
       </map>
     </option>
   </component>
