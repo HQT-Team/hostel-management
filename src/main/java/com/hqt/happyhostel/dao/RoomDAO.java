@@ -143,7 +143,7 @@ public class RoomDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
 
-                String sql = "SELECT HostelService.service_id as 'service_id', Services.service_name as 'service_name', HostelService.valid_date as 'valid_date', HostelService.service_price as 'service_price', Services.unit as 'unit'\n" +
+                String sql = "SELECT hostel_service_id, HostelService.service_id as 'service_id', Services.service_name as 'service_name', HostelService.valid_date as 'valid_date', HostelService.service_price as 'service_price', Services.unit as 'unit'\n" +
                              "FROM HostelService, Services\n" +
                              "WHERE hostel_id = ?\n" +
                              "AND HostelService.service_id = Services.service_id\n" +
@@ -160,12 +160,13 @@ public class RoomDAO {
                 rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
+                        int hostelServiceId = rs.getInt("hostel_service_id");
                         int serviceID = rs.getInt("service_id");
                         String serviceName = rs.getString("service_name");
                         int servicePrice = rs.getInt("service_price");
                         String unit = rs.getString("unit");
                         String validDate = rs.getString("valid_date");
-                        servicesList.add(new ServiceInfo(hostelID, serviceID, serviceName, validDate, servicePrice, unit));
+                        servicesList.add(new ServiceInfo(hostelServiceId, hostelID, serviceID, serviceName, validDate, servicePrice, unit));
                     }
                 }
             }
@@ -568,7 +569,69 @@ public class RoomDAO {
                 String sql = "SELECT consume_id, number_electric, number_water, update_date, status\n" +
                         "FROM Consumes\n" +
                         "WHERE room_id = ?\n" +
-                        "ORDER BY update_date DESC";
+                        "ORDER BY consume_id DESC";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int consumeID = rs.getInt("consume_id");
+                        int numberElectric = rs.getInt("number_electric");
+                        int numberWater = rs.getInt("number_water");
+                        String updateDate = rs.getString("update_date");
+                        int status = rs.getInt("status");
+                        consumesList.add(Consume.builder()
+                                .consumeID(consumeID)
+                                .roomID(roomID)
+                                .numberElectric(numberElectric)
+                                .numberWater(numberWater)
+                                .updateDate(updateDate)
+                                .status(status).build());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return consumesList;
+    }
+
+    public ArrayList<Consume> getConsumeThisMonth(int roomID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Consume> consumesList = new ArrayList();
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT consume_id, number_electric, number_water, update_date, status\n" +
+                        "FROM Consumes\n" +
+                        "WHERE room_id = ?\n AND status = 0" +
+                        "ORDER BY consume_id DESC";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
@@ -692,14 +755,13 @@ public class RoomDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
+
                 String sql = "SELECT COUNT(roomate_info_id) as 'quantityMember'\n" +
                         "FROM RoomateInformations\n" +
                         "WHERE account_renter_id = (SELECT TOP 1 account_id\n" +
-                        "\t\t\t\t\t\t\tFROM Accounts\n" +
-                        "\t\t\t\t\t\t\tWHERE room_id = ?\n" +
-                        "\t\t\t\t\t\t\tAND role = 2\n" +
-                        "\t\t\t\t\t\t\tAND status = 1\n" +
-                        "\t\t\t\t\t\t\tORDER BY create_date DESC)";
+                        "FROM Accounts\n" +
+                        "WHERE room_id = ? AND role = 2\n" +
+                        "ORDER BY create_date DESC)";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);

@@ -1,4 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -7,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
 
     <!-- Title -->
     <title>TÍnh tiền phòng</title>
@@ -26,7 +31,7 @@
 
 <body>
 <!-- Navbar -->
-<%@include file="./components/navbar.jsp"%>
+<%@include file="./components/navbar.jsp" %>
 
 <!-- Body -->
 <div class="container min-height">
@@ -34,7 +39,7 @@
 
         <!-- Side bar -->
         <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
-            <%@include file="./components/sidebar.jsp"%>
+            <%@include file="./components/sidebar.jsp" %>
         </div>
 
         <!-- Content -->
@@ -72,10 +77,24 @@
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <p class="bill__item">Ngày tạo hóa đơn: <span>22/02/2022</span></p>
-                                <p class="bill__item">Ngày thanh toán: <span>Trống</span></p>
-                                <p class="bill__item">Trạng thái: <span class="status--no">Chưa thanh toán</span>
-                                </p>
+                                <p class="bill__item">Ngày tạo hóa đơn:
+                                    <jsp:useBean id="now" class="java.util.Date"/>
+                                    <fmt:formatDate var="dateCreate" value="${now}"
+                                                    pattern="dd/MM/yyyy"/>
+                                    <span>${dateCreate}</span> </p>
+                                <p class="bill__item">Ngày tới hạn thanh toán:
+                                    <span>
+                                        <select name="expiredDate">
+                                        <option value="${dateCreate}">${dateCreate}</option>
+                                        <c:forEach begin="1" end="10" varStatus="loop">
+                                            <c:set target="${now}" property="time" value="${now.time + 86400000}"/>
+                                            <fmt:formatDate var="expiredDateOption" value="${now}"
+                                                            pattern="dd/MM/yyyy"/>
+                                            <option value="${expiredDateOption}">${expiredDateOption}</option>
+                                        </c:forEach>
+                                    </select>
+                                    </span></p>
+<%--                                <p class="bill__item">Trạng thái: <span class="status--no">Chưa thanh toán</span>--%>
                             </div>
                         </div>
                         <div class="bill__table">
@@ -112,18 +131,18 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="bill__sign-label">Người lập hóa đơn</div>
-                                    <div class="bill__sign-name">Nguyễn Văn A</div>
+                                    <div class="bill__sign-name">${sessionScope.USER.accountInfo.information.fullname}</div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="bill__sign-label">Người thanh toán</div>
-                                    <div class="bill__sign-name"></div>
-                                </div>
+<%--                                <div class="col-6">--%>
+<%--                                    <div class="bill__sign-label">Người thanh toán</div>--%>
+<%--                                    <div class="bill__sign-name"></div>--%>
+<%--                                </div>--%>
                             </div>
                         </div>
                         <div class="bill__spacer"></div>
                         <!-- Direct to room detail -->
-                        <form action="" method="POST" class="bill__form d-flex justify-content-end">
-                            <input type="hidden" name="roomID" value="" />
+                        <form action="calculateTotalCost" method="POST" class="bill__form d-flex justify-content-end">
+                            <input type="hidden" name="roomID" value=""/>
                             <button class="btn btn-primary fs-2" type="submit">Xác nhận</button>
                         </form>
                     </div>
@@ -134,7 +153,7 @@
 </div>
 
 <!-- Footer -->
-<%@include file="./components/footer.jsp"%>
+<%@include file="./components/footer.jsp" %>
 
 <!-- Script Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
