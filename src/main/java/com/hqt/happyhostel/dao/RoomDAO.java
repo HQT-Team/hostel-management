@@ -143,19 +143,31 @@ public class RoomDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
 
-                String sql = "SELECT hostel_service_id, HostelService.service_id as 'service_id', Services.service_name as 'service_name', HostelService.valid_date as 'valid_date', HostelService.service_price as 'service_price', Services.unit as 'unit'\n" +
-                             "FROM HostelService, Services\n" +
-                             "WHERE hostel_id = ?\n" +
-                             "AND HostelService.service_id = Services.service_id\n" +
-                             "AND valid_date IN (SELECT TOP 1 valid_date\n" +
-                             "FROM HostelService\n" +
-                             "WHERE hostel_id = ?\n" +
-                             "AND valid_date < GETDATE()\n" +
-                             "ORDER BY valid_date DESC)";
+                String sql = "DECLARE @service_id INT\n" +
+                        "DECLARE @hostel_id INT\n" +
+                        "DECLARE @NewestServicesTable TABLE (service_id int ,hostel_id int , service_price decimal(18, 3) , valid_date datetime)\n" +
+                        "DECLARE cursorServices CURSOR FOR\n" +
+                        "SELECT service_id, hostel_id  FROM (SELECT DISTINCT service_id, hostel_id FROM HostelService WHERE hostel_id = ?) AS TB\n" +
+                        "Open cursorServices\n" +
+                        "FETCH NEXT FROM cursorServices \n" +
+                        "      INTO @service_id, @hostel_id\n" +
+                        "WHILE @@FETCH_STATUS = 0\n" +
+                        "BEGIN\n" +
+                        "\tDECLARE @validDate datetime\n" +
+                        "\tSet @validDate = (SELECT MAX(valid_date) FROM HostelService WHERE hostel_id = @hostel_id AND service_id = @service_id)\n" +
+                        "\tDECLARE @price decimal(18, 0)\n" +
+                        "\tSET @price = (SELECT service_price FROM HostelService WHERE valid_date = @validDate AND hostel_id = @hostel_id AND service_id = @service_id)\n" +
+                        "\tINSERT @NewestServicesTable SELECT @service_id, @hostel_id, @price, @validDate\n" +
+                        "    FETCH NEXT FROM cursorServices\n" +
+                        "          INTO @service_id, @hostel_id\n" +
+                        "END\n" +
+                        "CLOSE cursorServices\n" +
+                        "DEALLOCATE cursorServices\n" +
+                        "SELECT S.service_id, service_name, valid_date, service_price, unit \n" +
+                        "FROM Services S RIGHT JOIN @NewestServicesTable N ON S.service_id = N.service_id";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelID);
-                pst.setInt(2, hostelID);
 
                 rs = pst.executeQuery();
                 if (rs != null) {
