@@ -276,7 +276,7 @@ public class AccountDAO {
                              "\t\t\t\t\tFROM Rooms R, Contracts C\n" +
                              "\t\t\t\t\tWHERE R.room_id = ?\n" +
                              "\t\t\t\t\tAND R.room_id = C.room_id\n" +
-                             "\t\t\t\t\tORDER BY C.start_date DESC)";
+                             "\t\t\t\t\tORDER BY C.start_date DESC) AND status = 1";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
                 ResultSet rs = pst.executeQuery();

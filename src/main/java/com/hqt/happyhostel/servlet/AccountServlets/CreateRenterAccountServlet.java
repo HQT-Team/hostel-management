@@ -65,6 +65,7 @@ public class CreateRenterAccountServlet extends HttpServlet {
                                     .deposit(Integer.parseInt(deposit))
                                     .renterId(renterId)
                                     .hostelOwnerId(owner.getAccId())
+                                    .status(1)
                                     .build();
                             url = success;
 //                    req.setAttribute("SUCCESS", "Đăng ký tài khoản thành công! Tài khoản sẽ được quản trị viên xem xét và thông báo kết quả qua email!");
