@@ -336,13 +336,21 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer justify-content-between">
-                                                        <!-- Start update member information button -->
-                                                        <button type="button" class="btn btn-danger"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#update-member-infor-modal-${roommateList.roommateID}">
-                                                            Cập nhật
-                                                        </button>
-                                                        <!-- End update member information button -->
+                                                        <div>
+                                                            <!-- Start update member information button -->
+                                                            <button type="button" class="btn btn-danger"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#update-member-infor-modal-${roommateList.roommateID}">
+                                                                Cập nhật
+                                                            </button>
+                                                            <!-- End update member information button -->
+                                                            <!-- Start delete member button -->
+                                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#remove-member-modal">
+                                                                Xóa thành viên
+                                                            </button>
+                                                            <!-- End delete member button -->
+                                                        </div>
+
                                                         <button type="button"
                                                                 class="btn btn-primary"
                                                                 data-bs-dismiss="modal">
@@ -353,6 +361,33 @@
                                             </div>
                                         </div>
                                         <!-- End modal member detail -->
+                                        <!-- Start Remove member modal -->
+                                        <div class="modal fade" id="remove-member-modal" tabindex="-1" aria-labelledby="remove-member-modal-label" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="remove-member-modal-label">
+                                                            Cảnh báo
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body pt-5 pb-5">
+                                                        Bạn có chắc chắn là muốn xóa thành viên này ra khỏi phòng?
+                                                    </div>
+                                                    <div class="modal-footer justify-content-between">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                                                        <form action="delete-roommate" method="POST">
+                                                            <input type="hidden" name="renter-account-id" value="${requestScope.renterAccountId}">
+                                                            <input type="hidden" name="roommate-id" value="${roommateList.roommateID}">
+                                                            <button type="submit" class="btn btn-danger">
+                                                                Đồng ý
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Remove member modal -->
                                         <!-- Start Update member information modal -->
                                         <div class="modal fade" id="update-member-infor-modal-${roommateList.roommateID}"
                                              tabindex="-1"
