@@ -47,21 +47,21 @@
         }
       }
     }
-  }
+    .modal {
+      position: absolute;
+      top: 50px;
 
-  .modal {
-    position: absolute;
-    top: 50px;
+      .modal-header {
+        background-color: #6A5Af9;
+        color: #eee;
+      }
 
-    .modal-header {
-      background-color: rgb(119, 0, 255);
-    }
-
-    .modal-body {
-      h3 {
-        display: block;
-        padding-left: 20px;
-        font-size: 23px;
+      .modal-body {
+        h3 {
+          display: block;
+          padding-left: 20px;
+          font-size: 23px;
+        }
       }
     }
   }
