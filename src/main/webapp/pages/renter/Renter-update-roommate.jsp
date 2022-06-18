@@ -70,61 +70,61 @@
 
     <div class="row">
         <div class="dashboard hidden" id="dashboard">
-                <div class="infor-top">
-                    <img src="./assets/images/avatars/user-avatar.jpg" alt="">
-                    <h3><%=account.getUsername()%></h3>
-                    <p>Renter</p>
+            <div class="infor-top">
+                <img src="./assets/images/avatars/user-avatar.jpg" alt="">
+                <h3><%=account.getUsername()%></h3>
+                <p>Renter</p>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <button class="collapsed show" data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">
+                        <img src="./assets/images/logos/homeicon.webp">
+                        Phòng trọ
+                    </button>
                 </div>
-                <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <button class="collapsed show" data-toggle="collapse" data-target="#collapseOne"
-                                aria-expanded="true" aria-controls="collapseOne">
-                            <img src="./assets/images/logos/homeicon.webp">
-                            Phòng trọ
-                        </button>
-                    </div>
 
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card-body">
-                            <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
-                            <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
-                            <h3><a href="Renter-contract">Hợp đồng</a></h3>
-                            <h3><a href="#">Hóa đơn</a></h3>
-                            <h3><a href="Renter-report">Gửi báo cáo</a></h3>
-                            <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
-                            <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header" id="headingTwo">
-                        <button class="collapsed" data-toggle="collapse" data-target="#collapseTwo"
-                                aria-expanded="false" aria-controls="collapseTwo">
-                            <img src="./assets/images/logos/account.png">
-                            Tài khoản
-                        </button>
-                    </div>
-                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
-                        <div class="card-body">
-                            <h3><a href="HostelRenterProfilePage?<%=account.getAccId()%>">Hồ sơ</a></h3>
-                            <h3><a href="logout">Đăng xuất</a></h3>
-                        </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
+                        <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
+                        <h3><a href="Renter-contract">Hợp đồng</a></h3>
+                        <h3><a href="#">Hóa đơn</a></h3>
+                        <h3><a href="Renter-report">Gửi báo cáo</a></h3>
+                        <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
+                        <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <button class="collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                            aria-expanded="false" aria-controls="collapseTwo">
+                        <img src="./assets/images/logos/account.png">
+                        Tài khoản
+                    </button>
+                </div>
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <h3><a href="HostelRenterProfilePage?<%=account.getAccId()%>">Hồ sơ</a></h3>
+                        <h3><a href="logout">Đăng xuất</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <div class="content">
             <div class="div-controll-form" id="div-controll-form">
                 <form action="#" class="form" id="form">
-                    <h1>Thêm Thành Viên</h1>
+                    <h1>Cập Nhật Thông Tin</h1>
                     <div class="form-item" id="form-item">
                         <input id="form-item-input-1" type="text" placeholder="Tên đây đủ">
                         <p class="border-bottom"></p>
                         <span id="mes-1"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-2" placeholder="Email">
+                        <input id="form-item-input-2" placeholder="Email" type="email" name="emails" multiple>
                         <p class="border-bottom"></p>
                         <span id="mes-2"></span>
                     </div>
@@ -153,7 +153,7 @@
                         <p class="border-bottom"></p>
                         <span id="mes-7"></span>
                     </div>
-                    <input id="form-item-submit" type="button" value="Tạo Mới">
+                    <input id="form-item-submit" type="button" value="Lưu">
                 </form>
             </div>
         </div>

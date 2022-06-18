@@ -33,12 +33,13 @@
       }
 
       tr {
+        border: 1px solid #2f281e;
         th {
-          border: 1px solid black;
+          border: 1px solid #2f281e;
         }
 
         td {
-          border: 1px solid black;
+          border-left: 1px solid #2f281e;
 
           button {
             width: 60px;

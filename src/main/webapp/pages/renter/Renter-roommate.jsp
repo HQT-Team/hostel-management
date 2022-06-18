@@ -117,13 +117,14 @@
       <div class="table">
         <table border="1">
           <tr>
-            <th colspan="3">
+            <th colspan="5">
               <h2>Roommate</h2>
             </th>
           </tr>
           <tr>
             <th>Stt</th>
             <th>Tên</th>
+            <th></th>
             <th></th>
             <th></th>
           </tr>
@@ -139,7 +140,9 @@
               </button></td>
               <td><a href="#" role="button" class="btn btn-primary"
                      style="width:60px; height:30px; color: #ffffff; padding-top: 7px;">Delete</a></td>
+              <td><a href="Renter-update-roommate" role="button" class="btn btn-primary" style="width:60px; height:30px; color: #ffffff; padding-top: 7px;">Chỉnh Sửa</a></td>
             </tr>
+
             <%
               x +=1;
             %>
