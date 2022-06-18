@@ -49,7 +49,7 @@ public class GetRoomDetailServlet extends HttpServlet {
             List<InfrastructureItem> infrastructureItemList = infrastructureDAO.getAllInfrastructure();
             request.setAttribute("infrastructureList", infrastructureItemList);
 
-            Bill bill = roomDAO.getLastBill(roomId);
+            Bill bill = new BillDAO().getLastBill(roomId);
             request.setAttribute("billRoom", bill);
 
             String username = accountDAO.getUsernameRoomCurrently(roomId);

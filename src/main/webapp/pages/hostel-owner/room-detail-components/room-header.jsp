@@ -131,7 +131,8 @@
             </c:when>
             <c:when test="${requestScope.consumeNumber.status eq 0}">
                 <!-- Start calculate button button -->
-                <form action="CalculateTotalCostRoomPage" method="GET">
+                <form action="calculateTotalCost" method="get">
+                    <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
                     <button class="action-calculate-btn">Tính tiền phòng</button>
                 </form>
                 <!-- End calculate button button -->

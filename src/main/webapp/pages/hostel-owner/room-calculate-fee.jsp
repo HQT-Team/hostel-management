@@ -45,107 +45,168 @@
         <!-- Content -->
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 content-group">
             <div class="content-history pt-5 pb-5">
-                <a href="./hostel.html" class="history-link">Danh sách khu trọ</a>
+                <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
                 <i class="fa-solid fa-chevron-right"></i>
-                <a href="./room-detail.html" class="history-link">NovaLand Sky</a>
+                <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}"
+                   class="history-link">${sessionScope.hostel.hostelName}</a>
                 <i class="fa-solid fa-chevron-right"></i>
-                <a href="./room-detail.html" class="history-link">Phòng 11</a>
+                <a href="roomDetail?roomID=${sessionScope.room.roomId}"
+                   class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
                 <i class="fa-solid fa-chevron-right"></i>
                 <div class="current">Tính tiền phòng</div>
             </div>
             <div class="row mb-5">
                 <div class="content-body col-12 col-lg-12 col-xxl-9 m-auto">
-                    <div class="bill">
-                        <h1 class="bill__title">Hóa đơn tháng 05/2022</h1>
-                        <div class="row">
-                            <div class="col-12 col-sm-6">
-                                <p class="bill__item">Khu trọ: <span>Nova land</span></p>
-                                <p class="bill__item">Phòng số: <span>11</span></p>
-                                <p class="bill__item">Địa chỉ: <span>999 Hoàng Hữu Nam, phường Long Thạnh Mỹ, thành
-                                            phố Thủ Đức, thành phố Hồ Chí Minh</span></p>
-                                <div class="bill__consume">
-                                    <div class="bill__consume-name">Điện</div>
-                                    <div class="bill__consume-number">
-                                        Số cũ: <span>20</span>, Số mới: <span>40</span>, Tiêu thụ: <span>20</span>
+                    <form action="calculateTotalCost" method="POST" class="bill__form d-flex justify-content-end">
+                        <div class="bill">
+                            <c:set var="consumeThisMonth" value="${requestScope.consumeListThisMonth}"/>
+                            <c:set var="consumeBeginMonth"
+                                   value="${consumeThisMonth.get(consumeThisMonth.size() - 1)}"/>
+                            <c:set var="consumeEndMonth" value="${consumeThisMonth.get(0)}"/>
+                            <h1 class="bill__title">Hóa đơn
+                                tháng ${requestScope.consumeListThisMonth.get(0).updateDate.split("-")[1]}/${requestScope.consumeListThisMonth.get(0).updateDate.split("-")[0]}</h1>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <p class="bill__item">Khu trọ: <span>${sessionScope.hostel.hostelName}</span></p>
+                                    <p class="bill__item">Phòng số: <span>${sessionScope.room.roomNumber}</span></p>
+                                    <p class="bill__item">Địa chỉ:
+                                        <span>${sessionScope.hostel.address}, ${sessionScope.hostel.ward.split('-')[1]}, ${sessionScope.hostel.district.split('-')[1]}, ${sessionScope.hostel.city.split('-')[1]}</span>
+                                    </p>
+                                    <div class="bill__consume">
+                                        <div class="bill__consume-name">Điện</div>
+                                        <c:set var="consumeElectricNumber"
+                                               value="${consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric}"/>
+                                        <div class="bill__consume-number">
+                                            Số cũ: <span>${consumeBeginMonth.numberElectric}</span>, Số mới:
+                                            <span>${consumeEndMonth.numberElectric}</span>, Tiêu thụ:
+                                            <span>${consumeElectricNumber}</span>
+                                        </div>
+                                    </div>
+                                    <div class="bill__consume">
+                                        <div class="bill__consume-name">Nước</div>
+                                        <c:set var="consumeWaterNumber"
+                                               value="${consumeEndMonth.numberWater - consumeBeginMonth.numberWater}"/>
+                                        <div class="bill__consume-number">
+                                            Số cũ: <span>${consumeBeginMonth.numberWater}</span>, Số mới:
+                                            <span>${consumeEndMonth.numberWater}</span>, Tiêu thụ:
+                                            <span>${consumeWaterNumber}</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="bill__consume">
-                                    <div class="bill__consume-name">Nước</div>
-                                    <div class="bill__consume-number">
-                                        Số cũ: <span>20</span>, Số mới: <span>40</span>, Tiêu thụ: <span>20</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <p class="bill__item">Ngày tạo hóa đơn:
-                                    <jsp:useBean id="now" class="java.util.Date"/>
-                                    <fmt:formatDate var="dateCreate" value="${now}"
-                                                    pattern="dd/MM/yyyy"/>
-                                    <span>${dateCreate}</span> </p>
-                                <p class="bill__item">Ngày tới hạn thanh toán:
-                                    <span>
+                                <div class="col-12 col-sm-6">
+                                    <p class="bill__item">Ngày tạo hóa đơn:
+                                        <jsp:useBean id="now" class="java.util.Date"/>
+                                        <fmt:formatDate var="dateCreate" value="${now}"
+                                                        pattern="dd/MM/yyyy"/>
+                                        <fmt:formatDate var="dateCreateValue" value="${now}"
+                                                        pattern="yyyy/MM/dd"/>
+                                        <span>${dateCreate}</span></p>
+                                    <p class="bill__item">Ngày tới hạn thanh toán:
+                                        <span>
                                         <select name="expiredDate">
-                                        <option value="${dateCreate}">${dateCreate}</option>
+                                        <option value="${dateCreateValue}">${dateCreate}</option>
                                         <c:forEach begin="1" end="10" varStatus="loop">
                                             <c:set target="${now}" property="time" value="${now.time + 86400000}"/>
                                             <fmt:formatDate var="expiredDateOption" value="${now}"
                                                             pattern="dd/MM/yyyy"/>
-                                            <option value="${expiredDateOption}">${expiredDateOption}</option>
+                                            <fmt:formatDate var="expiredDateValue" value="${now}"
+                                                            pattern="yyyy/MM/dd"/>
+                                            <option value="${expiredDateValue}">${expiredDateOption}</option>
                                         </c:forEach>
                                     </select>
                                     </span></p>
-<%--                                <p class="bill__item">Trạng thái: <span class="status--no">Chưa thanh toán</span>--%>
-                            </div>
-                        </div>
-                        <div class="bill__table">
-                            <table class="table table-success table-striped table-bordered">
-                                <thead>
-                                <tr class="text-center">
-                                    <th>STT</th>
-                                    <th>Tên</th>
-                                    <th>Đơn vị tính</th>
-                                    <th>Số lượng</th>
-                                    <th>Đơn giá</th>
-                                    <th>Thành tiền</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Điện</td>
-                                    <td>1 Kwh</td>
-                                    <td>20</td>
-                                    <td>3.500 đ</td>
-                                    <td>70.000 đ</td>
-                                </tr>
-
-                                <!-- Total money -->
-                                <tr>
-                                    <td colspan="5" class="total">Tổng tiền</td>
-                                    <td class="total-money">70.000 đ</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="bill__sign">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="bill__sign-label">Người lập hóa đơn</div>
-                                    <div class="bill__sign-name">${sessionScope.USER.accountInfo.information.fullname}</div>
+                                    <%--                                <p class="bill__item">Trạng thái: <span class="status--no">Chưa thanh toán</span>--%>
                                 </div>
-<%--                                <div class="col-6">--%>
-<%--                                    <div class="bill__sign-label">Người thanh toán</div>--%>
-<%--                                    <div class="bill__sign-name"></div>--%>
-<%--                                </div>--%>
                             </div>
+                            <div class="bill__table">
+                                <table class="table table-success table-striped table-bordered">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th>STT</th>
+                                        <th>Tên</th>
+                                        <th>Đơn vị tính</th>
+                                        <th>Số lượng</th>
+                                        <th>Đơn giá</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:set var="count" value="0"/>
+                                    <c:set var="totalCost" value="0"/>
+                                    <c:forEach var="service" items="${requestScope.serviceInfo}">
+                                        <c:set var="count" value="${count+1}"/>
+                                        <c:set var="quantity" value="1"/>
+                                        <tr>
+                                            <td>${count}</td>
+                                            <td>${service.serviceName}</td>
+                                            <td>${service.unit}</td>
+                                            <c:choose>
+                                                <c:when test="${service.serviceName eq 'Điện'}">
+                                                    <c:set var="quantity" value="${consumeElectricNumber}"/>
+                                                    <td>${consumeElectricNumber}</td>
+                                                </c:when>
+                                                <c:when test="${service.serviceName eq 'Nước'}">
+                                                    <c:set var="quantity" value="${consumeWaterNumber}"/>
+                                                    <td>${consumeWaterNumber}</td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:set var="quantity" value="1"/>
+                                                    <td>1</td>
+                                                </c:otherwise>
+                                            </c:choose>
+
+                                            <fmt:parseNumber var="servicePrice" integerOnly="true"
+                                                             type="number" value="${service.servicePrice}"/>
+                                            <td>${servicePrice}</td>
+
+                                            <c:set var="totalCost"
+                                                   value="${totalCost + service.servicePrice * quantity}"/>
+                                            <td><fmt:formatNumber value="${service.servicePrice * quantity}"
+                                                                  type="currency"/></td>
+                                        </tr>
+                                    </c:forEach>
+                                    <tr>
+                                        <td>${count+1}</td>
+                                        <td>Tiền phòng</td>
+                                        <td>phòng</td>
+                                        <td>1</td>
+                                        <td>${requestScope.contractRoom.price}</td>
+                                        <c:set var="totalCost" value="${totalCost + requestScope.contractRoom.price}"/>
+                                        <td><fmt:formatNumber value="${requestScope.contractRoom.price}"
+                                                              type="currency"/></td>
+                                    </tr>
+                                    <!-- Total -->
+                                    <td colspan="5" class="text-end total">Tổng
+                                        tiền:
+                                    </td>
+                                    <td><fmt:formatNumber value="${totalCost}" type="currency"/></td>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="bill__sign">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="bill__sign-label">Người lập hóa đơn</div>
+                                        <div class="bill__sign-name">${sessionScope.USER.accountInfo.information.fullname}</div>
+                                    </div>
+                                    <%--                                <div class="col-6">--%>
+                                    <%--                                    <div class="bill__sign-label">Người thanh toán</div>--%>
+                                    <%--                                    <div class="bill__sign-name"></div>--%>
+                                    <%--                                </div>--%>
+                                </div>
+                            </div>
+                            <div class="bill__spacer"></div>
+                            <!-- Direct to room detail -->
+                            <fmt:parseNumber var="totalCostRoom" integerOnly="true"
+                                             type="number" value="${totalCost}"/>
+                            <input type="hidden" name="totalCost" value="${totalCostRoom}"/>
+                            <input type="hidden" name="consumeStartID" value="${consumeBeginMonth}">
+                            <input type="hidden" name="consumeEndID" value="${consumeEndMonth}">
+                            <button class="btn btn-primary fs-2" type="submit"
+                                    class="bill__form d-flex justify-content-end">Xác nhận
+                            </button>
                         </div>
-                        <div class="bill__spacer"></div>
-                        <!-- Direct to room detail -->
-                        <form action="calculateTotalCost" method="POST" class="bill__form d-flex justify-content-end">
-                            <input type="hidden" name="roomID" value=""/>
-                            <button class="btn btn-primary fs-2" type="submit">Xác nhận</button>
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
