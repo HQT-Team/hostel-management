@@ -37,11 +37,12 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
           <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
-          <a class="dropdown-item" href="#">Hợp đồng</a>
+          <a class="dropdown-item" href="Renter-contract">Hợp đồng</a>
           <a class="dropdown-item" href="#">Hóa đơn</a>
-          <a class="dropdown-item" href="#">Báo cáo</a>
+          <a class="dropdown-item" href="Renter-report">Báo cáo</a>
           <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
           <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
+          <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
           <a class="dropdown-item" href="logout">Đăng xuất</a>
         </div>
       </div>
@@ -83,10 +84,11 @@
           <div class="card-body">
             <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
             <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
-            <h3><a href="#">Hợp đồng</a></h3>
+            <h3><a href="Renter-contract">Hợp đồng</a></h3>
             <h3><a href="#">Hóa đơn</a></h3>
-            <h3><a href="#">Gửi báo cáo</a></h3>
+            <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
+            <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
           </div>
         </div>
       </div>
@@ -104,7 +106,7 @@
             <h3><a href="logout">Đăng xuất</a></h3>
           </div>
         </div>
-      </div>2
+      </div>
     </div>
     <div class="content row">
       <div class="profile">
