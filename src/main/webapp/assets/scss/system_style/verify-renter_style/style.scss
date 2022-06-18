@@ -1,0 +1,88 @@
+// Register navbar
+.main-nav {
+  height: var(--navbar-height);
+  box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
+
+  // Logo
+  .main-nav__logo {
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+  }
+
+  .main-nav__logo-img {
+    width: 132px;
+  }
+
+  // Title
+  .main-nav__title {
+    text-align: end;
+    height: var(--navbar-height);
+    line-height: var(--navbar-height);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+}
+
+// Content CSS
+.verify-content {
+  min-height: var(--min-body-height);
+}
+
+// Register form
+.verify-form {
+  background-color: var(--white-color);
+  padding: 24px 16px;
+  margin-top: 24px;
+  border-radius: 6px;
+  box-shadow: var(--box-shadow-border-model);
+
+  .form-title {
+    color: #009a13;
+    padding: 0 30px;
+  }
+
+  .form-subtitle {
+    span {
+      color: red;
+    }
+  }
+
+  .form-control.btn {
+    font-size: 1.7rem;
+    font-weight: 600;
+  }
+
+  .form-message {
+    margin-bottom: 0;
+    line-height: 2.2rem;
+  }
+
+  // Submit btn
+  .form-submit {
+    width: 100%;
+    background-color: #20df7f;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #00c964;
+    }
+  }
+}
+
+// Footer
+footer {
+  background-color: var(--footer-background-color);
+}
+
+.copyright-wrapper {
+  height: var(--footer-height);
+
+  .copyright-content {
+    line-height: var(--footer-height);
+    color: #a9b3bb;
+  }
+}

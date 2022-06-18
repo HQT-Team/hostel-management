@@ -1,0 +1,134 @@
+// Register navbar
+.main-nav {
+  height: var(--navbar-height);
+  box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
+
+  // Logo
+  .main-nav__logo {
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+  }
+
+  .main-nav__logo-img {
+    width: 132px;
+  }
+
+  // Title
+  .main-nav__title {
+    text-align: end;
+    height: var(--navbar-height);
+    line-height: var(--navbar-height);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+}
+
+// Content CSS
+.content {
+  min-height: var(--min-body-height);
+}
+
+.content__wrapper {
+  background-color: var(--white-color);
+  padding: 24px 24px;
+  border-radius: 6px;
+  box-shadow: var(--box-shadow-border-model);
+}
+
+.content__header {
+  margin: 6px 0 12px 0;
+  span {
+    color: #009a13;
+  }
+}
+
+.content__subheader {
+  color: var(--primary-color);
+
+  span {
+    color: #ff0000;
+  }
+}
+
+.content__spacer {
+  background: rgba(0, 0, 0, 0.3);
+  height: 0.2px;
+  margin-bottom: 12px;
+}
+
+.content__infor-title {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.content__infor-item {
+  font-weight: 600;
+
+  span {
+    font-weight: 400;
+  }
+}
+
+.content__table {
+  padding: 14px 16px;
+
+  &:first-of-type {
+    border-right: 0.5px solid rgba(0, 0, 0, 0.3);
+
+    @media (max-width: 768px) {
+      border-right: 0;
+    }
+  }
+
+  .content__infor-table {
+    .good {
+      color: #009a13;
+    }
+  }
+}
+
+.content__form {
+  .form-group {
+    margin-bottom: 8px;
+
+    > div {
+      margin-bottom: 8px;
+    }
+
+    .content__form-confirm {
+      width: 20px;
+      height: 20px;
+    }
+
+    .content__form-label {
+      padding-left: 6px;
+      font-weight: 600;
+    }
+
+    .form-message {
+      margin-bottom: 0;
+    }
+  }
+
+  .form-actions {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+// Footer
+footer {
+  background-color: var(--footer-background-color);
+}
+
+.copyright-wrapper {
+  height: var(--footer-height);
+
+  .copyright-content {
+    line-height: var(--footer-height);
+    color: #a9b3bb;
+  }
+}

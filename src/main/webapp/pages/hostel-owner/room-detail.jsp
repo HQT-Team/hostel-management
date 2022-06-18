@@ -39,16 +39,14 @@
 
         <!-- Content -->
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
-            <div class="content-bar pt-5">
-                <!-- History link bar -->
-                <div class="content-history">
-                    <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}"
-                       class="history-link">${sessionScope.hostel.hostelName}</a>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <div class="current">Phòng ${sessionScope.room.roomNumber}</div>
-                </div>
+            <!-- History link bar -->
+            <div class="content-history">
+                <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}"
+                   class="history-link">${sessionScope.hostel.hostelName}</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <div class="current">Phòng ${sessionScope.room.roomNumber}</div>
             </div>
             <!-- Infor box -->
             <div class="col-xxl-9 m-auto">

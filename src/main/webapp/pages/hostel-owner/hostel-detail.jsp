@@ -46,13 +46,11 @@
         <!-- Content -->
         <c:set var="hostelInformation" value="${requestScope.hostel}"/>
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
-            <div class="content-bar pt-5">
-                <!-- History link bar -->
-                <div class="content-history">
-                    <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <div class="current">${hostelInformation.hostelName}</div>
-                </div>
+            <!-- History link -->
+            <div class="content-history">
+                <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <div class="current">${hostelInformation.hostelName}</div>
             </div>
             <div class="content-body">
                 <div class="hostel-header">

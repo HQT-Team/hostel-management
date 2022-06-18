@@ -39,16 +39,14 @@
 
         <!-- Content -->
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 content-group">
-            <div class="content-bar pt-5">
-                <div class="content-history">
-                    <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}" class="history-link">${sessionScope.hostel.hostelName}</a>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <a href="roomDetail?roomID=${sessionScope.room.roomId}" class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <div class="current">Tạo tài khoản</div>
-                </div>
+            <div class="content-history">
+                <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}" class="history-link">${sessionScope.hostel.hostelName}</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="roomDetail?roomID=${sessionScope.room.roomId}" class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <div class="current">Tạo tài khoản</div>
             </div>
             <div class="row mb-5">
                 <div class="content-body col-12 col-md-10 col-lg-9 col-xl-7 col-xxl-6 m-auto">

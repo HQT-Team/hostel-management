@@ -39,14 +39,12 @@
         <!-- Content -->
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 content-group">
             <!-- Content head bar -->
-            <div class="content-bar pt-5">
-                <div class="content-history">
-                    <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <a href="detailHostel?hostelID=${requestScope.hostel.hostelID}" class="history-link">${requestScope.hostel.hostelName}</a>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <div class="current">Thêm phòng</div>
-                </div>
+            <div class="content-history">
+                <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="detailHostel?hostelID=${requestScope.hostel.hostelID}" class="history-link">${requestScope.hostel.hostelName}</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <div class="current">Thêm phòng</div>
             </div>
             <!-- Form -->
             <div class="row mb-5">
@@ -77,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <div class="form-wrapper">
-                                <label for="room-name" class="form-label">Tên phòng: </label>
+                                <label for="room-name" class="form-label">Phòng số: </label>
                                 <input id="room-name" name="room-name" type="number" class="form-control"
                                        placeholder="Phòng số ...">
                             </div>
@@ -216,6 +214,7 @@
             Validator.isRequired('#room-quantity', 'Vui lòng nhập số lượng phòng cần tạo'),
             Validator.minNumber('#room-quantity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
             Validator.maxNumber('#room-quantity', 50, 'Vui lòng nhập số lượng dưới 50'),
+            Validator.isRequired('#room-name', 'Vui lòng nhập phòng số'),
             Validator.isRequired('#room-capacity', 'Vui lòng nhập số lượng thành viên tối đa'),
             Validator.minNumber('#room-capacity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
             Validator.maxNumber('#room-capacity', 10, 'Vui lòng nhập số lượng dưới 10'),
@@ -227,6 +226,18 @@
             Validator.minNumber('#room-air-conditioner', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
         ]
     });
+
+    const inputName = document.querySelector('#room-name');
+
+    document.querySelector('#room-quantity').addEventListener('change', (e) => {
+        if (e.target.value != '1') {
+            inputName.setAttribute("disabled", "true");
+            inputName.value = "0";
+        } else {
+            inputName.removeAttribute("disabled");
+            inputName.value = "";
+        }
+    })
 </script>
 
 </body>

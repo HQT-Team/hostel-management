@@ -1,0 +1,93 @@
+@import "../_common-style/navbar";
+@import "../_common-style/sidebar";
+@import "../_common-style/footer";
+
+// Style here
+.content-group {
+  min-height: var(--min-body-height);
+
+  .content-body {
+    padding: 24px 24px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  }
+}
+
+.bill__title {
+  text-align: center;
+  margin: 0 0 16px 0;
+}
+
+.bill__item {
+  font-weight: 600;
+
+  span {
+    font-weight: 400;
+  }
+
+  .status--yes {
+    color: #009a13;
+  }
+
+  .status--no {
+    color: #ff0000;
+  }
+}
+
+.bill__consume {
+  margin-bottom: 10px;
+
+  &:last-of-type {
+    margin-bottom: 16px;
+  }
+
+  .bill__consume-name {
+    font-weight: 500;
+  }
+  .bill__consume-number {
+    font-weight: 500;
+    span {
+      font-weight: 400;
+    }
+  }
+}
+
+.bill__table {
+  overflow-x: auto;
+
+  table {
+    min-width: 670px;
+
+    .total {
+      padding-right: 20px;
+      text-align: right;
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
+
+    .total-money {
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
+  }
+}
+
+.bill__sign {
+  margin-top: 12px;
+
+  .bill__sign-label {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .bill__sign-name {
+    text-align: center;
+  }
+}
+
+.bill__spacer {
+  background-color: rgba(0, 0, 0, 0.12);
+  height: 0.5px;
+  margin: 16px 0;
+}

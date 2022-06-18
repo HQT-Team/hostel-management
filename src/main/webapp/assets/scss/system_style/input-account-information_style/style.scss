@@ -1,4 +1,4 @@
-// Login navbar
+// Register navbar
 .main-nav {
   height: var(--navbar-height);
   box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
@@ -26,55 +26,75 @@
 }
 
 // Content CSS
-.login-content {
-  min-height: var(--min-body-height);
-}
+.content__label {
+  display: flex;
+  align-items: center;
 
-// Turn back
-.turn-back__link {
-  font-size: 1.6rem;
+  .content__label-icons {
+    position: relative;
+    width: 30px;
+    height: 30px;
 
-  &:hover {
+    .content__label-icon-1,
+    .content__label-icon-2 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .content__label-icon-1 {
+      color: var(--primary-color);
+      font-size: 2rem;
+    }
+
+    .content__label-icon-2 {
+      color: var(--white-color);
+      font-size: 1rem;
+    }
+  }
+
+  .content__label-title {
+    font-size: 1.8rem;
+    font-weight: 500;
     color: var(--primary-color);
+    margin-bottom: 0;
   }
 }
 
-.login-form {
+.register-content {
+  min-height: var(--min-body-height);
+}
+
+// Register form
+.register-form {
   background-color: var(--white-color);
-  padding: 16px 16px;
+  padding: 24px 16px;
   margin-top: 24px;
   border-radius: 6px;
   box-shadow: var(--box-shadow-border-model);
 
-  .more-action {
+  .form-title {
+    color: #009a13;
+  }
+
+  .form-subtitle {
+    padding: 0 50px;
+
+    span {
+      color: var(--error-color);
+    }
+  }
+
+  // Register policy
+  .register-policy {
+    font-size: 1.4rem;
     margin-bottom: 16px;
+    text-align: center;
 
-    .form-group {
-      display: flex;
-      align-items: center;
-    }
-
-    .more-action__checkbox {
-      width: 16px;
-      height: 16px;
-    }
-
-    .more-action__checkbox-title {
-      font-weight: 400;
-      margin-left: 6px;
-      margin-bottom: 0;
-      font-size: 1.6rem;
-    }
-
-    .more-action__forgot-link {
-      display: block;
-      text-align: right;
+    a {
+      font-style: italic;
       color: var(--primary-color);
-      font-size: 1.8rem;
-
-      &:hover {
-        color: var(--button-active-color);
-      }
     }
   }
 
@@ -93,6 +113,7 @@
   // Other links
   .form-other-link {
     text-align: center;
+
     a {
       color: #ff6a00;
 
@@ -103,17 +124,9 @@
   }
 }
 
-// Forgot password modal
-.forgot-password-modal-label {
-  font-size: 2.4rem;
-}
-
-.forgot-password-modal-body {
-  padding: 24px 10px;
-}
-
-.forgot-password-modal-btn {
-  font-size: 1.8rem;
+// Footer
+.register-footer {
+  margin-top: 60px;
 }
 
 // Footer

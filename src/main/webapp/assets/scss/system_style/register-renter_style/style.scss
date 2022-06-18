@@ -26,7 +26,7 @@
 }
 
 // Content CSS
-.login-content {
+.register-content {
   min-height: var(--min-body-height);
 }
 
@@ -39,12 +39,28 @@
   }
 }
 
-.login-form {
+.register-form {
   background-color: var(--white-color);
   padding: 16px 16px;
   margin-top: 24px;
   border-radius: 6px;
   box-shadow: var(--box-shadow-border-model);
+
+  .form-title {
+    color: #009a13;
+  }
+
+  .form-subtitle {
+    line-height: 2rem;
+
+    span {
+      color: red;
+    }
+  }
+
+  .form-error-message {
+    line-height: 2.2rem;
+  }
 
   .more-action {
     margin-bottom: 16px;
@@ -101,19 +117,6 @@
       }
     }
   }
-}
-
-// Forgot password modal
-.forgot-password-modal-label {
-  font-size: 2.4rem;
-}
-
-.forgot-password-modal-body {
-  padding: 24px 10px;
-}
-
-.forgot-password-modal-btn {
-  font-size: 1.8rem;
 }
 
 // Footer
