@@ -136,9 +136,11 @@
                         <span id="mes-3"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-4" type="text" placeholder="Giới tính">
-                        <p class="border-bottom"></p>
-                        <span id="mes-4"></span>
+                        <select name="sex" id="form-item-input-4">
+                            <option value="male">Nam</option>
+                            <option value="female">Nữ</option>
+                            <option value="female">Khác</option>
+                        </select>
                     </div>
                     <div class="form-item">
                         <input id="form-item-input-5" type="text" placeholder="Số điện thoại">

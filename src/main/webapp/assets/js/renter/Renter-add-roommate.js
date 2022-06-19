@@ -30,16 +30,21 @@ function showMessageSuccess(input, x) {
 
 function isValidDate(dateString) {
     // First check for the pattern
-    var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
+    var date_regex = /^(0[1-9]|1\d|2\d|3[01])\/|-(0[1-9]|1[0-2])\/|-(19|20)\d{2}$/;
     if (!(date_regex.test(dateString.value))) {
         return false;
     }
     // Parse the date parts to integers
-    var parts = dateString.value.split("/");
-    var day = parseInt(parts[1], 10);
-    var month = parseInt(parts[0], 10);
+    var parts = dateString.value.split(/[-,/]/);
+    var day = parseInt(parts[0], 10);
+    var month = parseInt(parts[1], 10);
     var year = parseInt(parts[2], 10);
-
+    const str = year + "-" + month + "-" + day;
+    const date1 = new Date()
+    const date2 = new Date(str)
+    if (date1 < date2) {
+        return false
+    }
     // Check the ranges of month and year
     if (year < 1000 || year > 3000 || month == 0 || month > 12)
         return false;
@@ -62,13 +67,29 @@ const validateEmail = (email) => {
         );
 };
 
+function checkNumber(input) {
+    const vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+    if (!(vnf_regex).test(input.value)) {
+        return false
+    }
+    return true;
+}
+
+
+function checkNumberCCCD(input) {
+    var reg = /^\d{12}$/;
+    if (!reg.test(input.value))
+        return false
+    return true
+}
+
 function checkEmpty(list) {
     let check = true
     let x = 1;
     list.forEach(input => {
-        // if (x == 3) {
-        //     x = 4;
-        // }
+        if (x == 4) {
+            x = 5;
+        }
         input.value = input.value.trim();
         if (!input.value) {
             check = showMessageError(input, x);
@@ -85,25 +106,46 @@ function checkEmpty(list) {
 
 submit.addEventListener('click', function () {
     let check = true;
-    check = checkEmpty([input_1, input_2, input_3, input_4, input_5, input_6, input_7])
+    check = checkEmpty([input_1, input_2, input_3, input_5, input_6, input_7])
     if (document.getElementById("mes-3").value == undefined) {
         console.log(document.getElementById("mes-3"));
         var check_date = isValidDate(input_3)
         if (!check_date) {
             let parent = input_3.parentElement;
             let span = parent.querySelector("#mes-3");
-            span.innerText = "Vui lòng nhập đúng ngày sinh!";
+            span.innerText = "Vui lòng nhập đúng ngày sinh! (dd-mm-yyyy hoặc dd/mm/yyyy)";
         } else {
             let parent = input_3.parentElement;
             let span = parent.querySelector("#mes-3");
             span.innerText = "";
         }
     }
+    if (!checkNumberCCCD(input_7)) {
+        let parent = input_7.parentElement;
+        let span = parent.querySelector("#mes-7");
+        span.innerText = "Vui lòng nhập số căn cước công dân";
+    } else {
+        let parent = input_7.parentElement;
+        let span = parent.querySelector("#mes-7");
+        span.innerText = "";
+    }
+
+
+    if (!checkNumber(input_5)) {
+        let parent = input_5.parentElement;
+        let span = parent.querySelector("#mes-5");
+        span.innerText = "Vui lòng nhập số điện thoại của bạn!";
+        check = false;
+    } else {
+        let parent = input_5.parentElement;
+        let span = parent.querySelector("#mes-5");
+        span.innerText = "";
+    }
     var check_email = validateEmail(input_2)
     if (!check_email) {
         let parent = input_2.parentElement;
         let span = parent.querySelector("#mes-2");
-        span.innerText = "Vui lòng nhập đúng định dạng ...@gmail.com";
+        span.innerText = "Vui lòng nhập đúng định dạng (...@gmail.com)";
     } else {
         let parent = input_2.parentElement;
         let span = parent.querySelector("#mes-2");
