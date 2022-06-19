@@ -43,8 +43,8 @@
           <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
           <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
           <a class="dropdown-item" href="Renter-contract">Hợp đồng</a>
-          <a class="dropdown-item" href="#">Hóa đơn</a>
-          <a class="dropdown-item" href="">Báo cáo</a>
+          <a class="dropdown-item" href="Renter-invoice">Hóa đơn</a>
+          <a class="dropdown-item" href="Renter-report">Báo cáo</a>
           <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
           <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
           <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
@@ -91,7 +91,7 @@
             <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
             <h3><a href="get-roommate-infor" style="color:rgb(4, 4, 255)">Bạn cùng phòng</a></h3>
             <h3><a href="Renter-contract">Hợp đồng</a></h3>
-            <h3><a href="#">Hóa đơn</a></h3>
+            <h3><a href="Renter-invoice">Hóa đơn</a></h3>
             <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
