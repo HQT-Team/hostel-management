@@ -78,7 +78,7 @@ public class RoomInviteDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "Select [room_id], [hostel_id], [invite_code], [QRcode], [expiredTimeCode], [room_status]\n" +
+                String sql = "Select [room_id]\n" +
                              "From [dbo].[Rooms]\n" +
                              "Where [invite_code] = ?";
                 pst = cn.prepareStatement(sql);
@@ -131,6 +131,102 @@ public class RoomInviteDAO {
         return room;
     }
 
+    public boolean checkRoomInviteCode(String inviteCode){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean result = false;
+        try {
+            cn = DBUtils.makeConnection();
+            if(cn != null){
+                String sql = "SELECT [account_id]\n" +
+                        "FROM [dbo].[Rooms] AS R JOIN [dbo].[Accounts] AS A ON R.[room_id] = A.[room_id]\n" +
+                        "WHERE R.[invite_code] = ?";
+                cn.prepareStatement(sql);
+                pst.setString(1, inviteCode);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()){
+                    result = true;
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+
+    public boolean checkRoomInviteCodeExpiredTime(String inviteCode){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean result = false;
+        try {
+            cn = DBUtils.makeConnection();
+            if(cn != null){
+                String sql = "SELECT [room_id]\n" +
+                        "FROM [dbo].[Rooms] AS R\n" +
+                        "WHERE R.[invite_code] = ? AND GETDATE() > R.[expiredTimeCode]";
+                cn.prepareStatement(sql);
+                pst.setString(1, inviteCode);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()){
+                    result = true;
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
     public boolean updateRoomInviteCode(int idRoom, String inviteCode, String QRCode, String endTime) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -177,4 +273,53 @@ public class RoomInviteDAO {
         }
         return isSuccess;
     }
+
+
+    public int getAccountIdByInviteCode(String inviteCode) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        int accId = -1;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT A.[account_id]\n" +
+                        "FROM [dbo].[Accounts] AS A JOIN [dbo].[Rooms] AS R ON A.[room_id] = R.[room_id]\n" +
+                        "WHERE R.[invite_code] = ? AND A.[status] = 1";
+                pst = cn.prepareStatement(sql);
+                pst.setString(1, inviteCode);
+                rs = pst.executeQuery();
+                if (rs!= null && rs.next()){
+                    accId = rs.getInt("account_id");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return accId;
+    }
+
+
 }

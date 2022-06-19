@@ -877,4 +877,51 @@ public class RoomDAO {
         return roomInfor;
     }
 
+    public Room getRoomByRenterId(int renterId) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Room roomInfor = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(
+                        "SELECT R.[room_id], R.[room_number], R.[room_area], R.[capacity], R.[has_attic]\n" +
+                        "FROM [dbo].[Rooms] AS R JOIN [dbo].[Accounts] AS A ON R.[room_id] = A.[room_id]\n" +
+                        "WHERE A.account_id = ?");
+                pst.setInt(1, renterId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int roomId = rs.getInt("room_id");
+                    int roomNumber = rs.getInt("room_number");
+                    double roomArea = rs.getInt("room_area");
+                    int capacity = rs.getInt("capacity");
+                    int hasAttic = rs.getInt("hasAttic");
+                    roomInfor = Room
+                            .builder()
+                            .roomId(roomId)
+                            .roomNumber(roomNumber)
+                            .roomArea(roomArea)
+                            .capacity(capacity)
+                            .hasAttic(hasAttic)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return roomInfor;
+    }
+
+
 }

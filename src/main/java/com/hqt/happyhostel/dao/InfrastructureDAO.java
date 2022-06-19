@@ -51,7 +51,7 @@ public class InfrastructureDAO {
         return isSuccess;
     }
 
-    public ArrayList<Infrastructures> getInfrastructures(int roomID) {
+    public ArrayList<Infrastructures> getRoomInfrastructures(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -59,10 +59,10 @@ public class InfrastructureDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "SELECT id_infrastructure, quantity, status, infrastructure_name\n" +
-                             "FROM InfrastructuresRoom I, InfrastructureItem IT\n" +
-                             "WHERE I.room_id = ?\n" +
-                             "AND I.id_infrastructure_item = IT.id_infrastructure_item";
+                String sql =
+                        "SELECT [id_infrastructure], [quantity], [status], I.[infrastructure_name]\n" +
+                        "FROM [dbo].[InfrastructuresRoom] AS IR JOIN [dbo].[InfrastructureItem] AS I ON IR.[id_infrastructure_item] = I.[id_infrastructure_item]\n" +
+                        "WHERE IR.[room_id] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
                 rs = pst.executeQuery();

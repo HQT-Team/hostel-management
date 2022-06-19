@@ -1,7 +1,7 @@
-package com.hqt.happyhostel.servlet.RenterServlet;
+package com.hqt.happyhostel.servlet.RenterServlets;
 
 import com.hqt.happyhostel.dao.HostelDAO;
-import com.hqt.happyhostel.dao.InformationDAO;
+import com.hqt.happyhostel.dao.NotificationDAO;
 import com.hqt.happyhostel.dto.*;
 
 import javax.servlet.ServletException;
@@ -15,28 +15,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@WebServlet(name = "GetRenterInforServlet", value = "/GetRenterInforServlet")
-public class GetRenterInforServlet extends HttpServlet {
-    public static final String ERROR = "Renter-profile";
-    public static final String SUCCESS = "Renter-profile";
+@WebServlet(name = "GetNotificationServlet", value = "/GetNotificationServlet")
+
+
+public class GetNotificationServlet extends HttpServlet {
+    public static final String ERROR = "Renter-notification";
+    public static final String SUCCESS = "Renter-notification";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = ERROR;
-        Account acc;
-        List<Infrastructures> infrastructures = new ArrayList<>();
-        List<ServiceInfo> serviceInfo = new ArrayList<>();
-        Information accInfo;
+        Account acc = new Account();
+        List<Notification> notifications = new ArrayList<>();
         try {
             HttpSession session = req.getSession();
             acc = (Account)session.getAttribute("USER");
-            int renterId = acc.getAccId();
+            int accId = acc.getAccId();
             HostelDAO hostelDAO = new HostelDAO();
 
-            //Get Account Infor
-            accInfo = new InformationDAO().getAccountInformationById(renterId);
-            if (accInfo!=null){
-                req.setAttribute("ACC_INFO", accInfo);
+            notifications = new NotificationDAO().getNotificationById(accId);
+            if (notifications.size()>0){
+                req.setAttribute("NOTIFY", notifications);
                 url = SUCCESS;
             }
 
@@ -47,9 +46,5 @@ public class GetRenterInforServlet extends HttpServlet {
             req.getRequestDispatcher(url).forward(req,resp);
         }
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
-    }
 }
+

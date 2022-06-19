@@ -61,7 +61,7 @@ public class GetRoomDetailServlet extends HttpServlet {
             List<RoommateInfo> listRoommatesInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(accountId);
             request.setAttribute("listRoommatesInfo", listRoommatesInfo);
 
-            ArrayList<Infrastructures> infrastructures = infrastructureDAO.getInfrastructures(roomId);
+            ArrayList<Infrastructures> infrastructures = infrastructureDAO.getRoomInfrastructures(roomId);
             request.setAttribute("infrastructures", infrastructures);
 
         } catch (Exception e) {

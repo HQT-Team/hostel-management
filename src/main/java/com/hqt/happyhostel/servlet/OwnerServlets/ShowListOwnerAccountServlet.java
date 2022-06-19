@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet.AccountServlets;
+package com.hqt.happyhostel.servlet.OwnerServlets;
 
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dto.Account;

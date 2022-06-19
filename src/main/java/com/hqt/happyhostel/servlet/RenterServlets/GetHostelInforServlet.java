@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet.RenterServlet;
+package com.hqt.happyhostel.servlet.RenterServlets;
 
 import com.hqt.happyhostel.dao.*;
 import com.hqt.happyhostel.dto.*;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 

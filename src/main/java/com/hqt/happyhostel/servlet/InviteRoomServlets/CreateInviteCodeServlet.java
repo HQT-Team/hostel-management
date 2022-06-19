@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet;
+package com.hqt.happyhostel.servlet.InviteRoomServlets;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -22,11 +22,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-@WebServlet(name = "InviteCodeServlet", value = "/InviteCodeServlet")
-public class InviteCodeServlet extends HttpServlet {
-    private final String success = "invite-code-page";
-    private final String denied = "denied";
-    private String url;
+@WebServlet(name = "CreateInviteCodeServlet", value = "/CreateInviteCodeServlet")
+public class CreateInviteCodeServlet extends HttpServlet {
+    private final String SUCCESS = "invite-code-page";
+    private final String FAIL = "create-room-account";
+    private final String ERROR = "error-page";
+
 
 
     @Override
@@ -36,11 +37,15 @@ public class InviteCodeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = ERROR;
+        String roomId = null;
+        Account owner = null;
+        Room roomInvite = null;
+        StringBuilder inviteUrl = new StringBuilder("RenterRegisterPage?inviteCode=");
         try {
-            String roomId = request.getParameter("room_id");
-            Account owner = null;
+
+            roomId = request.getParameter("room_id");
             int ownerId = -1;
-            StringBuilder inviteUrl = new StringBuilder("RenterRegisterPage?inviteCode=");
 
             HttpSession session = request.getSession(false);
             if (session != null) owner = (Account) session.getAttribute("USER");
@@ -55,11 +60,10 @@ public class InviteCodeServlet extends HttpServlet {
                 //check xem roomID có thuộc ownerID không
                 if (new HostelOwnerDAO().checkOwnerRoom(ownerId, roomID)) {
                     Timestamp endTime = null;
-                    Room roomInvite = null;
-
+                    roomInvite = roomInviteDAO.getRoomInviteById(roomID);
                     //check xem trên databse có inviteCode của roomId này chưa
-                    if (roomInviteDAO.getRoomInviteById(roomID).getInviteCode() != null) {
-                        roomInvite = roomInviteDAO.getRoomInviteById(roomID);
+                    if (roomInvite != null && roomInvite.getInviteCode() != null) {
+                        url = SUCCESS;
                         inviteUrl = inviteUrl.append(roomInvite.getInviteCode());
                     } else {
                         //Create invite link
@@ -81,21 +85,22 @@ public class InviteCodeServlet extends HttpServlet {
                         if (roomInviteDAO.updateRoomInviteCode(roomID, inviteCode, QRBase64, sdf.format(endTime))) {
                             new RoomDAO().updateRoomStatus(roomID, 0);
                             roomInvite = roomInviteDAO.getRoomInviteById(roomID);
-                        } else url = denied;
 
+                            url = SUCCESS;
+                        } else url = FAIL;
                     }
-                    request.setAttribute("ROOM_INVITE", roomInvite);
-                    request.setAttribute("URL_INVITE", inviteUrl);
-                    url = success;
                 } else {
-                    url = denied;
+                    url = FAIL;
                 }
-            } else url = denied;
+                request.setAttribute("ROOM_INVITE", roomInvite);
+                request.setAttribute("URL_INVITE", inviteUrl);
+            }
 
         } catch (Exception e) {
             log("Error at InviteCodeServlet: " + e.toString());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            if (owner != null && roomId != null) request.getRequestDispatcher(url).forward(request, response);
+            else response.sendRedirect(url);
         }
     }
 }

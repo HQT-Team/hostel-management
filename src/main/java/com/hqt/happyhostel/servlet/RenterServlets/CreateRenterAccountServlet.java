@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet.AccountServlets;
+package com.hqt.happyhostel.servlet.RenterServlets;
 
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dao.ContractDAO;
@@ -18,8 +18,9 @@ import java.io.IOException;
 
 @WebServlet(name = "CreateRenterAccountServlet", value = "/CreateRenterAccountServlet")
 public class CreateRenterAccountServlet extends HttpServlet {
-    private final String success = "createInvite";
-    private final String fail = "create-room-account";
+    private final String SUCCESS = "create-contract";
+    private final String FAIL = "create-room-account";
+    private final String ERROR = "error-page";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -45,7 +46,7 @@ public class CreateRenterAccountServlet extends HttpServlet {
                     Account renterAccount = Account.builder()
                             .username(username)
                             .password(password)
-                            .status(0)
+                            .status(1)
                             .role(2)
                             .roomId(Integer.parseInt(roomId))
                             .build();
@@ -56,29 +57,24 @@ public class CreateRenterAccountServlet extends HttpServlet {
                         HttpSession session = req.getSession(false);
                         if (session != null) {
                             Account owner = (Account) session.getAttribute("USER");
-
-                            Contract contract = Contract.builder()
-                                    .room_id(Integer.parseInt(roomId))
-                                    .price(Integer.parseInt(price))
-                                    .startDate(startDate)
-                                    .expiration(endDate)
-                                    .deposit(Integer.parseInt(deposit))
-                                    .renterId(renterId)
-                                    .hostelOwnerId(owner.getAccId())
-                                    .build();
-                            url = success;
-//                    req.setAttribute("SUCCESS", "Đăng ký tài khoản thành công! Tài khoản sẽ được quản trị viên xem xét và thông báo kết quả qua email!");
-                            if (contractDAO.addContract(contract)) url = success;
-                            else url = fail;
+                            if (owner != null){
+                                req.setAttribute("contract_room_id", roomId);
+                                req.setAttribute("contract_room_price", price);
+                                req.setAttribute("contract_startDate", startDate);
+                                req.setAttribute("contract_endDate", endDate);
+                                req.setAttribute("contract_deposit", deposit);
+                                req.setAttribute("contract_renterId", renterId);
+                                req.setAttribute("contract_hostelOwnerId", owner.getAccId());
+                                url = SUCCESS;
+                            }else url = ERROR;
                         }
-
                     } else {
-                        url = fail;
+                        url = FAIL;
                         req.setAttribute("ERROR", "Đã có lỗi xảy ra, vui lòng thử lại sau!");
                     }
                 } else {
                     // username has been existed
-                    url = fail;
+                    url = FAIL;
                     req.setAttribute("ERROR_TYPE", "username");
                     req.setAttribute("ERROR", "Tài khoản đã tồn tại trong hệ thống!");
                     req.setAttribute("username", username);
@@ -87,11 +83,11 @@ public class CreateRenterAccountServlet extends HttpServlet {
                     req.setAttribute("startDate", startDate);
                     req.setAttribute("endDate", endDate);
                 }
-            }else url = success;
+            }else url = SUCCESS;
 
 
         } catch (Exception e) {
-            log("Error at LoginServlet: " + e.toString());
+            log("Error at CreateRenterAccountServlet: " + e.toString());
         } finally {
             req.getRequestDispatcher(url).forward(req, resp);
         }
