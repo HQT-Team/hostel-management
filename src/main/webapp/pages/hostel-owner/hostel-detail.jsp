@@ -124,9 +124,7 @@
                                     <div class="service-group">
                                         <div class="service-name">${serviceList.serviceName}</div>
                                         <div class="service-price">
-                                            <span>
-                                                <fmt:formatNumber value="${serviceList.servicePrice}" type="currency" />
-                                            </span> VNĐ/${serviceList.unit}</div>
+                                            <span><fmt:formatNumber value="${serviceList.servicePrice}" type="currency"/></span>/${serviceList.unit}</div>
                                     </div>
                                 </c:forEach>
                             </div>

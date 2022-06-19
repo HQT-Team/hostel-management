@@ -23,7 +23,6 @@
 
 .room-name {
   font-size: 2.8rem;
-  line-height: 2.8rem;
   font-weight: 700;
   color: #ff0000;
   width: 150px;
@@ -41,7 +40,6 @@
     color: var(--primary-color);
     background-color: transparent;
     font-size: 1.6rem;
-    line-height: 1.6rem;
     font-weight: 600;
     display: block;
     padding: 12px 12px;
@@ -174,14 +172,12 @@
 
 .invoice-title {
   font-size: 2rem;
-  line-height: 2rem;
   font-weight: 600;
   color: #2d31fa;
 }
 
 .invoice-created {
   font-size: 2rem;
-  line-height: 2rem;
 }
 
 .invoice-group {
@@ -205,13 +201,11 @@
 .invoice-content.price {
   color: #ff0000;
   font-size: 2rem;
-  line-height: 2rem;
   font-weight: 600;
 
   span {
     font-size: 1.6rem;
     color: var(--text-color);
-    line-height: 1.6rem;
     font-weight: 400;
   }
 }
@@ -274,7 +268,6 @@
 
 .members-title {
   font-size: 2rem;
-  line-height: 2rem;
   font-weight: 600;
   color: #00b4d8;
 }
@@ -301,7 +294,6 @@
 .members-detail-actions {
   .member-detail-btn {
     font-size: 1.6rem;
-    line-height: 1.6rem;
     width: 100px;
     padding: 6px;
     border-radius: 4px;
@@ -329,7 +321,6 @@
 
 .account-header {
   font-size: 2rem;
-  line-height: 2rem;
   font-weight: 600;
   color: #2d31fa;
   padding-bottom: 6px;
@@ -371,7 +362,6 @@
 
 .infrastructure-header {
   font-size: 2rem;
-  line-height: 2rem;
   font-weight: 600;
   color: #c70a80;
   padding-bottom: 6px;
@@ -521,7 +511,6 @@
 .invoice-detail__title {
   text-align: center;
   font-size: 2.4rem;
-  line-height: 2.4rem;
   font-weight: 600;
   margin: 16px 0;
 }

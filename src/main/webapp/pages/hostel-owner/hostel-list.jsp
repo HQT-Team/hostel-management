@@ -47,7 +47,7 @@
 
                 <!-- Content -->
                 <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
-                    <div class="content-bar pt-5">
+                    <div class="content-bar">
                         <div class="content-history">
                             <div class="current">
                                 Danh sách khu trọ</div>
