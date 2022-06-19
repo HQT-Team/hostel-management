@@ -37,11 +37,14 @@ public class CalculateTotalCostServlet extends HttpServlet {
             ArrayList<ServiceInfo> serviceInfo = roomDAO.getServicesOfHostel(hostelID);
             request.setAttribute("serviceInfo", serviceInfo);
 
-//            String username = accountDAO.getUsernameRoomCurrently(roomId);
-//            request.setAttribute("userNameRenterRoom", username);
-//
-//            int accountId = accountDAO.getAccountIdByUserName(username);
-//            request.setAttribute("renterAccountId", accountId);
+            String username = accountDAO.getUsernameRoomCurrently(roomId);
+            request.setAttribute("userNameRenterRoom", username);
+
+            int accountId = accountDAO.getAccountIdByUserName(username);
+            request.setAttribute("renterAccountId", accountId);
+
+            AccountInfo accountRenter = accountDAO.getAccountInformationById(accountId);
+            request.setAttribute("renterName", accountRenter.getInformation().getFullname());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,27 +75,34 @@ public class CalculateTotalCostServlet extends HttpServlet {
 
             ArrayList<ServiceInfo> serviceInfo = roomDAO.getServicesOfHostel(hostelID);
 
+            String username = accountDAO.getUsernameRoomCurrently(roomId);
+            request.setAttribute("userNameRenterRoom", username);
+
+            int accountRenterId = accountDAO.getAccountIdByUserName(username);
+
             String expiredDateBill = request.getParameter("expiredDate");
 
-            int totalCost = Integer.parseInt(request.getParameter("totalCost"));
+            double totalCostBill = Double.parseDouble(request.getParameter("totalCost"));
+            int totalCost = (int) totalCostBill;
             int consumeIDStart = consumeThisMonth.get(0).getConsumeID();
             int consumeIDEnd = consumeThisMonth.get(consumeThisMonth.size() - 1).getConsumeID();
             ArrayList<Integer> listHostelServiceID = new ArrayList<>();
-            for (ServiceInfo service: serviceInfo) {
+            for (ServiceInfo service : serviceInfo) {
                 listHostelServiceID.add(service.getHostelService());
             }
             int numberLastElectric = consumeThisMonth.get(0).getNumberElectric();
             int numberLastWater = consumeThisMonth.get(0).getNumberWater();
 
             boolean isInserted = new BillDAO().InsertANewBill(totalCost, expiredDateBill, roomId,
-                    consumeIDStart, consumeIDEnd, accHostelOwnerID, numberLastElectric, numberLastWater, listHostelServiceID);
+                    consumeIDStart, consumeIDEnd, accHostelOwnerID, accountRenterId, numberLastElectric, numberLastWater, listHostelServiceID);
 
             if (isInserted) {
                 url = "roomDetail";
                 request.setAttribute("roomID", roomId);
-                request.setAttribute("IS_SUCCESS", HandlerStatus.builder().status(true));
+//                request.setAttribute("IS_SUCCESS", HandlerStatus.builder().status(true));
             } else {
-                request.setAttribute("IS_SUCCESS", HandlerStatus.builder().status(false));
+                url = "list-hostels";
+//                request.setAttribute("IS_SUCCESS", HandlerStatus.builder().status(false));
             }
 
         } catch (Exception e) {

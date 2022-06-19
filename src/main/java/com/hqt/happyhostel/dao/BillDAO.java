@@ -1,6 +1,7 @@
 package com.hqt.happyhostel.dao;
 
 import com.hqt.happyhostel.dto.Bill;
+import com.hqt.happyhostel.dto.BillDetail;
 import com.hqt.happyhostel.dto.Payment;
 import com.hqt.happyhostel.utils.DBUtils;
 
@@ -13,7 +14,7 @@ public class BillDAO {
             "VALUES (?, GETDATE(), ?, 0, NULL, ?)";
 
     private static final String INSERT_NEW_BILL_DETAIL = "INSERT INTO BillDetail (consumeIDStart, consumeIDEnd, accountHostelOwnerID, accountRenterID, bill_id)\n" +
-            "VALUES (?, ?, ?, NULL, ?)";
+            "VALUES (?, ?, ?, ?, ?)";
 
     // This function help you can view the service at the time hostel has, maybe now these functions are expanded - so we need this table to check and view for history
     private static final String INSERT_NEW_BILL_SERVICE = "INSERT INTO BillService (bill_detail_id, hostel_service_id) VALUES (?, ?)";
@@ -23,7 +24,7 @@ public class BillDAO {
             "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id) VALUES (?, ?, GETDATE(), 0, ?)\n";
 
     public Boolean InsertANewBill(int totalMoney, String expiredPaymentDate, int roomID,
-                                  int consumeIDStart, int consumeIDEnd, int accountHostelOwner,
+                                  int consumeIDStart, int consumeIDEnd, int accountHostelOwner, int accountRenterID,
                                   int numberLastElectric, int numberLastWater,
                                   ArrayList<Integer> hostelServiceList) {
         Connection cn = null;
@@ -56,7 +57,8 @@ public class BillDAO {
                 ptm.setInt(1, consumeIDStart);
                 ptm.setInt(2, consumeIDEnd);
                 ptm.setInt(3, accountHostelOwner);
-                ptm.setInt(4, billID);
+                ptm.setInt(4, accountRenterID);
+                ptm.setInt(5, billID);
                 check = ptm.executeUpdate() > 0;
 
                 rs = ptm.getGeneratedKeys();
@@ -125,7 +127,7 @@ public class BillDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "SELECT TOP 1 bill_id, total_money, created_date, expired_payment_date, status, Bill.payment_id as 'payment_id'\n" +
+                String sql = "SELECT TOP 1 bill_id, total_money, created_date, expired_payment_date, payment_date, status, Bill.payment_id as 'payment_id'\n" +
                         "FROM Bill, Payment\n" +
                         "WHERE room_id = ?\n" +
                         "ORDER BY created_date DESC";
@@ -139,13 +141,14 @@ public class BillDAO {
                     int totalMoney = rs.getInt("total_money");
                     String createdDate = rs.getString("created_date");
                     String expiredPaymentDate = rs.getString("expired_payment_date");
+                    String paymentDate = rs.getString("payment_date");
                     int status = rs.getInt("status");
                     if (rs.getString("payment_id") == null) {
-                        bill = new Bill(billID, roomID, totalMoney, createdDate, expiredPaymentDate, status, new Payment(0, null));
+                        bill = new Bill(billID, roomID, totalMoney, createdDate, expiredPaymentDate, paymentDate, status, new Payment(0, null));
                     } else {
                         int paymentID = rs.getInt("payment_id");
                         String paymentName = rs.getString("payment_name");
-                        bill = new Bill(billID, roomID, totalMoney, createdDate, expiredPaymentDate, status, new Payment(paymentID, paymentName));
+                        bill = new Bill(billID, roomID, totalMoney, createdDate, expiredPaymentDate, paymentDate, status, new Payment(paymentID, paymentName));
                     }
                 }
             }
@@ -176,5 +179,59 @@ public class BillDAO {
         }
         return bill;
     }
+
+    public BillDetail getBillDetail(int billID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        BillDetail billDetail = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT bill_detail_id, consumeIDStart, consumeIDEnd, accountHostelOwnerID, accountRenterID \n" +
+                        "FROM BillDetail WHERE bill_id = ?";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, billID);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int billDetailID = rs.getInt("bill_detail_id");
+                    int consumeIDStart = rs.getInt("consumeIDStart");
+                    int consumeIDEnd = rs.getInt("consumeIDEnd");
+                    int accountHostelOwnerID = rs.getInt("accountHostelOwnerID");
+                    int accountRenterID = rs.getInt("accountRenterID");
+                    billDetail = new BillDetail(billDetailID, consumeIDStart, consumeIDEnd, accountHostelOwnerID, accountRenterID);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return billDetail;
+    }
+
+
 
 }

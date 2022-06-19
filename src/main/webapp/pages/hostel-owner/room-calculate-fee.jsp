@@ -155,9 +155,7 @@
                                                 </c:otherwise>
                                             </c:choose>
 
-                                            <fmt:parseNumber var="servicePrice" integerOnly="true"
-                                                             type="number" value="${service.servicePrice}"/>
-                                            <td>${servicePrice}</td>
+                                            <td>${service.servicePrice}</td>
 
                                             <c:set var="totalCost"
                                                    value="${totalCost + service.servicePrice * quantity}"/>
@@ -189,17 +187,16 @@
                                         <div class="bill__sign-label">Người lập hóa đơn</div>
                                         <div class="bill__sign-name">${sessionScope.USER.accountInfo.information.fullname}</div>
                                     </div>
-                                    <%--                                <div class="col-6">--%>
-                                    <%--                                    <div class="bill__sign-label">Người thanh toán</div>--%>
-                                    <%--                                    <div class="bill__sign-name"></div>--%>
-                                    <%--                                </div>--%>
+                                    <div class="col-6">
+                                        <div class="bill__sign-label">Người thanh toán</div>
+                                        <div class="bill__sign-name">${requestScope.renterName}</div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="bill__spacer"></div>
                             <!-- Direct to room detail -->
-                            <fmt:parseNumber var="totalCostRoom" integerOnly="true"
-                                             type="number" value="${totalCost}"/>
-                            <input type="hidden" name="totalCost" value="${totalCostRoom}"/>
+
+                            <input type="hidden" name="totalCost" value="${totalCost}"/>
                             <input type="hidden" name="consumeStartID" value="${consumeBeginMonth}">
                             <input type="hidden" name="consumeEndID" value="${consumeEndMonth}">
                             <button class="btn btn-primary fs-2" type="submit"

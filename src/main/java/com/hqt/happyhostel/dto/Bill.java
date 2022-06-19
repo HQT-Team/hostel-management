@@ -14,6 +14,7 @@ public class Bill {
     int totalMoney;
     String createdDate;
     String expiredPaymentDate;
+    String paymentDate;
     int status;
     Payment payment;
 }

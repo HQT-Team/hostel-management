@@ -305,6 +305,49 @@ public class AccountDAO {
         return username;
     }
 
+    public String getFullnameRenterRoomCurrently(int roomID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        String username = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT username\n" +
+                        "FROM Accounts\n" +
+                        "WHERE account_id = (SELECT TOP 1 renter_id\n" +
+                        "\t\t\t\t\tFROM Rooms R, Contracts C\n" +
+                        "\t\t\t\t\tWHERE R.room_id = ?\n" +
+                        "\t\t\t\t\tAND R.room_id = C.room_id\n" +
+                        "\t\t\t\t\tORDER BY C.start_date DESC)";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    username = rs.getString("username");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return username;
+    }
+
+
     // Update token
     public int updateTokenByUserName(String token, String username) {
         int result = 0;
