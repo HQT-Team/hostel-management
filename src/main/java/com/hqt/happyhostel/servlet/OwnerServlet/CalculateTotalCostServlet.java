@@ -8,6 +8,9 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +37,40 @@ public class CalculateTotalCostServlet extends HttpServlet {
             ArrayList<Consume> consumeThisMonth = roomDAO.getConsumeThisMonth(roomId);
             request.setAttribute("consumeListThisMonth", consumeThisMonth);
 
-            ArrayList<ServiceInfo> serviceInfo = roomDAO.getServicesOfHostel(hostelID);
+            String consumeDateStart = consumeThisMonth.get(consumeThisMonth.size() - 1).getUpdateDate().split(" ")[0];
+            String consumeDateEnd = consumeThisMonth.get(0).getUpdateDate().split(" ")[0];
+
+            String billTitle = null;
+            if (new BillDAO().getBillTitle(roomId, contract.getStartDate()) != null) {
+                String billTitleOld = new BillDAO().getBillTitle(roomId, contract.getStartDate());
+                String month = billTitleOld.split("/")[0];
+                String year = billTitleOld.split("/")[1];
+                int monthInteger = Integer.parseInt(month) + 1;
+                billTitle = "" + monthInteger + "/" + year;
+            } else {
+                long monthsBetween = ChronoUnit.MONTHS.between(
+                        YearMonth.from(LocalDate.parse(consumeDateStart)),
+                        YearMonth.from(LocalDate.parse(consumeDateEnd)));
+
+                if (monthsBetween == 0) {
+                    String month = consumeDateEnd.split("-")[1];
+                    String year = consumeDateEnd.split("-")[0];
+                    billTitle = month + "/" + year;
+                } else if (monthsBetween == 1) {
+                    String month = consumeDateEnd.split("-")[1];
+                    String year = consumeDateEnd.split("-")[0];
+                    billTitle = month + "/" + year;
+                } else if (monthsBetween == 2) {
+                    String month = consumeDateEnd.split("-")[1];
+                    int monthInteger = Integer.parseInt(month) - 1;
+                    String year = consumeDateEnd.split("-")[0];
+                    billTitle = monthInteger + "/" + year;
+                }
+            }
+
+            request.setAttribute("billTitle", billTitle);
+
+            ArrayList<ServiceInfo> serviceInfo = new ServicesDAO().getServicesOfHostel(hostelID);
             request.setAttribute("serviceInfo", serviceInfo);
 
             String username = accountDAO.getUsernameRoomCurrently(roomId);
@@ -73,7 +109,7 @@ public class CalculateTotalCostServlet extends HttpServlet {
             ArrayList<Consume> consumeThisMonth = roomDAO.getConsumeThisMonth(roomId);
             request.setAttribute("consumeListThisMonth", consumeThisMonth);
 
-            ArrayList<ServiceInfo> serviceInfo = roomDAO.getServicesOfHostel(hostelID);
+            ArrayList<ServiceInfo> serviceInfo = new ServicesDAO().getServicesOfHostel(hostelID);
 
             String username = accountDAO.getUsernameRoomCurrently(roomId);
             request.setAttribute("userNameRenterRoom", username);
@@ -82,10 +118,27 @@ public class CalculateTotalCostServlet extends HttpServlet {
 
             String expiredDateBill = request.getParameter("expiredDate");
 
+            //            String consumeDateStart = consumeThisMonth.get(consumeThisMonth.size() - 1).getUpdateDate().split(" ")[0];
+//            String consumeDateEnd = consumeThisMonth.get(0).getUpdateDate().split(" ")[0];
+//
+//            long monthsBetween = ChronoUnit.MONTHS.between(
+//                    YearMonth.from(LocalDate.parse(consumeDateStart)),
+//                    YearMonth.from(LocalDate.parse(consumeDateEnd)));
+//
+//            String billTitle = null;
+//            if (monthsBetween == 0) {
+//                String month = consumeDateEnd.split("-")[1];
+//                String year = consumeDateEnd.split("-")[0];
+//                billTitle = month + "/" + year;
+//            }
+
+
+            String billTitle = request.getParameter("billTitle");
+
             double totalCostBill = Double.parseDouble(request.getParameter("totalCost"));
             int totalCost = (int) totalCostBill;
-            int consumeIDStart = consumeThisMonth.get(0).getConsumeID();
-            int consumeIDEnd = consumeThisMonth.get(consumeThisMonth.size() - 1).getConsumeID();
+            int consumeIDEnd = consumeThisMonth.get(0).getConsumeID();
+            int consumeIDStart = consumeThisMonth.get(consumeThisMonth.size() - 1).getConsumeID();
             ArrayList<Integer> listHostelServiceID = new ArrayList<>();
             for (ServiceInfo service : serviceInfo) {
                 listHostelServiceID.add(service.getHostelService());
@@ -93,7 +146,7 @@ public class CalculateTotalCostServlet extends HttpServlet {
             int numberLastElectric = consumeThisMonth.get(0).getNumberElectric();
             int numberLastWater = consumeThisMonth.get(0).getNumberWater();
 
-            boolean isInserted = new BillDAO().InsertANewBill(totalCost, expiredDateBill, roomId,
+            boolean isInserted = new BillDAO().InsertANewBill(totalCost, billTitle, expiredDateBill, roomId,
                     consumeIDStart, consumeIDEnd, accHostelOwnerID, accountRenterId, numberLastElectric, numberLastWater, listHostelServiceID);
 
             if (isInserted) {

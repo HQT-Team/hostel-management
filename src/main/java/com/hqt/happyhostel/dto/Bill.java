@@ -13,6 +13,7 @@ public class Bill {
     int roomID;
     int totalMoney;
     String createdDate;
+    String billTitle;
     String expiredPaymentDate;
     String paymentDate;
     int status;

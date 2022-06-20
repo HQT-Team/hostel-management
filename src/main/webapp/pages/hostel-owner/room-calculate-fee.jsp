@@ -64,7 +64,7 @@
                                    value="${consumeThisMonth.get(consumeThisMonth.size() - 1)}"/>
                             <c:set var="consumeEndMonth" value="${consumeThisMonth.get(0)}"/>
                             <h1 class="bill__title">Hóa đơn
-                                tháng ${requestScope.consumeListThisMonth.get(0).updateDate.split("-")[1]}/${requestScope.consumeListThisMonth.get(0).updateDate.split("-")[0]}</h1>
+                                tháng ${requestScope.billTitle}</h1>
                             <div class="row">
                                 <div class="col-12 col-sm-6">
                                     <p class="bill__item">Khu trọ: <span>${sessionScope.hostel.hostelName}</span></p>
@@ -181,6 +181,7 @@
                                     </tbody>
                                 </table>
                             </div>
+
                             <div class="bill__sign">
                                 <div class="row">
                                     <div class="col-6">
@@ -199,6 +200,7 @@
                             <input type="hidden" name="totalCost" value="${totalCost}"/>
                             <input type="hidden" name="consumeStartID" value="${consumeBeginMonth}">
                             <input type="hidden" name="consumeEndID" value="${consumeEndMonth}">
+                            <input type="hidden" name="billTitle" value="${requestScope.billTitle}">
                             <button class="btn btn-primary fs-2" type="submit"
                                     class="bill__form d-flex justify-content-end">Xác nhận
                             </button>

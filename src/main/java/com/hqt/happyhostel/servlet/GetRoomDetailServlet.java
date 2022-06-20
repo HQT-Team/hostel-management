@@ -52,6 +52,39 @@ public class GetRoomDetailServlet extends HttpServlet {
             Bill bill = new BillDAO().getLastBill(roomId);
             request.setAttribute("billRoom", bill);
 
+            ArrayList<Payment> payments = new PaymentDAO().getPaymentList();
+            request.setAttribute("paymentList", payments);
+
+            if (bill != null) {
+                int billID = bill.getBillID();
+                BillDetail billDetail = new BillDAO().getBillDetail(billID);
+                int consumeIDStart = billDetail.getConsumeIDStart();
+                int consumeIDEnd = billDetail.getConsumeIDEnd();
+
+                if (bill.getStatus() == 0 || bill.getPayment() != null) {
+                    String paymentName = new BillDAO().getPaymentName(bill.getPayment().getPaymentID());
+                    request.setAttribute("paymentName", paymentName);
+                }
+
+                Consume consumeStart = new ConsumeDAO().getConsumeByID(consumeIDStart);
+                Consume consumeEnd = new ConsumeDAO().getConsumeByID(consumeIDEnd);
+
+                request.setAttribute("consumeStart", consumeStart);
+                request.setAttribute("consumeEnd", consumeEnd);
+
+                int billDetailID = billDetail.getBillDetailID();
+                ArrayList<ServiceInfo> serviceInfos = new ServicesDAO().getServiceOfBill(billDetailID, hostelID);
+                request.setAttribute("serviceInfo", serviceInfos);
+
+                int accountHOID = billDetail.getAccountHostelOwnerID();
+                int accountRenterID = billDetail.getAccountRenterID();
+                AccountInfo accountHOInfo = accountDAO.getAccountInformationById(accountHOID);
+                AccountInfo accountRenterInfo = accountDAO.getAccountInformationById(accountRenterID);
+
+                request.setAttribute("billMakerFullName", accountHOInfo.getInformation().getFullname());
+                request.setAttribute("billPaymenterFullName", accountRenterInfo.getInformation().getFullname());
+            }
+
             String username = accountDAO.getUsernameRoomCurrently(roomId);
             request.setAttribute("userNameRenterRoom", username);
 
@@ -108,11 +141,19 @@ public class GetRoomDetailServlet extends HttpServlet {
             Bill bill = new BillDAO().getLastBill(roomId);
             request.setAttribute("billRoom", bill);
 
+            ArrayList<Payment> payments = new PaymentDAO().getPaymentList();
+            request.setAttribute("paymentList", payments);
+
             if (bill != null) {
                 int billID = bill.getBillID();
                 BillDetail billDetail = new BillDAO().getBillDetail(billID);
                 int consumeIDStart = billDetail.getConsumeIDStart();
                 int consumeIDEnd = billDetail.getConsumeIDEnd();
+
+                if (bill.getStatus() == 0 || bill.getPayment() != null) {
+                    String paymentName = new BillDAO().getPaymentName(bill.getPayment().getPaymentID());
+                    request.setAttribute("paymentName", paymentName);
+                }
 
                 Consume consumeStart = new ConsumeDAO().getConsumeByID(consumeIDStart);
                 Consume consumeEnd = new ConsumeDAO().getConsumeByID(consumeIDEnd);
@@ -120,9 +161,17 @@ public class GetRoomDetailServlet extends HttpServlet {
                 request.setAttribute("consumeStart", consumeStart);
                 request.setAttribute("consumeEnd", consumeEnd);
 
+                int billDetailID = billDetail.getBillDetailID();
+                ArrayList<ServiceInfo> serviceInfos = new ServicesDAO().getServiceOfBill(billDetailID, hostelID);
+                request.setAttribute("serviceInfo", serviceInfos);
+
                 int accountHOID = billDetail.getAccountHostelOwnerID();
                 int accountRenterID = billDetail.getAccountRenterID();
+                AccountInfo accountHOInfo = accountDAO.getAccountInformationById(accountHOID);
+                AccountInfo accountRenterInfo = accountDAO.getAccountInformationById(accountRenterID);
 
+                request.setAttribute("billMakerFullName", accountHOInfo.getInformation().getFullname());
+                request.setAttribute("billPaymenterFullName", accountRenterInfo.getInformation().getFullname());
             }
 
             String username = accountDAO.getUsernameRoomCurrently(roomId);

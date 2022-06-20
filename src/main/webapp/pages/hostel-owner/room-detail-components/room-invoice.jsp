@@ -16,33 +16,37 @@
             </c:choose>
         </div>
     </div>
-    <div class="invoice-body">
-        <div class="invoice-group">
-            <div class="invoice-label">Trạng thái:</div>
-            <!-- Paid: success ~ Unpaid: fail -->
-            <div class="invoice-content status success">
-                <c:choose>
-                    <c:when test="${requestScope.billRoom.status eq 1}">Đã thanh toán</c:when>
-                    <c:when test="${requestScope.billRoom.status eq 0}">Chưa thanh toán</c:when>
-                </c:choose>
+    <c:choose>
+        <c:when test="${requestScope.billRoom ne null}">
+            <div class="invoice-body">
+                <div class="invoice-group">
+                    <div class="invoice-label">Trạng thái:</div>
+                    <!-- Paid: success ~ Unpaid: fail -->
+                    <div class="invoice-content status success">
+                        <c:choose>
+                            <c:when test="${requestScope.billRoom.status eq 1}">Đã thanh toán</c:when>
+                            <c:when test="${requestScope.billRoom.status eq 0}">Chưa thanh toán</c:when>
+                        </c:choose>
+                    </div>
+                </div>
+                <div class="invoice-group">
+                    <div class="invoice-label">Phương thức thanh toán:</div>
+                    <div class="invoice-content">
+                            ${requestScope.paymentName}
+                    </div>
+                </div>
+                <div class="invoice-group">
+                    <div class="invoice-label">Tổng tiền:</div>
+                    <c:choose>
+                        <c:when test="${requestScope.billRoom ne null}">
+                            <div class="invoice-content price">${String.format("%,d",requestScope.billRoom.totalMoney)}
+                                <span>VNĐ</span></div>
+                        </c:when>
+                    </c:choose>
+                </div>
             </div>
-        </div>
-        <div class="invoice-group">
-            <div class="invoice-label">Phương thức thanh toán:</div>
-            <div class="invoice-content">
-                ${requestScope.billRoom.payment.paymentName}
-            </div>
-        </div>
-        <div class="invoice-group">
-            <div class="invoice-label">Tổng tiền:</div>
-            <c:choose>
-                <c:when test="${requestScope.billRoom ne null}">
-                    <div class="invoice-content price">${String.format("%,d",requestScope.billRoom.totalMoney)}
-                        <span>VNĐ</span></div>
-                </c:when>
-            </c:choose>
-        </div>
-    </div>
+        </c:when>
+    </c:choose>
     <div class="invoice-actions">
         <div class="left-actions">
             <!-- Start view invoice detail button -->
@@ -71,7 +75,8 @@
                         <div class="modal-body">
                             <div class="invoice-detail__wrapper">
                                 <div class="invoice-detail__title">Hóa Đơn Tháng
-                                    <span>05</span>/<span>2021</span>
+<%--                                    <span>05</span>/<span>2021</span>--%>
+                                    <span>${requestScope.billRoom.billTitle}</span>
                                 </div>
                                 <div class="invoice-detail__infor">
                                     <div class="row">
@@ -83,7 +88,8 @@
                                                 Khu trọ: <span>${sessionScope.hostel.hostelName}</span>
                                             </div>
                                             <div class="invoice-detail__infor-detail">
-                                                Địa chỉ: <span>${sessionScope.hostel.address}, ${sessionScope.hostel.ward.split('-')[1]}, ${sessionScope.hostel.district.split('-')[1]}, ${sessionScope.hostel.city.split('-')[1]}</span>
+                                                Địa chỉ:
+                                                <span>${sessionScope.hostel.address}, ${sessionScope.hostel.ward.split('-')[1]}, ${sessionScope.hostel.district.split('-')[1]}, ${sessionScope.hostel.city.split('-')[1]}</span>
                                             </div>
                                         </div>
                                         <div class="col-6 invoice-detail__infor-right">
@@ -118,6 +124,10 @@
 <%--                                                ${requestScope.billRoom.paymentDate == null ? "Chưa thanh toán" : requestScope.billRoom.paymentDate}--%>
                                                 </span>
                                                     </div>
+                                                    <div class="invoice-detail__infor-detail">
+                                                        Phương thức thanh toán:
+                                                        <span>${requestScope.paymentName == null ? "Trống" : requestScope.paymentName}</span>
+                                                    </div>
                                                 </c:when>
                                             </c:choose>
                                             <div class="invoice-detail__infor-detail">
@@ -132,13 +142,15 @@
                                 <div class="invoice-detail__consumed-group">
                                     Điện: <span>Số cũ: <span>${consumeBeginMonth.numberElectric}</span></span>
                                     <span>Số mới: <span>${consumeEndMonth.numberElectric}</span></span>
-                                    <c:set var="consumeNumberElectric" value="${consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric}"/>
+                                    <c:set var="consumeNumberElectric"
+                                           value="${consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric}"/>
                                     <span>Tiêu thụ: <span>${consumeNumberElectric}</span></span>
                                 </div>
                                 <div class="invoice-detail__consumed-group">
                                     Nước: <span>Số cũ: <span>${consumeBeginMonth.numberWater}</span></span>
                                     <span>Số mới: <span>${consumeEndMonth.numberWater}</span></span>
-                                    <c:set var="consumeNumberWater" value="${consumeEndMonth.numberWater - consumeBeginMonth.numberWater}"/>
+                                    <c:set var="consumeNumberWater"
+                                           value="${consumeEndMonth.numberWater - consumeBeginMonth.numberWater}"/>
                                     <span>Tiêu thụ: <span>${consumeNumberWater}</span></span>
                                 </div>
                                 <div class="invoice-detail__table">
@@ -155,35 +167,54 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        <c:set var="count" value="0"/>
+                                        <c:set var="totalCost" value="0"/>
+                                        <c:forEach var="service" items="${requestScope.serviceInfo}">
+                                            <c:set var="count" value="${count+1}"/>
+                                            <c:set var="quantity" value="1"/>
+                                            <tr>
+                                                <td>${count}</td>
+                                                <td>${service.serviceName}</td>
+                                                <td>${service.unit}</td>
+                                                <c:choose>
+                                                    <c:when test="${service.serviceName eq 'Điện'}">
+                                                        <c:set var="quantity" value="${consumeNumberElectric}"/>
+                                                        <td>${consumeNumberElectric}</td>
+                                                    </c:when>
+                                                    <c:when test="${service.serviceName eq 'Nước'}">
+                                                        <c:set var="quantity" value="${consumeNumberWater}"/>
+                                                        <td>${consumeNumberWater}</td>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:set var="quantity" value="1"/>
+                                                        <td>1</td>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                                <td>${service.servicePrice}</td>
+
+                                                <c:set var="totalCost"
+                                                       value="${totalCost + service.servicePrice * quantity}"/>
+                                                <td><fmt:formatNumber value="${service.servicePrice * quantity}"
+                                                                      type="currency"/></td>
+                                            </tr>
+                                        </c:forEach>
                                         <tr>
-                                            <td>1</td>
-                                            <td>Điện</td>
-                                            <td>Kwh</td>
-                                            <td>100</td>
-                                            <td>3500</td>
-                                            <td>350000 <span>vnđ</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Nước</td>
-                                            <td>m3</td>
-                                            <td>5</td>
-                                            <td>15000</td>
-                                            <td>75000 <span>vnđ</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
+                                            <td>${count+1}</td>
                                             <td>Tiền phòng</td>
                                             <td>phòng</td>
                                             <td>1</td>
-                                            <td>2500000</td>
-                                            <td>2500000 <span>vnđ</span></td>
+                                            <td>${requestScope.contractRoom.price}</td>
+                                            <c:set var="totalCost"
+                                                   value="${totalCost + requestScope.contractRoom.price}"/>
+                                            <td><fmt:formatNumber value="${requestScope.contractRoom.price}"
+                                                                  type="currency"/></td>
                                         </tr>
                                         <!-- Total -->
                                         <td colspan="5" class="text-end total">Tổng
                                             tiền:
                                         </td>
-                                        <td>2925000 <span>vnđ</span></td>
+                                        <td><fmt:formatNumber value="${totalCost}" type="currency"/></td>
                                         </tbody>
                                     </table>
                                 </div>
@@ -195,7 +226,7 @@
                                                 Người lập hóa đơn
                                             </div>
                                             <div class="invoice-detail__signature-name">
-                                                Nguyễn Văn A
+                                                ${requestScope.billMakerFullName}
                                             </div>
                                         </div>
                                         <div class="col-6">
@@ -204,7 +235,7 @@
                                                 Người thanh toán
                                             </div>
                                             <div class="invoice-detail__signature-name">
-                                                Nguyễn Văn B
+                                                ${requestScope.billPaymenterFullName}
                                             </div>
                                         </div>
                                     </div>
@@ -224,9 +255,13 @@
         </div>
         <div class="right-actions">
 
-            <button class="invoice-action-btn list-invoices-btn">
-                Danh sách hóa đơn
-            </button>
+            <c:choose>
+                <c:when test="${requestScope.billRoom ne null}">
+                    <button class="invoice-action-btn list-invoices-btn">
+                        Danh sách hóa đơn
+                    </button>
+                </c:when>
+            </c:choose>
 
             <c:if test="${requestScope.billRoom.status eq 0 && requestScope.billRoom ne null}">
                 <!-- If this invoice has been paid, please hide this button -->
@@ -249,14 +284,17 @@
                             <div class="modal-body">
                                 Bạn có chắc chắn là người thuê đã thanh toán tiền phòng?
                             </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-danger"
-                                        data-bs-dismiss="modal">Chưa
-                                </button>
-                                <a href="" class="btn btn-success">
-                                    Xác nhận
-                                </a>
-                            </div>
+                            <form action="updateBilLStatus" method="POST">
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Hủy bỏ
+                                    </button>
+                                    <input type="hidden" name="billID" value="${requestScope.billRoom.billID}">
+                                    <button type="submit" class="btn btn-success">
+                                        Xác nhận
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class BillDAO {
 
-    private static final String INSERT_NEW_BILL = "INSERT INTO Bill (total_money, created_date, expired_payment_date, status, payment_id, room_id)\n" +
-            "VALUES (?, GETDATE(), ?, 0, NULL, ?)";
+    private static final String INSERT_NEW_BILL = "INSERT INTO Bill (total_money, created_date, bill_title, expired_payment_date, status, payment_id, room_id)\n" +
+            "VALUES (?, GETDATE(), ?, ?, 0, NULL, ?)";
 
     private static final String INSERT_NEW_BILL_DETAIL = "INSERT INTO BillDetail (consumeIDStart, consumeIDEnd, accountHostelOwnerID, accountRenterID, bill_id)\n" +
             "VALUES (?, ?, ?, ?, ?)";
@@ -23,7 +23,7 @@ public class BillDAO {
     private static final String INSERT_NEW_BILL_TAIL = "UPDATE Consumes SET status = 1 WHERE room_id = 1\n" +
             "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id) VALUES (?, ?, GETDATE(), 0, ?)\n";
 
-    public Boolean InsertANewBill(int totalMoney, String expiredPaymentDate, int roomID,
+    public Boolean InsertANewBill(int totalMoney, String billTitle, String expiredPaymentDate, int roomID,
                                   int consumeIDStart, int consumeIDEnd, int accountHostelOwner, int accountRenterID,
                                   int numberLastElectric, int numberLastWater,
                                   ArrayList<Integer> hostelServiceList) {
@@ -42,8 +42,9 @@ public class BillDAO {
                 // Insert new Bill
                 ptm = cn.prepareStatement(INSERT_NEW_BILL, Statement.RETURN_GENERATED_KEYS);
                 ptm.setInt(1, totalMoney);
-                ptm.setString(2, expiredPaymentDate);
-                ptm.setInt(3, roomID);
+                ptm.setString(2, billTitle);
+                ptm.setString(3, expiredPaymentDate);
+                ptm.setInt(4, roomID);
                 check = ptm.executeUpdate() > 0;
 
                 rs = ptm.getGeneratedKeys();
@@ -68,7 +69,7 @@ public class BillDAO {
 
                 // Insert Many Bill_Service
                 ptm = cn.prepareStatement(INSERT_NEW_BILL_SERVICE);
-                for (Integer hostelServiceID: hostelServiceList) {
+                for (Integer hostelServiceID : hostelServiceList) {
                     ptm.setInt(1, billDetailID);
                     ptm.setInt(2, hostelServiceID);
                     if (ptm.executeUpdate() == 0) {
@@ -127,7 +128,7 @@ public class BillDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "SELECT TOP 1 bill_id, total_money, created_date, expired_payment_date, payment_date, status, Bill.payment_id as 'payment_id'\n" +
+                String sql = "SELECT TOP 1 bill_id, total_money, created_date, bill_title, expired_payment_date, payment_date, status, Bill.payment_id as 'payment_id'\n" +
                         "FROM Bill, Payment\n" +
                         "WHERE room_id = ?\n" +
                         "ORDER BY created_date DESC";
@@ -140,15 +141,15 @@ public class BillDAO {
                     int billID = rs.getInt("bill_id");
                     int totalMoney = rs.getInt("total_money");
                     String createdDate = rs.getString("created_date");
+                    String billTitle = rs.getString("bill_title");
                     String expiredPaymentDate = rs.getString("expired_payment_date");
                     String paymentDate = rs.getString("payment_date");
                     int status = rs.getInt("status");
                     if (rs.getString("payment_id") == null) {
-                        bill = new Bill(billID, roomID, totalMoney, createdDate, expiredPaymentDate, paymentDate, status, new Payment(0, null));
+                        bill = new Bill(billID, roomID, totalMoney, createdDate, billTitle, expiredPaymentDate, paymentDate, status, new Payment(0, null));
                     } else {
                         int paymentID = rs.getInt("payment_id");
-                        String paymentName = rs.getString("payment_name");
-                        bill = new Bill(billID, roomID, totalMoney, createdDate, expiredPaymentDate, paymentDate, status, new Payment(paymentID, paymentName));
+                        bill = new Bill(billID, roomID, totalMoney, createdDate, billTitle, expiredPaymentDate, paymentDate, status, new Payment(paymentID, null));
                     }
                 }
             }
@@ -179,6 +180,53 @@ public class BillDAO {
         }
         return bill;
     }
+
+    public String getPaymentName(int paymentID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        String paymentName = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT payment_name FROM Payment WHERE payment_id = ?";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, paymentID);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    paymentName = rs.getString("payment_name");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return paymentName;
+    }
+
 
     public BillDetail getBillDetail(int billID) {
         Connection cn = null;
@@ -232,6 +280,56 @@ public class BillDAO {
         return billDetail;
     }
 
+    public String getBillTitle(int roomID, String contractStartDate) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        String billTitle = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT TOP 1 bill_title\n" +
+                        "FROM Bill\n" +
+                        "WHERE room_id = ?\n" +
+                        "AND created_date > ?\n" +
+                        "ORDER BY created_date DESC";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+                pst.setString(2, contractStartDate);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    billTitle = rs.getString("bill_title");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return billTitle;
+    }
 
 
 }

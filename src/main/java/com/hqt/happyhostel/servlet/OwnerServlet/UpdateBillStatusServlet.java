@@ -1,0 +1,47 @@
+package com.hqt.happyhostel.servlet.OwnerServlet;
+
+import com.hqt.happyhostel.dao.*;
+import com.hqt.happyhostel.dto.*;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
+import java.io.IOException;
+import java.util.ArrayList;
+
+@WebServlet(name = "UpdateBillStatusServlet", value = "/UpdateBillStatusServlet")
+public class UpdateBillStatusServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = "list-hostels";
+        try {
+            HttpSession session = request.getSession();
+            Room room = (Room) session.getAttribute("room");
+            int roomId = room.getRoomId();
+
+//            int paymentID = Integer.parseInt(request.getParameter("methodPayment"));
+            int billID = Integer.parseInt(request.getParameter("billID"));
+
+            boolean isUpdated = new PaymentDAO().updateBillStatus(billID, 1);
+
+            if (isUpdated) {
+                url = "roomDetail";
+                request.setAttribute("roomID", roomId);
+//                request.setAttribute("IS_SUCCESS", HandlerStatus.builder().status(true));
+            } else {
+                url = "list-hostels";
+//                request.setAttribute("IS_SUCCESS", HandlerStatus.builder().status(false));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+    }
+}

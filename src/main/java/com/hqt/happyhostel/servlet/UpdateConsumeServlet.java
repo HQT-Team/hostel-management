@@ -34,7 +34,6 @@ public class UpdateConsumeServlet extends HttpServlet {
             boolean isSuccess = new ConsumeDAO().updateConsumeNumber(consume);
             if (isSuccess) {
                 url = "roomDetail";
-                request.setAttribute("roomID", roomID);
                 request.setAttribute("updateSuccess", true);
             } else {
                 request.setAttribute("updateSuccess", false);

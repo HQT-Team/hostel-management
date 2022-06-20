@@ -2,6 +2,7 @@ package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
+import com.hqt.happyhostel.dao.ServicesDAO;
 import com.hqt.happyhostel.dto.*;
 
 import javax.servlet.*;
@@ -42,7 +43,7 @@ public class HostelDetailServlet extends HttpServlet {
                     quantityMembers.add(quantityMember);
                 }
 
-                ArrayList<ServiceInfo> serviceList = roomDao.getServicesOfHostel(hostelId);
+                ArrayList<ServiceInfo> serviceList = new ServicesDAO().getServicesOfHostel(hostelId);
                 url = "HostelDetailPage";
                 request.setAttribute("hostel", hostel);
                 session.setAttribute("hostel", hostel);
