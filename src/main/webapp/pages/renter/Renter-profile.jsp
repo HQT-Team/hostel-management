@@ -120,9 +120,7 @@
         <h3>Số điện thoại: ${ACC_INFO.phone}</h3>
         <h3>Địa chỉ: ${ACC_INFO.address}</h3>
         <h3>CCCD: ${ACC_INFO.cccd}</h3>
-        <a href="Renter-update-profile" role="button"
-           style="text-decoration: none;font-size: 28px;border-radius: 8px;background-color: rgb(0, 153, 25);color: aliceblue;padding: 5px;margin-top: 10px;">Chỉnh
-          Sửa</a>
+        <a href="Renter-update-profile" role="button">Chỉnh Sửa</a>
       </div>
     </div>
   </div>

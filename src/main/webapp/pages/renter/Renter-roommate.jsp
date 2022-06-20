@@ -160,7 +160,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" style="margin-left:36%;color:#ffffff;" id="staticBackdropLabel">Thông Tin Chi Tiết
+              <h5 class="modal-title" id="staticBackdropLabel">Thông Tin Chi Tiết
               </h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -190,8 +190,6 @@
       %>
     </div>
   </div>
-
-</div>
 <!-- Modal -->
 
 <!-- footer -->

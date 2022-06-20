@@ -2,7 +2,6 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-@media screen and (min-width: 1024px) {
   .dropdown {
     display: none;
   }
@@ -21,7 +20,7 @@
       margin: auto;
     }
   }
-}
+
 
 
 @media screen and (max-width: 1024px) and (min-width: 740px) {
