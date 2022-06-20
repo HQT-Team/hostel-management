@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %><%--
   Created by IntelliJ IDEA.
   User: 84337
@@ -43,7 +44,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
                     <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
-                    <a class="dropdown-item" href="Renter-contract">Hợp đồng</a>
+                    <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
                     <a class="dropdown-item" href="Renter-invoice">Hóa đơn</a>
                     <a class="dropdown-item" href="Renter-report">Báo cáo</a>
                     <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
@@ -91,7 +92,7 @@
                     <div class="card-body">
                         <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
                         <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
-                        <h3><a href="Renter-contract">Hợp đồng</a></h3>
+                        <h3><a href="ContractPage">Hợp đồng</a></h3>
                         <h3><a href="Renter-invoice">Hóa đơn</a></h3>
                         <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                         <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
@@ -123,20 +124,21 @@
                 <br>
                 <h4>Hợp đồng thuê phòng</h4>
                 <p>1. Bên cho thuê</p>
-                <h5>Ông: Trân Hoài Nam</h5><br>
-                <h5>Ngày sinh: 2001-06-16</h5><br>
-                <h5>CCCD: 070201002019</h5><br>
-                <h5>Số điện thoại</h5><br>
+                <h5>Ông: ${OWNER_INFO.fullname}</h5><br>
+                <h5>Ngày sinh: ${OWNER_INFO.birthday}</h5><br>
+                <h5>CCCD: ${OWNER_INFO.cccd}</h5><br>
+                <h5>SĐT: ${OWNER_INFO.phone}</h5><br>
                 <p>2. Bên thuê</p>
-                <h5>Ông: Trân Hoài Nam</h5><br>
-                <h5>Ngày sinh: 2001-06-16</h5><br>
-                <h5>CCCD: 070201002019</h5><br>
-                <h5>Số điện thoại</h5><br>
+                <h5>Ông: ${RENTER_INFO.fullname}</h5><br>
+                <h5>Ngày sinh: ${RENTER_INFO.birthday}</h5><br>
+                <h5>CCCD: ${RENTER_INFO.cccd}</h5><br>
+                <h5>SĐT: ${RENTER_INFO.phone}</h5><br>
                 <p>Sau khi bàn bạc :</p>
-                <h5>Bên A xác nhận cho bên B thuê phòng trọ tại địa chỉ: Thủ đức </h5><br>
-                <h5>Giá : 200000vnd</h5><br>
-                <h5>Tiền cọc: 200000vnd</h5><br>
-                <h5>Hợp đồng có giá trị từ ngày: 2020-06-1 đến ngày : 2020-07-1</h5><br>
+                <h5>Bên A xác nhận cho bên B thuê phòng trọ tại địa chỉ: ${HOSTEL.address}, ${HOSTEL.ward.split('-')[1]},
+                    ${HOSTEL.district.split('-')[1]}, ${HOSTEL.city.split('-')[1]} </h5><br>
+                <h5>Giá :  <fmt:formatNumber value="${CONTRACT.price}" type="currency" currencySymbol=""/>VNĐ</h5><br>
+                <h5>Tiền cọc: <fmt:formatNumber value="${CONTRACT.deposit}" type="currency" currencySymbol=""/> VNĐ</h5><br>
+                <h5>Hợp đồng có giá trị từ ngày: ${CONTRACT.startDate} đến ngày : ${CONTRACT.expiration}</h5><br>
             </div>
         </div>
     </div>

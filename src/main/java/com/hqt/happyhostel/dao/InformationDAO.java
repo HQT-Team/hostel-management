@@ -58,7 +58,8 @@ public class InformationDAO {
 
     // Renter handler
     private static final String GET_HOSTEL_OWNER_INFOR_BY_RENTER_ID =
-            "SELECT DISTINCT AccountInformations.fullname, AccountInformations.phone\n" +
+            "SELECT DISTINCT AccountInformations.fullname, AccountInformations.email, AccountInformations.birthday," +
+                    " AccountInformations.sex, AccountInformations.phone, AccountInformations.address, AccountInformations.identity_card_number\n" +
                     "FROM AccountInformations INNER JOIN Accounts ON AccountInformations.account_id=Accounts.account_id\n" +
                     "INNER JOIN Hostels ON Accounts.account_id=Hostels.owner_account_id\n" +
                     "INNER JOIN Contracts ON Accounts.account_id=Contracts.hostel_owner_id\n" +
@@ -85,8 +86,22 @@ public class InformationDAO {
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     String fullname = rs.getString("fullname");
+                    String email = rs.getString("email");
+                    String birthday = rs.getString("birthday");
+                    int sex = rs.getInt("sex");
                     String phone = rs.getString("phone");
-                    accountInfor = Information.builder().fullname(fullname).phone(phone).build();
+                    String address = rs.getString("address");
+                    String cccd = rs.getString("identity_card_number");
+
+                    accountInfor = Information.builder()
+                            .fullname(fullname)
+                            .phone(phone)
+                            .email(email)
+                            .birthday(birthday)
+                            .sex(sex)
+                            .address(address)
+                            .cccd(cccd)
+                            .build();
                 }
             }
         } catch (Exception e) {

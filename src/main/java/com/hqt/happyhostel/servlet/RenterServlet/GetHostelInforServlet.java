@@ -45,8 +45,15 @@ public class GetHostelInforServlet extends HttpServlet {
                 url = SUCCESS;
             }
             //Get Room Info
+            List<RoommateInfo> roommateInfos = new RoommateInfoDAO().getListRoommatesOfAnAccount(renterId);
+
+            int numberOfMembers = roommateInfos.size();
+            req.setAttribute("NUM_OF_MEMBERS", numberOfMembers);
+
+
             Room roomInfo = new RoomDAO().getHostelRoomInforByRenterId(renterId);
             if (roomInfo!=null){
+
                 req.setAttribute("ROOM_INFOR", roomInfo);
                 url = SUCCESS;
             }

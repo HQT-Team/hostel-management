@@ -42,7 +42,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
                     <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
-                    <a class="dropdown-item" href="Renter-contract">Hợp đồng</a>
+                    <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
                     <a class="dropdown-item" href="Renter-invoice">Hóa đơn</a>
                     <a class="dropdown-item" href="Renter-report">Báo cáo</a>
                     <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
@@ -89,7 +89,7 @@
                         <div class="card-body">
                             <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
                             <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
-                            <h3><a href="Renter-contract">Hợp đồng</a></h3>
+                            <h3><a href="ContractPage">Hợp đồng</a></h3>
                             <h3><a href="Renter-invoice">Hóa đơn</a></h3>
                             <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
@@ -118,44 +118,56 @@
 
         <div class="content">
             <div class="div-controll-form" id="div-controll-form">
-                <form action="#" class="form" id="form">
+                <form action="AddRenterRoommatePage" method="post" class="form" id="form">
                     <h1>Thêm Thành Viên</h1>
+                    <h3 style="color: red">${ERROR}</h3>
+                    <h3 style="color: green">${SUCCESS}</h3>
                     <div class="form-item" id="form-item">
-                        <input id="form-item-input-1" type="text" placeholder="Tên đây đủ">
+                        <input id="form-item-input-1" name="full-name" type="text" placeholder="Tên đây đủ">
                         <p class="border-bottom"></p>
                         <span id="mes-1"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-2" placeholder="Email">
+                        <input id="form-item-input-2" placeholder="Email" type="email" name="email" multiple>
                         <p class="border-bottom"></p>
                         <span id="mes-2"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-3" type="text" placeholder="Ngày sinh">
+                        <input id="form-item-input-3" type="text" placeholder="Ngày sinh" name="dob">
                         <p class="border-bottom"></p>
                         <span id="mes-3"></span>
                     </div>
                     <div class="form-item">
-                        <select name="sex" id="form-item-input-4">
-                            <option value="male">Nam</option>
-                            <option value="female">Nữ</option>
-                            <option value="female">Khác</option>
+                        <select name="gender" id="form-item-input-4">
+                            <option value="1">Nam</option>
+                            <option value="0">Nữ</option>
+                            <option value="0">Khác</option>
                         </select>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-5" type="text" placeholder="Số điện thoại">
+                        <input id="form-item-input-5" type="text" placeholder="Số điện thoại" name="phone-number">
                         <p class="border-bottom"></p>
                         <span id="mes-5"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-6" type="text" placeholder="Địa chỉ">
+                        <input id="form-item-input-6" type="text" placeholder="Địa chỉ" name="address">
                         <p class="border-bottom"></p>
                         <span id="mes-6"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-7" type="text" placeholder="Số CCCD">
+                        <input id="form-item-input-7" type="text" placeholder="Số CCCD" name="cccd">
                         <p class="border-bottom"></p>
                         <span id="mes-7"></span>
+                    </div>
+                    <div class="form-item">
+                        <input id="form-item-input-8" type="text" placeholder="Tên đầy đủ của cha/mẹ" name="parent-name">
+                        <p class="border-bottom"></p>
+                        <span id="mes-8"></span>
+                    </div>
+                    <div class="form-item">
+                        <input id="form-item-input-9" type="text" placeholder="Số điện thoại của cha/mẹ" name="parent-phone">
+                        <p class="border-bottom"></p>
+                        <span id="mes-9"></span>
                     </div>
                     <input id="form-item-submit" type="button" value="Tạo Mới">
                 </form>

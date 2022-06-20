@@ -11,7 +11,9 @@ public class ContractDAO {
     private static final String ADD_AN_CONTRACT =
             "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id])\n" +
             "VALUES (?, ?, ?, ?, ?, ?, ?)";
-
+    private static final String GET_CONTRACT_BY_RENTER_ID = "SELECT contract_id, room_id, price, start_date, expiration, deposit\n" +
+            "FROM Contracts\n" +
+            "WHERE renter_id = ?";
     public boolean addContract(Contract contract) {
         boolean check = false;
         Connection cn = null;
@@ -130,5 +132,61 @@ public class ContractDAO {
         }
         return contract;
     }
+    public Contract getContractByRenterId(int renterId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Contract contract = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_CONTRACT_BY_RENTER_ID);
+                pst.setInt(1, renterId);
 
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int contract_id = rs.getInt("contract_id");
+                    int roomID = rs.getInt("room_id");
+
+                    int price = rs.getInt("price");
+                    String startDate = rs.getString("start_date");
+                    String expiration = rs.getString("expiration");
+                    int deposit = rs.getInt("deposit");
+                    contract = Contract.builder()
+                            .contract_id(contract_id)
+                            .room_id(roomID)
+                            .price(price)
+                            .startDate(startDate)
+                            .expiration(expiration)
+                            .deposit(deposit)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return contract;
+    }
 }

@@ -197,12 +197,13 @@ public class InfrastructureDAO {
 
     // Renter handler
     private static final String GET_HOSTEL_INFRASTRUCTURE_BY_RENTER_ID =
-            "SELECT InfrastructureItem.infrastructure_name,InfrastructuresRoom.quantity\n" +
+            "SELECT InfrastructureItem.infrastructure_name, SUM(InfrastructuresRoom.quantity) as quantity\n" +
                     "FROM Accounts INNER JOIN Contracts ON Accounts.account_id=Contracts.renter_id\n" +
                     "INNER JOIN Rooms ON Contracts.room_id=Rooms.room_id \n" +
                     "INNER JOIN InfrastructuresRoom ON Rooms.room_id=InfrastructuresRoom.room_id\n" +
                     "INNER JOIN InfrastructureItem ON InfrastructuresRoom.id_infrastructure_item=InfrastructureItem.id_infrastructure_item\n" +
-                    "WHERE Accounts.account_id = ?";
+                    "WHERE Accounts.account_id = ?\n" +
+                    "GROUP BY InfrastructuresRoom.id_infrastructure_item, InfrastructureItem.infrastructure_name, InfrastructuresRoom.quantity";
     public List<Infrastructures> getHostelInfrastructuresByRenterId(int renterId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
