@@ -114,16 +114,37 @@
     </div>
     <div class="content row">
       <div class="profile-update">
-        <form action="profile-update" method="post">
+        <form action="profile-update" method="post" id="myForm">
           <h2>Chỉnh sửa thông tin</h2>
           <hr>
-          <input type="text" name="new-name" placeholder="Nhập tên mới!" value="">
-          <input type="text" name="new-email" placeholder="Nhập Email mới!">
-          <input type="text" name="new-birthday" placeholder="Nhập ngày sinh mới!">
-          <input type="text" name="new-phone" placeholder="Nhập số điện thoại mới!">
-          <input type="text" name="new-address" placeholder="Nhập địa chỉ mới!">
-          <input type="text" name="new-cccd" placeholder="Nhập CCCD mới!">
-          <input type="submit" name="save" value="Save" role="button" class="btn btn-primary">
+          <div class="form-content">
+            <input id="input-1" type="text" name="new-name" placeholder="Nhập tên mới!">
+            <span id="mes-1"></span>
+          </div>
+          <div class="form-content">
+            <input id="input-2" type="text" name="new-email" placeholder="Nhập Email mới!">
+            <span id="mes-2"></span>
+
+          </div>
+          <div class="form-content">
+            <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !">
+            <span id="mes-3"></span>
+          </div>
+          <div class="form-content">
+            <input id="input-4" type="text" name="new-phone" placeholder="Nhập số điện thoại mới!">
+            <span id="mes-4"></span>
+          </div>
+          <div class="form-content">
+            <input id="input-5" type="text" name="new-address" placeholder="Nhập địa chỉ mới!">
+            <span id="mes-5"></span>
+          </div>
+          <div class="form-content">
+            <input id="input-6" type="text" name="new-cccd" placeholder="Nhập cccd mới!">
+            <span id="mes-6"></span>
+          </div>
+          <div>
+            <input id="submit-1" type="button" value="Save" />
+          </div>
         </form>
       </div>
     </div>
