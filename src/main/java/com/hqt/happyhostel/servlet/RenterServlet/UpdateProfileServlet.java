@@ -36,12 +36,12 @@ public class UpdateProfileServlet extends HttpServlet {
             acc = (Account) session.getAttribute("USER");
             AccountInfo accountInfor = new AccountDAO().getAccountInformationById(acc.getAccId());
             int accId = acc.getAccId();
-            String profileName = req.getParameter("new-name") != null ? req.getParameter("new-name") : accountInfor.getInformation().getFullname();
-            String profileEmail = req.getParameter("new-email") != null ? req.getParameter("new-email") : accountInfor.getInformation().getEmail();
-            String profileBirthday = req.getParameter("new-birthday") != null ? req.getParameter("new-birthday") : accountInfor.getInformation().getBirthday();
-            String profilePhone = req.getParameter("new-phone") != null ? req.getParameter("new-phone") : accountInfor.getInformation().getPhone();
-            String profileAddress = req.getParameter("new-address") != null ? req.getParameter("new-address") : accountInfor.getInformation().getAddress();
-            String profileCCCD = req.getParameter("new-cccd") != null ? req.getParameter("new-cccd") : accountInfor.getInformation().getCccd();
+            String profileName = req.getParameter("new-name").equals("") ? accountInfor.getInformation().getFullname() : req.getParameter("new-name");
+            String profileEmail = req.getParameter("new-email").equals("") ? accountInfor.getInformation().getEmail() : req.getParameter("new-email");
+            String profileBirthday = req.getParameter("new-birthday").equals("") ? accountInfor.getInformation().getBirthday() : req.getParameter("new-birthday");
+            String profilePhone = req.getParameter("new-phone").equals("") ? accountInfor.getInformation().getPhone() : req.getParameter("new-phone");
+            String profileAddress = req.getParameter("new-address").equals("") ? accountInfor.getInformation().getAddress() : req.getParameter("new-address");
+            String profileCCCD = req.getParameter("new-cccd").equals("") ? accountInfor.getInformation().getCccd() : req.getParameter("new-cccd");
             accountInfos = Information.builder().fullname(profileName).email(profileEmail).birthday(profileBirthday).phone(profilePhone).address(profileAddress).cccd(profileCCCD).build();
             HostelDAO dao = new HostelDAO();
             boolean checkUpdateProfile = new InformationDAO().updateProfileByAccId(accountInfos, accId);

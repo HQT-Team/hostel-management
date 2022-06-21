@@ -48,7 +48,7 @@
                     <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
                     <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
                     <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
-                    <a class="dropdown-item" href="Renter-view-report">Xem báo cáo</a>
+                    <a class="dropdown-item" href="Get-report">Xem báo cáo</a>
                     <a class="dropdown-item" href="logout">Đăng xuất</a>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                             <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
                             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
-                            <h3><a href="Renter-view-report">Xem báo cáo</a></h3>
+                            <h3><a href="Get-report">Xem báo cáo</a></h3>
                         </div>
                     </div>
                 </div>

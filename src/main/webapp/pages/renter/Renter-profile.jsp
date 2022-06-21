@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -43,7 +44,7 @@
           <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
           <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
           <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
-          <a class="dropdown-item" href="Renter-view-report">Xem báo cáo</a>
+          <a class="dropdown-item" href="Get-report">Xem báo cáo</a>
           <a class="dropdown-item" href="logout">Đăng xuất</a>
         </div>
       </div>
@@ -90,7 +91,7 @@
             <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
-            <h3><a href="Renter-view-report">Xem báo cáo</a></h3>
+            <h3><a href="Get-report">Xem báo cáo</a></h3>
           </div>
         </div>
       </div>
@@ -116,7 +117,14 @@
         <h3>Tên: ${ACC_INFO.fullname}</h3>
         <h3>Email: ${ACC_INFO.email}</h3>
         <h3>Ngày sinh: ${ACC_INFO.birthday}</h3>
-        <h3>Giới tính: ${ACC_INFO.sex}</h3>
+        <h3>Giới tính:
+          <c:if test="${ACC_INFO.sex == 1}">
+            Nam
+          </c:if>
+          <c:if test="${ACC_INFO.sex == 0}">
+            Nữ
+          </c:if>
+        </h3>
         <h3>Số điện thoại: ${ACC_INFO.phone}</h3>
         <h3>Địa chỉ: ${ACC_INFO.address}</h3>
         <h3>CCCD: ${ACC_INFO.cccd}</h3>

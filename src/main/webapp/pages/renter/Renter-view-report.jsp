@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -43,7 +44,7 @@
                     <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
                     <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
                     <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
-                    <a class="dropdown-item" href="Renter-view-report">Xem báo cáo</a>
+                    <a class="dropdown-item" href="Get-report">Xem báo cáo</a>
                     <a class="dropdown-item" href="logout">Đăng xuất</a>
                 </div>
             </div>
@@ -90,7 +91,7 @@
                         <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                         <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
                         <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
-                        <h3><a href="Renter-view-report">Xem báo cáo</a></h3>
+                        <h3><a href="Get-report">Xem báo cáo</a></h3>
                     </div>
                 </div>
             </div>
@@ -123,21 +124,35 @@
                         <th style="width: 10%;">Thời Gian Phản Hồi</th>
                     </tr>
                     <tbody id="myTable">
-                    <tr>
-                        <td style="width: 10%;">Đơn xin nghỉ học</td>
-                        <td>
-                            <p> Hôm nay em làm đơn này để xin nghỉ
-                                học ,
-                                em xin hứa sẽ làm bài và học bài đầy đủ</p>
-                        </td>
-                        <td style="width: 5%;">06/06/2022</td>
-                        <td>
-                            <p>Em cứ nghỉ đi em , thoải mái -Tuấnvn
-                            </p>
-                        </td>
-                        <td style="width: 5%;">Đã phản hồi</td>
-                        <td style="width: 5%;">07-06-2022</td>
-                    </tr>
+                    <c:forEach var="rp" items="${REPORT_LIST}">
+                        <tr>
+                            <td style="width: 10%;">
+                                <c:forEach var="cate" items="${REPORT_CATE}">
+                                    <c:if test = "${rp.cateID == cate.cateID}" >
+                                            ${cate.cateTitle}
+                                    </c:if>
+                                </c:forEach>
+                            </td>
+                            <td>
+                                <p> ${rp.content}</p>
+                            </td>
+                            <td style="width: 5%;">${rp.sendDate}</td>
+                            <td>
+                                <p>${rp.reply}
+                                </p>
+                            </td>
+                            <td style="width: 5%;">
+                                <c:if test="${rp.status == 0}">
+                                    <p style="color: lightsalmon">Đang chờ</p>
+                                </c:if>
+                                <c:if test="${rp.status == 1}">
+                                    <p style="color: green">Đã phản hồi</p>
+                                </c:if>
+                            </td>
+                            <td style="width: 5%;">${rp.completeDate}</td>
+                        </tr>
+                    </c:forEach>
+
                     </tbody>
                 </table>
             </div>
