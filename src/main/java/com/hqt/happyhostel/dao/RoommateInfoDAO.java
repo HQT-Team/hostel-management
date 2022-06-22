@@ -26,6 +26,29 @@ public class RoommateInfoDAO {
                     "SET fullname = ?, email = ?, birthday = ?, sex = ?, phone = ?,\n" +
                     "address = ?, identity_card_number = ?, parent_name = ?, parent_phone = ?\n" +
                     "WHERE roomate_info_id = ?";
+    private static final String DELETE_ROOMMATE_INFO = "DELETE FROM RoomateInformations WHERE account_renter_id = ? AND roomate_info_id = ?";
+
+    public boolean DeleteRoommateInfo(int accountId, int roommateId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        boolean check = false;
+        try {
+            conn = DBUtils.makeConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(DELETE_ROOMMATE_INFO);
+                psm.setInt(1, accountId);
+                psm.setInt(2, roommateId);
+
+                check = psm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (psm != null) psm.close();
+            if (conn != null) conn.close();
+        }
+        return check;
+    }
 
     public boolean UpdateRoommateInfo(RoommateInfo roommateInfo) throws SQLException {
         Connection conn = null;

@@ -9,8 +9,47 @@ import java.sql.*;
 public class ContractDAO {
 
     private static final String ADD_AN_CONTRACT =
-            "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id])\n" +
-            "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id], [status])\n" +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE_CONTRACT_STATUS = "UPDATE Contracts SET status = 0\n" +
+                    "WHERE room_id = ? AND renter_id = ? AND status = 1";
+
+    public boolean updateContractStatus (int roomId, int renterAccountId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean check = false;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+
+                pst = cn.prepareStatement(UPDATE_CONTRACT_STATUS);
+                // Return key Identity of data just inserted
+                pst.setInt(1, roomId);
+                pst.setInt(2, renterAccountId);
+
+                check = pst.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
 
     public boolean addContract(Contract contract) {
         boolean check = false;
@@ -33,6 +72,7 @@ public class ContractDAO {
                 pst.setDouble(5, contract.getDeposit());
                 pst.setInt(6, contract.getHostelOwnerId());
                 pst.setInt(7, contract.getRenterId());
+                pst.setInt(8, contract.getStatus());
 
                 if (pst.executeUpdate() > 0) {
                     check = true;
@@ -70,7 +110,6 @@ public class ContractDAO {
         return check;
     }
 
-
     public Contract getContract(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -79,9 +118,9 @@ public class ContractDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "SELECT contract_id, room_id, price, start_date, expiration, deposit\n" +
+                String sql = "SELECT contract_id, room_id, price, start_date, expiration, deposit, hostel_owner_id, renter_id, status\n" +
                              "FROM Contracts\n" +
-                             "WHERE room_id = ?";
+                             "WHERE room_id = ? AND status = 1";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
@@ -93,6 +132,9 @@ public class ContractDAO {
                     String startDate = rs.getString("start_date");
                     String expiration = rs.getString("expiration");
                     int deposit = rs.getInt("deposit");
+                    int hostelAccountId = rs.getInt("hostel_owner_id");
+                    int renterAccountId = rs.getInt("renter_id");
+                    int status = rs.getInt("status");
                     contract = Contract.builder()
                             .contract_id(contract_id)
                             .room_id(roomID)
@@ -100,6 +142,9 @@ public class ContractDAO {
                             .startDate(startDate)
                             .expiration(expiration)
                             .deposit(deposit)
+                            .hostelOwnerId(hostelAccountId)
+                            .renterId(renterAccountId)
+                            .status(status)
                             .build();
                 }
             }
