@@ -877,7 +877,7 @@ public class RoomDAO {
         return roomInfor;
     }
 
-    public Room getRoomByRenterId(int renterId) throws SQLException {
+    public Room getRoomById(int roomId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -886,24 +886,28 @@ public class RoomDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 pst = cn.prepareStatement(
-                        "SELECT R.[room_id], R.[room_number], R.[room_area], R.[capacity], R.[has_attic]\n" +
-                        "FROM [dbo].[Rooms] AS R JOIN [dbo].[Accounts] AS A ON R.[room_id] = A.[room_id]\n" +
-                        "WHERE A.account_id = ?");
-                pst.setInt(1, renterId);
+                        "SELECT R.[room_id], R.[room_number], R.[room_area], R.[capacity], R.[has_attic], R.[hostel_id], R.[room_status]\n" +
+                                "FROM [dbo].[Rooms] AS R\n" +
+                                "WHERE R.[room_id]= ?");
+                pst.setInt(1, roomId);
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
-                    int roomId = rs.getInt("room_id");
+                    int roomID = rs.getInt("room_id");
+                    int hostelId = rs.getInt("hostel_id");
                     int roomNumber = rs.getInt("room_number");
                     double roomArea = rs.getInt("room_area");
                     int capacity = rs.getInt("capacity");
-                    int hasAttic = rs.getInt("hasAttic");
+                    int hasAttic = rs.getInt("has_Attic");
+                    int roomStatus = rs.getInt("room_status");
                     roomInfor = Room
                             .builder()
-                            .roomId(roomId)
+                            .roomId(roomID)
+                            .hostelId(hostelId)
                             .roomNumber(roomNumber)
                             .roomArea(roomArea)
                             .capacity(capacity)
                             .hasAttic(hasAttic)
+                            .roomStatus(roomStatus)
                             .build();
                 }
             }

@@ -4,6 +4,7 @@ import com.hqt.happyhostel.dto.HostelService;
 import com.hqt.happyhostel.dto.Hostel;
 import com.hqt.happyhostel.dto.Services;
 import com.hqt.happyhostel.utils.DBUtils;
+import com.hqt.happyhostel.utils.GetAddressUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -52,11 +53,11 @@ public class HostelDAO {
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     int hostelOwnerAccountID = rs.getInt("owner_account_id");
-                    String name = rs.getString("name");
-                    String address = rs.getString("address");
-                    String ward = rs.getString("ward");
-                    String district = rs.getString("district");
-                    String city = rs.getString("city");
+                    String name =  rs.getString("name");
+                    String address =  GetAddressUtils.getDefaultAddress(rs.getString("address"));
+                    String ward = GetAddressUtils.getDefaultAddress(rs.getString("ward"));
+                    String district = GetAddressUtils.getDefaultAddress(rs.getString("district"));
+                    String city = GetAddressUtils.getDefaultAddress(rs.getString("city"));
                     hostel = Hostel.builder()
                             .hostelID(hostelId)
                             .hostelOwnerAccountID(hostelOwnerAccountID)
@@ -64,7 +65,8 @@ public class HostelDAO {
                             .address(address)
                             .ward(ward)
                             .district(district)
-                            .city(city).build();
+                            .city(city)
+                            .build();
                 }
             }
         } catch (Exception e) {

@@ -402,11 +402,11 @@ public class AccountDAO {
         }
     }
 
-    public int updateAccountStatus(int id, int status) {
+    public boolean updateAccountStatus(int id, int status) {
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;
-        int result = 0;
+        boolean result = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
@@ -416,7 +416,8 @@ public class AccountDAO {
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, status);
                 pst.setInt(2, id);
-                result = pst.executeUpdate();
+                int i = pst.executeUpdate();
+                if(i > 0) result = true;
             }
 
         } catch (Exception e) {
@@ -580,12 +581,25 @@ public class AccountDAO {
                 pst.setInt(5, account.getRoomId());
 
                 if (pst.executeUpdate() > 0) {
-
+                    accountId = -1;
                     rs = pst.getGeneratedKeys();
+
                     if (rs.next()) {
                         accountId = rs.getInt(1);
                     }
 
+                    // Add into AccountInformations table
+                    pst = cn.prepareStatement(ADD_ACCOUNT_INFORMATION);
+                    pst.setInt(1, accountId);
+                    pst.setString(2, account.getAccountInfo().getInformation().getFullname());
+                    pst.setString(3, account.getAccountInfo().getInformation().getEmail());
+                    pst.setString(4, account.getAccountInfo().getInformation().getCccd());
+
+                    if (pst.executeUpdate() > 0) {
+                        cn.commit();
+                    } else {
+                        cn.rollback();
+                    }
                     cn.setAutoCommit(true);
                 } else {
                     cn.rollback();
@@ -655,7 +669,7 @@ public class AccountDAO {
     }
 
 
-    public int checkAccountByOTP(String email, String otp) throws SQLException {
+    public int checkAccountByOTP(int accId, String otp) throws SQLException {
         Connection conn = null;
         PreparedStatement psm = null;
         ResultSet rs = null;
@@ -669,9 +683,9 @@ public class AccountDAO {
             if (conn != null) {
                 String sql = "SELECT A.[account_id]\n" +
                         "FROM [dbo].[Accounts] AS A JOIN [dbo].[AccountInformations] AS AI ON A.[account_id] = AI.[account_id]\n" +
-                        "WHERE AI.[email] = ? AND A.[otp] = ? AND GETDATE() < A.[expiredTimeOTP]";
+                        "WHERE A.[account_id] = ? AND A.[otp] = ? AND GETDATE() < A.[expiredTimeOTP]";
                 psm = conn.prepareStatement(sql);
-                psm.setString(1, email);
+                psm.setInt(1, accId);
                 psm.setString(2, otp);
                 rs = psm.executeQuery();
 
@@ -790,11 +804,11 @@ public class AccountDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 cn.setAutoCommit(false);
-                String sql = UPDATE_ACCOUNT_FULLNAME;
+                String sql = UPDATE_ACCOUNT_OTP;
                 pst = cn.prepareStatement(sql);
                 pst.setString(1, otp);
                 pst.setString(2, endTime);
-                pst.setInt(2, accId);
+                pst.setInt(3, accId);
                 if (pst.executeUpdate() < 1) {
                     cn.rollback();
                 } else {
@@ -824,5 +838,7 @@ public class AccountDAO {
         }
         return isSuccess;
     }
+
+
 
 }

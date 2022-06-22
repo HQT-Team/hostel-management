@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -50,7 +51,7 @@
     <div class="row">
         <div class="col-12 col-lg-10 col-xl-8 col-xxl-7 m-auto content__wrapper">
             <h1 class="content__header">
-                Chào mừng bạn đến với khu trọ <span>Nova Land</span>
+                Chào mừng bạn đến với khu trọ <span>${sessionScope.CONTRACT_HOSTEL.hostelName}</span>
             </h1>
             <p class="content__subheader">
                 <span>*</span> Sau đây là thông tin tổng quát về khu trọ và phòng mà bạn thuê,
@@ -61,13 +62,18 @@
                 <h2 class="content__infor-title">Thông tin khu trọ</h2>
                 <div class="row">
                     <div class="col-12 col-md-6">
-                        <p class="content__infor-item">Khu trọ: <span>Nova Land</span></p>
-                        <p class="content__infor-item">Địa chỉ: <span>255 Hoàng Hữu Nam, phường Long Thạnh Mỹ, Thành
-                                    phố Thủ Đức, thành phố Hồ Chí Minh</span></p>
+                        <p class="content__infor-item">Khu trọ: <span>${sessionScope.CONTRACT_HOSTEL.hostelName}</span></p>
+                        <p class="content__infor-item">Địa chỉ:
+                            <span>
+                                ${sessionScope.CONTRACT_HOSTEL.address},
+                                ${sessionScope.CONTRACT_HOSTEL.ward},
+                                ${sessionScope.CONTRACT_HOSTEL.district},
+                                ${sessionScope.CONTRACT_HOSTEL.city},
+                            </span></p>
                     </div>
                     <div class="col-12 col-md-6">
-                        <p class="content__infor-item">Chủ trọ: <span>Kiều Trọng Khánh</span></p>
-                        <p class="content__infor-item">Số Điện Thoại: <span>0355267xxx</span></p>
+                        <p class="content__infor-item">Chủ trọ: <span>${sessionScope.CONTRACT_OWNER.information.fullname}</span></p>
+                        <p class="content__infor-item">Số Điện Thoại: <span>${sessionScope.CONTRACT_OWNER.information.phone}</span></p>
                     </div>
                 </div>
             </div>
@@ -76,16 +82,16 @@
                 <h2 class="content__infor-title">Thông tin phòng trọ</h2>
                 <div class="row">
                     <div class="col-12 col-sm-6">
-                        <p class="content__infor-item">Phòng số: <span>191</span></p>
-                        <p class="content__infor-item">Diện tích: <span>20 m2</span></p>
-                        <p class="content__infor-item">Gác: <span>Có</span></p>
-                        <p class="content__infor-item">Số lượng thành viên tối đa: <span>5</span></p>
+                        <p class="content__infor-item">Phòng số: <span>${sessionScope.CONTRACT_ROOM.roomNumber}</span></p>
+                        <p class="content__infor-item">Diện tích: <span>${sessionScope.CONTRACT_ROOM.roomArea}</span></p>
+                        <p class="content__infor-item">Gác: <span>${sessionScope.CONTRACT_ROOM.capacity}</span></p>
+                        <p class="content__infor-item">Số lượng thành viên tối đa: <span>${sessionScope.CONTRACT_ROOM.capacity}</span></p>
                     </div>
                     <div class="col-12 col-sm-6">
-                        <p class="content__infor-item">Ngày bắt đầu thuê: <span>29/02/2022</span></p>
-                        <p class="content__infor-item">Ngày kết thúc thuê: <span>29/02/2023</span></p>
-                        <p class="content__infor-item">Tiền cọc: <span>2.500.000 đ</span></p>
-                        <p class="content__infor-item">Tiền phòng: <span>2.500.000 đ</span></p>
+                        <p class="content__infor-item">Ngày bắt đầu thuê: <span>${sessionScope.CONTRACT.startDate}</span></p>
+                        <p class="content__infor-item">Ngày kết thúc thuê: <span>${sessionScope.CONTRACT.expiration}</span></p>
+                        <p class="content__infor-item">Tiền cọc: <span>${sessionScope.CONTRACT.deposit}vnđ</span></p>
+                        <p class="content__infor-item">Tiền phòng: <span>${sessionScope.CONTRACT.price}vnđ</span></p>
                     </div>
                 </div>
             </div>
@@ -119,21 +125,29 @@
                             <th>Trạng thái</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>Máy lạnh</td>
-                            <td class="good">Còn sử dụng</td>
-                        </tr>
-                        </tbody>
+                        <c:forEach var="infrastructure" items="${sessionScope.CONTRACT_ROOM_INFRASTRUCTURE_LIST}">
+                            <tbody>
+                            <tr>
+                                <td>${infrastructure.name}</td>
+                                <td class="good">
+                                    <c:choose>
+                                        <c:when test="${infrastructure.status == 1}">Sử dụng tốt</c:when>
+                                        <c:otherwise>Hư hỏng</c:otherwise>
+                                    </c:choose>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </c:forEach>
+
                     </table>
                 </div>
             </div>
             <div class="content__spacer"></div>
-            <form action="" id="content__form" class="content__form">
+            <form action="handle-confirm-contract" method="post" id="content__form" class="content__form">
                 <div class="form-group">
                     <div class="d-flex">
                         <input type="checkbox" id="content__form-confirm" class="content__form-confirm"
-                               name="confirm">
+                               name="action" value="continue">
                         <label for="content__form-confirm" class="content__form-label">Tôi đã đọc kỹ và xác nhận mọi
                             thông tin trên đều đúng như đã
                             thỏa thuận</label>
@@ -142,7 +156,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary fs-3">Tiếp tục</button>
-                    <a href="" class="btn btn-outline-danger fs-3">Có sai sót, hủy bỏ</a>
+                    <a href="" class="btn btn-outline-danger fs-3"> Có sai sót, hủy bỏ </a>
                 </div>
             </form>
         </div>

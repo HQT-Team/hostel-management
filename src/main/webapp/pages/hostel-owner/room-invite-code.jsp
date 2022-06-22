@@ -57,7 +57,8 @@
                                     lực</span>
                         </div>
                         <div id="invite-recreate" class="invite-recreate d-none">
-                            <form action="">
+                            <form action="createInvite" method="post">
+                                <input type="hidden" name="room_id" value="${sessionScope.room.roomId}">
                                 <button class="invite-recreate-btn" type="submit">Tạo mới mã tham gia</button>
                             </form>
                         </div>

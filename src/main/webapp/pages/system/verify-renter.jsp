@@ -53,7 +53,8 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-xs-9 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4 m-auto">
-                    <form action="" method="POST" id="verify-form" class="custom-form verify-form">
+                    <form action="check-otp" method="POST" id="verify-form" class="custom-form verify-form">
+                        <input type="hidden" name="account_id" value="${requestScope.ACCOUNT_ID}">
                         <div class="form-header">
                             <h3 class="form-title">Xác thực bạn chính xác là người thuê</h3>
                             <div class="form-subtitle">
@@ -66,7 +67,7 @@
                         <div class="row form-group">
                             <div class="col-8">
                                 <label for="confirm-code" class="form-label">Mã xác thực <span>*</span></label>
-                                <input id="confirm-code" name="confirm-code" type="confirm-code"
+                                <input id="confirm-code" name="otp" type="confirm-code"
                                        placeholder="Nhập mã xác thực" class="form-control">
                             </div>
                             <div class="col-4">
@@ -75,8 +76,9 @@
                                 <button id="resend-btn" class="form-control btn btn-primary disabled">180
                                     giây</button>
                             </div>
-                            <span class="form-message">Mã bạn vừa nhập chưa đúng, vui lòng kiểm tra lại hoặc liên hệ
-                                    với chủ trọ của bạn!</span>
+                            <span class="form-message">
+                                ${requestScope.RESPONSE_MSG.content}
+                            </span>
                         </div>
                         <div class="spacer"></div>
                         <button type="submit" class="form-submit">Xác thực</button>

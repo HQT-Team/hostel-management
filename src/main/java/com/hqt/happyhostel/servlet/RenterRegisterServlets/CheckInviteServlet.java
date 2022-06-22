@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet.InviteRoomServlets;
+package com.hqt.happyhostel.servlet.RenterRegisterServlets;
 
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dao.ContractDAO;
@@ -16,13 +16,13 @@ import java.util.Calendar;
 @WebServlet(name = "CheckInviteServlet", value = "/CheckInviteServlet")
 public class CheckInviteServlet extends HttpServlet {
     private final String SUCCESS = "send-otp";
-    private final String FAIL = "invite-page";
+    private final String FAIL = "renter-register-page";
     private final String ERROR = "error-page";
 
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String  url = ERROR;
-        String inviteCode = request.getParameter("invite_code");
+        String inviteCode = request.getParameter("invite-code");
         HandlerStatus handlerStatus = null;
         try {
             if(inviteCode != null){
@@ -35,14 +35,15 @@ public class CheckInviteServlet extends HttpServlet {
                     handlerStatus = HandlerStatus.builder().status(false).content("Mã mời đã hết hạn. Vui lòng liên hệ chủ trọ để cung cấp mã mời mới !").build();
                 else {
                     int renterId = roomInviteDAO.getAccountIdByInviteCode(inviteCode);
-                    String userEmail = new AccountDAO().getAccountInformationById(renterId).getInformation().getEmail();
-                    request.setAttribute("USER_EMAIL", userEmail);
-                    url = SUCCESS;
-                    request.setAttribute("ACCOUNT_ID", renterId);
+                    HttpSession session = request.getSession(true);
+                    if(session != null){
+                        session.setAttribute("confirm-invite", "OK");
+                        request.setAttribute("ACCOUNT_ID", renterId);
+                        url = SUCCESS;
+                    }
                 }
 
                 request.setAttribute("RESPONSE_MSG", handlerStatus);
-                request.setAttribute("INVITE_CODE", inviteCode);
             }
 
         }catch (Exception e){

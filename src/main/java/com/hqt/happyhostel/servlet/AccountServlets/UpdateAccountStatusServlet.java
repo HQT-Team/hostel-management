@@ -24,8 +24,8 @@ public class UpdateAccountStatusServlet extends HttpServlet {
 
             int id = Integer.parseInt(request.getParameter("owner_id"));
             int status = Integer.parseInt(request.getParameter("status"));
-            int i = status == 0 ? accountDAO.updateAccountStatus(id, 1) : accountDAO.updateAccountStatus(id, 0);
-            if (i < 0) {
+            boolean check = status == 0 ? accountDAO.updateAccountStatus(id, 1) : accountDAO.updateAccountStatus(id, 0);
+            if (check) {
                 request.setAttribute("ERROR", "UPDATE FAILED");
             } else {
                 request.setAttribute("SUCCESS", "UPDATED SUCCESSFULLY");

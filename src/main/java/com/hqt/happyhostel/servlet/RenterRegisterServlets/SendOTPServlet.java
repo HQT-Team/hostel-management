@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet.InviteRoomServlets;
+package com.hqt.happyhostel.servlet.RenterRegisterServlets;
 
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dto.HandlerStatus;
@@ -15,8 +15,8 @@ import java.util.Calendar;
 
 @WebServlet(name = "SendOTPServlet", value = "/SendOTPServlet")
 public class SendOTPServlet extends HttpServlet {
-    private final String SUCCESS = "otp-page";
-    private final String FAIL = "otp-page";
+    private final String SUCCESS = "verify-renter-page";
+    private final String FAIL = "verify-renter-page";
     private final String ERROR = "error-page";
 
     @Override
@@ -26,14 +26,14 @@ public class SendOTPServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = ERROR;
-        String userEmail = ( request.getAttribute("USER_EMAIL") != null ) ?
-                (String) request.getAttribute("USER_EMAIL") : request.getParameter("user_email");
-        HandlerStatus handlerStatus = null;
         int accId = ( request.getAttribute("ACCOUNT_ID") != null ) ?
                 (int) request.getAttribute("ACCOUNT_ID") : Integer.parseInt(request.getParameter("account_id"));
+        String url = ERROR;
+        String userEmail = null;
+        HandlerStatus handlerStatus = null;
 
         try {
+            userEmail = new AccountDAO().getAccountInformationById(accId).getInformation().getEmail();
             if (userEmail != null){
                 String otp = RandomStringGenerator.randomOTP(5);
                 String mailObject = "Mã xác nhận tài khoản";
@@ -54,7 +54,7 @@ public class SendOTPServlet extends HttpServlet {
                     handlerStatus = HandlerStatus.builder().status(false).content("Không thể gửi mã OTP. Vui lòng kiểm tra lại các thông tin.").build();
                 }
                 request.setAttribute("RESPONSE_MSG", handlerStatus);
-                request.setAttribute("USER_EMAIL", userEmail);//gửi cho Front sau đó Front gửi lại cho CheckOTPServlet
+                request.setAttribute("ACCOUNT_ID", accId);
             }
         }catch (Exception e){
             log("Error at SendOTPServlet: " + e.toString());

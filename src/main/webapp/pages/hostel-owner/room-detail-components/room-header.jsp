@@ -138,7 +138,7 @@
             </c:when>
             <c:when test="${sessionScope.room.roomStatus eq 0}">
                 <!-- Start view QR Code button -->
-                <form action="createInvite" method="post">
+                <form action="get-invite-code" method="post">
                     <input type="hidden" name="room_id" value="${sessionScope.room.roomId}">
                     <button type="submit" class="action-create-account-link">Xem mã tham gia</button>
                 </form>

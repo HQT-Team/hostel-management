@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet.ContractServlets;
+package com.hqt.happyhostel.servlet.RenterRegisterServlets;
 
 import com.hqt.happyhostel.dao.*;
 import com.hqt.happyhostel.dto.*;
@@ -11,10 +11,8 @@ import java.util.ArrayList;
 
 @WebServlet(name = "getContractServlet", value = "/getContractServlet")
 public class getContractServlet extends HttpServlet {
-    private final String SUCCESS_REGISTER = "renter-register-contract-page";
-    private final String FAIL_REGISTER = "renter-register-contract-page";
-    private final String SUCCESS_VIEW = "contract-page";
-    private final String FAIL_VIEW = "contract-page";
+    private final String SUCCESS = "confirm-room-info-page";
+    private final String FAIL = "confirm-room-info-page";
     private final String ERROR = "error-page";
 
     @Override
@@ -26,55 +24,48 @@ public class getContractServlet extends HttpServlet {
         String url = ERROR;
         int renterID = -1;
         try {
+            renterID = (int) request.getAttribute("ACCOUNT_ID");
 
-            String renterId = ( request.getAttribute("ACC_ID") != null ) ?
-                    (String) request.getAttribute("ACC_ID") : request.getParameter("acc_id");
-
-            String isRegister = request.getParameter("isRegister");
-
-            if(renterId != null){
-                renterID = Integer.parseInt(renterId);
+            if (renterID > 0) {
                 //get renter master
                 AccountInfo renterMasterInfo = new AccountDAO().getAccountInformationById(renterID);
                 //get renter account
-                Account renterAccount = new AccountDAO().getAccountById(renterID);
+                String renterAccountUsername = new AccountDAO().getAccountById(renterID).getUsername();
                 //get contract
                 Contract contract = new ContractDAO().getContractByRenterId(renterID);
-                if (contract != null){
+                if (contract != null) {
                     //get room information
-                    Room roomInfo = new RoomDAO().getRoomByRenterId(contract.getRoom_id());
+                    Room roomInfo = new RoomDAO().getRoomById(contract.getRoom_id());
                     //get room infrastructure
                     ArrayList<Infrastructures> roomInfrastructureList = new InfrastructureDAO().getRoomInfrastructures(contract.getRoom_id());
                     //get hostel information
                     Hostel hostelInfo = new HostelDAO().getHostelById(roomInfo.getHostelId());
+
                     //get hostel owner information
                     AccountInfo hostelOwnerInfo = new AccountDAO().getAccountInformationById(contract.getHostelOwnerId());
-
                     HttpSession session = request.getSession(true);
-                    if (session != null){
+                    if (session != null) {
                         session.setAttribute("CONTRACT", contract);
                         session.setAttribute("CONTRACT_ROOM", roomInfo);
                         session.setAttribute("CONTRACT_ROOM_INFRASTRUCTURE_LIST", roomInfrastructureList);
                         session.setAttribute("CONTRACT_HOSTEL", hostelInfo);
                         session.setAttribute("CONTRACT_OWNER", hostelOwnerInfo);
                         session.setAttribute("CONTRACT_RENTER", renterMasterInfo);
-                        session.setAttribute("RENTER_ACCOUNT", renterAccount);
+                        session.setAttribute("RENTER_ACCOUNT_USERNAME", renterAccountUsername);
                     }
-
-
-                    if(isRegister != null) url = SUCCESS_REGISTER;
-                    else url = SUCCESS_VIEW;
-                }else {
+                    url = SUCCESS;
+                } else {
                     HandlerStatus handlerStatus = HandlerStatus.builder().status(false).content("Không thể tìm thấy hợp đồng này").build();
                     request.setAttribute("RESPONSE_MSG", handlerStatus);
-                    if(isRegister != null) url = FAIL_REGISTER;
-                    else url = FAIL_VIEW;
+                    url = FAIL;
+
                 }
             }
-        }catch (Exception e){
-            log("Error at InviteCodeServlet: " + e.toString());
-        }finally {
-            if(ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
+        } catch (Exception e) {
+//
+            e.printStackTrace();
+        } finally {
+            if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
             else request.getRequestDispatcher(url).forward(request, response);
         }
     }
