@@ -124,19 +124,19 @@
         <!-- End update room information button -->
 
         <c:choose>
-            <c:when test="${sessionScope.room.roomStatus eq 1 || requestScope.userNameRenterRoom eq null}">
+            <c:when test="${sessionScope.room.roomStatus eq 1}">
                 <!-- Start create account button -->
                 <a href="create-room-account" class="action-create-account-link">Tạo tài khoản</a>
                 <!-- End create account button -->
             </c:when>
-            <c:when test="${requestScope.consumeNumber.status eq 0}">
+            <c:when test="${requestScope.renterAccount.status eq 1}">
                 <!-- Start calculate button button -->
                 <form action="CalculateTotalCostRoomPage" method="GET">
                     <button class="action-calculate-btn">Tính tiền phòng</button>
                 </form>
                 <!-- End calculate button button -->
             </c:when>
-            <c:when test="${sessionScope.room.roomStatus eq 0}">
+            <c:when test="${sessionScope.room.roomStatus eq 0 && requestScope.renterAccount.status eq 0}">
                 <!-- Start view QR Code button -->
                 <form action="get-invite-code" method="post">
                     <input type="hidden" name="room_id" value="${sessionScope.room.roomId}">

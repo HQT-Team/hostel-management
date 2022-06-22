@@ -52,14 +52,13 @@ public class GetRoomDetailServlet extends HttpServlet {
             Bill bill = roomDAO.getLastBill(roomId);
             request.setAttribute("billRoom", bill);
 
-            String username = accountDAO.getUsernameRoomCurrently(roomId);
-            request.setAttribute("userNameRenterRoom", username);
+            if (contract != null) {
+                Account renterAccount = accountDAO.getAccountById(contract.getRenterId());
+                request.setAttribute("renterAccount", renterAccount);
 
-            int accountId = accountDAO.getAccountIdByUserName(username);
-            request.setAttribute("renterAccountId", accountId);
-
-            List<RoommateInfo> listRoommatesInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(accountId);
-            request.setAttribute("listRoommatesInfo", listRoommatesInfo);
+                List<RoommateInfo> listRoommatesInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(contract.getRenterId());
+                request.setAttribute("listRoommatesInfo", listRoommatesInfo);
+            }
 
             ArrayList<Infrastructures> infrastructures = infrastructureDAO.getRoomInfrastructures(roomId);
             request.setAttribute("infrastructures", infrastructures);

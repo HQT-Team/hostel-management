@@ -54,10 +54,10 @@ public class HostelDAO {
                 if (rs != null && rs.next()) {
                     int hostelOwnerAccountID = rs.getInt("owner_account_id");
                     String name =  rs.getString("name");
-                    String address =  GetAddressUtils.getDefaultAddress(rs.getString("address"));
-                    String ward = GetAddressUtils.getDefaultAddress(rs.getString("ward"));
-                    String district = GetAddressUtils.getDefaultAddress(rs.getString("district"));
-                    String city = GetAddressUtils.getDefaultAddress(rs.getString("city"));
+                    String address =  rs.getString("address");
+                    String ward = rs.getString("ward");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
                     hostel = Hostel.builder()
                             .hostelID(hostelId)
                             .hostelOwnerAccountID(hostelOwnerAccountID)

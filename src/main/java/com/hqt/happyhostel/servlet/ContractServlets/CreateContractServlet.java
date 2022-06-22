@@ -42,6 +42,7 @@ public class CreateContractServlet extends HttpServlet {
                         .deposit(Integer.parseInt(deposit))
                         .renterId(renterId)
                         .hostelOwnerId(ownerId)
+                        .status(1)
                         .build();
                 req.setAttribute("room_id", roomId);
                 ContractDAO contractDAO = new ContractDAO();

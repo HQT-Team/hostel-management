@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value = "vi_VN"/>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -108,11 +110,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Điện</td>
-                            <td>3.500 đ</td>
-                            <td>1 Kwh</td>
-                        </tr>
+                        <c:forEach var="listServices" items="${sessionScope.CONTRACT_SERVICES_LIST}">
+                            <tr>
+                                <td>${listServices.serviceName}</td>
+                                <td>
+                                    <fmt:formatNumber value="${listServices.servicePrice}" type="currency"  />
+                                </td>
+                                <td>1 ${listServices.unit}</td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>

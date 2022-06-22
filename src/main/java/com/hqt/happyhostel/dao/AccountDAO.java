@@ -339,10 +339,10 @@ public class AccountDAO {
                 String sql = "SELECT username\n" +
                              "FROM Accounts\n" +
                              "WHERE account_id = (SELECT TOP 1 renter_id\n" +
-                             "\t\t\t\t\tFROM Rooms R, Contracts C\n" +
-                             "\t\t\t\t\tWHERE R.room_id = ?\n" +
-                             "\t\t\t\t\tAND R.room_id = C.room_id\n" +
-                             "\t\t\t\t\tORDER BY C.start_date DESC) AND status = 1";
+                             "FROM Rooms R, Contracts C\n" +
+                             "WHERE R.room_id = ?\n" +
+                             "AND R.room_id = C.room_id\n" +
+                             "ORDER BY C.start_date ASC)";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
                 ResultSet rs = pst.executeQuery();
@@ -581,7 +581,6 @@ public class AccountDAO {
                 pst.setInt(5, account.getRoomId());
 
                 if (pst.executeUpdate() > 0) {
-                    accountId = -1;
                     rs = pst.getGeneratedKeys();
 
                     if (rs.next()) {

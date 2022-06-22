@@ -53,6 +53,8 @@ public class CreateRenterAccountServlet extends HttpServlet {
                             String deposit = req.getParameter("room-deposit");
                             String startDate = req.getParameter("room-startdate");
                             String endDate = req.getParameter("room-enddate");
+                            int roomElectric = Integer.parseInt(req.getParameter("room-electric"));
+                            int roomWater = Integer.parseInt(req.getParameter("room-water"));
                             if (!accountDAO.isExistUsername(username)) {
                                 if (!new InformationDAO().isExistEmail(email)) {
                                     String password = SecurityUtils.hashMd5(RandomStringGenerator.randomPassword(12, username));
@@ -73,7 +75,12 @@ public class CreateRenterAccountServlet extends HttpServlet {
 
                                     int renterId = accountDAO.createRenterAccount(renterAccount);
                                     if (renterId > 0) {
-                                        if (owner != null) {
+                                        boolean updateConsumeResult = new ConsumeDAO().updateConsumeNumber(Consume.builder()
+                                                .numberElectric(roomElectric)
+                                                .numberWater(roomWater)
+                                                .status(0)
+                                                .roomID(Integer.parseInt(roomId)).build());
+                                        if (updateConsumeResult) {
                                             req.setAttribute("contract_room_id", roomId);
                                             req.setAttribute("contract_room_price", price);
                                             req.setAttribute("contract_startDate", startDate);
@@ -82,6 +89,9 @@ public class CreateRenterAccountServlet extends HttpServlet {
                                             req.setAttribute("contract_renterId", renterId);
                                             req.setAttribute("contract_hostelOwnerId", owner.getAccId());
                                             url = SUCCESS;
+                                        } else {
+                                            url = FAIL;
+                                            req.setAttribute("ERROR", "Đã có lỗi xảy ra, vui lòng thử lại sau!");
                                         }
                                     } else {
                                         url = FAIL;

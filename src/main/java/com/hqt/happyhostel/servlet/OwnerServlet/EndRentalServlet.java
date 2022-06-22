@@ -30,13 +30,13 @@ public class EndRentalServlet extends HttpServlet {
             RoomDAO roomDAO = new RoomDAO();
             ContractDAO contractDAO = new ContractDAO();
 
-            int updateResult = accountDAO.updateAccountStatus(renterAccountId, 0);
+            boolean updateResult = accountDAO.updateAccountStatus(renterAccountId, 0);
 
             boolean updateRoomStatusResult = roomDAO.updateRoomStatus(roomId, 1);
 
             boolean updateContractStatus = contractDAO.updateContractStatus(roomId, renterAccountId);
 
-            if (updateResult > 0 && updateRoomStatusResult && updateContractStatus) {
+            if (updateResult && updateRoomStatusResult && updateContractStatus) {
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(true)
                         .content("Bạn đã kết thúc hợp đồng thành công!").build());

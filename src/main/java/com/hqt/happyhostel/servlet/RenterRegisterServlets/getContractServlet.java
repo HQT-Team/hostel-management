@@ -8,6 +8,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "getContractServlet", value = "/getContractServlet")
 public class getContractServlet extends HttpServlet {
@@ -41,6 +42,9 @@ public class getContractServlet extends HttpServlet {
                     //get hostel information
                     Hostel hostelInfo = new HostelDAO().getHostelById(roomInfo.getHostelId());
 
+                    //get room services
+                    List<ServiceInfo> serviceInfoList = new RoomDAO().getServicesOfHostel(hostelInfo.getHostelID());
+
                     //get hostel owner information
                     AccountInfo hostelOwnerInfo = new AccountDAO().getAccountInformationById(contract.getHostelOwnerId());
                     HttpSession session = request.getSession(true);
@@ -52,6 +56,7 @@ public class getContractServlet extends HttpServlet {
                         session.setAttribute("CONTRACT_OWNER", hostelOwnerInfo);
                         session.setAttribute("CONTRACT_RENTER", renterMasterInfo);
                         session.setAttribute("RENTER_ACCOUNT_USERNAME", renterAccountUsername);
+                        session.setAttribute("CONTRACT_SERVICES_LIST", serviceInfoList);
                     }
                     url = SUCCESS;
                 } else {

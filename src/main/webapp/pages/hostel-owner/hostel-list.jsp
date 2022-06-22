@@ -114,6 +114,9 @@
         <!-- Footer -->
         <%@include file="components/footer.jsp"%>
 
+        <!-- Toast element -->
+        <div id="toast">&nbsp;</div>
+
     </div>
 
     <!-- Script Bootstrap !important -->
@@ -131,6 +134,27 @@
             // Initial datatable
             $('#hostel-table').DataTable();
         });
+    </script>
+    <script src="./assets/js/toast-alert.js"></script>
+    <script>
+        <c:choose>
+            <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+                toast({
+                    title: 'Thành công',
+                    message: '${requestScope.RESPONSE_MSG.content}',
+                    type: 'success',
+                    duration: 4000
+                });
+            </c:when>
+            <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+                toast({
+                    title: 'Lỗi',
+                    message: '${requestScope.RESPONSE_MSG.content}',
+                    type: 'error',
+                    duration: 4000
+                });
+            </c:when>
+        </c:choose>
     </script>
 </body>
 
