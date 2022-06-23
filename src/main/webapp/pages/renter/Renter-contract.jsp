@@ -138,7 +138,7 @@
                     ${HOSTEL.district.split('-')[1]}, ${HOSTEL.city.split('-')[1]} </h5><br>
                 <h5>Giá :
                     <fmt:setLocale value="vi_VN"/>
-                    <fmt:formatNumber value="${CONTRACT.price}" type="currency"/>
+                    <fmt:formatNumber value="${CONTRACT.price}" type="currency" currencySymbol="VNĐ"/>
                 </h5><br>
                 <h5>Tiền cọc:
                     <fmt:setLocale value="vi_VN"/>
