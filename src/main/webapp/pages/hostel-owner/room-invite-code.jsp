@@ -24,7 +24,15 @@
 
 </head>
 
-<body>
+<body class="over-flow-hidden">
+<div id="preloader">
+    <div class="dots">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+
 <!-- Navbar -->
 <%@include file="./components/navbar.jsp"%>
 
@@ -147,6 +155,9 @@
         targetDate: "${requestScope.ROOM_INVITE.expiredTimeCode}"
     });
 </script>
+
+<!-- Loader -->
+<script src="./assets/js/loading-handler.js"></script>
 
 </body>
 

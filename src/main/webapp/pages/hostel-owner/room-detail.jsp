@@ -25,7 +25,18 @@
 
 </head>
 
-<body>
+<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</c:if>
+
 <!-- Navbar -->
 <%@include file="components/navbar.jsp" %>
 
@@ -145,6 +156,11 @@
 <script src="./assets/js/handle-main-navbar.js"></script>
 <script src="./assets/js/valid-form.js"></script>
 <script src="./assets/js/owner/room-detail/validate-input.js"></script>
+
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <!-- Loader -->
+    <script src="./assets/js/loading-handler.js"></script>
+</c:if>
 </body>
 
 </html>

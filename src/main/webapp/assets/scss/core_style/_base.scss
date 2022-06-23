@@ -208,27 +208,6 @@ html *::-webkit-scrollbar-track {
   }
 }
 
-/* Animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
 /* Toast alert */
 .toast + .toast {
   margin-top: 20px;
@@ -263,12 +242,6 @@ html *::-webkit-scrollbar-track {
   to {
     opacity: 1;
     transform: translateX(0);
-  }
-}
-
-@keyframes fadeOut {
-  to {
-    opacity: 0;
   }
 }
 
@@ -369,4 +342,82 @@ html *::-webkit-scrollbar-track {
 
 .toast--error .toast__countdown {
   background: #ff623d;
+}
+
+.over-flow-hidden {
+  overflow: hidden;
+}
+
+// Preloader css
+#preloader {
+  background-color: #fff;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  inset: 0;
+
+  .dots {
+    width: 3.5em;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .dots div {
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    background-color: #fc2f70;
+    animation: fade 0.8s ease-in-out alternate infinite;
+  }
+
+  .dots div:nth-of-type(1) {
+    animation-delay: -0.4s;
+  }
+
+  .dots div:nth-of-type(2) {
+    animation-delay: -0.2s;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}
+
+#preloader[closing] {
+  animation: fadeOut 0.3s ease-in forwards;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }

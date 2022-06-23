@@ -247,7 +247,6 @@ public class AccountDAO {
         return acc;
     }
 
-
     public Account getAccountByToken(String token) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -327,48 +326,6 @@ public class AccountDAO {
             }
         }
         return list;
-    }
-
-    public String getUsernameRoomCurrently(int roomID) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        String username = null;
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "SELECT username\n" +
-                             "FROM Accounts\n" +
-                             "WHERE account_id = (SELECT TOP 1 renter_id\n" +
-                             "FROM Rooms R, Contracts C\n" +
-                             "WHERE R.room_id = ?\n" +
-                             "AND R.room_id = C.room_id\n" +
-                             "ORDER BY C.start_date ASC)";
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, roomID);
-                ResultSet rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    username = rs.getString("username");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return username;
     }
 
     // Update token
@@ -667,7 +624,6 @@ public class AccountDAO {
         return accountId;
     }
 
-
     public int checkAccountByOTP(int accId, String otp) throws SQLException {
         Connection conn = null;
         PreparedStatement psm = null;
@@ -707,6 +663,7 @@ public class AccountDAO {
     private static final String UPDATE_ACCOUNT_PASSWORD = "Update [dbo].[Accounts] Set [password] = ? Where [account_id] = ?";
     private static final String UPDATE_ACCOUNT_FULLNAME = "Update [dbo].[AccountInformations] Set [fullname] = ? Where [account_id] = ?";
     private static final String UPDATE_ACCOUNT_OTP = "Update [dbo].[Accounts] Set [otp]  = ?, [expiredTimeOTP] = ? Where [account_id] = ? ";
+
     public boolean updateAccountPass(int accId, String pass) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -749,7 +706,6 @@ public class AccountDAO {
         }
         return isSuccess;
     }
-
 
     public boolean updateAccountFullName(int accId, String fullName) {
         Connection cn = null;

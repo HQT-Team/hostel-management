@@ -27,7 +27,14 @@
     <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
 </head>
 
-<body class="position-relative">
+<body class="position-relative over-flow-hidden">
+<div id="preloader">
+    <div class="dots">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
 
 <!-- Navbar -->
 <div class="home-navbar">
@@ -219,6 +226,8 @@
 <script src="./assets/js/jquery-3.5.1.min.js"></script>
 <!-- Link your script here -->
 <script src="./assets/js/system/home-handle.js"></script>
+<!-- Loader -->
+<script src="./assets/js/loading-handler.js"></script>
 </body>
 
 </html>

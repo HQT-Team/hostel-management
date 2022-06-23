@@ -15,6 +15,7 @@ public class BillDAO {
                     "FROM Accounts INNER JOIN Rooms ON Accounts.room_id=Rooms.room_id\n" +
                     "INNER JOIN Bill ON Rooms.room_id=Bill.room_id\n" +
                     "WHERE Accounts.account_id = ?";
+
     public Bill getBillByAccountID(int accID) throws SQLException {
         Bill bill = null;
         Connection cn = null;
@@ -63,4 +64,5 @@ public class BillDAO {
         return bill;
 
     }
+
 }

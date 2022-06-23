@@ -3,6 +3,7 @@ package com.hqt.happyhostel.servlet.AccountServlets;
 
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dto.Account;
+import com.hqt.happyhostel.dto.HandlerStatus;
 import com.hqt.happyhostel.utils.RandomStringGenerator;
 import com.hqt.happyhostel.utils.SecurityUtils;
 
@@ -45,10 +46,16 @@ public class LoginServlet extends HttpServlet {
                     }
                 }
                 session.setAttribute("CURRENT_PAGE", "dashboard");
-            } else request.setAttribute("WARNING", "Tài khoản của bạn đã bị khóa hoặc chưa được kích hoạt!");
-            if (account == null)
-                request.setAttribute("WARNING", "Sai tài khoản hoặc mật khẩu. Vui lòng kiểm tra lại!");
-
+            } else if (account != null && account.getStatus() == 0) {
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                                                        .status(false)
+                                                        .content("Tài khoản của bạn đã bị khóa hoặc chưa được kích hoạt!").build());
+            }
+            else {
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                                                        .status(false)
+                                                        .content("Sai tài khoản hoặc mật khẩu. Vui lòng kiểm tra lại!").build());
+            }
         } catch (Exception e) {
             log("Error at LoginServlet: " + e.toString());
         } finally {

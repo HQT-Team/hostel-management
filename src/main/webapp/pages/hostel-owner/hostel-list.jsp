@@ -29,7 +29,16 @@
 
 </head>
 
-<body>
+<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+    <c:if test="${requestScope.RESPONSE_MSG eq null}">
+        <div id="preloader">
+            <div class="dots">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </c:if>
 
     <div class="app">
 
@@ -156,6 +165,11 @@
             </c:when>
         </c:choose>
     </script>
+
+    <c:if test="${requestScope.RESPONSE_MSG eq null}">
+        <!-- Loader -->
+        <script src="./assets/js/loading-handler.js"></script>
+    </c:if>
 </body>
 
 </html>

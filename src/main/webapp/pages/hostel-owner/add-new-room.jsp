@@ -24,17 +24,27 @@
 
 </head>
 
-<body>
-<!-- Navbar -->
-<%@include file="components/navbar.jsp"%>
+<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
 
+<!-- Navbar -->
+<%@include file="./components/navbar.jsp"%>
+
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</c:if>
 
 <!-- Body -->
 <div class="container min-height">
     <div class="row position-relative">
         <!-- Sidebar -->
         <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
-            <%@include file="components/sidebar.jsp"%>
+            <%@include file="./components/sidebar.jsp"%>
         </div>
         <!-- Content -->
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 content-group">
@@ -191,7 +201,7 @@
 </div>
 
 <!-- Footer -->
-<%@include file="components/footer.jsp"%>
+<%@include file="./components/footer.jsp"%>
 
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -307,6 +317,11 @@
         </script>
     </c:when>
 </c:choose>
+
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <!-- Loader -->
+    <script src="./assets/js/loading-handler.js"></script>
+</c:if>
 
 </body>
 

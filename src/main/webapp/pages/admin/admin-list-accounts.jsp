@@ -28,7 +28,17 @@
 
 </head>
 
-<body>
+<body class="${ requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</c:if>
 
 <div class="app">
 
@@ -216,20 +226,20 @@
 <script src="./assets/js/toast-alert.js"></script>
 <script>
     <c:choose>
-        <c:when test="${requestScope.SUCCESS ne null}">
+        <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq true}">
             toast({
                 title: 'Thành công',
-                message: 'Cập nhật trạng thái tài khoản thành công!',
+                message: '${requestScope.RESPONSE_MSG.content}',
                 type: 'success',
-                duration: 10000
+                duration: 5000
             });
         </c:when>
-        <c:when test="${requestScope.ERROR ne null}">
+        <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq false}">
             toast({
                 title: 'Lỗi',
-                message: 'Cập nhật trạng thái tài khoản thất bại!',
+                message: '${requestScope.RESPONSE_MSG.content}',
                 type: 'error',
-                duration: 10000
+                duration: 5000
             });
         </c:when>
     </c:choose>
@@ -238,6 +248,11 @@
     $('#uncheck-acc__table').DataTable();
     $('#checked-acc__table').DataTable();
 </script>
+
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <!-- Loader -->
+    <script src="./assets/js/loading-handler.js"></script>
+</c:if>
 </body>
 
 </html>
