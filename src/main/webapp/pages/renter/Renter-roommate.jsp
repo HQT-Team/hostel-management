@@ -116,7 +116,7 @@
       </div>
     </div>
     <div class="content row">
-      <div class="table">
+      <div class="table-1">
         <table border="1">
           <tr>
             <th colspan="5">

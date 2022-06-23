@@ -36,13 +36,19 @@ body{
     }
 
     tr {
+h2{
+  font-weight: 500;
+  font-size: 28px;
+}
       th {
+        font-size: 24px;
         border: 1px solid black;
+        font-weight: 500;
       }
 
       td {
         border: 1px solid black;
-
+        font-size: 20px;
         button {
           width: 80px;
           height: 30px;
