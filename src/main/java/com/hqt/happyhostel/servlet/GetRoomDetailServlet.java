@@ -28,7 +28,7 @@ public class GetRoomDetailServlet extends HttpServlet {
             int hostelID = ((Hostel) session.getAttribute("hostel")).getHostelID();
             int accID = ((Account) session.getAttribute("USER")).getAccId();
 
-            int roomId = Integer.parseInt(request.getParameter("roomID"));
+            int roomId = (request.getParameter("roomID") != null ) ? Integer.parseInt(request.getParameter("roomID")) : (int) session.getAttribute("current_room_id");
 
             RoomDAO roomDAO = new RoomDAO();
             AccountDAO accountDAO = new AccountDAO();
@@ -36,6 +36,7 @@ public class GetRoomDetailServlet extends HttpServlet {
 
             Room room = roomDAO.getRoomInformationByRoomID(roomId, hostelID, accID);
             session.setAttribute("room", room);
+            session.setAttribute("current_room_id", room.getRoomId());
 
             Contract contract = new ContractDAO().getContract(roomId);
             request.setAttribute("contractRoom", contract);

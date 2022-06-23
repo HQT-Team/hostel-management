@@ -25,7 +25,7 @@ import java.util.Calendar;
 @WebServlet(name = "CreateInviteCodeServlet", value = "/CreateInviteCodeServlet")
 public class CreateInviteCodeServlet extends HttpServlet {
     private final String SUCCESS = "invite-code-page";
-    private final String FAIL = "create-room-account";
+    private final String FAIL = "create-room-account-page";
     private final String ERROR = "error-page";
 
 
@@ -77,6 +77,7 @@ public class CreateInviteCodeServlet extends HttpServlet {
                         long timeInSecs = startTime.getTimeInMillis();
                         Timestamp endTime = new Timestamp(timeInSecs + (30 * 60 * 1000));
 
+                        //Set invite code into database
                         if (roomInviteDAO.updateRoomInviteCode(roomID, inviteCode, QRBase64, sdf.format(endTime))) {
                             new RoomDAO().updateRoomStatus(roomID, 0);
                             roomInvite = roomInviteDAO.getRoomInviteById(roomID);
@@ -90,8 +91,8 @@ public class CreateInviteCodeServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at InviteCodeServlet: " + e.toString());
         } finally {
-            if (owner != null && roomId != null) request.getRequestDispatcher(url).forward(request, response);
-            else response.sendRedirect(url);
+            if(ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
+            else request.getRequestDispatcher(url).forward(request, response);
         }
     }
 }

@@ -5,15 +5,18 @@ import com.hqt.happyhostel.dto.*;
 import com.hqt.happyhostel.utils.RandomStringGenerator;
 import com.hqt.happyhostel.utils.SecurityUtils;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "CreateRenterAccountServlet", value = "/CreateRenterAccountServlet")
 public class CreateRenterAccountServlet extends HttpServlet {
     private final String SUCCESS = "create-contract";
-    private final String FAIL = "create-room-account";
+    private final String FAIL = "create-room-account-page";
     private final String ERROR = "error-page";
 
     @Override
@@ -24,9 +27,8 @@ public class CreateRenterAccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        RoomInviteDAO roomInviteDAO = new RoomInviteDAO();
         AccountDAO accountDAO = new AccountDAO();
-        ContractDAO contractDAO = new ContractDAO();
+        HandlerStatus handlerStatus = null;
         Account owner = null;
         String url = null;
         int ownerId = -1;
@@ -35,16 +37,16 @@ public class CreateRenterAccountServlet extends HttpServlet {
         try {
             HttpSession session = req.getSession(false);
             if (session != null) {
-                String roomId = req.getParameter("room_id");
+                roomID = (int) session.getAttribute("current_room_id");
                 owner = (Account) session.getAttribute("USER");
 
                 //check request parameter
-                if (owner != null && roomId != null) {
-                    roomID = Integer.parseInt(roomId);
+                if (owner != null && roomID > 0) {
                     ownerId = owner.getAccId();
 
                     //check xem roomID có thuộc ownerID không
                     if (new HostelOwnerDAO().checkOwnerRoom(ownerId, roomID)) {
+                        url = FAIL;
                         Room room = new RoomDAO().getRoomById(roomID);
                         if (room.getRoomStatus() == 1) {
                             String username = req.getParameter("room-username");
@@ -70,7 +72,7 @@ public class CreateRenterAccountServlet extends HttpServlet {
                                             .password(password)
                                             .status(0)
                                             .role(2)
-                                            .roomId(Integer.parseInt(roomId))
+                                            .roomId(roomID)
                                             .accountInfo(accountInfo).build();
 
                                     int renterId = accountDAO.createRenterAccount(renterAccount);
@@ -79,9 +81,10 @@ public class CreateRenterAccountServlet extends HttpServlet {
                                                 .numberElectric(roomElectric)
                                                 .numberWater(roomWater)
                                                 .status(0)
-                                                .roomID(Integer.parseInt(roomId)).build());
+                                                .roomID(roomID).build());
                                         if (updateConsumeResult) {
-                                            req.setAttribute("contract_room_id", roomId);
+                                            handlerStatus = HandlerStatus.builder().status(true).content("Tạo tài khoản thành công").build();
+                                            req.setAttribute("contract_room_id", roomID);
                                             req.setAttribute("contract_room_price", price);
                                             req.setAttribute("contract_startDate", startDate);
                                             req.setAttribute("contract_endDate", endDate);
@@ -94,14 +97,11 @@ public class CreateRenterAccountServlet extends HttpServlet {
                                             req.setAttribute("ERROR", "Đã có lỗi xảy ra, vui lòng thử lại sau!");
                                         }
                                     } else {
-                                        url = FAIL;
-                                        req.setAttribute("ERROR", "Đã có lỗi xảy ra, vui lòng thử lại sau!");
+                                        handlerStatus = HandlerStatus.builder().status(false).content("Đã có lỗi xảy ra, vui lòng thử lại sau!").build();
                                     }
                                 } else {
                                     // username has been existed
-                                    url = FAIL;
-                                    req.setAttribute("ERROR_TYPE", "email");
-                                    req.setAttribute("ERROR", "Email đã tồn tại trong hệ thống!");
+                                    handlerStatus = HandlerStatus.builder().status(false).content("Email đã tồn tại trong hệ thống!").build();
                                     req.setAttribute("username", username);
                                     req.setAttribute("price", price);
                                     req.setAttribute("deposit", deposit);
@@ -111,9 +111,7 @@ public class CreateRenterAccountServlet extends HttpServlet {
 
                             } else {
                                 // username has been existed
-                                url = FAIL;
-                                req.setAttribute("ERROR_TYPE", "username");
-                                req.setAttribute("ERROR", "Tài khoản đã tồn tại trong hệ thống!");
+                                handlerStatus = HandlerStatus.builder().status(false).content("Tài khoản đã tồn tại trong hệ thống!").build();
                                 req.setAttribute("username", username);
                                 req.setAttribute("price", price);
                                 req.setAttribute("deposit", deposit);
@@ -123,13 +121,13 @@ public class CreateRenterAccountServlet extends HttpServlet {
                         } else url = SUCCESS;
                     }
                 }
-
-
+                req.setAttribute("RESPONSE_MSG", handlerStatus);
             }
         } catch (Exception e) {
-            log("Error at CreateRenterAccountServlet: " + e.toString());
+            log("Error at CreateRenterAccountServlet: " + e);
         } finally {
-            req.getRequestDispatcher(url).forward(req, resp);
+            if(ERROR.equalsIgnoreCase(url)) resp.sendRedirect(url);
+            else req.getRequestDispatcher(url).forward(req, resp);
         }
     }
 }

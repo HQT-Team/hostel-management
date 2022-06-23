@@ -12,7 +12,7 @@ import java.io.IOException;
 public class CreateContractServlet extends HttpServlet {
 
     private final String SUCCESS = "createInvite";
-    private final String FAIL = "create-room-account";
+    private final String FAIL = "create-room-account-page";
     private final String ERROR = "error-page";
 
     @Override

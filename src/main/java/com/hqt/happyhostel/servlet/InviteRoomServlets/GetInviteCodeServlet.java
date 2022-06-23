@@ -1,30 +1,22 @@
 package com.hqt.happyhostel.servlet.InviteRoomServlets;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 import com.hqt.happyhostel.dao.HostelOwnerDAO;
-import com.hqt.happyhostel.dao.RoomDAO;
 import com.hqt.happyhostel.dao.RoomInviteDAO;
 import com.hqt.happyhostel.dto.Account;
 import com.hqt.happyhostel.dto.Room;
-import com.hqt.happyhostel.utils.EncodeBase64Utils;
-import com.hqt.happyhostel.utils.RandomStringGenerator;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-import java.awt.image.BufferedImage;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 @WebServlet(name = "GetInviteCodeServlet", value = "/GetInviteCodeServlet")
 public class GetInviteCodeServlet extends HttpServlet {
     private final String SUCCESS = "invite-code-page";
-    private final String FAIL = "createInvite";
+    private final String FAIL = "roomDetail";
     private final String ERROR = "error-page";
 
     @Override
@@ -35,13 +27,11 @@ public class GetInviteCodeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;
-        String roomId = null;
+        int roomID = -1;
         Account owner = null;
         Room roomInvite = null;
         StringBuilder inviteUrl = new StringBuilder("RenterRegisterPage?inviteCode=");
         try {
-
-            roomId = request.getParameter("room_id");
             int ownerId = -1;
             String inviteCode = null;
 
@@ -49,11 +39,10 @@ public class GetInviteCodeServlet extends HttpServlet {
             if (session != null) {
                 owner = (Account) session.getAttribute("USER");
                 RoomInviteDAO roomInviteDAO = new RoomInviteDAO();
-
+                roomID = (int) session.getAttribute("current_room_id");
                 //check request parameter
-                if (owner != null && roomId != null) {
+                if (owner != null && roomID > 0) {
                     url = FAIL;
-                    int roomID = Integer.parseInt(roomId);
                     ownerId = owner.getAccId();
 
                     //check xem roomID có thuộc ownerID không
@@ -75,8 +64,8 @@ public class GetInviteCodeServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at GetInviteCodeServlet: " + e.toString());
         } finally {
-            if (owner != null && roomId != null) request.getRequestDispatcher(url).forward(request, response);
-            else response.sendRedirect(url);
+            if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
+            else request.getRequestDispatcher(url).forward(request, response);
         }
     }
 }
