@@ -19,8 +19,8 @@ import java.util.List;
 
 @WebServlet(name = "AddReportServlet", value = "/AddReportServlet")
 public class AddReportServlet extends HttpServlet {
-    public static final String ERROR = "Renter-report";
-    public static final String SUCCESS = "Renter-report";
+    public static final String ERROR = "Renter-report-page";
+    public static final String SUCCESS = "Renter-report-page";
 //    public static final String SUCCESS = "Renter-view-report";
 
 
