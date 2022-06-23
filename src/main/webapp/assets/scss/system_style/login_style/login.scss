@@ -27,7 +27,7 @@
 
 // Content CSS
 .login-content {
-  min-height: 80vh;
+  min-height: var(--min-body-height);
 }
 
 // Turn back

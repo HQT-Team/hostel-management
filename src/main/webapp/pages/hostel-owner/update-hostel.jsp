@@ -42,15 +42,13 @@
 
                 <!-- Content -->
                 <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
-                    <div class="content-bar pt-5">
-                        <div class="content-history">
-                            <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
-                            <i class="fa-solid fa-chevron-right"></i>
-                            <a href="" class="history-link">NovaLand Sky</a>
-                            <i class="fa-solid fa-chevron-right"></i>
-                            <div class="current">
-                                Cập nhật thông tin
-                            </div>
+                    <div class="content-history">
+                        <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
+                        <i class="fa-solid fa-chevron-right"></i>
+                        <a href="detailHostel?hostelID=${requestScope.HOSTEL.hostelID}" class="history-link">${requestScope.HOSTEL.hostelName}</a>
+                        <i class="fa-solid fa-chevron-right"></i>
+                        <div class="current">
+                            Cập nhật thông tin
                         </div>
                     </div>
                     <div class="row">
@@ -141,7 +139,7 @@
     <script src="./assets/js/handle-main-navbar.js"></script>
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="./assets/js/owner/update-hostel/handle-address.js"></script>
+<%--    <script src="./assets/js/owner/update-hostel/handle-address.js"></script>--%>
     <script src="./assets/js/valid-form.js"></script>
     <script>
         let maxNumber = 1000000;

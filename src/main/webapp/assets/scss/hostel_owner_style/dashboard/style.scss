@@ -19,7 +19,6 @@
 
 .welcome-title {
   font-size: 2.4rem;
-  line-height: 2.4rem;
   margin-bottom: 8px;
 
   span {
@@ -54,19 +53,17 @@
 
 .summary-title {
   font-size: 3rem;
-  line-height: 3rem;
   font-weight: 500;
   margin-bottom: 8px;
 }
 
 .summary-income_title {
   font-size: 1.8rem;
-  font-weight: 2.2rem;
+  line-height: 2.2rem;
 }
 
 .summary-income_money {
   font-size: 3.6rem;
-  line-height: 3.6rem;
   font-weight: 500;
   margin: 16px 0;
 }
@@ -140,7 +137,6 @@
 // Report summary
 .report-summary-title {
   font-size: 2.4rem;
-  line-height: 2.4rem;
   font-weight: 500;
 }
 
@@ -181,7 +177,6 @@
 
 .report-summary-count {
   font-size: 2.8rem;
-  line-height: 2.8rem;
   font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;

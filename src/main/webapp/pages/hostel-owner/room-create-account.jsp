@@ -39,16 +39,14 @@
 
         <!-- Content -->
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 content-group">
-            <div class="content-bar pt-5">
-                <div class="content-history">
-                    <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}" class="history-link">${sessionScope.hostel.hostelName}</a>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <a href="roomDetail?roomID=${sessionScope.room.roomId}" class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <div class="current">Tạo tài khoản</div>
-                </div>
+            <div class="content-history">
+                <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}" class="history-link">${sessionScope.hostel.hostelName}</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="roomDetail?roomID=${sessionScope.room.roomId}" class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <div class="current">Tạo tài khoản</div>
             </div>
             <div class="row mb-5">
                 <div class="content-body col-12 col-md-10 col-lg-9 col-xl-7 col-xxl-6 m-auto">
@@ -68,6 +66,19 @@
                                 <div class="col-6">
                                     <input id="room-username" name="room-username" type="text"
                                            class="form-control m-0" placeholder="Nhập tên tài khoản truy cập phòng">
+                                </div>
+                            </div>
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <label for="room-email" class="form-label">Email:
+                                        <span>*</span></label>
+                                </div>
+                                <div class="col-6">
+                                    <input id="room-email" name="room-email" type="text"
+                                           class="form-control m-0" placeholder="Nhập email của tài khoản">
                                 </div>
                             </div>
                             <span class="form-message"></span>

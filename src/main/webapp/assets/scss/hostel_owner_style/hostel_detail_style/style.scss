@@ -5,7 +5,7 @@
 // Body
 .content-group {
   min-height: var(--min-body-height);
-  margin-bottom: 24px;
+  padding-bottom: 24px;
 
   .content-body {
     padding: 16px 16px;
@@ -28,13 +28,11 @@
 
 .hostel-name {
   font-size: 2.8rem;
-  line-height: 2.8rem;
   font-weight: 700;
 }
 
 .hostel-address {
   font-size: 1.6rem;
-  line-height: 1.6rem;
   margin: 8px 0 16px 0;
 }
 
@@ -50,7 +48,6 @@
   width: 140px;
   padding: 12px 12px;
   font-size: 1.8rem;
-  line-height: 1.8rem;
   font-weight: 600;
   text-align: center;
   border-radius: 6px;
@@ -122,7 +119,6 @@
     display: block;
     text-align: center;
     font-size: 1.8rem;
-    line-height: 1.8rem;
     color: rgb(255, 145, 0);
 
     &:hover {

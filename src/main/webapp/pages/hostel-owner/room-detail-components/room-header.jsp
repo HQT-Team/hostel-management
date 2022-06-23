@@ -1,4 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="vi_VN"/>
+
 <div class="room-header">
     <h2 class="room-name">Phòng ${sessionScope.room.roomNumber}</h2>
     <div class="room-actions">
@@ -93,8 +98,11 @@
                                         <select name="room-attic"
                                                 id="update-room-infor__room-attic"
                                                 class="form-control m-0">
-                                            <option value="1" ${sessionScope.room.hasAttic eq 1 ? "selected" : ""}>Có</option>
-                                            <option value="0" ${sessionScope.room.hasAttic eq 0 ? "selected" : ""}>Không</option>
+                                            <option value="1" ${sessionScope.room.hasAttic eq 1 ? "selected" : ""}>Có
+                                            </option>
+                                            <option value="0" ${sessionScope.room.hasAttic eq 0 ? "selected" : ""}>
+                                                Không
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -116,20 +124,21 @@
         <!-- End update room information button -->
 
         <c:choose>
-            <c:when test="${sessionScope.room.roomStatus eq 1 || requestScope.userNameRenterRoom eq null}">
+            <c:when test="${sessionScope.room.roomStatus eq 1}">
                 <!-- Start create account button -->
-                <a href="create-room-account" class="action-create-account-link">Tạo tài khoản</a>
+                <a href="create-room-account-page" class="action-create-account-link">Tạo tài khoản</a>
                 <!-- End create account button -->
             </c:when>
-            <c:when test="${requestScope.billRoom ne null}">
+            <c:when test="${requestScope.renterAccount.status eq 1}">
                 <!-- Start calculate button button -->
-                <button class="action-calculate-btn">Tính tiền phòng</button>
+                <form action="CalculateTotalCostRoomPage" method="GET">
+                    <button class="action-calculate-btn">Tính tiền phòng</button>
+                </form>
                 <!-- End calculate button button -->
             </c:when>
-            <c:when test="${sessionScope.room.roomStatus eq 0}">
+            <c:when test="${sessionScope.room.roomStatus eq 0 && requestScope.renterAccount.status eq 0}">
                 <!-- Start view QR Code button -->
-                <form action="createInvite" method="post">
-                    <input type="hidden" name="room_id" value="${sessionScope.room.roomId}">
+                <form action="get-invite-code" method="post">
                     <button type="submit" class="action-create-account-link">Xem mã tham gia</button>
                 </form>
                 <!-- End view QR Code button -->

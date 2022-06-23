@@ -23,7 +23,7 @@
   --navbar-height: 80px;
   --footer-height: 80px;
 
-  --min-body-height: 80vh;
+  --min-body-height: calc(100vh - (var(--navbar-height) + var(--footer-height)));
 }
 
 // Reset css
@@ -40,7 +40,7 @@ html {
 body {
   font-family: "Roboto", sans-serif;
   font-size: 1.6rem;
-  line-height: 1.6rem;
+  line-height: normal;
   text-rendering: optimizeSpeed;
   color: var(--text-color);
 }
@@ -65,6 +65,22 @@ a {
   overflow: hidden;
 }
 
+// Scroll bar css
+html *::-webkit-scrollbar {
+  border-radius: 0;
+  width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-track {
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+
 // Form
 .custom-form {
   .spacer {
@@ -78,7 +94,6 @@ a {
 
   .form-title {
     font-size: 3.2rem;
-    line-height: 3.2rem;
     font-weight: 600;
   }
 
@@ -90,7 +105,6 @@ a {
 // Form input
 .form-label {
   font-size: 1.8rem;
-  line-height: 1.8rem;
   font-weight: 500;
 
   span {
@@ -100,9 +114,8 @@ a {
 
 .form-control {
   font-size: 1.4rem;
-  line-height: 1.4rem;
   height: 40px;
-  margin: 4px 0px 16px 0px;
+  margin: 4px 0 16px 0;
   border-radius: 4px;
 }
 
@@ -117,17 +130,15 @@ a {
   color: var(--error-color);
   font-style: italic;
   font-size: 1.6rem;
-  line-height: 1.6rem;
   margin-bottom: 16px;
 }
 
 // Form submit
 .form-submit {
   color: var(--white-color);
-  font-size: 2rem;
-  line-height: 2rem;
+  font-size: 1.6rem;
   font-weight: 600;
-  padding: 12px 0px;
+  padding: 12px 0;
   border-radius: 4px;
 }
 
@@ -136,14 +147,14 @@ a {
   .content-bar {
     display: flex;
     align-items: center;
-    margin-bottom: 24px;
   }
   .content-history {
     flex: 1;
     font-size: 1.8rem;
-    line-height: 1.8rem;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    padding: 30px 0;
 
     a {
       margin-right: 8px;
@@ -155,7 +166,6 @@ a {
 
     i {
       font-size: 1.4rem;
-      line-height: 1.4rem;
       margin-right: 8px;
     }
 
@@ -178,7 +188,6 @@ a {
       padding: 12px 8px;
       border-radius: 6px;
       font-size: 1.6rem;
-      line-height: 1.6rem;
       color: var(--white-color);
     }
   }
@@ -237,12 +246,13 @@ a {
   align-items: center;
   background-color: #fff;
   border-radius: 2px;
-  padding: 0 14px;
+  padding-right: 14px;
   min-width: 400px;
   max-width: 450px;
   border-left: 4px solid;
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
-  transition: all linear .3s;
+  transition: all linear 0.3s;
+  animation: slideInLeft ease 0.3s, fadeOut linear 1s 10s forwards;
 }
 
 @keyframes slideInLeft {
@@ -260,6 +270,13 @@ a {
   to {
     opacity: 0;
   }
+}
+
+.toast__wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
 }
 
 .toast--success {
@@ -296,7 +313,7 @@ a {
 
 .toast__icon {
   font-size: 40px;
-  padding: 0 16px 0 2px;
+  padding: 0 16px 0 16px;
 }
 
 .toast__body {
@@ -306,12 +323,12 @@ a {
   font-size: 24px;
   font-weight: 600;
   color: #333;
-  margin: 15px 0px 10px 0px;
+  margin: 15px 0 10px 0;
 }
 .toast__msg {
   font-size: 14px;
   color: #888;
-  margin: 0px 0px 15px 0px;
+  margin: 0 0 15px 0;
   line-height: 1.5;
 }
 .toast__close {
@@ -319,4 +336,37 @@ a {
   color: rgba(0, 0, 0, 0.4);
   cursor: pointer;
   padding: 0 2px 0 10px;
+}
+
+.toast__countdown {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 4px;
+  width: 100%;
+}
+
+@keyframes countdown {
+  0% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0%;
+  }
+}
+
+.toast--success .toast__countdown {
+  background: #47d864;
+}
+.toast--info .toast__countdown {
+  background: #2186eb;
+}
+
+.toast--warning .toast__countdown {
+  background: #ffc021;
+}
+
+.toast--error .toast__countdown {
+  background: #ff623d;
 }

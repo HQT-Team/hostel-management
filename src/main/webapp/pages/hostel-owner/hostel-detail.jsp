@@ -46,13 +46,11 @@
         <!-- Content -->
         <c:set var="hostelInformation" value="${requestScope.hostel}"/>
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
-            <div class="content-bar pt-5">
-                <!-- History link bar -->
-                <div class="content-history">
-                    <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
-                    <i class="fa-solid fa-chevron-right"></i>
-                    <div class="current">${hostelInformation.hostelName}</div>
-                </div>
+            <!-- History link -->
+            <div class="content-history">
+                <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <div class="current">${hostelInformation.hostelName}</div>
             </div>
             <div class="content-body">
                 <div class="hostel-header">
@@ -119,14 +117,18 @@
                                             data-bs-target="#updateServicesModel">Cập nhật
                                     </button>
                                 </div>
-                                <div class="services-date">Áp dụng từ: <span>${requestScope.serviceInfo[0].validDate.split('-')[2]}-${requestScope.serviceInfo[0].validDate.split('-')[1]}-${requestScope.serviceInfo[0].validDate.split('-')[0]}</span></div>
+                                <div class="services-date">
+                                    Áp dụng từ:
+                                    <fmt:parseDate pattern="yyyy-MM-dd" value="${requestScope.serviceInfo[0].validDate}" var="validDate" />
+                                    <span><fmt:formatDate pattern = "dd/MM/yyyy" value="${validDate}" /></span>
+                                </div>
                                 <c:forEach var="serviceList" items="${requestScope.serviceInfo}">
                                     <div class="service-group">
                                         <div class="service-name">${serviceList.serviceName}</div>
                                         <div class="service-price">
                                             <span>
                                                 <fmt:formatNumber value="${serviceList.servicePrice}" type="currency" />
-                                            </span> VNĐ/${serviceList.unit}</div>
+                                            </span>/${serviceList.unit}</div>
                                     </div>
                                 </c:forEach>
                             </div>
@@ -141,7 +143,6 @@
 <!-- Footer -->
 <%@include file="components/footer.jsp"%>
 
-
 <!-- Add service modal -->
 <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel"
      aria-hidden="true">
@@ -151,16 +152,16 @@
                 <h5 class="modal-title addServiceModal-label" id="addServiceModalLabel">Thêm dịch vụ</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="post" class="custom-form">
+            <form action="add-new-service" method="post" class="custom-form" id="add-new-service-form">
+                <input type="hidden" name="hostel-id" value="${sessionScope.hostel.hostelID}"/>
                 <div class="modal-body addServiceModal-content">
                     <div class="form-group">
                         <label for="service-id" class="form-label">Tên dịch vụ</label>
                         <select name="service-id" id="service-id" class="form-control">
                             <option value="">Chọn loại dịch vụ</option>
-                            <option value="1">Phí bảo trì</option>
-                            <option value="2">Phí sửa chữa</option>
-                            <option value="3">Phí vận hành</option>
-                            <option value="4">Phí vệ sinh</option>
+                            <c:forEach var="services" items="${requestScope.services}">
+                                <option value="${services.serviceID}">${services.serviceName}</option>
+                            </c:forEach>
                         </select>
                         <span class="form-message"></span>
                     </div>
@@ -177,7 +178,7 @@
                             <div class="form-group">
                                 <label for="service-unit" class="form-label">Đơn vị tính</label>
                                 <input type="text" disabled name="service-unit" id="service-unit"
-                                       class="form-control" value="vnđ/phòng">
+                                       class="form-control" value="phòng">
                             </div>
                         </div>
                     </div>
@@ -229,364 +230,47 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="post" class="custom-form">
+            <form action="update-services" method="post" class="custom-form" id="update-services-form">
+                <input type="hidden" name="hostel-id" value="${requestScope.hostel.hostelID}" />
                 <div class="modal-body updateServiceInputModal-content" style="max-height: 60vh; overflow-y: auto;">
                     <div class="container">
                         <!-- Label - Dont't update this! -->
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="service-name" class="form-label">Tên dịch vụ</label>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-5">
                                 <div class="form-group">
-                                    <label for="" class="form-label">Giá</label>
+                                    <label class="form-label">Giá</label>
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
-                                    <label for="" class="form-label">Đơn vị tính</label>
+                                    <label class="form-label">Đơn vị tính</label>
                                 </div>
                             </div>
                         </div>
                         <!-- Each service -->
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
+                        <c:forEach var="serviceList" items="${requestScope.serviceInfo}">
+                        <input type="hidden" name="update-service-id" value="${serviceList.serviceID}" />
+                        <div class="row form-group">
+                            <div class="col-4">
+                                    <input type="text" id="service-name" name="service-name" value="${serviceList.serviceName}" disabled
                                            class="form-control">
-                                </div>
                             </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
+                            <div class="col-5">
+                                    <input type="number" id="update-service-price-${serviceList.serviceID}" name="update-service-price" class="form-control" value="${serviceList.servicePrice}"
                                            placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
                             </div>
                             <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
+                                    <input type="text" disabled class="form-control"
+                                           value="đ/${serviceList.unit}">
                             </div>
+                            <div class="form-message"></div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <input type="text" id="service-name" name="service-id" value="Điện" disabled
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="number" name="service-price" class="form-control"
-                                           placeholder="Nhập giá. VD: 1000">
-                                    <div class="form-message"></div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <input type="text" disabled name="service-unit" class="form-control"
-                                           value="vnđ/Kwh">
-                                </div>
-                            </div>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
                 <div class="modal-footer updateServiceInputModal-action">
@@ -602,6 +286,9 @@
     </div>
 </div>
 
+<!-- Toast element -->
+<div id="toast">&nbsp;</div>
+
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -610,12 +297,58 @@
 <script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <!-- Link your script here -->
 <script src="./assets/js/handle-main-navbar.js"></script>
+<script src="./assets/js/valid-form.js"></script>
 <!-- Simple Datatable JS -->
 <script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script>
     $(document).ready(function () {
         // Initial datatable
         $('#rooms-table').DataTable();
+    });
+</script>
+<script src="./assets/js/toast-alert.js"></script>
+<script>
+    <c:choose>
+        <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+            toast({
+                title: 'Thành công',
+                message: '${requestScope.RESPONSE_MSG.content}',
+                type: 'success',
+                duration: 5000
+            });
+        </c:when>
+        <c:when test="${requestScope.ERROR eq false}">
+            toast({
+                title: 'Lỗi',
+                message: '${requestScope.RESPONSE_MSG.content}',
+                type: 'error',
+                duration: 5000
+            });
+        </c:when>
+    </c:choose>
+</script>
+<script>
+    Validator({
+        form: "#add-new-service-form",
+        formGroupSelector: ".form-group",
+        errorSelector: ".form-message",
+        rules: [
+            Validator.isRequired("#service-id", "Vui lòng chọn loại dịch vụ cần thêm mới vào khu trọ!"),
+            Validator.isRequired("#service-price", "Vui lòng nhập giá tiền của dịch vụ!"),
+            Validator.minNumber("#service-price", 1, "Vui lòng nhập giá tối thiểu là 1!"),
+        ]
+    });
+
+    Validator({
+        form: "#update-services-form",
+        formGroupSelector: ".form-group",
+        errorSelector: ".form-message",
+        rules: [
+            <c:forEach var="serviceList" items="${requestScope.serviceInfo}">
+                Validator.isRequired("#update-service-price-${serviceList.serviceID}", "Vui lòng nhập giá dịch vụ!"),
+                Validator.minNumber("#update-service-price-${serviceList.serviceID}", 0, "Vui lòng nhập giá tối thiểu là 0!"),
+            </c:forEach>
+        ]
     });
 </script>
 </body>

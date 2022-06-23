@@ -70,7 +70,7 @@
                                 Đăng ký
                                 <div class="register-modal">
                                     <a href="registerPage" class="register-owner">Chủ trọ</a>
-                                    <a href="" class="register-renter">Người thuê</a>
+                                    <a href="renter-register-page" class="register-renter">Người thuê</a>
                                 </div>
                             </button>
                         </div>
@@ -142,7 +142,7 @@
                         HQT-Hostel là một nền tảng cho phép người thuê dễ dàng kết nối với
                         chủ trọ, xem thông tin và hàng loạt tính năng mới
                     </div>
-                    <a href="#" class="banner-link renter-link" data-aos="fade-up" data-aos-duration="1000">
+                    <a href="renter-register-page" class="banner-link renter-link" data-aos="fade-up" data-aos-duration="1000">
                         Trở thành người thuê Ngay
                     </a>
                 </div>

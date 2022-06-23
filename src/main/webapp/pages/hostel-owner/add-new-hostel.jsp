@@ -39,12 +39,10 @@
 
             <!-- Content -->
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 content-group">
-                <div class="content-bar pt-5">
-                    <div class="content-history">
-                        <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
-                        <i class="fa-solid fa-chevron-right"></i>
-                        <div class="current">Thêm khu trọ</div>
-                    </div>
+                <div class="content-history">
+                    <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <div class="current">Thêm khu trọ</div>
                 </div>
                 <div class="row mb-5">
                     <div class="content-body col-12 col-md-10 col-lg-9 col-xl-8 m-auto">
@@ -163,7 +161,7 @@
                             </div>
                             <div class="spacer"></div>
                             <div class="add-hostel-action">
-                                <a href="ShowListHostel" class="form-submit">Hủy bỏ</a>
+                                <a href="list-hostels" class="form-submit">Hủy bỏ</a>
                                 <button class="form-submit">Tạo phòng</button>
                             </div>
                         </form>

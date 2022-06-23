@@ -2,6 +2,7 @@ package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
+import com.hqt.happyhostel.dao.ServicesDAO;
 import com.hqt.happyhostel.dto.*;
 
 import javax.servlet.*;
@@ -16,8 +17,8 @@ import java.util.List;
 public class HostelDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = "ListHostelPage";
-        Account acc = new Account();
+        String url = "list-hostels";
+        Account acc;
 
         try {
             HttpSession session = request.getSession();
@@ -42,13 +43,17 @@ public class HostelDetailServlet extends HttpServlet {
                     quantityMembers.add(quantityMember);
                 }
 
-                ArrayList<ServiceInfo> serviceList = roomDao.getServicesOfHostel(hostelId);
+                List<ServiceInfo> serviceList = roomDao.getServicesOfHostel(hostelId);
+
+                List<Services> servicesNotInHostel = new ServicesDAO().getListServicesNotInHostel(hostelId);
+
                 url = "HostelDetailPage";
                 request.setAttribute("hostel", hostel);
                 session.setAttribute("hostel", hostel);
                 request.setAttribute("roomList", rooms);
                 request.setAttribute("roomQuantity", numberRoom);
                 request.setAttribute("serviceInfo", serviceList);
+                request.setAttribute("services", servicesNotInHostel);
                 request.setAttribute("quantityMembers", quantityMembers);
             }
 
@@ -61,6 +66,6 @@ public class HostelDetailServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 }
