@@ -90,9 +90,9 @@
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
+                        <h3><a href="HostelRenterPage" >Thông tin phòng</a></h3>
                         <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
-                        <h3><a href="ContractPage">Hợp đồng</a></h3>
+                        <h3><a href="ContractPage" style="color:rgb(4, 4, 255)">Hợp đồng</a></h3>
                         <h3><a href="Renter-bill">Hóa đơn</a></h3>
                         <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                         <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>

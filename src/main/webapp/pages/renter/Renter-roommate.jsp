@@ -41,7 +41,7 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
-          <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
+          <a class="dropdown-item" href="get-roommate-infor" style="color:rgb(4, 4, 255)">Bạn cùng phòng</a>
           <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
           <a class="dropdown-item" href="Renter-bill">Hóa đơn</a>
           <a class="dropdown-item" href="Renter-report">Báo cáo</a>

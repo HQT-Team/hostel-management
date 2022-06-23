@@ -9,7 +9,9 @@
 .link {
   display: none;
 }
-
+body{
+  overflow-x: hidden;
+}
 .dropdown {
   #dropdownMenuButton {
     width: 130px;

@@ -7,7 +7,9 @@
   display: none;
 }
 
-
+body{
+  overflow-x: hidden;
+}
 .content {
   width: 70%;
 
@@ -146,3 +148,5 @@
     }
   }
 }
+
+

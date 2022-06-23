@@ -42,7 +42,7 @@
                     <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
                     <a class="dropdown-item" href="Renter-bill">Hóa đơn</a>
                     <a class="dropdown-item" href="Renter-report">Báo cáo</a>
-                    <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
+                    <a class="dropdown-item" href="RenterNotificationPage" >Thông báo</a>
                     <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
                     <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
                     <a class="dropdown-item" href="Get-report">Xem báo cáo</a>

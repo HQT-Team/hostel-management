@@ -87,8 +87,8 @@
                             <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
                             <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
                             <h3><a href="ContractPage">Hợp đồng</a></h3>
-                            <h3><a href="RRenter-bill">Hóa đơn</a></h3>
-                            <h3><a href="Renter-report">Gửi báo cáo</a></h3>
+                            <h3><a href="Renter-bill">Hóa đơn</a></h3>
+                            <h3><a href="Renter-report" style="color:rgb(4, 4, 255)">Gửi báo cáo</a></h3>
                             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
                             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
                             <h3><a href="Get-report">Xem báo cáo</a></h3>

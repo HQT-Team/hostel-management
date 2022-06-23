@@ -91,7 +91,7 @@
                         <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                         <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
                         <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
-                        <h3><a href="Get-report">Xem báo cáo</a></h3>
+                        <h3><a href="Get-report" style="color:rgb(4, 4, 255)">Xem báo cáo</a></h3>
                     </div>
                 </div>
             </div>
