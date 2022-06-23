@@ -1,6 +1,7 @@
 package com.hqt.happyhostel.servlet.RenterServlet;
 
 import com.hqt.happyhostel.dao.HostelDAO;
+import com.hqt.happyhostel.dao.ReportCategoryDAO;
 import com.hqt.happyhostel.dao.ReportDAO;
 import com.hqt.happyhostel.dto.*;
 
@@ -56,6 +57,7 @@ public class AddReportServlet extends HttpServlet {
                     .replyAccountID(ownerID)
                     .cateID(cateID)
                     .build();
+            //Add report
             boolean checkInsert = new ReportDAO().addReport(report,cateID);
             if (checkInsert){
                 req.setAttribute("SUCCESS", "Bạn đã gửi đi báo cáo thành công");

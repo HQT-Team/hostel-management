@@ -39,7 +39,7 @@
                     <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
                     <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
                     <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
-                    <a class="dropdown-item" href="Renter-invoice">Hóa đơn</a>
+                    <a class="dropdown-item" href="Renter-bill">Hóa đơn</a>
                     <a class="dropdown-item" href="Renter-report">Báo cáo</a>
                     <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
                     <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
@@ -87,7 +87,7 @@
                         <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
                         <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
                         <h3><a href="ContractPage">Hợp đồng</a></h3>
-                        <h3><a href="Renter-invoice">Hóa đơn</a></h3>
+                        <h3><a href="Renter-bill">Hóa đơn</a></h3>
                         <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                         <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
                         <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
@@ -116,17 +116,16 @@
                 <input type="text" placeholder="Search.." id="myInput">
                 <table class="table table-dark table-striped">
                     <tr class="header">
-                        <th style="width:10%;">Loại Đơn</th>
-                        <th style="width: 31%;">Nội Dung</th>
-                        <th style="width: 10%;">Ngày Gửi</th>
-                        <th style="width: 26%;">Phản Hồi</th>
-                        <th style="width: 10%;">Tình Trạng</th>
-                        <th style="width: 10%;">Thời Gian Phản Hồi</th>
-                    </tr>
+                        <th >Loại Đơn</th>
+                        <th >Nội Dung</th>
+                        <th >Ngày Gửi</th>
+                        <th >Phản Hồi</th>
+                        <th >Tình Trạng</th>
+                        <th >Ngày phản hồi</th>
                     <tbody id="myTable">
                     <c:forEach var="rp" items="${REPORT_LIST}">
                         <tr>
-                            <td style="width: 10%;">
+                            <td >
                                 <c:forEach var="cate" items="${REPORT_CATE}">
                                     <c:if test = "${rp.cateID == cate.cateID}" >
                                             ${cate.cateTitle}
@@ -136,12 +135,12 @@
                             <td>
                                 <p> ${rp.content}</p>
                             </td>
-                            <td style="width: 5%;">${rp.sendDate}</td>
+                            <td >${rp.sendDate}</td>
                             <td>
                                 <p>${rp.reply}
                                 </p>
                             </td>
-                            <td style="width: 5%;">
+                            <td>
                                 <c:if test="${rp.status == 0}">
                                     <p style="color: lightsalmon">Đang chờ</p>
                                 </c:if>
@@ -149,7 +148,7 @@
                                     <p style="color: green">Đã phản hồi</p>
                                 </c:if>
                             </td>
-                            <td style="width: 5%;">${rp.completeDate}</td>
+                            <td>${rp.completeDate}</td>
                         </tr>
                     </c:forEach>
 

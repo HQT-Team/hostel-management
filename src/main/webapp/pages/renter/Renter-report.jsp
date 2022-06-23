@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -38,7 +39,7 @@
                         <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
                         <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
                         <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
-                        <a class="dropdown-item" href="Renter-invoice">Hóa đơn</a>
+                        <a class="dropdown-item" href="Renter-bill">Hóa đơn</a>
                         <a class="dropdown-item" href="Renter-report">Báo cáo</a>
                         <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
                         <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
@@ -86,7 +87,7 @@
                             <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
                             <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
                             <h3><a href="ContractPage">Hợp đồng</a></h3>
-                            <h3><a href="Renter-invoice">Hóa đơn</a></h3>
+                            <h3><a href="RRenter-bill">Hóa đơn</a></h3>
                             <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
                             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
@@ -118,9 +119,9 @@
                         <div>
                             <select name="cateID" id="select">
                                 <option value="">Loại Đơn</option>
-                                <option value="1">Bao hu hong</option>
-                                <option value="2">Bao hu hong</option>
-                                <option value="3">Bao hu hong</option>
+                                <c:forEach var="cate" items="${REPORT_CATE}">
+                                    <option value="${cate.cateID}">${cate.cateTitle}</option>
+                                </c:forEach>
                             </select>
                             <br>
                             <span id="mes-1"></span>

@@ -40,7 +40,7 @@
           <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
           <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
           <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
-          <a class="dropdown-item" href="Renter-invoice">Hóa đơn</a>
+          <a class="dropdown-item" href="Renter-bill">Hóa đơn</a>
           <a class="dropdown-item" href="Renter-report">Báo cáo</a>
           <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
           <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
@@ -88,7 +88,7 @@
             <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
             <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
             <h3><a href="ContractPage">Hợp đồng</a></h3>
-            <h3><a href="Renter-invoice">Hóa đơn</a></h3>
+            <h3><a href="Renter-bill">Hóa đơn</a></h3>
             <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="Renter-notification">Xem thông báo</a></h3>
             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
@@ -143,7 +143,7 @@
             <span id="mes-6"></span>
           </div>
           <div>
-            <input id="submit-1" type="button" value="Save" />
+            <input id="submit-1" type="button" value="Cập nhật" />
           </div>
         </form>
       </div>

@@ -11,7 +11,7 @@ import lombok.*;
 public class Bill {
     int billID;
     int roomID;
-    int totalMoney;
+    double totalMoney;
     String createdDate;
     String expiredPaymentDate;
     int status;
