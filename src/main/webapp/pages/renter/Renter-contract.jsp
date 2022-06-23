@@ -136,8 +136,14 @@
                 <p>Sau khi bàn bạc :</p>
                 <h5>Bên A xác nhận cho bên B thuê phòng trọ tại địa chỉ: ${HOSTEL.address}, ${HOSTEL.ward.split('-')[1]},
                     ${HOSTEL.district.split('-')[1]}, ${HOSTEL.city.split('-')[1]} </h5><br>
-                <h5>Giá :  <fmt:formatNumber value="${CONTRACT.price}" type="currency" currencySymbol=""/>VNĐ</h5><br>
-                <h5>Tiền cọc: <fmt:formatNumber value="${CONTRACT.deposit}" type="currency" currencySymbol=""/> VNĐ</h5><br>
+                <h5>Giá :
+                    <fmt:setLocale value="vi_VN"/>
+                    <fmt:formatNumber value="${CONTRACT.price}" type="currency"/>
+                </h5><br>
+                <h5>Tiền cọc:
+                    <fmt:setLocale value="vi_VN"/>
+                    <fmt:formatNumber value="${CONTRACT.deposit}" type="currency" currencySymbol="VNĐ"/>
+                </h5><br>
                 <h5>Hợp đồng có giá trị từ ngày: ${CONTRACT.startDate} đến ngày : ${CONTRACT.expiration}</h5><br>
             </div>
         </div>
