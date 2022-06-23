@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -155,8 +156,12 @@
                         </tr>
                         <c:forEach var="s" items="${SERVICES}">
                             <tr>
+
                                 <td>${s.serviceName}</td>
-                                <td>${s.servicePrice}</td>
+                                <td>
+                                    <fmt:setLocale value="vi_VN"/>
+                                    <fmt:formatNumber value="${s.servicePrice}" type="currency" currencySymbol="VNĐ"/>
+                                </td>
                             </tr>
                         </c:forEach>
                     </table>
