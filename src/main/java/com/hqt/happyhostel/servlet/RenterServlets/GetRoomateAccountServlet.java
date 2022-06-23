@@ -19,7 +19,6 @@ public class GetRoomateAccountServlet extends HttpServlet {
         Account account = (Account)session.getAttribute("USER");
 
         ArrayList<RoommateInfo> list = new AccountDAO().getRoommateInformationById(account.getAccId());
-
         session.setAttribute("listroommateinfor", list);
         request.getRequestDispatcher("Renter-roommate").forward(request, response);
     }

@@ -39,12 +39,13 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
           <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
-          <a class="dropdown-item" href="#">Hợp đồng</a>
-          <a class="dropdown-item" href="#">Hóa đơn</a>
-          <a class="dropdown-item" href="#">Báo cáo</a>
+          <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
+          <a class="dropdown-item" href="Renter-bill">Hóa đơn</a>
+          <a class="dropdown-item" href="Renter-report">Báo cáo</a>
           <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
           <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
-
+          <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
+          <a class="dropdown-item" href="Get-report">Xem báo cáo</a>
           <a class="dropdown-item" href="logout">Đăng xuất</a>
         </div>
       </div>
@@ -86,10 +87,12 @@
           <div class="card-body">
             <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
             <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
-            <h3><a href="#">Hợp đồng</a></h3>
-            <h3><a href="#">Hóa đơn</a></h3>
-            <h3><a href="#">Gửi báo cáo</a></h3>
+            <h3><a href="ContractPage">Hợp đồng</a></h3>
+            <h3><a href="Renter-bill">Hóa đơn</a></h3>
+            <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="Renter-notification">Xem thông báo</a></h3>
+            <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
+            <h3><a href="Get-report">Xem báo cáo</a></h3>
           </div>
         </div>
       </div>
@@ -111,16 +114,37 @@
     </div>
     <div class="content row">
       <div class="profile-update">
-        <form action="profile-update" method="post">
+        <form action="profile-update" method="post" id="myForm">
           <h2>Chỉnh sửa thông tin</h2>
           <hr>
-          <input type="text" name="new-name" placeholder="Nhập tên mới!">
-          <input type="text" name="new-email" placeholder="Nhập Email mới!">
-          <input type="text" name="new-birthday" placeholder="Nhập ngày sinh mới!">
-          <input type="text" name="new-phone" placeholder="Nhập số điện thoại mới!">
-          <input type="text" name="new-address" placeholder="Nhập địa chỉ mới!">
-          <input type="text" name="new-cccd" placeholder="Nhập CCCD mới!">
-          <input type="submit" name="save" value="Save" role="button" class="btn btn-primary">
+          <div class="form-content">
+            <input id="input-1" type="text" name="new-name" placeholder="Nhập tên mới!">
+            <span id="mes-1"></span>
+          </div>
+          <div class="form-content">
+            <input id="input-2" type="text" name="new-email" placeholder="Nhập Email mới!">
+            <span id="mes-2"></span>
+
+          </div>
+          <div class="form-content">
+            <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !">
+            <span id="mes-3"></span>
+          </div>
+          <div class="form-content">
+            <input id="input-4" type="text" name="new-phone" placeholder="Nhập số điện thoại mới!">
+            <span id="mes-4"></span>
+          </div>
+          <div class="form-content">
+            <input id="input-5" type="text" name="new-address" placeholder="Nhập địa chỉ mới!">
+            <span id="mes-5"></span>
+          </div>
+          <div class="form-content">
+            <input id="input-6" type="text" name="new-cccd" placeholder="Nhập cccd mới!">
+            <span id="mes-6"></span>
+          </div>
+          <div>
+            <input id="submit-1" type="button" value="Cập nhật" />
+          </div>
         </form>
       </div>
     </div>
@@ -159,6 +183,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+<script src="./assets/js/renter/Renter-update-profile.js"></script>
 </body>
 
 </html>

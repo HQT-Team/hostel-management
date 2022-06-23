@@ -41,12 +41,14 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
-          <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
-          <a class="dropdown-item" href="#">Hợp đồng</a>
-          <a class="dropdown-item" href="#">Hóa đơn</a>
-          <a class="dropdown-item" href="#">Báo cáo</a>
+          <a class="dropdown-item" href="get-roommate-infor" style="color:rgb(4, 4, 255)">Bạn cùng phòng</a>
+          <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
+          <a class="dropdown-item" href="Renter-bill">Hóa đơn</a>
+          <a class="dropdown-item" href="Renter-report">Báo cáo</a>
           <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
           <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
+          <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
+          <a class="dropdown-item" href="Get-report">Xem báo cáo</a>
           <a class="dropdown-item" href="logout">Đăng xuất</a>
         </div>
       </div>
@@ -88,10 +90,12 @@
           <div class="card-body">
             <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
             <h3><a href="get-roommate-infor" style="color:rgb(4, 4, 255)">Bạn cùng phòng</a></h3>
-            <h3><a href="#">Hợp đồng</a></h3>
-            <h3><a href="#">Hóa đơn</a></h3>
-            <h3><a href="#">Gửi báo cáo</a></h3>
+            <h3><a href="ContractPage">Hợp đồng</a></h3>
+            <h3><a href="Renter-bill">Hóa đơn</a></h3>
+            <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
+            <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
+            <h3><a href="Get-report">Xem báo cáo</a></h3>
           </div>
         </div>
       </div>
@@ -112,16 +116,18 @@
       </div>
     </div>
     <div class="content row">
-      <div class="table">
+      <div class="table-1">
         <table border="1">
           <tr>
-            <th colspan="3">
+            <th colspan="5">
               <h2>Roommate</h2>
             </th>
           </tr>
           <tr>
-            <th>Stt</th>
-            <th>Tên</th>
+            <th>STT</th>
+            <th>Họ và tên</th>
+            <th></th>
+            <th></th>
             <th></th>
           </tr>
           <%
@@ -132,9 +138,13 @@
               <td><%=x%></td>
               <td><span>${roommateinfor.getInformation().getFullname()}</span></td>
               <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%=x%>">
-                View
+                Xem chi tiết
               </button></td>
+              <td><a href="DeleteRoommatePage?roommateID=${roommateinfor.roommateID}" role="button" class="btn btn-primary"
+                     style="width:60px; height:30px; color: #ffffff; padding-top: 7px;">Xoá</a></td>
+              <td><a href="Renter-update-roommate" role="button" class="btn btn-primary" style="width:60px; height:30px; color: #ffffff; padding-top: 7px;">Chỉnh Sửa</a></td>
             </tr>
+
             <%
               x +=1;
             %>
@@ -142,39 +152,46 @@
 
         </table>
       </div>
+      <%
+        for (int y = 1; y < x; y++){
+      %>
+      <div class="modal fade" id="staticBackdrop<%=y%>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+           aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Thông Tin Chi Tiết
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <h3>Name: <%=listroommateinfor.get(y-1).getInformation().getFullname()%></h3>
+              <h3>Email: <%=listroommateinfor.get(y-1).getInformation().getEmail()%></h3>
+              <h3>Birthday: <%=listroommateinfor.get(y-1).getInformation().getBirthday()%></h3>
+              <h3>Sex:
+                  <c:if test="<%= listroommateinfor.get(y-1).getInformation().getSex() == 1 %>">
+                        Nam
+                  </c:if>
+                  <c:if test="<%= listroommateinfor.get(y-1).getInformation().getSex() == 0 %>">
+                        Nữ
+                  </c:if>
+              </h3>
+              <h3>Phone: <%=listroommateinfor.get(y-1).getInformation().getPhone()%></h3>
+              <h3>Address: <%=listroommateinfor.get(y-1).getInformation().getAddress()%></h3>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%
+        }
+      %>
     </div>
   </div>
-</div>
 <!-- Modal -->
-<%
-  for (int y = 1; y < x; y++){
-%>
-<div class="modal fade" id="staticBackdrop<%=y%>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" style="margin-left:36%;color:#ffffff;" id="staticBackdropLabel">Thông Tin Chi Tiết
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <h3>Name: <%=listroommateinfor.get(y-1).getInformation().getFullname()%></h3>
-        <h3>Email: <%=listroommateinfor.get(y-1).getInformation().getEmail()%></h3>
-        <h3>Birthday: <%=listroommateinfor.get(y-1).getInformation().getBirthday()%></h3>
-        <h3>Sex: <%=listroommateinfor.get(y-1).getInformation().getSex()%></h3>
-        <h3>Phone: <%=listroommateinfor.get(y-1).getInformation().getPhone()%></h3>
-        <h3>Address: <%=listroommateinfor.get(y-1).getInformation().getAddress()%></h3>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-<%
-  }
-%>
+
 <!-- footer -->
 
 <footer>

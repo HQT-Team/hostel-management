@@ -844,12 +844,14 @@ public class RoomDAO {
 
     // Renter handler
     private static final String GET_HOSTEL_ROOM_INFOR_BY_RENTER_ID =
-            "SELECT Rooms.room_number,Rooms.room_area, COUNT(RoomateInformations.roomate_info_id) AS numberOfMembers\n" +
-                    "FROM Rooms INNER JOIN Contracts ON Rooms.room_id=Contracts.room_id \n" +
-                    "INNER JOIN Accounts ON Contracts.renter_id=Accounts.account_id \n" +
-                    "INNER JOIN RoomateInformations ON Accounts.account_id=RoomateInformations.account_renter_id\n" +
-                    "WHERE Accounts.account_id = ?\n" +
-                    "GROUP BY Rooms.room_number,Rooms.room_area";
+            "SELECT R.* FROM Rooms AS R INNER JOIN Contracts AS C \n" +
+                    "ON R.room_id = C.room_id WHERE C.renter_id = ?";
+//            "SELECT Rooms.room_number,Rooms.capacity,Rooms.room_area, COUNT(RoomateInformations.roomate_info_id) AS numberOfMembers\n" +
+//                    "FROM Rooms INNER JOIN Contracts ON Rooms.room_id=Contracts.room_id \n" +
+//                    "INNER JOIN Accounts ON Contracts.renter_id=Accounts.account_id \n" +
+//                    "INNER JOIN RoomateInformations ON Accounts.account_id=RoomateInformations.account_renter_id\n" +
+//                    "WHERE Accounts.account_id = ?\n" +
+//                    "GROUP BY Rooms.room_number,Rooms.room_area,Rooms.capacity";
     public Room getHostelRoomInforByRenterId(int renterId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -864,12 +866,12 @@ public class RoomDAO {
                 if (rs != null && rs.next()) {
                     int roomNumber = rs.getInt("room_number");
                     double roomArea = rs.getInt("room_area");
-                    int numberOfMembers = rs.getInt("numberOfMembers");
+                    int capacity = rs.getInt("capacity");
                     roomInfor = Room
                             .builder()
                             .roomNumber(roomNumber)
+                            .capacity(capacity)
                             .roomArea(roomArea)
-                            .capacity(numberOfMembers)
                             .build();
                 }
             }

@@ -1,6 +1,10 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.hqt.happyhostel.dto.Account" %>
+<%@ page import="com.hqt.happyhostel.dto.Account" %><%--
+  Created by IntelliJ IDEA.
+  User: 84337
+  Date: 6/18/2022
+  Time: 12:28 PM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +23,7 @@
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/renter_page/Renter-home-page.css">
+    <link rel="stylesheet" href="./assets/css/renter_page/Renter-add-roommate.css">
 
 </head>
 
@@ -65,8 +69,8 @@
 
     </nav>
 
-    <div class="row main-body">
-        <div class="dashboard">
+    <div class="row">
+        <div class="dashboard hidden" id="dashboard">
             <div class="infor-top">
                 <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                 <h3><%=account.getUsername()%></h3>
@@ -112,91 +116,77 @@
         </div>
 
 
-        <div class="content row">
-            <div class="content-top row">
-                <div class="content-top-1 ">
-                    <h3>Khu Trọ</h3>
-                    <p>Tên: ${HOSTEL.hostelName}</p>
-                    <p>Địa chỉ: ${HOSTEL.address},${HOSTEL.ward.split('-')[1]},${HOSTEL.district.split('-')[1]},${HOSTEL.city.split('-')[1]}</p>
-                    <h3>Phòng</h3>
-                    <p>Phòng số: ${ROOM_INFOR.roomNumber}</p>
-                    <p>Diện tích: ${ROOM_INFOR.roomArea} m2</p>
-                    <p>Số thành viên: ${NUM_OF_MEMBERS}/${ROOM_INFOR.capacity}</p>
-                </div>
-                <div class="content-top-2 ">
-                    <h3>Chủ Trọ</h3>
-                    <p>Tên: ${ACCOUNT_INFOR.fullname}</p>
-                    <p>Số Điện Thoại: ${ACCOUNT_INFOR.phone}</p>
-                </div>
+        <div class="content">
+            <div class="div-controll-form" id="div-controll-form">
+                <form action="#" class="form" id="form">
+                    <h1>Cập Nhật Thông Tin</h1>
+                    <div class="form-item" id="form-item">
+                        <input id="form-item-input-1" type="text" placeholder="Tên đây đủ">
+                        <p class="border-bottom"></p>
+                        <span id="mes-1"></span>
+                    </div>
+                    <div class="form-item">
+                        <input id="form-item-input-2" placeholder="Email" type="email" name="emails" multiple>
+                        <p class="border-bottom"></p>
+                        <span id="mes-2"></span>
+                    </div>
+                    <div class="form-item">
+                        <input id="form-item-input-3" type="text" placeholder="Ngày sinh">
+                        <p class="border-bottom"></p>
+                        <span id="mes-3"></span>
+                    </div>
+                    <div class="form-item">
+                        <input id="form-item-input-4" type="text" placeholder="Giới tính">
+                        <p class="border-bottom"></p>
+                        <span id="mes-4"></span>
+                    </div>
+                    <div class="form-item">
+                        <input id="form-item-input-5" type="text" placeholder="Số điện thoại">
+                        <p class="border-bottom"></p>
+                        <span id="mes-5"></span>
+                    </div>
+                    <div class="form-item">
+                        <input id="form-item-input-6" type="text" placeholder="Địa chỉ">
+                        <p class="border-bottom"></p>
+                        <span id="mes-6"></span>
+                    </div>
+                    <div class="form-item">
+                        <input id="form-item-input-7" type="text" placeholder="Số CCCD">
+                        <p class="border-bottom"></p>
+                        <span id="mes-7"></span>
+                    </div>
+                    <input id="form-item-submit" type="button" value="Lưu">
+                </form>
             </div>
-            <div class="content-bottom row">
-                <div class="content-bottom-1">
-                    <h3>Thiết Bị</h3>
-                    <table>
-                        <tr>
-                            <th>Tên</th>
-                            <th>Số lượng</th>
-                        </tr>
-                        <c:forEach var="infras" items="${INFRASTRUCTURES}">
-                            <tr>
-                                <td>${infras.name}</td>
-                                <td>${infras.quantity}</td>
-                            </tr>
-                        </c:forEach>
-
-                    </table>
-                </div>
-
-                <div class="content-bottom-2">
-                    <h3>Dịch vụ</h3>
-                    <table>
-                        <tr>
-                            <th>Tên</th>
-                            <th>Giá</th>
-                        </tr>
-                        <c:forEach var="s" items="${SERVICES}">
-                            <tr>
-
-                                <td>${s.serviceName}</td>
-                                <td>
-                                    <fmt:setLocale value="vi_VN"/>
-                                    <fmt:formatNumber value="${s.servicePrice}" type="currency" currencySymbol="VNĐ"/>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </table>
-                </div>
-            </div>
-
         </div>
     </div>
-
-    <footer>
-        <div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="copyright-wrapper d-flex justify-content-center">
-                        <!-- <div class="copyright-logo">
+</div>
+<footer>
+    <div>
+        <div class="row">
+            <div class="col-12">
+                <div class="copyright-wrapper d-flex justify-content-center">
+                    <!-- <div class="copyright-logo">
                         <img src="../../assets/images/logos/logo-white.png" alt="Logo">
                     </div> -->
-                        <div class="copyright-content">© 2022 HQT Team. All rights reserved.</div>
-                    </div>
+                    <div class="copyright-content">© 2022 HQT Team. All rights reserved.</div>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="./assets/js/renter/Renter-add-roommate.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-</div>
 </body>
 
 </html>

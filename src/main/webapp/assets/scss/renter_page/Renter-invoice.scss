@@ -2,38 +2,45 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-  .dropdown {
-    display: none;
-  }
+.dropdown {
+  display: none;
+}
 body{
   overflow-x: hidden;
 }
-  .content {
-    width: 70%;
-  }
+.content {
+  width: 70%;
 
-  .notification {
-    margin: 10% auto;
-    width: 900px;
+  .invoice {
+    width: 60%;
+    margin: 100px auto;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    min-height: 450px;
+    padding: 30px;
+    border-radius: 8px;
 
-    table {
-      font-size: 20px;
-      width: 80%;
+    h2 {
+      width: 120px;
       margin: auto;
-      tr{
-        th{
-          text-align: center;
-        }
-      }
+      color: blueviolet;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 19px;
+      line-height: 36px;
     }
   }
+}
 
-
-
-@media screen and (max-width: 1024px) and (min-width: 740px) {
+@media screen and (min-width: 740px) and (max-width: 1024px) {
   .content {
     width: 100%;
-    margin: 0px;
+
+    .invoice {
+      width: 90%;
+    }
   }
 
   .dropdown {
@@ -47,24 +54,18 @@ body{
   .dashboard {
     display: none;
   }
-
-  .main-body {
-    margin: 0px;
-  }
-
-  .table {
-    width: 80%;
-    margin: 50px auto;
-  }
-
-
 }
 
 
 @media screen and (max-width: 740px) {
   .content {
-    width: 100%;
+    padding: 0px;
     margin: 0px;
+    width: 100%;
+
+    .invoice {
+      width: 90%;
+    }
   }
 
   .navbar {
@@ -104,6 +105,11 @@ body{
     }
   }
 
+  .main-body {
+    padding: 0px;
+    margin: 0px;
+  }
+
   .dropdown {
     display: block;
   }
@@ -114,18 +120,5 @@ body{
 
   .dashboard {
     display: none;
-  }
-
-  .main-body {
-    margin: 0px;
-  }
-
-  .table {
-    width: 80%;
-    margin: 50px auto;
-  }
-
-  .copyright-content {
-    font-size: 13px;
   }
 }

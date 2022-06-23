@@ -1,6 +1,11 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.hqt.happyhostel.dto.Account" %>
+<%@ page import="com.hqt.happyhostel.dto.Account" %><%--
+  Created by IntelliJ IDEA.
+  User: 84337
+  Date: 6/18/2022
+  Time: 9:36 AM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +14,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renter</title>
+    <title>Contract</title>
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -19,7 +24,7 @@
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/renter_page/Renter-home-page.css">
+    <link rel="stylesheet" href="./assets/css/renter_page/Renter-contract.css">
 
 </head>
 
@@ -28,6 +33,7 @@
     Account account = (Account)session.getAttribute("USER");
 %>
 <div>
+    <!-- navbar -->
     <nav class="navbar row">
         <div class="navbar-left">
             <div class="dropdown">
@@ -65,7 +71,8 @@
 
     </nav>
 
-    <div class="row main-body">
+    <!-- content -->
+    <div class="main-body row">
         <div class="dashboard">
             <div class="infor-top">
                 <img src="./assets/images/avatars/user-avatar.jpg" alt="">
@@ -83,9 +90,9 @@
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
+                        <h3><a href="HostelRenterPage" >Thông tin phòng</a></h3>
                         <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
-                        <h3><a href="ContractPage">Hợp đồng</a></h3>
+                        <h3><a href="ContractPage" style="color:rgb(4, 4, 255)">Hợp đồng</a></h3>
                         <h3><a href="Renter-bill">Hóa đơn</a></h3>
                         <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                         <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
@@ -110,93 +117,70 @@
                 </div>
             </div>
         </div>
-
-
         <div class="content row">
-            <div class="content-top row">
-                <div class="content-top-1 ">
-                    <h3>Khu Trọ</h3>
-                    <p>Tên: ${HOSTEL.hostelName}</p>
-                    <p>Địa chỉ: ${HOSTEL.address},${HOSTEL.ward.split('-')[1]},${HOSTEL.district.split('-')[1]},${HOSTEL.city.split('-')[1]}</p>
-                    <h3>Phòng</h3>
-                    <p>Phòng số: ${ROOM_INFOR.roomNumber}</p>
-                    <p>Diện tích: ${ROOM_INFOR.roomArea} m2</p>
-                    <p>Số thành viên: ${NUM_OF_MEMBERS}/${ROOM_INFOR.capacity}</p>
-                </div>
-                <div class="content-top-2 ">
-                    <h3>Chủ Trọ</h3>
-                    <p>Tên: ${ACCOUNT_INFOR.fullname}</p>
-                    <p>Số Điện Thoại: ${ACCOUNT_INFOR.phone}</p>
-                </div>
+            <div class="contract-content">
+                <h2>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h2>
+                <h3>Độc lập - Tự do - Hạnh phúc</h3>
+                <br>
+                <h4>Hợp đồng thuê phòng</h4>
+                <p>1. Bên cho thuê</p>
+                <h5>Ông: ${OWNER_INFO.fullname}</h5><br>
+                <h5>Ngày sinh: ${OWNER_INFO.birthday}</h5><br>
+                <h5>CCCD: ${OWNER_INFO.cccd}</h5><br>
+                <h5>SĐT: ${OWNER_INFO.phone}</h5><br>
+                <p>2. Bên thuê</p>
+                <h5>Ông: ${RENTER_INFO.fullname}</h5><br>
+                <h5>Ngày sinh: ${RENTER_INFO.birthday}</h5><br>
+                <h5>CCCD: ${RENTER_INFO.cccd}</h5><br>
+                <h5>SĐT: ${RENTER_INFO.phone}</h5><br>
+                <p>Sau khi bàn bạc :</p>
+                <h5>Bên A xác nhận cho bên B thuê phòng trọ tại địa chỉ: ${HOSTEL.address}, ${HOSTEL.ward.split('-')[1]},
+                    ${HOSTEL.district.split('-')[1]}, ${HOSTEL.city.split('-')[1]} </h5><br>
+                <h5>Giá :
+                    <fmt:setLocale value="vi_VN"/>
+                    <fmt:formatNumber value="${CONTRACT.price}" type="currency" currencySymbol="VNĐ"/>
+                </h5><br>
+                <h5>Tiền cọc:
+                    <fmt:setLocale value="vi_VN"/>
+                    <fmt:formatNumber value="${CONTRACT.deposit}" type="currency" currencySymbol="VNĐ"/>
+                </h5><br>
+                <h5>Hợp đồng có giá trị từ ngày: ${CONTRACT.startDate} đến ngày : ${CONTRACT.expiration}</h5><br>
             </div>
-            <div class="content-bottom row">
-                <div class="content-bottom-1">
-                    <h3>Thiết Bị</h3>
-                    <table>
-                        <tr>
-                            <th>Tên</th>
-                            <th>Số lượng</th>
-                        </tr>
-                        <c:forEach var="infras" items="${INFRASTRUCTURES}">
-                            <tr>
-                                <td>${infras.name}</td>
-                                <td>${infras.quantity}</td>
-                            </tr>
-                        </c:forEach>
-
-                    </table>
-                </div>
-
-                <div class="content-bottom-2">
-                    <h3>Dịch vụ</h3>
-                    <table>
-                        <tr>
-                            <th>Tên</th>
-                            <th>Giá</th>
-                        </tr>
-                        <c:forEach var="s" items="${SERVICES}">
-                            <tr>
-
-                                <td>${s.serviceName}</td>
-                                <td>
-                                    <fmt:setLocale value="vi_VN"/>
-                                    <fmt:formatNumber value="${s.servicePrice}" type="currency" currencySymbol="VNĐ"/>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </table>
-                </div>
-            </div>
-
         </div>
     </div>
+</div>
 
-    <footer>
-        <div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="copyright-wrapper d-flex justify-content-center">
-                        <!-- <div class="copyright-logo">
-                        <img src="../../assets/images/logos/logo-white.png" alt="Logo">
-                    </div> -->
-                        <div class="copyright-content">© 2022 HQT Team. All rights reserved.</div>
+
+<!-- footer -->
+
+<footer>
+    <div>
+        <div class="row">
+            <div class="col-12">
+                <div class="copyright-wrapper d-flex justify-content-center">
+                    <div class="copyright-logo">
+                        <!-- <img src="../../assets/images/logos/logo-white.png" alt="Logo"> -->
                     </div>
+                    <div class="copyright-content" style="font-size: 18px;">© 2022 HQT Team. All rights
+                        reserved.</div>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

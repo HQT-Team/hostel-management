@@ -14,6 +14,10 @@ public class ContractDAO {
     private static final String UPDATE_CONTRACT_STATUS = "UPDATE Contracts SET status = 0\n" +
                     "WHERE room_id = ? AND renter_id = ? AND status = 1";
 
+    private static final String GET_CONTRACT_BY_RENTER_ID = "SELECT contract_id, room_id, price, start_date, expiration, deposit\n" +
+            "FROM Contracts\n" +
+            "WHERE renter_id = ?";
+
     public boolean updateContractStatus (int roomId, int renterAccountId) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -240,5 +244,4 @@ public class ContractDAO {
         }
         return contract;
     }
-
 }
