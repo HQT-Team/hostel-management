@@ -1,6 +1,5 @@
 package com.hqt.happyhostel.dao;
 
-import com.hqt.happyhostel.dto.Account;
 import com.hqt.happyhostel.dto.Contract;
 import com.hqt.happyhostel.utils.DBUtils;
 
@@ -13,10 +12,6 @@ public class ContractDAO {
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_CONTRACT_STATUS = "UPDATE Contracts SET status = 0\n" +
                     "WHERE room_id = ? AND renter_id = ? AND status = 1";
-
-    private static final String GET_CONTRACT_BY_RENTER_ID = "SELECT contract_id, room_id, price, start_date, expiration, deposit\n" +
-            "FROM Contracts\n" +
-            "WHERE renter_id = ?";
 
     public boolean updateContractStatus (int roomId, int renterAccountId) {
         Connection cn = null;

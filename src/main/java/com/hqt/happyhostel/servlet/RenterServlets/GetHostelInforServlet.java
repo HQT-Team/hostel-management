@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-
 @WebServlet(name = "GetHostelInforServlet", value = "/GetHostelInforServlet")
 public class GetHostelInforServlet extends HttpServlet {
     public static final String ERROR = "hostel-renter-page";
@@ -27,19 +26,21 @@ public class GetHostelInforServlet extends HttpServlet {
         Information accInfo;
         try {
             HttpSession session = req.getSession();
-            acc = (Account)session.getAttribute("USER");
+            acc = (Account) session.getAttribute("USER");
             int renterId = acc.getAccId();
-            //Get Hostel
+
             HostelDAO hostelDAO = new HostelDAO();
             InformationDAO informationDAO = new InformationDAO();
+
+            //Get Hostel
             Hostel hostel = hostelDAO.getHostelByRenterId(renterId);
-            if (hostel!=null){
+            if (hostel != null) {
                 req.setAttribute("HOSTEL", hostel);
                 url = SUCCESS;
             }
             //Get Hostel Owner Info
-            Information accountInfo = informationDAO.getHostelOwnerInforByRenterId(renterId);
-            if (accountInfo!=null){
+            Information accountInfo = informationDAO.getHostelOwnerInfoByRenterId(renterId);
+            if (accountInfo != null) {
                 req.setAttribute("ACCOUNT_INFOR", accountInfo);
                 url = SUCCESS;
             }
@@ -50,37 +51,38 @@ public class GetHostelInforServlet extends HttpServlet {
             req.setAttribute("NUM_OF_MEMBERS", numberOfMembers);
 
 
-            Room roomInfo = new RoomDAO().getHostelRoomInforByRenterId(renterId);
-            if (roomInfo!=null){
-
+            Room roomInfo = new RoomDAO().getRoomInfoByRenterId(renterId);
+            if (roomInfo != null) {
                 req.setAttribute("ROOM_INFOR", roomInfo);
                 url = SUCCESS;
             }
 
             //Get Infrastructure
-            infrastructures = new InfrastructureDAO().getHostelInfrastructuresByRenterId(renterId);
-            if (infrastructures.size() > 0){
+            infrastructures = new InfrastructureDAO().getRoomInfrastructures(roomInfo.getRoomId());
+            if (infrastructures.size() > 0) {
                 req.setAttribute("INFRASTRUCTURES", infrastructures);
                 url = SUCCESS;
             }
+
             //Get Service
-            serviceInfo = new ServicesDAO().getHostelServicesByRenterId(renterId);
-            if (serviceInfo!=null){
+            serviceInfo = new ServiceInfoDAO().getServicesOfHostel(roomInfo.getHostelId());
+            if (serviceInfo != null) {
                 req.setAttribute("SERVICES", serviceInfo);
                 url = SUCCESS;
             }
+
             //Get Account Infor
             accInfo = new InformationDAO().getAccountInformationById(renterId);
-            if (accInfo!=null){
+            if (accInfo != null) {
                 req.setAttribute("ACC_INFO", accInfo);
                 url = SUCCESS;
             }
 
             session.setAttribute("CURRENT_PAGE", "hostel-renter-page");
-        }catch (Exception e){
+        } catch (Exception e) {
             log("Error at GetHostelInforServlet: " + e.toString());
-        }finally {
-            req.getRequestDispatcher(url).forward(req,resp);
+        } finally {
+            req.getRequestDispatcher(url).forward(req, resp);
         }
     }
 }

@@ -34,7 +34,7 @@ public class CheckOTPServlet extends HttpServlet {
                 if (accId > 0) {
                     request.setAttribute("ACCOUNT_ID", accID);
                     HttpSession session = request.getSession(false);
-                    if(session != null){
+                    if (session != null) {
                         session.setAttribute("confirm-OTP", "OK");
                         new AccountDAO().updateAccountOTP(accId, null, null);
                         url = SUCCESS;
@@ -48,8 +48,8 @@ public class CheckOTPServlet extends HttpServlet {
             }
         } catch (Exception e) {
             log("Error at CheckOTPServlet: " + e.toString());
-        }finally {
-            if(ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
+        } finally {
+            if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
             else request.getRequestDispatcher(url).forward(request, response);
         }
     }

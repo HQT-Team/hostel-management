@@ -1,6 +1,7 @@
 package com.hqt.happyhostel.servlet.InfrastructureServlets;
 
 import com.hqt.happyhostel.dao.InfrastructureDAO;
+import com.hqt.happyhostel.dto.HandlerStatus;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -24,14 +25,18 @@ public class AddNewInfrastructureServlet extends HttpServlet {
             int idNewInfrastructure = Integer.parseInt(request.getParameter("idNewInfrastructure"));
             int statusNewInfrastructure = Integer.parseInt(request.getParameter("statusNewInfrastructure"));
             int roomID = Integer.parseInt(request.getParameter("roomID"));
-            Boolean insertStatus = infrastructureDAO.addNewInfrastructure(roomID, 1, statusNewInfrastructure, idNewInfrastructure);
+            boolean insertStatus = infrastructureDAO.addNewInfrastructure(roomID, 1, statusNewInfrastructure, idNewInfrastructure);
             if (insertStatus) {
                 request.setAttribute("roomID", roomID);
-                request.setAttribute("updateSuccess", true);
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(true)
+                        .content("Thêm cơ sở vật chất thành công!").build());
                 url = "roomDetail";
             } else {
                 request.setAttribute("roomID", roomID);
-                request.setAttribute("updateSuccess", false);
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(false)
+                        .content("Đã có lỗi xảy ra! Thêm cơ sở vật chất thất bại!").build());
             }
         } catch (Exception e) {
             e.printStackTrace();

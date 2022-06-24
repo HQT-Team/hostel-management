@@ -3,7 +3,6 @@ package com.hqt.happyhostel.servlet.OwnerServlet;
 import com.hqt.happyhostel.dao.HostelServiceDAO;
 import com.hqt.happyhostel.dto.HandlerStatus;
 import com.hqt.happyhostel.dto.HostelService;
-import com.hqt.happyhostel.dto.ServiceInfo;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -27,7 +26,7 @@ public class UpdateServiceServlet extends HttpServlet {
             for (int i = 0; i < servicesIdStr.length; i ++) {
                 hostelServiceList.add(HostelService.builder()
                         .serviceID(Integer.parseInt(servicesIdStr[i]))
-                        .servicePrice(Double.parseDouble(servicesPriceStr[i])).build());
+                        .servicePrice(Integer.parseInt(servicesPriceStr[i])).build());
             }
 
             boolean checkUpdate = new HostelServiceDAO().insertListServicesIntoHostel(hostelServiceList, hostelId);

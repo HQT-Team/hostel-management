@@ -37,15 +37,15 @@ public class CreateInviteCodeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;
-        String roomId = null;
-        Account owner = null;
+        String roomId;
+        Account owner;
         Room roomInvite = null;
         StringBuilder inviteUrl = new StringBuilder("RenterRegisterPage?inviteCode=");
         try {
 
             roomId = request.getParameter("room_id");
-            int ownerId = -1;
-            String inviteCode = null;
+            int ownerId;
+            String inviteCode;
 
             HttpSession session = request.getSession(false);
             if (session != null) {
@@ -53,31 +53,31 @@ public class CreateInviteCodeServlet extends HttpServlet {
                 owner = (Account) session.getAttribute("USER");
                 RoomInviteDAO roomInviteDAO = new RoomInviteDAO();
 
-                //check request parameter
+                // Check request parameter
                 if (owner != null && roomId != null) {
                     int roomID = Integer.parseInt(roomId);
                     ownerId = owner.getAccId();
 
-                    //check xem roomID có thuộc ownerID không
+                    // Check xem roomID có thuộc ownerID không
                     if (new HostelOwnerDAO().checkOwnerRoom(ownerId, roomID)) {
 
-                        //Create invite link
+                        // Create invite link
                         inviteCode = RandomStringGenerator.randomInviteCode(5, roomId);
                         inviteUrl = inviteUrl.append(inviteCode);
 
-                        //Create QR Code
+                        // Create QR Code
                         QRCodeWriter barcodeWriter = new QRCodeWriter();
                         BitMatrix bitMatrix = barcodeWriter.encode(inviteUrl.toString(), BarcodeFormat.QR_CODE, 200, 200);
                         BufferedImage qrImg = MatrixToImageWriter.toBufferedImage(bitMatrix);
                         String QRBase64 = EncodeBase64Utils.imageToBase64(qrImg);
 
-                        //Create endTime
+                        // Create endTime
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                         Calendar startTime = Calendar.getInstance();
                         long timeInSecs = startTime.getTimeInMillis();
                         Timestamp endTime = new Timestamp(timeInSecs + (30 * 60 * 1000));
 
-                        //Set invite code into database
+                        // Set invite code into database
                         if (roomInviteDAO.updateRoomInviteCode(roomID, inviteCode, QRBase64, sdf.format(endTime))) {
                             new RoomDAO().updateRoomStatus(roomID, 0);
                             roomInvite = roomInviteDAO.getRoomInviteById(roomID);
@@ -91,8 +91,10 @@ public class CreateInviteCodeServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at InviteCodeServlet: " + e.toString());
         } finally {
-            if(ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
-            else request.getRequestDispatcher(url).forward(request, response);
+            if (ERROR.equalsIgnoreCase(url))
+                response.sendRedirect(url);
+            else
+                request.getRequestDispatcher(url).forward(request, response);
         }
     }
 }

@@ -24,7 +24,6 @@ public class UpdateBillStatusServlet extends HttpServlet {
             Room room = (Room) session.getAttribute("room");
             int roomId = room.getRoomId();
 
-//            int paymentID = Integer.parseInt(request.getParameter("methodPayment"));
             int billID = Integer.parseInt(request.getParameter("billID"));
 
             boolean isUpdated = new PaymentDAO().updateBillStatus(billID, 1);
@@ -32,10 +31,14 @@ public class UpdateBillStatusServlet extends HttpServlet {
             if (isUpdated) {
                 url = "roomDetail";
                 request.setAttribute("roomID", roomId);
-//                request.setAttribute("IS_SUCCESS", HandlerStatus.builder().status(true));
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(true)
+                        .content("Cập nhật trạng thái hóa đơn thành công!").build());
             } else {
                 url = "list-hostels";
-//                request.setAttribute("IS_SUCCESS", HandlerStatus.builder().status(false));
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(false)
+                        .content("Đã có lỗi xảy ra. Cập nhật trạng thái hóa đơn thất bại!").build());
             }
 
         } catch (Exception e) {

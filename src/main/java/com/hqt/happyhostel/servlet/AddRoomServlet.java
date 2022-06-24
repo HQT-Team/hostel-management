@@ -4,8 +4,6 @@ import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
 import com.hqt.happyhostel.dto.HandlerStatus;
 import com.hqt.happyhostel.dto.Hostel;
-import com.hqt.happyhostel.dto.Room;
-import com.hqt.happyhostel.dto.ServiceInfo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @WebServlet(name = "AddRoomServlet", value = "/AddRoomServlet")
 public class AddRoomServlet extends HttpServlet {

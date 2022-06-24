@@ -1,6 +1,5 @@
 package com.hqt.happyhostel.dao;
 
-import com.hqt.happyhostel.dto.Consume;
 import com.hqt.happyhostel.dto.InfrastructureItem;
 import com.hqt.happyhostel.dto.Infrastructures;
 import com.hqt.happyhostel.utils.DBUtils;
@@ -51,7 +50,7 @@ public class InfrastructureDAO {
         return isSuccess;
     }
 
-    public ArrayList<Infrastructures> getRoomInfrastructures(int roomID) {
+    public List<Infrastructures> getRoomInfrastructures(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -104,7 +103,7 @@ public class InfrastructureDAO {
         return infrastructures;
     }
 
-    public ArrayList<InfrastructureItem> getAllInfrastructure() {
+    public List<InfrastructureItem> getAllInfrastructure() {
         Connection cn = null;
         Statement pst = null;
         ResultSet rs = null;
@@ -193,52 +192,6 @@ public class InfrastructureDAO {
             }
         }
         return isSuccess;
-    }
-
-    // Renter handler
-    private static final String GET_HOSTEL_INFRASTRUCTURE_BY_RENTER_ID =
-            "SELECT InfrastructureItem.infrastructure_name, SUM(InfrastructuresRoom.quantity) as quantity\n" +
-                    "FROM Accounts INNER JOIN Contracts ON Accounts.account_id=Contracts.renter_id\n" +
-                    "INNER JOIN Rooms ON Contracts.room_id=Rooms.room_id \n" +
-                    "INNER JOIN InfrastructuresRoom ON Rooms.room_id=InfrastructuresRoom.room_id\n" +
-                    "INNER JOIN InfrastructureItem ON InfrastructuresRoom.id_infrastructure_item=InfrastructureItem.id_infrastructure_item\n" +
-                    "WHERE Accounts.account_id = ?\n" +
-                    "GROUP BY InfrastructuresRoom.id_infrastructure_item, InfrastructureItem.infrastructure_name, InfrastructuresRoom.quantity";
-    public List<Infrastructures> getHostelInfrastructuresByRenterId(int renterId) throws SQLException {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        List<Infrastructures> infrastructures = new ArrayList<>();
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                pst = cn.prepareStatement(GET_HOSTEL_INFRASTRUCTURE_BY_RENTER_ID);
-                pst.setInt(1, renterId);
-                rs = pst.executeQuery();
-                while (rs != null && rs.next()) {
-                    String infrastructureName = rs.getString("infrastructure_name");
-                    int quantity = rs.getInt("quantity");
-                    infrastructures.add(Infrastructures
-                            .builder()
-                            .name(infrastructureName)
-                            .quantity(quantity)
-                            .build());
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (pst != null) {
-                pst.close();
-            }
-            if (cn != null) {
-                cn.close();
-            }
-        }
-        return infrastructures;
     }
 
 }

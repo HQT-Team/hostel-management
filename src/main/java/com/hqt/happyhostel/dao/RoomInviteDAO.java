@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 
 public class RoomInviteDAO {
 
@@ -21,8 +20,8 @@ public class RoomInviteDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "Select [room_id], [hostel_id], [invite_code], [QRcode], [expiredTimeCode]\n" +
-                        "From [dbo].[Rooms]\n" +
-                        "Where [room_id] = ?";
+                             "From [dbo].[Rooms]\n" +
+                             "Where [room_id] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, idRoom);
                 rs = pst.executeQuery();
@@ -117,67 +116,6 @@ public class RoomInviteDAO {
         return roomId;
     }
 
-    public Room getRoomIdByInviteCode(String inviteCode) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        Room room = null;
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "Select [room_id]\n" +
-                        "From [dbo].[Rooms]\n" +
-                        "Where [invite_code] = ?";
-                pst = cn.prepareStatement(sql);
-                pst.setString(1, inviteCode);
-                rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    int roomId = rs.getInt("room_id");
-                    int hostelId = rs.getInt("hostel_id");
-                    String InviteCode = rs.getString("invite_code");
-                    String QRCode = rs.getString("QRcode");
-                    int status = rs.getInt("room_status");
-
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                    Timestamp endTime = rs.getTimestamp("expiredTimeCode");
-                    room = Room.builder()
-                            .roomId(roomId)
-                            .hostelId(hostelId)
-                            .inviteCode(inviteCode)
-                            .QRCode(QRCode)
-                            .expiredTimeCode(endTime)
-                            .roomStatus(status)
-                            .build();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return room;
-    }
-
     public boolean checkRoomInviteCode(String inviteCode) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -187,8 +125,8 @@ public class RoomInviteDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT [account_id]\n" +
-                        "FROM [dbo].[Rooms] AS R JOIN [dbo].[Accounts] AS A ON R.[room_id] = A.[room_id]\n" +
-                        "WHERE R.[invite_code] = ?";
+                             "FROM [dbo].[Rooms] AS R JOIN [dbo].[Accounts] AS A ON R.[room_id] = A.[room_id]\n" +
+                             "WHERE R.[invite_code] = ?";
                 pst = cn.prepareStatement(sql);
                 pst.setString(1, inviteCode);
 
@@ -225,7 +163,6 @@ public class RoomInviteDAO {
         }
         return result;
     }
-
 
     public boolean checkRoomInviteCodeExpiredTime(String inviteCode) {
         Connection cn = null;
@@ -321,7 +258,6 @@ public class RoomInviteDAO {
         return isSuccess;
     }
 
-
     public int getAccountIdByInviteCode(String inviteCode) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -368,6 +304,5 @@ public class RoomInviteDAO {
         }
         return accId;
     }
-
 
 }

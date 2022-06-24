@@ -8,14 +8,14 @@ import com.hqt.happyhostel.utils.DBUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AccountDAO {
 
     private Account getAccount(ResultSet rs) {
         Account acc = null;
         AccountInfo accInf = null;
-        RoommateInfo renterInfo = null;
-        ArrayList<RoommateInfo> roommateInfoList = new ArrayList<>();
+        List<RoommateInfo> roommateInfoList = new ArrayList<>();
         try {
             int accId = rs.getInt("account_id");
             String username = rs.getString("username");
@@ -24,8 +24,8 @@ public class AccountDAO {
             int status = rs.getInt("status");
             int role = rs.getInt("role");
             int roomId = rs.getInt("room_id");
-            if (role == 2) {//Renter
-                roommateInfoList = getRoommateInformationById(accId);
+            if (role == 2) { //Renter
+                roommateInfoList = new RoommateInfoDAO().getListRoommatesOfAnAccount(accId);
                 accInf = getAccountInformationById(accId);
                 acc = Account.builder()
                         .accId(accId)
@@ -101,57 +101,6 @@ public class AccountDAO {
             }
         }
         return inf;
-    }
-
-    public ArrayList<RoommateInfo> getRoommateInformationById(int accId) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        RoommateInfo renterInfo = null;
-        ArrayList<RoommateInfo> roommateInfoList = new ArrayList<RoommateInfo>();
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "SELECT *\n" +
-                             "FROM [dbo].[RoomateInformations]\n" +
-                             "WHERE [account_renter_id] = ?";
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, accId);
-                ResultSet rs = pst.executeQuery();
-                while (rs != null && rs.next()) {
-                    int roommateID = rs.getInt("roomate_info_id");
-                    String fullname = rs.getString("fullname");
-                    String email = rs.getString("email");
-                    String birthday = rs.getString("birthday");
-                    int sex = rs.getInt("sex");
-                    String phone = rs.getString("phone");
-                    String address = rs.getString("address");
-                    String cccd = rs.getString("identity_card_number");
-                    String parentName = rs.getString("parent_name");
-                    String parentPhone = rs.getString("parent_phone");
-
-                    renterInfo = new RoommateInfo(roommateID, new Information(fullname, email, birthday, sex, phone, address, cccd), parentName, parentPhone);
-                    roommateInfoList.add(renterInfo);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return roommateInfoList;
     }
 
     public Account getAccountByUsernameAndPassword(String username, String password) {
@@ -251,8 +200,7 @@ public class AccountDAO {
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;
-        AccountInfo inf = null;
-        RoommateInfo roommateInfo = null;
+
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
@@ -287,9 +235,9 @@ public class AccountDAO {
         return acc;
     }
 
-    public ArrayList<Account> GetAllByRole(int role) {
-        Account acc = null;
-        ArrayList<Account> list = new ArrayList<Account>();
+    public List<Account> GetAccountsByRole(int role) {
+        Account acc;
+        ArrayList<Account> list = new ArrayList<>();
         Connection cn = null;
         PreparedStatement pst = null;
 
@@ -328,52 +276,9 @@ public class AccountDAO {
         return list;
     }
 
-    public String getFullnameRenterRoomCurrently(int roomID) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        String username = null;
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "SELECT username\n" +
-                        "FROM Accounts\n" +
-                        "WHERE account_id = (SELECT TOP 1 renter_id\n" +
-                        "\t\t\t\t\tFROM Rooms R, Contracts C\n" +
-                        "\t\t\t\t\tWHERE R.room_id = ?\n" +
-                        "\t\t\t\t\tAND R.room_id = C.room_id\n" +
-                        "\t\t\t\t\tORDER BY C.start_date DESC)";
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, roomID);
-                ResultSet rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    username = rs.getString("username");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return username;
-    }
-
-
     // Update token
-    public int updateTokenByUserName(String token, String username) {
-        int result = 0;
+    public boolean updateTokenByUserName(String token, String username) {
+        boolean result = false;
         Connection cn = null;
         PreparedStatement pst = null;
         try {
@@ -385,7 +290,7 @@ public class AccountDAO {
                 pst = cn.prepareStatement(sqlUpdateStatus);
                 pst.setString(1, token);
                 pst.setString(2, username);
-                result = pst.executeUpdate();
+                result = pst.executeUpdate() > 0;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -398,8 +303,8 @@ public class AccountDAO {
                     e.printStackTrace();
                 }
             }
-            return result;
         }
+        return result;
     }
 
     public boolean updateAccountStatus(int id, int status) {
@@ -702,7 +607,6 @@ public class AccountDAO {
         return accountId;
     }
 
-
     private static final String UPDATE_ACCOUNT_PASSWORD = "Update [dbo].[Accounts] Set [password] = ? Where [account_id] = ?";
     private static final String UPDATE_ACCOUNT_FULLNAME = "Update [dbo].[AccountInformations] Set [fullname] = ? Where [account_id] = ?";
     private static final String UPDATE_ACCOUNT_OTP = "Update [dbo].[Accounts] Set [otp]  = ?, [expiredTimeOTP] = ? Where [account_id] = ? ";
@@ -836,7 +740,5 @@ public class AccountDAO {
         }
         return isSuccess;
     }
-
-
 
 }

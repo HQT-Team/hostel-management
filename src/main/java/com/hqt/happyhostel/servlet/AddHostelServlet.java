@@ -2,9 +2,9 @@ package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dto.Account;
+import com.hqt.happyhostel.dto.HandlerStatus;
 import com.hqt.happyhostel.dto.HostelService;
 import com.hqt.happyhostel.dto.Hostel;
-import com.hqt.happyhostel.dto.Services;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +20,8 @@ import java.util.List;
 
 @WebServlet(name = "AddHostelServlet", value = "/AddHostelServlet")
 public class AddHostelServlet extends HttpServlet {
-    public static final String ERROR = "error.jsp";
-    public static final String SUCCESS = "list-hostels";
+    public static final String ERROR = "add-hostel";
+    public static final String SUCCESS = "add-hostel";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,17 +35,14 @@ public class AddHostelServlet extends HttpServlet {
         LocalDate dateObj = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String validDate = dateObj.format(formatter);
-        List<Services> servicesList = new ArrayList<>();
         List<HostelService> hostelServiceList = new ArrayList<>();
-        Account acc = new Account();
-
+        Account acc;
 
         try {
             req.setCharacterEncoding("UTF-8");
             HttpSession session = req.getSession();
             acc = (Account) session.getAttribute("USER");
             HostelDAO dao = new HostelDAO();
-//            servicesList = dao.getListServices();
 
             int accountId = acc.getAccId();
             String hostelName = req.getParameter("hostel-name");
@@ -55,27 +52,27 @@ public class AddHostelServlet extends HttpServlet {
             String hostelWard = req.getParameter("hostel-ward");
 
             //electric
-            double electricityPrice = Double.parseDouble(req.getParameter("hostel-electric"));
+            int electricityPrice = Integer.parseInt(req.getParameter("hostel-electric"));
             hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(electricityPrice).build());
 
             //water
-            double waterPrice = Double.parseDouble(req.getParameter("hostel-water"));
+            int waterPrice = Integer.parseInt(req.getParameter("hostel-water"));
             hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(waterPrice).build());
 
             //wifi
-            double internetPrice = Double.parseDouble(req.getParameter("hostel-wifi"));
+            int internetPrice = Integer.parseInt(req.getParameter("hostel-wifi"));
             hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(internetPrice).build());
 
             //Management
-            double managementPrice = Double.parseDouble(req.getParameter("hostel-manage"));
+            int managementPrice = Integer.parseInt(req.getParameter("hostel-manage"));
             hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(managementPrice).build());
 
             //Vehicle
-            double vehiclePrice = Double.parseDouble(req.getParameter("hostel-vehicle"));
+            int vehiclePrice = Integer.parseInt(req.getParameter("hostel-vehicle"));
             hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(vehiclePrice).build());
 
             //cleaning
-            double cleaningPrice = Double.parseDouble(req.getParameter("hostel-cleaning"));
+            int cleaningPrice = Integer.parseInt(req.getParameter("hostel-cleaning"));
             hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(cleaningPrice).build());
 
             Hostel hostel = Hostel.builder()
@@ -85,10 +82,18 @@ public class AddHostelServlet extends HttpServlet {
                     .ward(hostelWard)
                     .district(hostelDistrict)
                     .city(hostelProvince).build();
-            boolean checkInsert = dao.addHostel(hostel, hostelServiceList);
+            int hostelId = dao.addHostel(hostel, hostelServiceList);
 
-            if (checkInsert) {
+            if (hostelId >= 0) {
                 url = SUCCESS;
+                req.setAttribute("HOSTEL_ID", hostelId);
+                req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(true)
+                        .content("Tạo khu trọ thành công!").build());
+            } else {
+                req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(false)
+                        .content("Đã có lỗi xảy ra! Tạo khu trọ thất bại!").build());
             }
         } catch (Exception e) {
             log("Error at AddHostel: " + e.toString());

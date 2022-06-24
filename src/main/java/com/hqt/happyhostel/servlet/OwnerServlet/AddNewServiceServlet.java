@@ -19,7 +19,7 @@ public class AddNewServiceServlet extends HttpServlet {
         try {
             int hostelId = Integer.parseInt(request.getParameter("hostel-id"));
             int serviceId = Integer.parseInt(request.getParameter("service-id"));
-            double servicePrice = Double.parseDouble(request.getParameter("service-price"));
+            int servicePrice = Integer.parseInt(request.getParameter("service-price"));
 
             HostelServiceDAO hostelServiceDAO = new HostelServiceDAO();
 

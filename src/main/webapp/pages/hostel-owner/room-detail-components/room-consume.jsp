@@ -16,102 +16,104 @@
         <div class="consume-quantity">${requestScope.consumeNumber.numberWater}</div>
     </div>
     <div class="consume-actions">
-        <!-- Start consume update button -->
-        <button class="consume-update-btn" data-bs-toggle="modal"
-                data-bs-target="#update-consume-modal">Cập nhật
-        </button>
-        <!-- Start consume update modal -->
-        <div class="modal fade" id="update-consume-modal" tabindex="-1"
-             aria-labelledby="update-consume-modal-label" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="update-consume-modal-label">
-                            Cập nhật số điện/nước tiêu thụ
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+        <c:if test="${sessionScope.room.roomStatus == 0 && requestScope.renterAccount.status == 1}">
+            <!-- Start consume update button -->
+            <button class="consume-update-btn" data-bs-toggle="modal"
+                    data-bs-target="#update-consume-modal">Cập nhật
+            </button>
+            <!-- Start consume update modal -->
+            <div class="modal fade" id="update-consume-modal" tabindex="-1"
+                 aria-labelledby="update-consume-modal-label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="update-consume-modal-label">
+                                Cập nhật số điện/nước tiêu thụ
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <form action="updateConsume" method="POST"
+                              class="custom-form update-consume-modal-form"
+                              id="update-consume-modal-form">
+                            <div class="modal-body">
+                                <!-- Label - Don't update -->
+                                <div class="form-group">
+                                    <div class="row text-center">
+                                        <div class="col-2"></div>
+                                        <div class="col-5">
+                                            <label class="form-label">Số cũ</label>
+                                        </div>
+                                        <div class="col-5">
+                                            <label class="form-label">
+                                                Số mới
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Input electric -->
+                                <div class="form-group">
+                                    <div class="row align-items-center">
+                                        <div class="col-2 text-start">
+                                            <label for="form-update-consume__electric"
+                                                   class="form-label">Điện</label>
+                                        </div>
+                                        <div class="col-5">
+                                            <input type="number" value="${requestScope.consumeNumber.numberElectric}" disabled
+                                                   class="form-control m-0"
+                                                   id="form-update-consume__electric-old">
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="text-center">
+                                                <input id="form-update-consume__electric"
+                                                       type="number" name="number-electric"
+                                                       value="" class="form-control m-0"
+                                                       placeholder="Nhập số điện mới">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="form-message text-start mt-3 mb-3"></span>
+                                </div>
+                                <!-- Input water -->
+                                <div class="form-group">
+                                    <div class="row align-items-center">
+                                        <div class="col-2 text-start">
+                                            <label for="form-update-consume__water"
+                                                   class="form-label">Nước</label>
+                                        </div>
+                                        <div class="col-5">
+                                            <input type="number" value="${requestScope.consumeNumber.numberWater}" disabled
+                                                   class="form-control m-0"
+                                                   id="form-update-consume__water-old">
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="text-center">
+                                                <input id="form-update-consume__water"
+                                                       type="number" name="number-water"
+                                                       value="" class="form-control m-0"
+                                                       placeholder="Nhập số nước mới">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="form-message text-start mt-3 mb-3"></span>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Hủy bỏ
+                                </button>
+                                <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
+                                <button type="submit" class="btn btn-danger">
+                                    Cập nhật
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <form action="updateConsume" method="POST"
-                          class="custom-form update-consume-modal-form"
-                          id="update-consume-modal-form">
-                        <div class="modal-body">
-                            <!-- Label - Don't update -->
-                            <div class="form-group">
-                                <div class="row text-center">
-                                    <div class="col-2"></div>
-                                    <div class="col-5">
-                                        <label class="form-label">Số cũ</label>
-                                    </div>
-                                    <div class="col-5">
-                                        <label class="form-label">
-                                            Số mới
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Input electric -->
-                            <div class="form-group">
-                                <div class="row align-items-center">
-                                    <div class="col-2 text-start">
-                                        <label for="form-update-consume__electric"
-                                               class="form-label">Điện</label>
-                                    </div>
-                                    <div class="col-5">
-                                        <input type="number" value="${requestScope.consumeNumber.numberElectric}" disabled
-                                               class="form-control m-0"
-                                               id="form-update-consume__electric-old">
-                                    </div>
-                                    <div class="col-5">
-                                        <div class="text-center">
-                                            <input id="form-update-consume__electric"
-                                                   type="number" name="number-electric"
-                                                   value="" class="form-control m-0"
-                                                   placeholder="Nhập số điện mới">
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="form-message text-start mt-3 mb-3"></span>
-                            </div>
-                            <!-- Input water -->
-                            <div class="form-group">
-                                <div class="row align-items-center">
-                                    <div class="col-2 text-start">
-                                        <label for="form-update-consume__water"
-                                               class="form-label">Nước</label>
-                                    </div>
-                                    <div class="col-5">
-                                        <input type="number" value="${requestScope.consumeNumber.numberWater}" disabled
-                                               class="form-control m-0"
-                                               id="form-update-consume__water-old">
-                                    </div>
-                                    <div class="col-5">
-                                        <div class="text-center">
-                                            <input id="form-update-consume__water"
-                                                   type="number" name="number-water"
-                                                   value="" class="form-control m-0"
-                                                   placeholder="Nhập số nước mới">
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="form-message text-start mt-3 mb-3"></span>
-                            </div>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Hủy bỏ
-                            </button>
-                            <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
-                            <button type="submit" class="btn btn-danger">
-                                Cập nhật
-                            </button>
-                        </div>
-                    </form>
                 </div>
             </div>
-        </div>
-        <!-- End consume update modal -->
-        <!-- End consume update button -->
+            <!-- End consume update modal -->
+            <!-- End consume update button -->
+        </c:if>
 
         <!-- Start consume history list button -->
         <button class="consume-history-btn" data-bs-toggle="modal"

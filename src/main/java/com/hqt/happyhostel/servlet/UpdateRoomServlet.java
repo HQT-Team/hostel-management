@@ -1,8 +1,7 @@
 package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.RoomDAO;
-import com.hqt.happyhostel.dto.Infrastructures;
-import com.hqt.happyhostel.dto.Room;
+import com.hqt.happyhostel.dto.HandlerStatus;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @WebServlet(name = "UpdateRoomServlet", value = "/UpdateRoomServlet")
 public class UpdateRoomServlet extends HttpServlet {
@@ -31,9 +29,13 @@ public class UpdateRoomServlet extends HttpServlet {
             boolean isSuccessUpdate = new RoomDAO().updateRoom(roomID, roomNumber, capacity, roomArea, attic);
 
             if (isSuccessUpdate) {
-                request.setAttribute("updateSuccess", true);
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(true)
+                        .content("Cập nhật thông tin phòng thành công!").build());
             } else {
-                request.setAttribute("updateSuccess", false);
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(false)
+                        .content("Đã có lỗi xảy ra! Cập nhật thông tin phòng thất bại!").build());
             }
         } catch (Exception e) {
             e.printStackTrace();

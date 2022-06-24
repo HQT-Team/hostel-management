@@ -58,7 +58,7 @@ public class AddReportServlet extends HttpServlet {
                     .cateID(cateID)
                     .build();
             //Add report
-            boolean checkInsert = new ReportDAO().addReport(report,cateID);
+            boolean checkInsert = new ReportDAO().addReport(report);
             if (checkInsert){
                 req.setAttribute("SUCCESS", "Bạn đã gửi đi báo cáo thành công");
                 url = SUCCESS;

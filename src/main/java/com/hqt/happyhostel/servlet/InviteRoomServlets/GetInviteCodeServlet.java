@@ -27,13 +27,13 @@ public class GetInviteCodeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;
-        int roomID = -1;
-        Account owner = null;
+        int roomID;
+        Account owner;
         Room roomInvite = null;
         StringBuilder inviteUrl = new StringBuilder("RenterRegisterPage?inviteCode=");
         try {
-            int ownerId = -1;
-            String inviteCode = null;
+            int ownerId;
+            String inviteCode;
 
             HttpSession session = request.getSession(false);
             if (session != null) {

@@ -2,9 +2,7 @@ package com.hqt.happyhostel.dao;
 
 import com.hqt.happyhostel.dto.HostelService;
 import com.hqt.happyhostel.dto.Hostel;
-import com.hqt.happyhostel.dto.Services;
 import com.hqt.happyhostel.utils.DBUtils;
-import com.hqt.happyhostel.utils.GetAddressUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,12 +10,8 @@ import java.util.List;
 
 public class HostelDAO {
 
-    private static final String GET_HOSTEL =
-            "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels]";
     private static final String INSERT_HOSTEl =
             "INSERT INTO [dbo].[Hostels](owner_account_id, name, address, ward, district, city) VALUES(?, ?, ?, ?, ?, ?)";
-    private static final String GET_SERVICE =
-            "SELECT service_id, service_name, unit FROM [dbo].[Services]";
     private static final String INSERT_HOSTEL_SERVICE =
             "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
                     "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Điện'), ?, ?)\n" +
@@ -39,6 +33,12 @@ public class HostelDAO {
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM Hostels WHERE hostel_id = ? AND owner_account_id = ?";
     private static final String GET_HOSTEL_BY_OWNER_ID =
             "SELECT hostel_id, owner_account_id, name, address, ward, district, city FROM [dbo].[Hostels] WHERE owner_account_id = ?";
+    private static final String GET_HOSTEL_BY_RENTER_ID =
+            "SELECT Hostels.hostel_id, Hostels.owner_account_id, Hostels.name, Hostels.address, Hostels.ward, Hostels.district, Hostels.city\n" +
+                    "FROM Hostels INNER JOIN Rooms ON Hostels.hostel_id=Rooms.hostel_id \n" +
+                    "INNER JOIN Contracts ON Rooms.room_id = Contracts.room_id\n" +
+                    "INNER JOIN Accounts ON Contracts.renter_id = Accounts.account_id\n" +
+                    "Where account_id = ?";
 
     public Hostel getHostelById(int hostelId) throws SQLException {
         Connection cn = null;
@@ -176,8 +176,9 @@ public class HostelDAO {
         return listHostels;
     }
 
-    public boolean addHostel(Hostel hostel, List<HostelService> hostelServices) throws SQLException {
-        boolean check = false;
+    public int addHostel(Hostel hostel, List<HostelService> hostelServices) throws SQLException {
+        int id = -1;
+        boolean check;
         Connection cn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -199,7 +200,8 @@ public class HostelDAO {
                 rs = ptm.getGeneratedKeys();
 
                 if (rs.next()) {
-                    hostel.setHostelID(rs.getInt(1));
+                    id = rs.getInt(1);
+                    hostel.setHostelID(id);
                 }
 
                 int c = 0;
@@ -235,7 +237,7 @@ public class HostelDAO {
                 cn.close();
             }
         }
-        return check;
+        return id;
     }
 
     public boolean updateHostel(Hostel hostel, int hostelID) throws SQLException {
@@ -276,13 +278,6 @@ public class HostelDAO {
         return checkUpdate;
     }
 
-    // Renter handler
-    private static final String GET_HOSTEL_BY_RENTER_ID =
-            "SELECT Hostels.hostel_id, Hostels.owner_account_id, Hostels.name, Hostels.address, Hostels.ward, Hostels.district, Hostels.city\n" +
-                    "FROM Hostels INNER JOIN Rooms ON Hostels.hostel_id=Rooms.hostel_id \n" +
-                    "INNER JOIN Contracts ON Rooms.room_id = Contracts.room_id\n" +
-                    "INNER JOIN Accounts ON Contracts.renter_id = Accounts.account_id\n" +
-                    "Where account_id = ?";
     public Hostel getHostelByRenterId(int renterId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -320,6 +315,5 @@ public class HostelDAO {
         }
         return hostel;
     }
-
 
 }

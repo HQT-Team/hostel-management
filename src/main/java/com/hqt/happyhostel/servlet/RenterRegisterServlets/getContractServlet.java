@@ -7,7 +7,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "getContractServlet", value = "/getContractServlet")
@@ -38,12 +37,12 @@ public class getContractServlet extends HttpServlet {
                     //get room information
                     Room roomInfo = new RoomDAO().getRoomById(contract.getRoom_id());
                     //get room infrastructure
-                    ArrayList<Infrastructures> roomInfrastructureList = new InfrastructureDAO().getRoomInfrastructures(contract.getRoom_id());
+                    List<Infrastructures> roomInfrastructureList = new InfrastructureDAO().getRoomInfrastructures(contract.getRoom_id());
                     //get hostel information
                     Hostel hostelInfo = new HostelDAO().getHostelById(roomInfo.getHostelId());
 
                     //get room services
-                    List<ServiceInfo> serviceInfoList = new RoomDAO().getServicesOfHostel(hostelInfo.getHostelID());
+                    List<ServiceInfo> serviceInfoList = new ServiceInfoDAO().getServicesOfHostel(hostelInfo.getHostelID());
 
                     //get hostel owner information
                     AccountInfo hostelOwnerInfo = new AccountDAO().getAccountInformationById(contract.getHostelOwnerId());
@@ -63,11 +62,9 @@ public class getContractServlet extends HttpServlet {
                     HandlerStatus handlerStatus = HandlerStatus.builder().status(false).content("Không thể tìm thấy hợp đồng này").build();
                     request.setAttribute("RESPONSE_MSG", handlerStatus);
                     url = FAIL;
-
                 }
             }
         } catch (Exception e) {
-//
             e.printStackTrace();
         } finally {
             if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);

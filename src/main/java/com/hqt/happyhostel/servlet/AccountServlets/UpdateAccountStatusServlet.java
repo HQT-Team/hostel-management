@@ -22,7 +22,6 @@ public class UpdateAccountStatusServlet extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
 
         try {
-
             int id = Integer.parseInt(request.getParameter("owner_id"));
             int status = Integer.parseInt(request.getParameter("status"));
             boolean check = status == 0 ? accountDAO.updateAccountStatus(id, 1) : accountDAO.updateAccountStatus(id, 0);
@@ -35,10 +34,10 @@ public class UpdateAccountStatusServlet extends HttpServlet {
                         .status(false)
                         .content("Đã có lỗi xảy ra! Cập nhật trạng thái tài khoản thất bại.").build());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log("Error at DashboardServlet: " + e.toString());
-        }finally {
-            request.getRequestDispatcher(url).forward(request,response);
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 }

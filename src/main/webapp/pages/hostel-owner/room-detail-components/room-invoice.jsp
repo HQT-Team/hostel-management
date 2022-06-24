@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="vi_VN"/>
 <div class="room-invoice">
     <div class="invoice-header">
         <div class="invoice-title">Hóa đơn gần nhất</div>
@@ -32,15 +34,16 @@
                 <div class="invoice-group">
                     <div class="invoice-label">Phương thức thanh toán:</div>
                     <div class="invoice-content">
-                            ${requestScope.paymentName}
+                            ${requestScope.paymentName eq null ? "Trống" : requestScope.paymentName}
                     </div>
                 </div>
                 <div class="invoice-group">
                     <div class="invoice-label">Tổng tiền:</div>
                     <c:choose>
                         <c:when test="${requestScope.billRoom ne null}">
-                            <div class="invoice-content price">${requestScope.billRoom.totalMoney}
-                                <span>VNĐ</span></div>
+                            <div class="invoice-content price">
+                                <fmt:formatNumber value="${requestScope.billRoom.totalMoney}" type="currency" currencySymbol="VNĐ"/>
+                            </div>
                         </c:when>
                     </c:choose>
                 </div>
@@ -75,7 +78,6 @@
                         <div class="modal-body">
                             <div class="invoice-detail__wrapper">
                                 <div class="invoice-detail__title">Hóa Đơn Tháng
-<%--                                    <span>05</span>/<span>2021</span>--%>
                                     <span>${requestScope.billRoom.billTitle}</span>
                                 </div>
                                 <div class="invoice-detail__infor">
@@ -191,12 +193,14 @@
                                                     </c:otherwise>
                                                 </c:choose>
 
-                                                <td>${service.servicePrice}</td>
+                                                <td>
+                                                    <fmt:formatNumber value="${service.servicePrice}" type="currency" currencySymbol="VNĐ"/>
+                                                </td>
 
                                                 <c:set var="totalCost"
                                                        value="${totalCost + service.servicePrice * quantity}"/>
                                                 <td><fmt:formatNumber value="${service.servicePrice * quantity}"
-                                                                      type="currency"/></td>
+                                                                      type="currency" currencySymbol="VNĐ"/></td>
                                             </tr>
                                         </c:forEach>
                                         <tr>
@@ -204,17 +208,19 @@
                                             <td>Tiền phòng</td>
                                             <td>phòng</td>
                                             <td>1</td>
-                                            <td>${requestScope.contractRoom.price}</td>
+                                            <td>
+                                                <fmt:formatNumber value="${requestScope.contractRoom.price}" type="currency" currencySymbol="VNĐ"/>
+                                            </td>
                                             <c:set var="totalCost"
                                                    value="${totalCost + requestScope.contractRoom.price}"/>
                                             <td><fmt:formatNumber value="${requestScope.contractRoom.price}"
-                                                                  type="currency"/></td>
+                                                                  type="currency" currencySymbol="VNĐ"/></td>
                                         </tr>
                                         <!-- Total -->
                                         <td colspan="5" class="text-end total">Tổng
                                             tiền:
                                         </td>
-                                        <td><fmt:formatNumber value="${totalCost}" type="currency"/></td>
+                                        <td><fmt:formatNumber value="${totalCost}" type="currency" currencySymbol="VNĐ"/></td>
                                         </tbody>
                                     </table>
                                 </div>

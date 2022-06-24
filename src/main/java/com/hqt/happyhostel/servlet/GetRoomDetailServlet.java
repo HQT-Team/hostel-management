@@ -31,20 +31,21 @@ public class GetRoomDetailServlet extends HttpServlet {
             int roomId = (request.getParameter("roomID") != null ) ? Integer.parseInt(request.getParameter("roomID")) : (int) session.getAttribute("current_room_id");
 
             RoomDAO roomDAO = new RoomDAO();
+            ConsumeDAO consumeDAO = new ConsumeDAO();
             AccountDAO accountDAO = new AccountDAO();
             InfrastructureDAO infrastructureDAO = new InfrastructureDAO();
 
-            Room room = roomDAO.getRoomInformationByRoomID(roomId, hostelID, accID);
+            Room room = roomDAO.getRoomInformationByRoomId(roomId, hostelID, accID);
             session.setAttribute("room", room);
             session.setAttribute("current_room_id", room.getRoomId());
 
             Contract contract = new ContractDAO().getContract(roomId);
             request.setAttribute("contractRoom", contract);
 
-            List<Consume> consumeList = roomDAO.getConsumeHistory(roomId);
+            List<Consume> consumeList = consumeDAO.getConsumeHistory(roomId);
             request.setAttribute("consumeList", consumeList);
 
-            Consume consumeNumber = new ConsumeDAO().getNearestConsume(roomId);
+            Consume consumeNumber = consumeDAO.getNearestConsume(roomId);
             request.setAttribute("consumeNumber", consumeNumber);
 
             List<InfrastructureItem> infrastructureItemList = infrastructureDAO.getAllInfrastructure();
@@ -62,7 +63,7 @@ public class GetRoomDetailServlet extends HttpServlet {
                 request.setAttribute("listRoommatesInfo", listRoommatesInfo);
             }
 
-            ArrayList<Payment> payments = new PaymentDAO().getPaymentList();
+            List<Payment> payments = new PaymentDAO().getPaymentList();
             request.setAttribute("paymentList", payments);
 
             if (bill != null) {
@@ -83,7 +84,7 @@ public class GetRoomDetailServlet extends HttpServlet {
                 request.setAttribute("consumeEnd", consumeEnd);
 
                 int billDetailID = billDetail.getBillDetailID();
-                ArrayList<ServiceInfo> serviceInfos = new ServicesDAO().getServiceOfBill(billDetailID, hostelID);
+                List<ServiceInfo> serviceInfos = new ServiceInfoDAO().getServiceOfBill(billDetailID, hostelID);
                 request.setAttribute("serviceInfo", serviceInfos);
 
                 int accountHOID = billDetail.getAccountHostelOwnerID();
@@ -95,12 +96,8 @@ public class GetRoomDetailServlet extends HttpServlet {
                 request.setAttribute("billPaymenterFullName", accountRenterInfo.getInformation().getFullname());
             }
 
-            ArrayList<Infrastructures> infrastructures = infrastructureDAO.getRoomInfrastructures(roomId);
+            List<Infrastructures> infrastructures = infrastructureDAO.getRoomInfrastructures(roomId);
             request.setAttribute("infrastructures", infrastructures);
-
-//            ArrayList<Infrastructures> infrastructures = infrastructureDAO.getInfrastructures(roomId);
-//            request.setAttribute("infrastructures", infrastructures);
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -124,19 +121,20 @@ public class GetRoomDetailServlet extends HttpServlet {
             int roomId = ((Room) session.getAttribute("room")).getRoomId();
 
             RoomDAO roomDAO = new RoomDAO();
+            ConsumeDAO consumeDAO = new ConsumeDAO();
             AccountDAO accountDAO = new AccountDAO();
             InfrastructureDAO infrastructureDAO = new InfrastructureDAO();
 
-            Room room = roomDAO.getRoomInformationByRoomID(roomId, hostelID, accID);
+            Room room = roomDAO.getRoomInformationByRoomId(roomId, hostelID, accID);
             session.setAttribute("room", room);
 
             Contract contract = new ContractDAO().getContract(roomId);
             request.setAttribute("contractRoom", contract);
 
-            List<Consume> consumeList = roomDAO.getConsumeHistory(roomId);
+            List<Consume> consumeList = consumeDAO.getConsumeHistory(roomId);
             request.setAttribute("consumeList", consumeList);
 
-            Consume consumeNumber = new ConsumeDAO().getNearestConsume(roomId);
+            Consume consumeNumber = consumeDAO.getNearestConsume(roomId);
             request.setAttribute("consumeNumber", consumeNumber);
 
             List<InfrastructureItem> infrastructureItemList = infrastructureDAO.getAllInfrastructure();
@@ -145,7 +143,7 @@ public class GetRoomDetailServlet extends HttpServlet {
             Bill bill = new BillDAO().getLastBill(roomId);
             request.setAttribute("billRoom", bill);
 
-            ArrayList<Payment> payments = new PaymentDAO().getPaymentList();
+            List<Payment> payments = new PaymentDAO().getPaymentList();
             request.setAttribute("paymentList", payments);
 
             if (contract != null) {
@@ -175,7 +173,7 @@ public class GetRoomDetailServlet extends HttpServlet {
                 request.setAttribute("consumeEnd", consumeEnd);
 
                 int billDetailID = billDetail.getBillDetailID();
-                ArrayList<ServiceInfo> serviceInfos = new ServicesDAO().getServiceOfBill(billDetailID, hostelID);
+                List<ServiceInfo> serviceInfos = new ServiceInfoDAO().getServiceOfBill(billDetailID, hostelID);
                 request.setAttribute("serviceInfo", serviceInfos);
 
                 int accountHOID = billDetail.getAccountHostelOwnerID();
@@ -187,16 +185,7 @@ public class GetRoomDetailServlet extends HttpServlet {
                 request.setAttribute("billPaymenterFullName", accountRenterInfo.getInformation().getFullname());
             }
 
-//            String username = accountDAO.getUsernameRoomCurrently(roomId);
-//            request.setAttribute("userNameRenterRoom", username);
-
-//            int accountId = accountDAO.getAccountIdByUserName(username);
-//            request.setAttribute("renterAccountId", accountId);
-
-//            List<RoommateInfo> listRoommatesInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(accountId);
-//            request.setAttribute("listRoommatesInfo", listRoommatesInfo);
-
-            ArrayList<Infrastructures> infrastructures = infrastructureDAO.getRoomInfrastructures(roomId);
+            List<Infrastructures> infrastructures = infrastructureDAO.getRoomInfrastructures(roomId);
             request.setAttribute("infrastructures", infrastructures);
 
         } catch (Exception e) {

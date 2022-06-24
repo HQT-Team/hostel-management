@@ -155,7 +155,7 @@
                                                 </c:otherwise>
                                             </c:choose>
 
-                                            <td>${service.servicePrice}</td>
+                                            <td><fmt:formatNumber value="${service.servicePrice}" type="currency" currencySymbol="VNĐ"/></td>
 
                                             <c:set var="totalCost"
                                                    value="${totalCost + service.servicePrice * quantity}"/>
@@ -171,13 +171,13 @@
                                         <td>${requestScope.contractRoom.price}</td>
                                         <c:set var="totalCost" value="${totalCost + requestScope.contractRoom.price}"/>
                                         <td><fmt:formatNumber value="${requestScope.contractRoom.price}"
-                                                              type="currency"/></td>
+                                                              type="currency" currencySymbol="VNĐ"/></td>
                                     </tr>
                                     <!-- Total -->
                                     <td colspan="5" class="text-end total">Tổng
                                         tiền:
                                     </td>
-                                    <td><fmt:formatNumber value="${totalCost}" type="currency"/></td>
+                                    <td><fmt:formatNumber value="${totalCost}" type="currency" currencySymbol="VNĐ"/></td>
                                     </tbody>
                                 </table>
                             </div>

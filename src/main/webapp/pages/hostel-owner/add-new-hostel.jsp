@@ -24,17 +24,20 @@
 
 </head>
 
-<body class="over-flow-hidden">
-    <div id="preloader">
-        <div class="dots">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
+<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
 
     <!-- Navbar -->
     <%@include file="components/navbar.jsp"%>
+
+    <c:if test="${requestScope.RESPONSE_MSG eq null}">
+        <div id="preloader">
+            <div class="dots">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </c:if>
 
     <!-- Body -->
     <div class="container min-height">
@@ -231,8 +234,61 @@
         });
     </script>
 
-    <!-- Loader -->
-    <script src="./assets/js/loading-handler.js"></script>
+<c:choose>
+    <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq true}">
+        <!-- Alert Modal -->
+        <div class="modal fade" id="alert-modal" tabindex="-1" aria-labelledby="alert-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-success" id="alert-modal-label">Thành công</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pt-5 pb-5">
+                            ${requestScope.RESPONSE_MSG.content} Bạn có muốn thêm phòng cho khu trọ ngay bây giờ không?
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <a href="list-hostels" class="btn btn-secondary">Để sau</a>
+                        <a href="addRoom?hostelID=${requestScope.HOSTEL_ID}" class="btn btn-primary">Thêm phòng ngay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            new bootstrap.Modal(document.getElementById('alert-modal')).show();
+        </script>
+    </c:when>
+    <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq false}">
+        <!-- Alert Modal -->
+        <div class="modal fade" id="alert-modal" tabindex="-1" aria-labelledby="alert-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-danger" id="alert-modal-label">Thất bại</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pt-5 pb-5">
+                            ${requestScope.RESPONSE_MSG.content}
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <a href="list-hostels" class="btn btn-secondary">Quay về</a>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thử lại</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            new bootstrap.Modal(document.getElementById('alert-modal')).show();
+        </script>
+    </c:when>
+</c:choose>
+
+    <c:if test="${requestScope.RESPONSE_MSG eq null}">
+        <!-- Loader -->
+        <script src="./assets/js/loading-handler.js"></script>
+    </c:if>
 
 </body>
 

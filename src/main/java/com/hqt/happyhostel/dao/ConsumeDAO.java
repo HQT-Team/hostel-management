@@ -8,89 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ConsumeDAO {
-
-    public Consume getNearestConsumeNumber(int roomID) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        Consume consume = null;
-        ArrayList<Consume> consumesList = new ArrayList();
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "SELECT TOP 2 consume_id, number_electric, number_water, update_date, status\n" +
-                             "FROM Consumes\n" +
-                             "WHERE room_id = ?\n" +
-                             "ORDER BY update_date DESC";
-
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, roomID);
-
-                rs = pst.executeQuery();
-                if (rs != null) {
-                    while (rs.next()) {
-                        int consumeID = rs.getInt("consume_id");
-                        int numberElectric = rs.getInt("number_electric");
-                        int numberWater = rs.getInt("number_water");
-                        String updateConsumeDate = rs.getString("update_date");
-                        int status = rs.getInt("status");
-                        consumesList.add(Consume.builder()
-                                .consumeID(consumeID)
-                                .roomID(roomID)
-                                .numberElectric(numberElectric)
-                                .numberWater(numberWater)
-                                .updateDate(updateConsumeDate)
-                                .status(status).build());
-                    }
-                }
-                if (consumesList.size() == 2) {
-                    int consumeID = consumesList.get(0).getConsumeID();
-                    String updateConsumeDate = consumesList.get(0).getUpdateDate();
-                    int status = consumesList.get(0).getStatus();
-                    int consumeElectricNumber = consumesList.get(0).getNumberElectric() - consumesList.get(1).getNumberElectric();
-                    int consumeWaterNumber = consumesList.get(0).getNumberWater() - consumesList.get(1).getNumberWater();
-                    consume = Consume.builder()
-                            .consumeID(consumeID)
-                            .roomID(roomID)
-                            .numberElectric(consumeElectricNumber)
-                            .numberWater(consumeWaterNumber)
-                            .updateDate(updateConsumeDate)
-                            .status(status).build();
-                } else if (consumesList.size() == 1) {
-                    consume = consumesList.get(0);
-                } else {
-                    consume = null;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return consume;
-    }
 
     public Consume getNearestConsume(int roomID) {
         Connection cn = null;
@@ -256,6 +176,127 @@ public class ConsumeDAO {
         return isSuccess;
     }
 
+    public List<Consume> getConsumeHistory(int roomID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Consume> consumesList = new ArrayList();
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT consume_id, number_electric, number_water, update_date, status\n" +
+                        "FROM Consumes\n" +
+                        "WHERE room_id = ?\n" +
+                        "ORDER BY consume_id DESC";
 
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
 
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int consumeID = rs.getInt("consume_id");
+                        int numberElectric = rs.getInt("number_electric");
+                        int numberWater = rs.getInt("number_water");
+                        String updateDate = rs.getString("update_date");
+                        int status = rs.getInt("status");
+                        consumesList.add(Consume.builder()
+                                .consumeID(consumeID)
+                                .roomID(roomID)
+                                .numberElectric(numberElectric)
+                                .numberWater(numberWater)
+                                .updateDate(updateDate)
+                                .status(status).build());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return consumesList;
+    }
+
+    public List<Consume> getConsumeThisMonth(int roomID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Consume> consumesList = new ArrayList();
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT consume_id, number_electric, number_water, update_date, status\n" +
+                        "FROM Consumes\n" +
+                        "WHERE room_id = ?\n AND status = 0" +
+                        "ORDER BY update_date DESC";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, roomID);
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int consumeID = rs.getInt("consume_id");
+                        int numberElectric = rs.getInt("number_electric");
+                        int numberWater = rs.getInt("number_water");
+                        String updateDate = rs.getString("update_date");
+                        int status = rs.getInt("status");
+                        consumesList.add(Consume.builder()
+                                .consumeID(consumeID)
+                                .roomID(roomID)
+                                .numberElectric(numberElectric)
+                                .numberWater(numberWater)
+                                .updateDate(updateDate)
+                                .status(status).build());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return consumesList;
+    }
 }

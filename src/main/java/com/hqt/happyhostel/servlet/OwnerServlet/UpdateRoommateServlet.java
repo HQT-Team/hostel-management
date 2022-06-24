@@ -1,6 +1,7 @@
 package com.hqt.happyhostel.servlet.OwnerServlet;
 
 import com.hqt.happyhostel.dao.RoommateInfoDAO;
+import com.hqt.happyhostel.dto.HandlerStatus;
 import com.hqt.happyhostel.dto.Information;
 import com.hqt.happyhostel.dto.RoommateInfo;
 
@@ -50,6 +51,15 @@ public class UpdateRoommateServlet extends HttpServlet {
                     .parentPhone(parentPhone).build();
 
             boolean check = roommateInfoDAO.UpdateRoommateInfo(roommateInfo);
+            if (check) {
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(true)
+                        .content("Cập nhật thông tin thành viên phòng thành công!").build());
+            } else {
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(false)
+                        .content("Đã có lỗi xảy ra. Cập nhật thông tin thành viên thất bại!").build());
+            }
         } catch (Exception e) {
             log("Error at UpdateRoommateServlet: " + e.toString());
         } finally {

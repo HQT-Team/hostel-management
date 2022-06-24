@@ -11,6 +11,19 @@ import java.sql.SQLException;
 public class InformationDAO {
 
     private static final String IS_EXIST_EMAIL = "SELECT email FROM AccountInformations WHERE email = ? ";
+    private static final String GET_HOSTEL_OWNER_INFO_BY_RENTER_ID =
+            "SELECT DISTINCT AccountInformations.fullname, AccountInformations.email, AccountInformations.birthday," +
+            " AccountInformations.sex, AccountInformations.phone, AccountInformations.address, AccountInformations.identity_card_number\n" +
+            "FROM AccountInformations INNER JOIN Accounts ON AccountInformations.account_id=Accounts.account_id\n" +
+            "INNER JOIN Hostels ON Accounts.account_id=Hostels.owner_account_id\n" +
+            "INNER JOIN Contracts ON Accounts.account_id=Contracts.hostel_owner_id\n" +
+            "WHERE Contracts.renter_id= ?";
+    private static final String GET_RENTER_INFO_BY_ID =
+            "SELECT *\n" +
+            "FROM [dbo].[AccountInformations]\n" +
+            "WHERE [account_id] = ?";
+    private static final String UPDATE_PROFILE =
+            "UPDATE AccountInformations SET fullname = ?, email = ?, birthday = ?, phone = ?, address = ?, identity_card_number = ? WHERE account_id = ?";
 
     public boolean isExistEmail(String email) {
         boolean check = false;
@@ -56,24 +69,7 @@ public class InformationDAO {
         return check;
     }
 
-    // Renter handler
-    private static final String GET_HOSTEL_OWNER_INFOR_BY_RENTER_ID =
-            "SELECT DISTINCT AccountInformations.fullname, AccountInformations.email, AccountInformations.birthday," +
-                    " AccountInformations.sex, AccountInformations.phone, AccountInformations.address, AccountInformations.identity_card_number\n" +
-                    "FROM AccountInformations INNER JOIN Accounts ON AccountInformations.account_id=Accounts.account_id\n" +
-                    "INNER JOIN Hostels ON Accounts.account_id=Hostels.owner_account_id\n" +
-                    "INNER JOIN Contracts ON Accounts.account_id=Contracts.hostel_owner_id\n" +
-                    "WHERE Contracts.renter_id= ?";
-
-    private static final String GET_RENTER_INFOR_BY_ID =
-            "SELECT *\n" +
-                    "FROM [dbo].[AccountInformations]\n" +
-                    "WHERE [account_id] = ?";
-
-    private static final String UPDATE_PROFILE =
-            "UPDATE AccountInformations SET fullname = ?, email = ?, birthday = ?, phone = ?, address = ?, identity_card_number = ? WHERE account_id = ?";
-
-    public Information getHostelOwnerInforByRenterId(int renterId) throws SQLException {
+    public Information getHostelOwnerInfoByRenterId(int renterId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -81,7 +77,7 @@ public class InformationDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                pst = cn.prepareStatement(GET_HOSTEL_OWNER_INFOR_BY_RENTER_ID);
+                pst = cn.prepareStatement(GET_HOSTEL_OWNER_INFO_BY_RENTER_ID);
                 pst.setInt(1, renterId);
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
@@ -127,7 +123,7 @@ public class InformationDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                pst = cn.prepareStatement(GET_RENTER_INFOR_BY_ID);
+                pst = cn.prepareStatement(GET_RENTER_INFO_BY_ID);
                 pst.setInt(1, renterId);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()) {

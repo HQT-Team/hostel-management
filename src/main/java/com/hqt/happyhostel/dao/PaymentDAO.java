@@ -5,24 +5,23 @@ import com.hqt.happyhostel.utils.DBUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PaymentDAO {
 
-    public ArrayList<Payment> getPaymentList() {
+    public List<Payment> getPaymentList() {
         Connection cn = null;
         Statement pst = null;
         ResultSet rs = null;
         ArrayList<Payment> paymentList = new ArrayList<>();
         try {
             cn = DBUtils.makeConnection();
+
             if (cn != null) {
-
-                String sql = "SELECT payment_id, payment_name\n" +
-                        "FROM Payment";
-
+                String sql = "SELECT payment_id, payment_name FROM Payment";
                 pst = cn.createStatement();
-
                 rs = pst.executeQuery(sql);
+
                 if (rs != null) {
                     while (rs.next()) {
                         int paymentId = rs.getInt("payment_id");
@@ -30,6 +29,7 @@ public class PaymentDAO {
                         paymentList.add(new Payment(paymentId, paymentName));
                     }
                 }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,37 +62,25 @@ public class PaymentDAO {
     public boolean updateBillStatus(int billID, int paymentID) {
         Connection cn = null;
         PreparedStatement pst = null;
-        ResultSet rs = null;
-        Boolean updated = false;
+        boolean updated = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
 
                 String sql = "UPDATE Bill\n" +
-                        "SET payment_date = GETDATE(), status = 1, payment_id = ?\n" +
-                        "WHERE bill_id = ?\n";
-
+                             "SET payment_date = GETDATE(), status = 1, payment_id = ?\n" +
+                             "WHERE bill_id = ?\n";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, paymentID);
                 pst.setInt(2, billID);
 
-                int rows = pst.executeUpdate();
-                if (rows == 0) {
-                    updated = false;
-                } else {
+                if (pst.executeUpdate() > 0) {
                     updated = true;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
             if (pst != null) {
                 try {
                     pst.close();
@@ -110,6 +98,5 @@ public class PaymentDAO {
         }
         return updated;
     }
-
 
 }

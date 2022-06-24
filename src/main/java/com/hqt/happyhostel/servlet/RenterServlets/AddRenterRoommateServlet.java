@@ -39,7 +39,7 @@ public class AddRenterRoommateServlet extends HttpServlet {
         try {
             int accId = acc.getAccId();
             RoomDAO roomDAO = new RoomDAO();
-            Room room = roomDAO.getHostelRoomInforByRenterId(accId);
+            Room room = roomDAO.getRoomInfoByRenterId(accId);
             int roomCapacity = room.getCapacity();
             String currentRenterAccountUsername = acc.getUsername();
             //Update Roommate Information
