@@ -134,6 +134,80 @@ public class RoomDAO {
         return number;
     }
 
+    public ArrayList<ServiceInfo> getServicesOfHostel(int hostelID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<ServiceInfo> servicesList = new ArrayList<>();
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+
+                String sql = "DECLARE @service_id INT \n" +
+                        "DECLARE @hostel_id INT = ? \n" +
+                        "DECLARE @NewestServicesTable TABLE (service_id int ,hostel_id int , service_price decimal(18, 3) , valid_date datetime) \n" +
+                        "DECLARE cursorServices CURSOR FOR\n" +
+                        "SELECT service_id  FROM (SELECT DISTINCT service_id, hostel_id FROM HostelService WHERE hostel_id = @hostel_id) AS TB \n" +
+                        "Open cursorServices \n" +
+                        "FETCH NEXT FROM cursorServices \n" +
+                        "      INTO @service_id \n" +
+                        "WHILE @@FETCH_STATUS = 0 \n" +
+                        "BEGIN \n" +
+                        "\tDECLARE @validDate datetime \n" +
+                        "\tSet @validDate = (SELECT MAX(valid_date) FROM HostelService WHERE hostel_id = @hostel_id AND service_id = @service_id) \n" +
+                        "\tDECLARE @price decimal(18, 0) \n" +
+                        "\tSET @price = (SELECT service_price FROM HostelService WHERE valid_date = @validDate AND hostel_id = @hostel_id AND service_id = @service_id) \n" +
+                        "\tINSERT @NewestServicesTable SELECT @service_id, @hostel_id, @price, @validDate \n" +
+                        "    FETCH NEXT FROM cursorServices \n" +
+                        "          INTO @service_id \n" +
+                        "END \n" +
+                        "CLOSE cursorServices \n" +
+                        "DEALLOCATE cursorServices \n" +
+                        "SELECT S.service_id, service_name, valid_date, service_price, unit \n" +
+                        "FROM Services S RIGHT JOIN @NewestServicesTable N ON S.service_id = N.service_id";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, hostelID);
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int serviceID = rs.getInt("service_id");
+                        String serviceName = rs.getString("service_name");
+                        int servicePrice = rs.getInt("service_price");
+                        String unit = rs.getString("unit");
+                        String validDate = rs.getString("valid_date");
+                        servicesList.add(new ServiceInfo(hostelID, serviceID, serviceName, validDate, servicePrice, unit));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return servicesList;
+    }
 
     public boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,
                               int quantity1, int status1,
@@ -774,13 +848,14 @@ public class RoomDAO {
 
     // Renter handler
     private static final String GET_HOSTEL_ROOM_INFOR_BY_RENTER_ID =
-            "SELECT Rooms.room_number,Rooms.room_area, COUNT(RoomateInformations.roomate_info_id) AS numberOfMembers\n" +
-                    "FROM Rooms INNER JOIN Contracts ON Rooms.room_id=Contracts.room_id \n" +
-                    "INNER JOIN Accounts ON Contracts.renter_id=Accounts.account_id \n" +
-                    "INNER JOIN RoomateInformations ON Accounts.account_id=RoomateInformations.account_renter_id\n" +
-                    "WHERE Accounts.account_id = ?\n" +
-                    "GROUP BY Rooms.room_number,Rooms.room_area";
-
+            "SELECT R.* FROM Rooms AS R INNER JOIN Contracts AS C \n" +
+                    "ON R.room_id = C.room_id WHERE C.renter_id = ?";
+//            "SELECT Rooms.room_number,Rooms.capacity,Rooms.room_area, COUNT(RoomateInformations.roomate_info_id) AS numberOfMembers\n" +
+//                    "FROM Rooms INNER JOIN Contracts ON Rooms.room_id=Contracts.room_id \n" +
+//                    "INNER JOIN Accounts ON Contracts.renter_id=Accounts.account_id \n" +
+//                    "INNER JOIN RoomateInformations ON Accounts.account_id=RoomateInformations.account_renter_id\n" +
+//                    "WHERE Accounts.account_id = ?\n" +
+//                    "GROUP BY Rooms.room_number,Rooms.room_area,Rooms.capacity";
     public Room getHostelRoomInforByRenterId(int renterId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -795,12 +870,12 @@ public class RoomDAO {
                 if (rs != null && rs.next()) {
                     int roomNumber = rs.getInt("room_number");
                     double roomArea = rs.getInt("room_area");
-                    int numberOfMembers = rs.getInt("numberOfMembers");
+                    int capacity = rs.getInt("capacity");
                     roomInfor = Room
                             .builder()
                             .roomNumber(roomNumber)
+                            .capacity(capacity)
                             .roomArea(roomArea)
-                            .capacity(numberOfMembers)
                             .build();
                 }
             }
@@ -819,5 +894,56 @@ public class RoomDAO {
         }
         return roomInfor;
     }
+
+    public Room getRoomById(int roomId) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Room roomInfor = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(
+                        "SELECT R.[room_id], R.[room_number], R.[room_area], R.[capacity], R.[has_attic], R.[hostel_id], R.[room_status]\n" +
+                                "FROM [dbo].[Rooms] AS R\n" +
+                                "WHERE R.[room_id]= ?");
+                pst.setInt(1, roomId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int roomID = rs.getInt("room_id");
+                    int hostelId = rs.getInt("hostel_id");
+                    int roomNumber = rs.getInt("room_number");
+                    double roomArea = rs.getInt("room_area");
+                    int capacity = rs.getInt("capacity");
+                    int hasAttic = rs.getInt("has_Attic");
+                    int roomStatus = rs.getInt("room_status");
+                    roomInfor = Room
+                            .builder()
+                            .roomId(roomID)
+                            .hostelId(hostelId)
+                            .roomNumber(roomNumber)
+                            .roomArea(roomArea)
+                            .capacity(capacity)
+                            .hasAttic(hasAttic)
+                            .roomStatus(roomStatus)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return roomInfor;
+    }
+
 
 }

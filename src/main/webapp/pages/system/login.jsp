@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -23,7 +24,16 @@
     <link rel="stylesheet" href="./assets/css/system_style/login_style/login.css">
 </head>
 
-<body class="bg-light">
+<body class="bg-light ${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</c:if>
 
     <!-- Navbar -->
     <div class="main-nav bg-white">
@@ -78,7 +88,8 @@
                                     class="form-control">
                                 <span class="form-message"></span>
                             </div>
-                            <div class="form-error-message">${requestScope.WARNING eq null ? "" : requestScope.WARNING}
+                            <div class="form-error-message">
+                                ${requestScope.RESPONSE_MSG.content}
                             </div>
                             <div class="row more-action">
                                 <div class="col-6">
@@ -145,6 +156,11 @@
     <!-- Link your script here -->
     <script src="./assets/js/valid-form.js"></script>
     <script src="./assets/js/system/login-handle.js"></script>
+
+    <c:if test="${requestScope.RESPONSE_MSG eq null}">
+        <!-- Loader -->
+        <script src="./assets/js/loading-handler.js"></script>
+    </c:if>
 </body>
 
 </html>

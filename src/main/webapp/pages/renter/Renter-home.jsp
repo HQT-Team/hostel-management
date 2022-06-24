@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -37,11 +38,13 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
                     <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
-                    <a class="dropdown-item" href="#">Hợp đồng</a>
-                    <a class="dropdown-item" href="#">Hóa đơn</a>
-                    <a class="dropdown-item" href="#">Báo cáo</a>
+                    <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
+                    <a class="dropdown-item" href="Renter-bill">Hóa đơn</a>
+                    <a class="dropdown-item" href="Renter-report">Báo cáo</a>
                     <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
                     <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
+                    <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
+                    <a class="dropdown-item" href="Get-report">Xem báo cáo</a>
                     <a class="dropdown-item" href="logout">Đăng xuất</a>
                 </div>
             </div>
@@ -82,10 +85,12 @@
                     <div class="card-body">
                         <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
                         <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
-                        <h3><a href="#">Hợp đồng</a></h3>
-                        <h3><a href="#">Hóa đơn</a></h3>
-                        <h3><a href="#">Gửi báo cáo</a></h3>
+                        <h3><a href="ContractPage">Hợp đồng</a></h3>
+                        <h3><a href="Renter-bill">Hóa đơn</a></h3>
+                        <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                         <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
+                        <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
+                        <h3><a href="Get-report">Xem báo cáo</a></h3>
                     </div>
                 </div>
             </div>
@@ -110,27 +115,27 @@
         <div class="content row">
             <div class="content-top row">
                 <div class="content-top-1 ">
-                    <h3>Hostel</h3>
-                    <p>Hostel: ${HOSTEL.hostelName}</p>
-                    <p>Address: ${HOSTEL.address},${HOSTEL.ward.split('-')[1]},${HOSTEL.district.split('-')[1]},${HOSTEL.city.split('-')[1]}</p>
-                    <h3>Room</h3>
-                    <p>Room number: ${ROOM_INFOR.roomNumber}</p>
-                    <p>Area: ${ROOM_INFOR.roomArea}</p>
-                    <p>Number of members: ${ROOM_INFOR.capacity}</p>
+                    <h3>Khu Trọ</h3>
+                    <p>Tên: ${HOSTEL.hostelName}</p>
+                    <p>Địa chỉ: ${HOSTEL.address},${HOSTEL.ward.split('-')[1]},${HOSTEL.district.split('-')[1]},${HOSTEL.city.split('-')[1]}</p>
+                    <h3>Phòng</h3>
+                    <p>Phòng số: ${ROOM_INFOR.roomNumber}</p>
+                    <p>Diện tích: ${ROOM_INFOR.roomArea} m2</p>
+                    <p>Số thành viên: ${NUM_OF_MEMBERS}/${ROOM_INFOR.capacity}</p>
                 </div>
                 <div class="content-top-2 ">
-                    <h3>Hostel owner</h3>
-                    <p>Name: ${ACCOUNT_INFOR.fullname}</p>
-                    <p>Phone: ${ACCOUNT_INFOR.phone}</p>
+                    <h3>Chủ Trọ</h3>
+                    <p>Tên: ${ACCOUNT_INFOR.fullname}</p>
+                    <p>Số Điện Thoại: ${ACCOUNT_INFOR.phone}</p>
                 </div>
             </div>
             <div class="content-bottom row">
                 <div class="content-bottom-1">
-                    <h3>Infrastructure</h3>
+                    <h3>Thiết Bị</h3>
                     <table>
                         <tr>
-                            <th>Name</th>
-                            <th>Quantity</th>
+                            <th>Tên</th>
+                            <th>Số lượng</th>
                         </tr>
                         <c:forEach var="infras" items="${INFRASTRUCTURES}">
                             <tr>
@@ -143,16 +148,20 @@
                 </div>
 
                 <div class="content-bottom-2">
-                    <h3>Service</h3>
+                    <h3>Dịch vụ</h3>
                     <table>
                         <tr>
-                            <th>Name</th>
-                            <th>Price</th>
+                            <th>Tên</th>
+                            <th>Giá</th>
                         </tr>
                         <c:forEach var="s" items="${SERVICES}">
                             <tr>
+
                                 <td>${s.serviceName}</td>
-                                <td>${s.servicePrice}</td>
+                                <td>
+                                    <fmt:setLocale value="vi_VN"/>
+                                    <fmt:formatNumber value="${s.servicePrice}" type="currency" currencySymbol="VNĐ"/>
+                                </td>
                             </tr>
                         </c:forEach>
                     </table>

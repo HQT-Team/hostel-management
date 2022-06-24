@@ -27,7 +27,14 @@
     <link rel="stylesheet" href="./assets/css/system_style/home_style/home.css">
 </head>
 
-<body class="position-relative">
+<body class="position-relative over-flow-hidden">
+<div id="preloader">
+    <div class="dots">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
 
 <!-- Navbar -->
 <div class="home-navbar">
@@ -70,7 +77,7 @@
                                 Đăng ký
                                 <div class="register-modal">
                                     <a href="registerPage" class="register-owner">Chủ trọ</a>
-                                    <a href="" class="register-renter">Người thuê</a>
+                                    <a href="renter-register-page" class="register-renter">Người thuê</a>
                                 </div>
                             </button>
                         </div>
@@ -142,7 +149,7 @@
                         HQT-Hostel là một nền tảng cho phép người thuê dễ dàng kết nối với
                         chủ trọ, xem thông tin và hàng loạt tính năng mới
                     </div>
-                    <a href="#" class="banner-link renter-link" data-aos="fade-up" data-aos-duration="1000">
+                    <a href="renter-register-page" class="banner-link renter-link" data-aos="fade-up" data-aos-duration="1000">
                         Trở thành người thuê Ngay
                     </a>
                 </div>
@@ -219,6 +226,8 @@
 <script src="./assets/js/jquery-3.5.1.min.js"></script>
 <!-- Link your script here -->
 <script src="./assets/js/system/home-handle.js"></script>
+<!-- Loader -->
+<script src="./assets/js/loading-handler.js"></script>
 </body>
 
 </html>

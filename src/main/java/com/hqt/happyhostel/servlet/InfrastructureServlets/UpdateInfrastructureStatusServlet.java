@@ -1,8 +1,6 @@
-package com.hqt.happyhostel.servlet.InfrastructureServlet;
+package com.hqt.happyhostel.servlet.InfrastructureServlets;
 
 import com.hqt.happyhostel.dao.InfrastructureDAO;
-import com.hqt.happyhostel.dao.RoomDAO;
-import lombok.extern.java.Log;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

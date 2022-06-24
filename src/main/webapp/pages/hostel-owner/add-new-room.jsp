@@ -24,17 +24,27 @@
 
 </head>
 
-<body>
-<!-- Navbar -->
-<%@include file="components/navbar.jsp"%>
+<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
 
+<!-- Navbar -->
+<%@include file="./components/navbar.jsp"%>
+
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</c:if>
 
 <!-- Body -->
 <div class="container min-height">
     <div class="row position-relative">
         <!-- Sidebar -->
         <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
-            <%@include file="components/sidebar.jsp"%>
+            <%@include file="./components/sidebar.jsp"%>
         </div>
         <!-- Content -->
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 content-group">
@@ -191,7 +201,7 @@
 </div>
 
 <!-- Footer -->
-<%@include file="components/footer.jsp"%>
+<%@include file="./components/footer.jsp"%>
 
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -214,31 +224,104 @@
             Validator.isRequired('#room-quantity', 'Vui lòng nhập số lượng phòng cần tạo'),
             Validator.minNumber('#room-quantity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
             Validator.maxNumber('#room-quantity', 50, 'Vui lòng nhập số lượng dưới 50'),
+            Validator.isInteger('#room-quantity', 'Số lượng phòng phải là số nguyên'),
             Validator.isRequired('#room-name', 'Vui lòng nhập phòng số'),
             Validator.isRequired('#room-capacity', 'Vui lòng nhập số lượng thành viên tối đa'),
             Validator.minNumber('#room-capacity', 1, 'Vui lòng nhập số lượng tối thiểu là 1'),
             Validator.maxNumber('#room-capacity', 10, 'Vui lòng nhập số lượng dưới 10'),
+            Validator.isInteger('#room-capacity', 'Số lượng người phải là số nguyên'),
             Validator.maxNumber('#room-area', 1000, 'Vui lòng nhập giá trị dưới 1000'),
             Validator.minNumber('#room-area', 1, 'Vui lòng nhập giá trị tối thiểu là 1'),
             Validator.minNumber('#room-toilet', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
+            Validator.isInteger('#room-toilet', 'Số lượng phải là số nguyên'),
             Validator.minNumber('#room-window', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
+            Validator.isInteger('#room-window', 'Số lượng phải là số nguyên'),
             Validator.minNumber('#room-door', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
+            Validator.isInteger('#room-door', 'Số lượng phải là số nguyên'),
             Validator.minNumber('#room-air-conditioner', 0, 'Vui lòng nhập giá trị tối thiểu là 0'),
+            Validator.isInteger('#room-air-conditioner', 'Số lượng phải là số nguyên'),
         ]
     });
 
+    function getParent(element, selector) {
+        while (element.parentElement) {
+            if (element.parentElement.matches(selector)) {
+                return element.parentElement;
+            }
+            element = element.parentElement;
+        }
+    }
+
     const inputName = document.querySelector('#room-name');
+    const errorElement = getParent(inputName, ".form-group").querySelector('.form-message');
 
     document.querySelector('#room-quantity').addEventListener('change', (e) => {
         if (e.target.value != '1') {
             inputName.setAttribute("disabled", "true");
             inputName.value = "0";
+            errorElement.innerHTML = "";
         } else {
             inputName.removeAttribute("disabled");
             inputName.value = "";
         }
     })
 </script>
+
+<c:choose>
+    <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq true}">
+        <!-- Alert Modal -->
+        <div class="modal fade" id="alert-modal" tabindex="-1" aria-labelledby="alert-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-success" id="alert-modal-label">Thành công</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pt-5 pb-5">
+                        ${requestScope.RESPONSE_MSG.content}
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <a href="detailHostel?hostelID=${requestScope.hostel.hostelID}" class="btn btn-secondary">Quay về khu trọ</a>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thêm tiếp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            new bootstrap.Modal(document.getElementById('alert-modal')).show();
+        </script>
+    </c:when>
+    <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq false}">
+        <!-- Alert Modal -->
+        <div class="modal fade" id="alert-modal" tabindex="-1" aria-labelledby="alert-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-danger" id="alert-modal-label">Thất bại</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pt-5 pb-5">
+                            ${requestScope.RESPONSE_MSG.content}
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <a href="detailHostel?hostelID=${requestScope.hostel.hostelID}" class="btn btn-secondary">Quay về khu trọ</a>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thêm lại</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            new bootstrap.Modal(document.getElementById('alert-modal')).show();
+        </script>
+    </c:when>
+</c:choose>
+
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <!-- Loader -->
+    <script src="./assets/js/loading-handler.js"></script>
+</c:if>
 
 </body>
 

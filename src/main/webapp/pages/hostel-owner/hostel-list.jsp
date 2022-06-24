@@ -29,7 +29,16 @@
 
 </head>
 
-<body>
+<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+    <c:if test="${requestScope.RESPONSE_MSG eq null}">
+        <div id="preloader">
+            <div class="dots">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </c:if>
 
     <div class="app">
 
@@ -114,6 +123,9 @@
         <!-- Footer -->
         <%@include file="components/footer.jsp"%>
 
+        <!-- Toast element -->
+        <div id="toast">&nbsp;</div>
+
     </div>
 
     <!-- Script Bootstrap !important -->
@@ -132,6 +144,32 @@
             $('#hostel-table').DataTable();
         });
     </script>
+    <script src="./assets/js/toast-alert.js"></script>
+    <script>
+        <c:choose>
+            <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+                toast({
+                    title: 'Thành công',
+                    message: '${requestScope.RESPONSE_MSG.content}',
+                    type: 'success',
+                    duration: 4000
+                });
+            </c:when>
+            <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+                toast({
+                    title: 'Lỗi',
+                    message: '${requestScope.RESPONSE_MSG.content}',
+                    type: 'error',
+                    duration: 4000
+                });
+            </c:when>
+        </c:choose>
+    </script>
+
+    <c:if test="${requestScope.RESPONSE_MSG eq null}">
+        <!-- Loader -->
+        <script src="./assets/js/loading-handler.js"></script>
+    </c:if>
 </body>
 
 </html>

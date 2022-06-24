@@ -24,7 +24,15 @@
 
 </head>
 
-<body>
+<body class="over-flow-hidden">
+<div id="preloader">
+    <div class="dots">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+
 <!-- Navbar -->
 <%@include file="./components/navbar.jsp"%>
 
@@ -57,7 +65,8 @@
                                     lực</span>
                         </div>
                         <div id="invite-recreate" class="invite-recreate d-none">
-                            <form action="">
+                            <form action="createInvite" method="post">
+                                <input type="hidden" name="room_id" value="${sessionScope.room.roomId}">
                                 <button class="invite-recreate-btn" type="submit">Tạo mới mã tham gia</button>
                             </form>
                         </div>
@@ -146,6 +155,9 @@
         targetDate: "${requestScope.ROOM_INVITE.expiredTimeCode}"
     });
 </script>
+
+<!-- Loader -->
+<script src="./assets/js/loading-handler.js"></script>
 
 </body>
 

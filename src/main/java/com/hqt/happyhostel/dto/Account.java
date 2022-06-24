@@ -19,6 +19,8 @@ public class Account {
     private int status;
     private int role;
     private int roomId;
+    private String otp;
+    private String expiredTimeOTP;
     private AccountInfo accountInfo;
     private ArrayList<RoommateInfo> roommateInfo;
 }

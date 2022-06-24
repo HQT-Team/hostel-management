@@ -67,7 +67,7 @@
             </span>
         </div>
         <div class="infor-group">Số lượng thành viên:
-            <span>${requestScope.listRoommatesInfo.size()}/${sessionScope.room.capacity}</span>
+            <span>${requestScope.listRoommatesInfo eq null ? 0 : requestScope.listRoommatesInfo.size()}/${sessionScope.room.capacity}</span>
         </div>
     </div>
 </div>

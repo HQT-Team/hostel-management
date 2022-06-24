@@ -2,73 +2,74 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-@media screen and (min-width: 1024px) {
-  body {
-    position: relative;
-  }
 
-  .dropdown {
-    display: none;
-  }
+body {
+  position: relative;
+}
 
-  .main-body {
-    padding: 0px;
-    margin: 0px;
-  }
+.dropdown {
+  display: none;
+}
 
-  .content {
+.main-body {
+  padding: 0px;
+  margin: 0px;
+}
+body{
+  overflow-x: hidden;
+}
+.content {
+  width: 70%;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+
+  table {
+    margin: 100px auto;
     width: 70%;
-    margin: 0px;
-    padding: 0px;
+    text-align: center;
+    font-size: 25px;
 
-    table {
-      margin: 100px auto;
-      width: 500px;
-      text-align: center;
-      font-size: 25px;
+    h2 {
+      color: rgb(119, 0, 255);
+      font-size: 26px;
+    }
 
-      h2 {
-        color: rgb(119, 0, 255);
-        font-size: 26px;
+    tr {
+h2{
+  font-weight: 500;
+  font-size: 28px;
+}
+      th {
+        font-size: 24px;
+        border: 1px solid black;
+        font-weight: 500;
       }
 
-      tr {
-        th {
-          border: 1px solid black;
-        }
-
-        td {
-          border: 1px solid black;
-
-          button {
-            width: 60px;
-            height: 30px;
-          }
+      td {
+        border: 1px solid black;
+        font-size: 20px;
+        button {
+          width: 80px;
+          height: 30px;
         }
       }
     }
   }
-
-  .modal {
-    position: absolute;
-    top: 50px;
-
-    .modal-header {
-      background-color: rgb(119, 0, 255);
-    }
-
-    .modal-body {
-      h3 {
-        display: block;
-        padding-left: 20px;
-        font-size: 23px;
-      }
+  .modal-header {
+    h5 {
+      color: #6A5AF9;
+      width: 100%;
+      text-align: center;
     }
   }
 }
 
+
+
+
 @media screen and (min-width: 740px) and (max-width: 1024px) {
-  .link{
+  .link {
     display: none;
   }
 
@@ -92,7 +93,7 @@
 
     table {
       margin: 100px auto;
-      width: 500px;
+      width: 80%;
       text-align: center;
       font-size: 25px;
 
@@ -118,24 +119,6 @@
     }
   }
 
-
-  .modal {
-    width: 100%;
-    position: absolute;
-    top: 50px;
-
-    .modal-header {
-      background-color: rgb(119, 0, 255);
-    }
-
-    .modal-body {
-      h3 {
-        display: block;
-        padding-left: 20px;
-        font-size: 23px;
-      }
-    }
-  }
 }
 
 @media screen and (max-width: 740px) {
@@ -192,9 +175,31 @@
     padding: 0px;
     width: 100%;
 
-    .table {
-      width: 162px;
-      margin: 20px 34%;
+    table {
+      margin: 100px auto;
+      width: 80%;
+      text-align: center;
+      font-size: 25px;
+
+      h2 {
+        color: rgb(119, 0, 255);
+        font-size: 26px;
+      }
+
+      tr {
+        th {
+          border: 1px solid black;
+        }
+
+        td {
+          border: 1px solid black;
+
+          button {
+            width: 60px;
+            height: 30px;
+          }
+        }
+      }
     }
   }
 }

@@ -1,0 +1,148 @@
+@import "./_common-style/_navbar";
+@import "./_common-style/_footer";
+@import "./_common-style/_sidebar";
+
+.dashboard {
+  display: none;
+}
+
+.link {
+  display: none;
+}
+body{
+  overflow-x: hidden;
+}
+.dropdown {
+  #dropdownMenuButton {
+    width: 130px;
+    height: 45px;
+    background-color: #6A5Af9;
+    font-size: 16px;
+  }
+
+  .dropdown-menu {
+    a {
+      font-size: 14px;
+    }
+
+    a:hover {
+      background-color: #6A5Af9;
+      color: #eee;
+    }
+  }
+}
+
+.content {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  min-height: 600px;
+
+  .report {
+    width: 100%;
+    margin: 0px;
+    padding: 50px 20px;
+
+    input {
+      width: 30%;
+      height: 30px;
+      border: 2px solid #7b7b7b;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      padding-left: 10px;
+    }
+
+    input:focus {
+      border-color: #6A5Af9;
+    }
+
+    table {
+      width: 100%;
+
+      tr {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr 2fr 1fr 1fr;
+
+        th {
+          line-height: 19px;
+          font-size: 16px;
+        }
+      }
+
+      tbody {
+        tr {
+          display: grid;
+          grid-template-columns: 1fr 2fr 1fr 2fr 1fr 1fr;
+
+          td {
+            line-height: 19px;
+            font-size: 16px;
+
+            p {
+              width: 100%;
+              word-wrap: break-word;
+            }
+          }
+        }
+      }
+
+
+
+    }
+  }
+
+}
+
+footer {
+  font-size: 18px;
+}
+
+@media screen and (max-width: 600px) {
+  .dropdown {
+    #dropdownMenuButton {
+      width: 80px;
+      height: 35px;
+      background-color: #6A5Af9;
+      font-size: 16px;
+    }
+
+    .dropdown-menu {
+      a {
+        font-size: 10px;
+      }
+
+      a:hover {
+        background-color: #6A5Af9;
+        color: #eee;
+      }
+    }
+  }
+
+  .navbar {
+    height: 60px;
+
+    .navbar-center {
+
+      a {
+        img {
+          width: 100px;
+          height: 30px;
+        }
+      }
+    }
+
+    .navbar-right {
+      width: 20%;
+      padding: 0px;
+
+      a {
+        font-size: 15px;
+
+        img {
+          display: none;
+        }
+      }
+    }
+  }
+
+}

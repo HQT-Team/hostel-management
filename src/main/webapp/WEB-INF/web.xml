@@ -3,6 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <session-config>
+        <session-timeout>20</session-timeout>
+    </session-config>
     <context-param>
         <param-name>SITEMAP_PROPERTIES_FILE_LOCATION</param-name>
         <param-value>/WEB-INF/siteMap.properties</param-value>
@@ -27,10 +30,17 @@
         <filter-name>AuthorizationFilter</filter-name>
         <filter-class>com.hqt.happyhostel.filter.AuthorizationFilter</filter-class>
     </filter>
-
+    <filter>
+        <filter-name>RenterRegisterFilter</filter-name>
+        <filter-class>com.hqt.happyhostel.filter.RenterRegisterFilter</filter-class>
+    </filter>
     <filter>
         <filter-name>DispatcherFilter</filter-name>
         <filter-class>com.hqt.happyhostel.filter.DispatcherFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>CharsetFilter</filter-name>
+        <filter-class>com.hqt.happyhostel.filter.CharsetFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
@@ -50,12 +60,32 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-<!--    <filter-mapping>-->
-<!--        <filter-name>RoleFilter</filter-name>-->
-<!--        <url-pattern>/loginAction</url-pattern>-->
-<!--    </filter-mapping>-->
+    <filter-mapping>
+        <filter-name>RenterRegisterFilter</filter-name>
+        <url-pattern>/verify-renter-page</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>RenterRegisterFilter</filter-name>
+        <url-pattern>/confirm-room-info-page</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>RenterRegisterFilter</filter-name>
+        <url-pattern>/input-account-information-page</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>DispatcherFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CharsetFilter</filter-name>
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>

@@ -25,7 +25,18 @@
 
 </head>
 
-<body>
+<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</c:if>
+
 <!-- Navbar -->
 <%@include file="components/navbar.jsp" %>
 
@@ -114,7 +125,11 @@
                                                 <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Hủy bỏ
                                                 </button>
-                                                <a href="" class="btn btn-danger">Đồng ý</a>
+                                                <form action="end-rental-contract" method="POST">
+                                                    <input type="hidden" name="room-id" value="${sessionScope.room.roomId}" />
+                                                    <input type="hidden" name="renter-account-id" value="${requestScope.renterAccountId}" />
+                                                    <button type="submit" class="btn btn-danger">Đồng ý</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -141,6 +156,11 @@
 <script src="./assets/js/handle-main-navbar.js"></script>
 <script src="./assets/js/valid-form.js"></script>
 <script src="./assets/js/owner/room-detail/validate-input.js"></script>
+
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <!-- Loader -->
+    <script src="./assets/js/loading-handler.js"></script>
+</c:if>
 </body>
 
 </html>

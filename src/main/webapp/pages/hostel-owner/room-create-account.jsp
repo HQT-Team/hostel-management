@@ -73,6 +73,19 @@
                         <div class="form-group">
                             <div class="row align-items-center">
                                 <div class="col-6">
+                                    <label for="room-email" class="form-label">Email:
+                                        <span>*</span></label>
+                                </div>
+                                <div class="col-6">
+                                    <input id="room-email" name="room-email" type="text"
+                                           class="form-control m-0" placeholder="Nhập email của tài khoản">
+                                </div>
+                            </div>
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="row align-items-center">
+                                <div class="col-6">
                                     <label for="room-electric" class="form-label">Số điện hiện tại:
                                         <span>*</span></label>
                                 </div>

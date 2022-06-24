@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet;
+package com.hqt.happyhostel.servlet.InviteRoomServlets;
 
 import com.hqt.happyhostel.dao.HostelOwnerDAO;
 import com.hqt.happyhostel.dao.RoomDAO;

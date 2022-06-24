@@ -64,7 +64,9 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-xs-11 col-sm-11 col-md-8 col-lg-6 col-xl-5 col-xxl-5 m-auto">
-                    <form action="" method="POST" id="register-form" class="custom-form register-form">
+                    <form action="renter-register" method="POST" id="register-form" class="custom-form register-form">
+                        <input type="hidden" name="username" value="${sessionScope.RENTER_ACCOUNT_USERNAME}">
+                        <input type="hidden" name="roomId" value="${sessionScope.RENTER_ACCOUNT_USERNAME}">
                         <div class="form-header">
                             <h3 class="form-title">Tài khoản đăng nhập</h3>
                             <div class="form-subtitle">
@@ -74,7 +76,7 @@
                         <div class="spacer"></div>
                         <div class="form-group">
                             <label for="username" class="form-label">Tên tài khoản <span>*</span></label>
-                            <input id="username" name="username" type="text" disabled class="form-control">
+                            <input id="username" name="username" value="${sessionScope.RENTER_ACCOUNT_USERNAME}" type="text" disabled class="form-control">
                             <span class="form-message"></span>
                         </div>
                         <div class="row">
@@ -95,17 +97,6 @@
                             <label for="fullname" class="form-label">Tên đại diện <span>*</span></label>
                             <input id="fullname" name="fullname" type="text" placeholder="VD: Nguyễn Văn A"
                                    class="form-control">
-                            <span class="form-message"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone" class="form-label">Số điện thoại <span>*</span></label>
-                            <input id="phone" name="phone" type="text"
-                                   placeholder="Nhập số điện thoại người đại diện" class="form-control">
-                            <span class="form-message"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email <span>*</span></label>
-                            <input id="email" name="email" type="text" class="form-control" disabled>
                             <span class="form-message"></span>
                         </div>
                         <div class="register-policy">
@@ -147,8 +138,6 @@
         errorSelector: ".form-message",
         rules: [
             Validator.isRequired("#fullname", "Vui lòng nhập tên người đại diện"),
-            Validator.isRequired("#phone", "Vui lòng nhập số điện thoại của người đại diện"),
-            Validator.isViePhoneNumber("#phone"),
             Validator.minLength("#password", 6),
             Validator.isRequired("#confirm-password"),
             Validator.isConfirmed(

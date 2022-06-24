@@ -2,6 +2,7 @@ package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
+import com.hqt.happyhostel.dto.HandlerStatus;
 import com.hqt.happyhostel.dto.Hostel;
 import com.hqt.happyhostel.dto.Room;
 import com.hqt.happyhostel.dto.ServiceInfo;
@@ -64,10 +65,13 @@ public class AddRoomServlet extends HttpServlet {
                             airConditions, airConditionsStatus);
                     url = "AddRoomPage";
                     if (isSuccess) {
-                        request.setAttribute("isSuccess", "true");
+                        request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                                .status(true)
+                                .content("Bạn đã thêm 1 phòng mới thành công!").build());
                     } else {
-                        request.setAttribute("isSuccess", "false");
-                        break;
+                        request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                                .status(false)
+                                .content("Đã có lỗi xảy ra! Thêm phòng mới thất bại!").build());
                     }
                 }
             } else {
@@ -80,9 +84,13 @@ public class AddRoomServlet extends HttpServlet {
                         airConditions, airConditionsStatus);
                 url = "AddRoomPage";
                 if (isSuccess) {
-                    request.setAttribute("isSuccess", "true");
+                    request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                            .status(true)
+                            .content("Bạn đã thêm " + quantityRoom + " phòng mới thành công!").build());
                 } else {
-                    request.setAttribute("isSuccess", "false");
+                    request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                            .status(false)
+                            .content("Đã có lỗi xảy ra! Thêm phòng mới thất bại!").build());
                 }
             }
 
