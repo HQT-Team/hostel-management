@@ -681,7 +681,7 @@ public class AccountDAO {
             if (conn != null) {
                 String sql = "SELECT A.[account_id]\n" +
                         "FROM [dbo].[Accounts] AS A JOIN [dbo].[AccountInformations] AS AI ON A.[account_id] = AI.[account_id]\n" +
-                        "WHERE A.[account_id] = ? AND A.[otp] = ? AND GETDATE() < A.[expiredTimeOTP]";
+                        "WHERE A.[account_id] = ? AND A.[otp] = ? AND GETDATE() < A.[expired_time_otp]";
                 psm = conn.prepareStatement(sql);
                 psm.setInt(1, accId);
                 psm.setString(2, otp);
@@ -705,7 +705,7 @@ public class AccountDAO {
 
     private static final String UPDATE_ACCOUNT_PASSWORD = "Update [dbo].[Accounts] Set [password] = ? Where [account_id] = ?";
     private static final String UPDATE_ACCOUNT_FULLNAME = "Update [dbo].[AccountInformations] Set [fullname] = ? Where [account_id] = ?";
-    private static final String UPDATE_ACCOUNT_OTP = "Update [dbo].[Accounts] Set [otp]  = ?, [expiredTimeOTP] = ? Where [account_id] = ? ";
+    private static final String UPDATE_ACCOUNT_OTP = "Update [dbo].[Accounts] Set [otp]  = ?, [expired_time_otp] = ? Where [account_id] = ? ";
 
     public boolean updateAccountPass(int accId, String pass) {
         Connection cn = null;
