@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -37,11 +38,13 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
           <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
-          <a class="dropdown-item" href="#">Hợp đồng</a>
-          <a class="dropdown-item" href="#">Hóa đơn</a>
-          <a class="dropdown-item" href="#">Báo cáo</a>
+          <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
+          <a class="dropdown-item" href="Renter-bill">Hóa đơn</a>
+          <a class="dropdown-item" href="Renter-report">Báo cáo</a>
           <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
           <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
+          <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
+          <a class="dropdown-item" href="Get-report">Xem báo cáo</a>
           <a class="dropdown-item" href="logout">Đăng xuất</a>
         </div>
       </div>
@@ -83,10 +86,12 @@
           <div class="card-body">
             <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
             <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
-            <h3><a href="#">Hợp đồng</a></h3>
-            <h3><a href="#">Hóa đơn</a></h3>
-            <h3><a href="#">Gửi báo cáo</a></h3>
+            <h3><a href="ContractPage">Hợp đồng</a></h3>
+            <h3><a href="Renter-bill">Hóa đơn</a></h3>
+            <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
+            <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
+            <h3><a href="Get-report">Xem báo cáo</a></h3>
           </div>
         </div>
       </div>
@@ -104,7 +109,7 @@
             <h3><a href="logout">Đăng xuất</a></h3>
           </div>
         </div>
-      </div>2
+      </div>
     </div>
     <div class="content row">
       <div class="profile">
@@ -112,13 +117,18 @@
         <h3>Tên: ${ACC_INFO.fullname}</h3>
         <h3>Email: ${ACC_INFO.email}</h3>
         <h3>Ngày sinh: ${ACC_INFO.birthday}</h3>
-        <h3>Giới tính: ${ACC_INFO.sex}</h3>
+        <h3>Giới tính:
+          <c:if test="${ACC_INFO.sex == 1}">
+            Nam
+          </c:if>
+          <c:if test="${ACC_INFO.sex == 0}">
+            Nữ
+          </c:if>
+        </h3>
         <h3>Số điện thoại: ${ACC_INFO.phone}</h3>
         <h3>Địa chỉ: ${ACC_INFO.address}</h3>
         <h3>CCCD: ${ACC_INFO.cccd}</h3>
-        <a href="Renter-update-profile" role="button"
-           style="text-decoration: none;font-size: 28px;border-radius: 8px;background-color: rgb(0, 153, 25);color: aliceblue;padding: 5px;margin-top: 10px;">Chỉnh
-          Sửa</a>
+        <a href="Renter-update-profile" role="button">Chỉnh Sửa</a>
       </div>
     </div>
   </div>

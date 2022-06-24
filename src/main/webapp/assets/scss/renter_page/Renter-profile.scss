@@ -2,51 +2,53 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-@media screen and (min-width: 1024px) {
-  body {
-    font-size: 20px;
-  }
+body {
+  font-size: 20px;
+}
+body{
+  overflow-x: hidden;
+}
+.dropdown {
+  display: none;
+}
 
-  .dropdown {
-    display: none;
-  }
+.content {
+  width: 70%;
 
-  .content {
-    width: 70%;
+  .profile {
+    width: 500px;
+    min-height: 400px;
+    text-align: center;
+    margin: 150px auto;
+    padding-top: 20px;
+    color: #000000;
+    border-radius: 8px;
+    background: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 
-    .profile {
-      width: 500px;
-      min-height: 400px;
-      text-align: center;
-      margin: auto;
-      padding-top: 20px;
-      color: #000000;
-      border-radius: 8px;
-      background: rgb(255, 255, 255);
-      box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    h2 {
+      margin: 10px auto;
+      font-size: 2em;
+      width: 444px;
+      display: block;
+      color: rgb(25, 0, 255);
 
-      h2 {
-        margin: 10px auto;
-        font-size: 2em;
-        width: 444px;
-        display: block;
-        color: rgb(25, 0, 255);
+    }
 
-      }
+    h3 {
 
-      h3 {
-
-        margin: 5px auto;
-        display: block;
-        font-size: 22px;
-        width: 444px;
-      }
+      margin: 5px auto;
+      display: block;
+      font-size: 22px;
+      width: 444px;
     }
   }
 }
 
 
+
 @media screen and (min-width: 740px) and (max-width: 1024px) {
+
   .dropdown {
     display: block;
   }
@@ -104,24 +106,30 @@
       width: 80%;
       height: 250px;
       margin: auto;
+      padding: 20px;
       text-align: center;
       border-radius: 8px;
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
 
       h2 {
-        font-size: 20px;
+        display: inline-block;
+        width: 100%;
+        font-size: 22px;
       }
 
       h3 {
+        display: inline-block;
+        width: 100%;
         font-size: 18px;
       }
 
       a {
-        margin: 0px;
-        padding: 0px;
         display: block;
         font-size: 18px;
+        color: #eee;
+        width: 40%;
+        margin: auto;
       }
     }
   }

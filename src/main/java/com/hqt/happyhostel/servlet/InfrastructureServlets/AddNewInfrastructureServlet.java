@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet.InfrastructureServlet;
+package com.hqt.happyhostel.servlet.InfrastructureServlets;
 
 import com.hqt.happyhostel.dao.InfrastructureDAO;
 
@@ -6,8 +6,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 @WebServlet(name = "AddNewInfrastructureServlet", value = "/AddNewInfrastructureServlet")
 public class AddNewInfrastructureServlet extends HttpServlet {

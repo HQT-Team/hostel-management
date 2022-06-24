@@ -11,15 +11,17 @@
         <div class="infor-group">Diện tích:
             <span>${sessionScope.room.roomArea} m2</span></div>
         <div class="infor-group">Gác: <span>${sessionScope.room.hasAttic eq 1 ? "Có" : "Không"}</span></div>
-        <div class="infor-group">Trạng thái: <span>${sessionScope.room.roomStatus eq 1 ? "Phòng sẵn sàng cho thuê" : "Đã được thuê"}</span></div>
+        <div class="infor-group">Trạng thái:
+            <span>${sessionScope.room.roomStatus eq 1 ? "Phòng sẵn sàng cho thuê" : "Đã được thuê"}</span></div>
     </div>
     <div class="col-12 col-md-5 room-information__right">
         <div class="infor-group">Ngày bắt đầu hợp đồng:
             <span>
                 <c:choose>
                     <c:when test="${requestScope.contractRoom.startDate ne null}">
-                        <fmt:parseDate pattern="yyyy-MM-dd" value="${requestScope.contractRoom.startDate}" var="startDate" />
-                        <fmt:formatDate pattern = "dd/MM/yyyy" value="${startDate}" />
+                        <fmt:parseDate pattern="yyyy-MM-dd" value="${requestScope.contractRoom.startDate}"
+                                       var="startDate"/>
+                        <fmt:formatDate pattern="dd/MM/yyyy" value="${startDate}"/>
                     </c:when>
                     <c:otherwise>
                         Trống
@@ -31,8 +33,9 @@
             <span>
                 <c:choose>
                     <c:when test="${requestScope.contractRoom.expiration ne null}">
-                        <fmt:parseDate pattern="yyyy-MM-dd" value="${requestScope.contractRoom.expiration}" var="expirationDate" />
-                        <fmt:formatDate pattern = "dd/MM/yyyy" value="${expirationDate}" />
+                        <fmt:parseDate pattern="yyyy-MM-dd" value="${requestScope.contractRoom.expiration}"
+                                       var="expirationDate"/>
+                        <fmt:formatDate pattern="dd/MM/yyyy" value="${expirationDate}"/>
                     </c:when>
                     <c:otherwise>
                         Trống
@@ -64,7 +67,7 @@
             </span>
         </div>
         <div class="infor-group">Số lượng thành viên:
-            <span>${requestScope.listRoommatesInfo.size()}/${sessionScope.room.capacity}</span>
+            <span>${requestScope.listRoommatesInfo eq null ? 0 : requestScope.listRoommatesInfo.size()}/${sessionScope.room.capacity}</span>
         </div>
     </div>
 </div>

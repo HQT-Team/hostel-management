@@ -60,7 +60,7 @@
     <div class="col-12">
       <div class="row">
         <div class="col-xs-11 col-sm-10 col-md-7 col-lg-6 col-xl-5 col-xxl-4 m-auto">
-          <form action="" method="POST" id="register-form"
+          <form action="invite-code" method="POST" id="register-form"
                 class="custom-form register-form">
             <div class="form-header">
               <h3 class="form-title">Mã tham gia</h3>
@@ -78,12 +78,11 @@
               <span class="form-message"></span>
             </div>
             <div class="form-error-message">
-              Mã bạn vừa nhập chưa đúng, vui lòng kiểm tra lại hoặc
-              liên hệ với chủ trọ của bạn
+                ${requestScope.RESPONSE_MSG.content}
             </div>
             <button class="form-submit">Tham gia</button>
             <div class="spacer"></div>
-            <div class="form-other-link">Đã có tài khoản? <a href="./login.html">Đăng nhập ngay!</a>
+            <div class="form-other-link">Đã có tài khoản? <a href="loginPage">Đăng nhập ngay!</a>
             </div>
           </form>
         </div>

@@ -18,4 +18,5 @@ public class Contract {
     int deposit;
     int hostelOwnerId;
     int renterId;
+    int status;
 }

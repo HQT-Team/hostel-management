@@ -27,7 +27,15 @@
 
 </head>
 
-<body>
+<body class="over-flow-hidden">
+
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
 
     <div class="app">
 
@@ -157,6 +165,9 @@
     <!-- Chart JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
     <script src="./assets/js/owner/dashboard/revenue-chart.js"></script>
+
+    <!-- Loader -->
+    <script src="./assets/js/loading-handler.js"></script>
 </body>
 
 </html>

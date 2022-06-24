@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-@WebFilter(urlPatterns={"/"})
+
 public class RoleRedirectFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }
@@ -41,7 +41,7 @@ public class RoleRedirectFilter implements Filter {
             }
 
             acc = (token != null) ? new AccountDAO().getAccountByToken(token) : (Account) session.getAttribute("USER");
-            if(acc != null && acc.getRole() != 69) {
+            if(acc != null) {
                 int role = acc.getRole();
                 if (role == 0) url = "AdminPage";
                 if (role == 1) url = "HostelOwnerPage";

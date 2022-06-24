@@ -24,7 +24,15 @@
 
 </head>
 
-<body>
+<body class="over-flow-hidden">
+
+<div id="preloader">
+    <div class="dots">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
 
 <div class="app">
 
@@ -81,6 +89,9 @@
 <script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <!-- Link your script here -->
 <script src="./assets/js/handle-main-navbar.js"></script>
+
+<!-- Loader -->
+<script src="./assets/js/loading-handler.js"></script>
 </body>
 
 </html>

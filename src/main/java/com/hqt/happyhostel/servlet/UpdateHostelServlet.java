@@ -1,6 +1,7 @@
 package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.HostelDAO;
+import com.hqt.happyhostel.dto.HandlerStatus;
 import com.hqt.happyhostel.dto.Hostel;
 
 import javax.servlet.*;
@@ -47,8 +48,14 @@ public class UpdateHostelServlet extends HttpServlet {
             boolean checkUpdate = dao.updateHostel(newHostel, hostelID);
             if (checkUpdate) {
                 url = SUCCESS;
+                req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(true)
+                        .content("Cập nhật thông tin khu trọ thành công!").build());
+            } else {
+                req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(false)
+                        .content("Đã có lỗi xảy ra! Cập nhật thông tin khu trọ thất bại!").build());
             }
-
         } catch (Exception e) {
             log("Error at UpdateHostel: " + e.toString());
         } finally {

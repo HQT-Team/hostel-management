@@ -24,7 +24,16 @@
     <link rel="stylesheet" href="./assets/css/system_style/register_style/register.css">
 </head>
 
-<body class="bg-light">
+<body class="bg-light ${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</c:if>
 
     <!-- Navbar -->
     <div class="main-nav bg-white">
@@ -78,7 +87,7 @@
                                 <label for="username" class="form-label">Tên tài khoản <span>*</span></label>
                                 <input id="username" name="username" type="text" value="${requestScope.username}" placeholder="Nhập tên tài khoản"
                                     class="form-control">
-                                <span class="form-message">${requestScope.ERROR_TYPE ne null && requestScope.ERROR_TYPE eq "username" && requestScope.ERROR ne null ? requestScope.ERROR : ""}</span>
+                                <span class="form-message">${requestScope.ERROR_TYPE ne null && requestScope.ERROR_TYPE eq "username" && requestScope.RESPONSE_MSG ne null ? requestScope.RESPONSE_MSG.content : ""}</span>
                             </div>
                             <div class="row">
                                 <div class="form-group col-6">
@@ -98,7 +107,7 @@
                                 <label for="email" class="form-label">Email <span>*</span></label>
                                 <input id="email" name="email" value="${requestScope.email}" type="text" placeholder="Nhập email của bạn"
                                        class="form-control">
-                                <span class="form-message">${requestScope.ERROR_TYPE ne null && requestScope.ERROR_TYPE eq "email" && requestScope.ERROR ne null ? requestScope.ERROR : ""}</span>
+                                <span class="form-message">${requestScope.ERROR_TYPE ne null && requestScope.ERROR_TYPE eq "email" && requestScope.RESPONSE_MSG ne null ? requestScope.RESPONSE_MSG.content : ""}</span>
                             </div>
                             <div class="form-group">
                                 <label for="cccd" class="form-label">CCCD/CMND <span>*</span></label>
@@ -149,24 +158,29 @@
     <script src="./assets/js/toast-alert.js"></script>
     <script>
         <c:choose>
-            <c:when test="${requestScope.SUCCESS ne null}">
+            <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
                 toast({
                     title: 'Thành công',
-                    message: 'Đăng ký tài khoản thành công! Tài khoản sẽ được quản trị viên xem xét và thông báo kết quả qua email!',
+                    message: '${requestScope.RESPONSE_MSG.content}',
                     type: 'success',
-                    duration: 10000
+                    duration: 5000
                 });
             </c:when>
-            <c:when test="${requestScope.ERROR ne null}">
+            <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
                 toast({
                     title: 'Lỗi',
-                    message: '${requestScope.ERROR}',
+                    message: '${requestScope.RESPONSE_MSG.content}',
                     type: 'error',
-                    duration: 10000
+                    duration: 5000
                 });
         </c:when>
         </c:choose>
     </script>
+
+    <c:if test="${requestScope.RESPONSE_MSG eq null}">
+        <!-- Loader -->
+        <script src="./assets/js/loading-handler.js"></script>
+    </c:if>
 </body>
 
 </html>

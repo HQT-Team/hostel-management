@@ -1,10 +1,6 @@
 $(document).ready(function () {
     const copyToClipboard = (element) => {
-        var $temp = $("<input>");
-        $("body").append($temp);
-        $temp.val($(element).html()).select();
-        document.execCommand("copy");
-        $temp.remove();
+        navigator.clipboard.writeText($(element).html().trim());
     };
 
     $("#invite-content__code").click(() => {

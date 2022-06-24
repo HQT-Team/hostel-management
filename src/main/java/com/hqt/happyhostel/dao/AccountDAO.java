@@ -27,10 +27,30 @@ public class AccountDAO {
             if (role == 2) {//Renter
                 roommateInfoList = getRoommateInformationById(accId);
                 accInf = getAccountInformationById(accId);
-                acc = new Account(accId, username, password, createdate, status, role, roomId, accInf, roommateInfoList);
+                acc = Account.builder()
+                        .accId(accId)
+                        .username(username)
+                        .password(password)
+                        .createDate(createdate)
+                        .status(status)
+                        .role(role)
+                        .roomId(roomId)
+                        .accountInfo(accInf)
+                        .roommateInfo(roommateInfoList)
+                        .build();
             } else {
                 accInf = getAccountInformationById(accId);
-                acc = new Account(accId, username, password, createdate, status, role, -1, accInf, null);
+                acc = Account.builder()
+                        .accId(accId)
+                        .username(username)
+                        .password(password)
+                        .createDate(createdate)
+                        .status(status)
+                        .role(role)
+                        .roomId(-1)
+                        .accountInfo(accInf)
+                        .roommateInfo(null)
+                        .build();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,6 +201,51 @@ public class AccountDAO {
         return acc;
     }
 
+    public Account getAccountById(int id) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Account acc = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT *\n" +
+                             "FROM [dbo].[Accounts]\n" +
+                             "WHERE [account_id] = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, id);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    acc = getAccount(rs);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return acc;
+    }
 
     public Account getAccountByToken(String token) {
         Connection cn = null;
@@ -263,48 +328,6 @@ public class AccountDAO {
         return list;
     }
 
-    public String getUsernameRoomCurrently(int roomID) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        String username = null;
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "SELECT username\n" +
-                             "FROM Accounts\n" +
-                             "WHERE account_id = (SELECT TOP 1 renter_id\n" +
-                             "\t\t\t\t\tFROM Rooms R, Contracts C\n" +
-                             "\t\t\t\t\tWHERE R.room_id = ?\n" +
-                             "\t\t\t\t\tAND R.room_id = C.room_id\n" +
-                             "\t\t\t\t\tORDER BY C.start_date DESC)";
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, roomID);
-                ResultSet rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    username = rs.getString("username");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return username;
-    }
-
     public String getFullnameRenterRoomCurrently(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -379,11 +402,11 @@ public class AccountDAO {
         }
     }
 
-    public int updateAccountStatus(int id, int status) {
+    public boolean updateAccountStatus(int id, int status) {
         Connection cn = null;
         PreparedStatement pst = null;
         Account acc = null;
-        int result = 0;
+        boolean result = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
@@ -393,7 +416,8 @@ public class AccountDAO {
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, status);
                 pst.setInt(2, id);
-                result = pst.executeUpdate();
+                int i = pst.executeUpdate();
+                if(i > 0) result = true;
             }
 
         } catch (Exception e) {
@@ -557,12 +581,24 @@ public class AccountDAO {
                 pst.setInt(5, account.getRoomId());
 
                 if (pst.executeUpdate() > 0) {
-
                     rs = pst.getGeneratedKeys();
+
                     if (rs.next()) {
                         accountId = rs.getInt(1);
                     }
 
+                    // Add into AccountInformations table
+                    pst = cn.prepareStatement(ADD_ACCOUNT_INFORMATION);
+                    pst.setInt(1, accountId);
+                    pst.setString(2, account.getAccountInfo().getInformation().getFullname());
+                    pst.setString(3, account.getAccountInfo().getInformation().getEmail());
+                    pst.setString(4, account.getAccountInfo().getInformation().getCccd());
+
+                    if (pst.executeUpdate() > 0) {
+                        cn.commit();
+                    } else {
+                        cn.rollback();
+                    }
                     cn.setAutoCommit(true);
                 } else {
                     cn.rollback();
@@ -630,4 +666,177 @@ public class AccountDAO {
         }
         return accountId;
     }
+
+    public int checkAccountByOTP(int accId, String otp) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+
+        int accountId = -1;
+
+        try {
+
+            conn = DBUtils.makeConnection();
+
+            if (conn != null) {
+                String sql = "SELECT A.[account_id]\n" +
+                        "FROM [dbo].[Accounts] AS A JOIN [dbo].[AccountInformations] AS AI ON A.[account_id] = AI.[account_id]\n" +
+                        "WHERE A.[account_id] = ? AND A.[otp] = ? AND GETDATE() < A.[expiredTimeOTP]";
+                psm = conn.prepareStatement(sql);
+                psm.setInt(1, accId);
+                psm.setString(2, otp);
+                rs = psm.executeQuery();
+
+                if (rs != null && rs.next()) {
+                    accountId = rs.getInt("account_id");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) { rs.close(); }
+            if (psm != null) { psm.close(); }
+            if (conn != null) { conn.close(); }
+        }
+        return accountId;
+    }
+
+
+    private static final String UPDATE_ACCOUNT_PASSWORD = "Update [dbo].[Accounts] Set [password] = ? Where [account_id] = ?";
+    private static final String UPDATE_ACCOUNT_FULLNAME = "Update [dbo].[AccountInformations] Set [fullname] = ? Where [account_id] = ?";
+    private static final String UPDATE_ACCOUNT_OTP = "Update [dbo].[Accounts] Set [otp]  = ?, [expiredTimeOTP] = ? Where [account_id] = ? ";
+
+    public boolean updateAccountPass(int accId, String pass) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Account acc = null;
+        boolean isSuccess = false;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+                String sql = UPDATE_ACCOUNT_PASSWORD;
+                pst = cn.prepareStatement(sql);
+                pst.setString(1, pass);
+                pst.setInt(2, accId);
+                if (pst.executeUpdate() < 1) {
+                    cn.rollback();
+                } else {
+                    isSuccess = true;
+                    cn.commit();
+                }
+                cn.setAutoCommit(true);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return isSuccess;
+    }
+
+    public boolean updateAccountFullName(int accId, String fullName) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Account acc = null;
+        boolean isSuccess = false;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+                String sql = UPDATE_ACCOUNT_FULLNAME;
+                pst = cn.prepareStatement(sql);
+                pst.setString(1, fullName);
+                pst.setInt(2, accId);
+                if (pst.executeUpdate() < 1) {
+                    cn.rollback();
+                } else {
+                    isSuccess = true;
+                    cn.commit();
+                }
+                cn.setAutoCommit(true);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return isSuccess;
+    }
+
+    public boolean updateAccountOTP(int accId, String otp, String endTime) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Account acc = null;
+        boolean isSuccess = false;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+                String sql = UPDATE_ACCOUNT_OTP;
+                pst = cn.prepareStatement(sql);
+                pst.setString(1, otp);
+                pst.setString(2, endTime);
+                pst.setInt(3, accId);
+                if (pst.executeUpdate() < 1) {
+                    cn.rollback();
+                } else {
+                    isSuccess = true;
+                    cn.commit();
+                }
+                cn.setAutoCommit(true);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return isSuccess;
+    }
+
+
+
 }
