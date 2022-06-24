@@ -143,27 +143,29 @@ public class RoomDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
 
-                String sql = "DECLARE @service_id INT \n" +
-                        "DECLARE @hostel_id INT = ? \n" +
-                        "DECLARE @NewestServicesTable TABLE (service_id int ,hostel_id int , service_price decimal(18, 3) , valid_date datetime) \n" +
+                String sql = "DECLARE @service_id INT\n" +
+                        "DECLARE @hostel_id INT = ?\n" +
+                        "DECLARE @NewestServicesTable TABLE (hostel_service_id int, service_id int ,hostel_id int , service_price decimal(18, 3) , valid_date datetime)\n" +
                         "DECLARE cursorServices CURSOR FOR\n" +
-                        "SELECT service_id  FROM (SELECT DISTINCT service_id, hostel_id FROM HostelService WHERE hostel_id = @hostel_id) AS TB \n" +
+                        "SELECT service_id  FROM (SELECT DISTINCT service_id, hostel_id FROM HostelService WHERE hostel_id = @hostel_id) AS TB\n" +
                         "Open cursorServices \n" +
-                        "FETCH NEXT FROM cursorServices \n" +
-                        "      INTO @service_id \n" +
+                        "FETCH NEXT FROM cursorServices\n" +
+                        "INTO @service_id\n" +
                         "WHILE @@FETCH_STATUS = 0 \n" +
-                        "BEGIN \n" +
-                        "\tDECLARE @validDate datetime \n" +
-                        "\tSet @validDate = (SELECT MAX(valid_date) FROM HostelService WHERE hostel_id = @hostel_id AND service_id = @service_id) \n" +
-                        "\tDECLARE @price decimal(18, 0) \n" +
-                        "\tSET @price = (SELECT service_price FROM HostelService WHERE valid_date = @validDate AND hostel_id = @hostel_id AND service_id = @service_id) \n" +
-                        "\tINSERT @NewestServicesTable SELECT @service_id, @hostel_id, @price, @validDate \n" +
-                        "    FETCH NEXT FROM cursorServices \n" +
-                        "          INTO @service_id \n" +
-                        "END \n" +
+                        "BEGIN\n" +
+                        "DECLARE @validDate datetime \n" +
+                        "Set @validDate = (SELECT MAX(valid_date) FROM HostelService WHERE hostel_id = @hostel_id AND service_id = @service_id) \n" +
+                        "DECLARE @price decimal(18, 0)\n" +
+                        "SET @price = (SELECT service_price FROM HostelService WHERE valid_date = @validDate AND hostel_id = @hostel_id AND service_id = @service_id)\n" +
+                        "DECLARE @hostel_service_id int\n" +
+                        "SET @hostel_service_id = (SELECT hostel_service_id FROM HostelService WHERE valid_date = @validDate AND hostel_id = @hostel_id AND service_id = @service_id)\n" +
+                        "INSERT @NewestServicesTable SELECT @hostel_service_id, @service_id, @hostel_id, @price, @validDate\n" +
+                        "FETCH NEXT FROM cursorServices\n" +
+                        "INTO @service_id\n" +
+                        "END\n" +
                         "CLOSE cursorServices \n" +
-                        "DEALLOCATE cursorServices \n" +
-                        "SELECT S.service_id, service_name, valid_date, service_price, unit \n" +
+                        "DEALLOCATE cursorServices\n" +
+                        "SELECT S.service_id, service_name, valid_date, service_price, unit, N.hostel_service_id\n" +
                         "FROM Services S RIGHT JOIN @NewestServicesTable N ON S.service_id = N.service_id";
 
                 pst = cn.prepareStatement(sql);
@@ -172,12 +174,13 @@ public class RoomDAO {
                 rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
+                        int hostelServiceID = rs.getInt("hostel_service_id");
                         int serviceID = rs.getInt("service_id");
                         String serviceName = rs.getString("service_name");
                         int servicePrice = rs.getInt("service_price");
                         String unit = rs.getString("unit");
                         String validDate = rs.getString("valid_date");
-                        servicesList.add(new ServiceInfo(hostelID, serviceID, serviceName, validDate, servicePrice, unit));
+                        servicesList.add(new ServiceInfo(hostelServiceID, hostelID, serviceID, serviceName, validDate, servicePrice, unit));
                     }
                 }
             }

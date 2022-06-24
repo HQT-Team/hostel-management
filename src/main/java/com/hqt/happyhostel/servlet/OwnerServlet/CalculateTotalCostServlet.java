@@ -73,13 +73,16 @@ public class CalculateTotalCostServlet extends HttpServlet {
             ArrayList<ServiceInfo> serviceInfo = new ServicesDAO().getServicesOfHostel(hostelID);
             request.setAttribute("serviceInfo", serviceInfo);
 
-            String username = accountDAO.getUsernameRoomCurrently(roomId);
-            request.setAttribute("userNameRenterRoom", username);
+//            String username = accountDAO.getUsernameRoomCurrently(roomId);
+//            request.setAttribute("userNameRenterRoom", username);
 
-            int accountId = accountDAO.getAccountIdByUserName(username);
-            request.setAttribute("renterAccountId", accountId);
 
-            AccountInfo accountRenter = accountDAO.getAccountInformationById(accountId);
+            Account renterAccount = accountDAO.getAccountById(contract.getRenterId());
+
+
+            request.setAttribute("renterAccountId", renterAccount.getAccId());
+
+            AccountInfo accountRenter = accountDAO.getAccountInformationById(renterAccount.getAccId());
             request.setAttribute("renterName", accountRenter.getInformation().getFullname());
 
         } catch (Exception e) {
@@ -111,10 +114,12 @@ public class CalculateTotalCostServlet extends HttpServlet {
 
             ArrayList<ServiceInfo> serviceInfo = new ServicesDAO().getServicesOfHostel(hostelID);
 
-            String username = accountDAO.getUsernameRoomCurrently(roomId);
-            request.setAttribute("userNameRenterRoom", username);
+//            String username = accountDAO.getUsernameRoomCurrently(roomId);
+//            request.setAttribute("userNameRenterRoom", username);
 
-            int accountRenterId = accountDAO.getAccountIdByUserName(username);
+            Account renterAccount = accountDAO.getAccountById(contract.getRenterId());
+
+            int accountRenterId = renterAccount.getAccId();
 
             String expiredDateBill = request.getParameter("expiredDate");
 
