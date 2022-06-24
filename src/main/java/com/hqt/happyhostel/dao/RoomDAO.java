@@ -28,8 +28,8 @@ public class RoomDAO {
 
                 // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
                 String sql = "SELECT room_id, hostel_id, room_number, capacity, room_area, has_attic, room_status\n" +
-                             "FROM Rooms\n" +
-                             "WHERE hostel_id = ?";
+                        "FROM Rooms\n" +
+                        "WHERE hostel_id = ?";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, hostelID);
@@ -143,27 +143,29 @@ public class RoomDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
 
-                String sql = "DECLARE @service_id INT \n" +
-                        "DECLARE @hostel_id INT = ? \n" +
-                        "DECLARE @NewestServicesTable TABLE (service_id int ,hostel_id int , service_price decimal(18, 3) , valid_date datetime) \n" +
+                String sql = "DECLARE @service_id INT\n" +
+                        "DECLARE @hostel_id INT = ?\n" +
+                        "DECLARE @NewestServicesTable TABLE (hostel_service_id int, service_id int ,hostel_id int , service_price decimal(18, 3) , valid_date datetime)\n" +
                         "DECLARE cursorServices CURSOR FOR\n" +
-                        "SELECT service_id  FROM (SELECT DISTINCT service_id, hostel_id FROM HostelService WHERE hostel_id = @hostel_id) AS TB \n" +
+                        "SELECT service_id  FROM (SELECT DISTINCT service_id, hostel_id FROM HostelService WHERE hostel_id = @hostel_id) AS TB\n" +
                         "Open cursorServices \n" +
-                        "FETCH NEXT FROM cursorServices \n" +
-                        "      INTO @service_id \n" +
+                        "FETCH NEXT FROM cursorServices\n" +
+                        "INTO @service_id\n" +
                         "WHILE @@FETCH_STATUS = 0 \n" +
-                        "BEGIN \n" +
-                        "\tDECLARE @validDate datetime \n" +
-                        "\tSet @validDate = (SELECT MAX(valid_date) FROM HostelService WHERE hostel_id = @hostel_id AND service_id = @service_id) \n" +
-                        "\tDECLARE @price decimal(18, 0) \n" +
-                        "\tSET @price = (SELECT service_price FROM HostelService WHERE valid_date = @validDate AND hostel_id = @hostel_id AND service_id = @service_id) \n" +
-                        "\tINSERT @NewestServicesTable SELECT @service_id, @hostel_id, @price, @validDate \n" +
-                        "    FETCH NEXT FROM cursorServices \n" +
-                        "          INTO @service_id \n" +
-                        "END \n" +
+                        "BEGIN\n" +
+                        "DECLARE @validDate datetime \n" +
+                        "Set @validDate = (SELECT MAX(valid_date) FROM HostelService WHERE hostel_id = @hostel_id AND service_id = @service_id) \n" +
+                        "DECLARE @price decimal(18, 0)\n" +
+                        "SET @price = (SELECT service_price FROM HostelService WHERE valid_date = @validDate AND hostel_id = @hostel_id AND service_id = @service_id)\n" +
+                        "DECLARE @hostel_service_id int\n" +
+                        "SET @hostel_service_id = (SELECT hostel_service_id FROM HostelService WHERE valid_date = @validDate AND hostel_id = @hostel_id AND service_id = @service_id)\n" +
+                        "INSERT @NewestServicesTable SELECT @hostel_service_id, @service_id, @hostel_id, @price, @validDate\n" +
+                        "FETCH NEXT FROM cursorServices\n" +
+                        "INTO @service_id\n" +
+                        "END\n" +
                         "CLOSE cursorServices \n" +
-                        "DEALLOCATE cursorServices \n" +
-                        "SELECT S.service_id, service_name, valid_date, service_price, unit \n" +
+                        "DEALLOCATE cursorServices\n" +
+                        "SELECT S.service_id, service_name, valid_date, service_price, unit, N.hostel_service_id\n" +
                         "FROM Services S RIGHT JOIN @NewestServicesTable N ON S.service_id = N.service_id";
 
                 pst = cn.prepareStatement(sql);
@@ -172,12 +174,13 @@ public class RoomDAO {
                 rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
+                        int hostelServiceID = rs.getInt("hostel_service_id");
                         int serviceID = rs.getInt("service_id");
                         String serviceName = rs.getString("service_name");
                         int servicePrice = rs.getInt("service_price");
                         String unit = rs.getString("unit");
                         String validDate = rs.getString("valid_date");
-                        servicesList.add(new ServiceInfo(hostelID, serviceID, serviceName, validDate, servicePrice, unit));
+                        servicesList.add(new ServiceInfo(hostelServiceID, hostelID, serviceID, serviceName, validDate, servicePrice, unit));
                     }
                 }
             }
@@ -210,10 +213,10 @@ public class RoomDAO {
     }
 
     public boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,
-                                     int quantity1, int status1,
-                                     int quantity2, int status2,
-                                     int quantity3, int status3,
-                                     int quantity4, int status4) {
+                              int quantity1, int status1,
+                              int quantity2, int status2,
+                              int quantity3, int status3,
+                              int quantity4, int status4) {
         Connection cn = null;
         PreparedStatement pst = null;
         boolean isInserted = false;
@@ -313,10 +316,10 @@ public class RoomDAO {
     }
 
     public boolean addNewManyRooms(int hostelID, int capacity, double roomArea, int attic, int roomStatus,
-                                          int quantity1, int status1,
-                                          int quantity2, int status2,
-                                          int quantity3, int status3,
-                                          int quantity4, int status4) {
+                                   int quantity1, int status1,
+                                   int quantity2, int status2,
+                                   int quantity3, int status3,
+                                   int quantity4, int status4) {
         Connection cn = null;
         PreparedStatement pst = null;
         boolean isInserted = false;
@@ -441,11 +444,11 @@ public class RoomDAO {
             cn = DBUtils.makeConnection();
             if (cn != null) {
                 String sql = "SELECT room_id, H.hostel_id as 'hostel_id', room_number, capacity, room_status, room_area, has_attic, name, address, ward, district, city\n" +
-                             "FROM Rooms R, Hostels H\n" +
-                             "WHERE R.room_id = ?\n" +
-                             "AND R.hostel_id = ?\n" +
-                             "AND H.owner_account_id = ?\n" +
-                             "AND R.hostel_id = H.hostel_id";
+                        "FROM Rooms R, Hostels H\n" +
+                        "WHERE R.room_id = ?\n" +
+                        "AND R.hostel_id = ?\n" +
+                        "AND H.owner_account_id = ?\n" +
+                        "AND R.hostel_id = H.hostel_id";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
@@ -512,33 +515,38 @@ public class RoomDAO {
         return room;
     }
 
-    public Bill getLastBill(int roomID) {
+    public List<Consume> getConsumeHistory(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        Bill bill = null;
+        ArrayList<Consume> consumesList = new ArrayList();
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String sql = "SELECT TOP 1 bill_id, total_money, created_date, expired_payment_date, status, Bill.payment_id as 'payment_id', payment_name\n" +
-                        "FROM Bill, Payment\n" +
+                String sql = "SELECT consume_id, number_electric, number_water, update_date, status\n" +
+                        "FROM Consumes\n" +
                         "WHERE room_id = ?\n" +
-                        "AND\tBill.payment_id = Payment.payment_id\n" +
-                        "ORDER BY created_date DESC";
+                        "ORDER BY consume_id DESC";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
 
                 rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    int billID = rs.getInt("bill_id");
-                    int totalMoney = rs.getInt("total_money");
-                    String createdDate = rs.getString("created_date");
-                    String expiredPaymentDate = rs.getString("expired_payment_date");
-                    int status = rs.getInt("status");
-                    int paymentID = rs.getInt("payment_id");
-                    String paymentName = rs.getString("payment_name");
-                    bill = new Bill(billID, roomID, totalMoney, createdDate, expiredPaymentDate, status, new Payment(paymentID, paymentName));
+                if (rs != null) {
+                    while (rs.next()) {
+                        int consumeID = rs.getInt("consume_id");
+                        int numberElectric = rs.getInt("number_electric");
+                        int numberWater = rs.getInt("number_water");
+                        String updateDate = rs.getString("update_date");
+                        int status = rs.getInt("status");
+                        consumesList.add(Consume.builder()
+                                .consumeID(consumeID)
+                                .roomID(roomID)
+                                .numberElectric(numberElectric)
+                                .numberWater(numberWater)
+                                .updateDate(updateDate)
+                                .status(status).build());
+                    }
                 }
             }
         } catch (Exception e) {
@@ -566,10 +574,10 @@ public class RoomDAO {
                 }
             }
         }
-        return bill;
+        return consumesList;
     }
 
-    public List<Consume> getConsumeHistory(int roomID) {
+    public ArrayList<Consume> getConsumeThisMonth(int roomID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -579,7 +587,7 @@ public class RoomDAO {
             if (cn != null) {
                 String sql = "SELECT consume_id, number_electric, number_water, update_date, status\n" +
                         "FROM Consumes\n" +
-                        "WHERE room_id = ?\n" +
+                        "WHERE room_id = ?\n AND status = 0" +
                         "ORDER BY update_date DESC";
 
                 pst = cn.prepareStatement(sql);
@@ -704,14 +712,13 @@ public class RoomDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
+
                 String sql = "SELECT COUNT(roomate_info_id) as 'quantityMember'\n" +
                         "FROM RoomateInformations\n" +
                         "WHERE account_renter_id = (SELECT TOP 1 account_id\n" +
-                        "\t\t\t\t\t\t\tFROM Accounts\n" +
-                        "\t\t\t\t\t\t\tWHERE room_id = ?\n" +
-                        "\t\t\t\t\t\t\tAND role = 2\n" +
-                        "\t\t\t\t\t\t\tAND status = 1\n" +
-                        "\t\t\t\t\t\t\tORDER BY create_date DESC)";
+                        "FROM Accounts\n" +
+                        "WHERE room_id = ? AND role = 2\n" +
+                        "ORDER BY create_date DESC)";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);

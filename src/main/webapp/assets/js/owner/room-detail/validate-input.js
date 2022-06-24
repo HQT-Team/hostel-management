@@ -35,26 +35,26 @@ Validator({
     rules: [
         Validator.isRequired("#form-update-consume__electric"),
         Validator.isInteger("#form-update-consume__electric"),
-        Validator.isHigher(
-            "#form-update-consume__electric",
-            function () {
-                return document.querySelector(
-                    "#update-consume-modal-form #form-update-consume__electric-old"
-                ).value;
-            },
-            "Vui lòng nhập số điện mới lớn hơn số cũ"
-        ),
+        // Validator.isHigher(
+        //     "#form-update-consume__electric",
+        //     function () {
+        //         return document.querySelector(
+        //             "#update-consume-modal-form #form-update-consume__electric-old"
+        //         ).value;
+        //     },
+        //     "Vui lòng nhập số điện mới lớn hơn số cũ"
+        // ),
         Validator.isRequired("#form-update-consume__water"),
         Validator.isInteger("#form-update-consume__water"),
-        Validator.isHigher(
-            "#form-update-consume__water",
-            function () {
-                return document.querySelector(
-                    "#update-consume-modal-form #form-update-consume__water-old"
-                ).value;
-            },
-            "Vui lòng nhập số điện mới lớn hơn số cũ"
-        ),
+        // Validator.isHigher(
+        //     "#form-update-consume__water",
+        //     function () {
+        //         return document.querySelector(
+        //             "#update-consume-modal-form #form-update-consume__water-old"
+        //         ).value;
+        //     },
+        //     "Vui lòng nhập số nước mới lớn hơn số cũ"
+        // ),
     ],
 });
 

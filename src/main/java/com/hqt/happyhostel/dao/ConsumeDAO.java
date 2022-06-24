@@ -152,6 +152,65 @@ public class ConsumeDAO {
         return consume;
     }
 
+    public Consume getConsumeByID(int consumeID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Consume consume = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT number_electric, number_water, update_date, status, room_id\n" +
+                        "FROM Consumes\n" +
+                        "WHERE consume_id = ?";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, consumeID);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int numberElectric = rs.getInt("number_electric");
+                    int numberWater = rs.getInt("number_water");
+                    String updateConsumeDate = rs.getString("update_date");
+                    int status = rs.getInt("status");
+                    int roomID = rs.getInt("room_id");
+                    consume = Consume.builder()
+                            .consumeID(consumeID)
+                            .roomID(roomID)
+                            .numberElectric(numberElectric)
+                            .numberWater(numberWater)
+                            .updateDate(updateConsumeDate)
+                            .status(status).build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return consume;
+    }
+
     public Boolean updateConsumeNumber(Consume consume) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -196,5 +255,7 @@ public class ConsumeDAO {
         }
         return isSuccess;
     }
+
+
 
 }

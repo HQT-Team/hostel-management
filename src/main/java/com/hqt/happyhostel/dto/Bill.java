@@ -13,7 +13,9 @@ public class Bill {
     int roomID;
     double totalMoney;
     String createdDate;
+    String billTitle;
     String expiredPaymentDate;
+    String paymentDate;
     int status;
     Payment payment;
 }
