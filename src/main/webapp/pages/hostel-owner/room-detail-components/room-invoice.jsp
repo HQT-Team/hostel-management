@@ -39,7 +39,7 @@
                     <div class="invoice-label">Tổng tiền:</div>
                     <c:choose>
                         <c:when test="${requestScope.billRoom ne null}">
-                            <div class="invoice-content price">${String.format("%,d",requestScope.billRoom.totalMoney)}
+                            <div class="invoice-content price">${requestScope.billRoom.totalMoney}
                                 <span>VNĐ</span></div>
                         </c:when>
                     </c:choose>
