@@ -40,7 +40,7 @@ public class CreateInviteCodeServlet extends HttpServlet {
         String roomId;
         Account owner;
         Room roomInvite = null;
-        StringBuilder inviteUrl = new StringBuilder("RenterRegisterPage?inviteCode=");
+        StringBuilder inviteUrl = new StringBuilder("http://localhost:8080/HappyHostel/invite-code?invite-code=");
         try {
 
             roomId = request.getParameter("room_id");
