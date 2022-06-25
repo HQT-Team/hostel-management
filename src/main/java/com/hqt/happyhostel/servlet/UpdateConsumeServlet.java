@@ -1,16 +1,12 @@
 package com.hqt.happyhostel.servlet;
 
-import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dao.ConsumeDAO;
-import com.hqt.happyhostel.dao.RoomDAO;
 import com.hqt.happyhostel.dto.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet(name = "UpdateConsumeServlet", value = "/UpdateConsumeServlet")
 public class UpdateConsumeServlet extends HttpServlet {
@@ -34,9 +30,13 @@ public class UpdateConsumeServlet extends HttpServlet {
             boolean isSuccess = new ConsumeDAO().updateConsumeNumber(consume);
             if (isSuccess) {
                 url = "roomDetail";
-                request.setAttribute("updateSuccess", true);
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(true)
+                        .content("Cập nhật số tiêu thụ thành công!").build());
             } else {
-                request.setAttribute("updateSuccess", false);
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(false)
+                        .content("Đã có lỗi xảy ra! Cập nhật số tiêu thụ thất bại!").build());
             }
         } catch (Exception e) {
             e.printStackTrace();

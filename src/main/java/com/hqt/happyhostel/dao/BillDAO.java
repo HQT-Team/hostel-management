@@ -23,14 +23,14 @@ public class BillDAO {
     private static final String INSERT_NEW_BILL_TAIL = "UPDATE Consumes SET status = 1 WHERE room_id = 1\n" +
             "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id) VALUES (?, ?, GETDATE(), 0, ?)\n";
 
-    public Boolean InsertANewBill(int totalMoney, String billTitle, String expiredPaymentDate, int roomID,
+    public boolean InsertANewBill(int totalMoney, String billTitle, String expiredPaymentDate, int roomID,
                                   int consumeIDStart, int consumeIDEnd, int accountHostelOwner, int accountRenterID,
                                   int numberLastElectric, int numberLastWater,
                                   ArrayList<Integer> hostelServiceList) {
         Connection cn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
-        Boolean check = null;
+        boolean check = false;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
@@ -227,7 +227,6 @@ public class BillDAO {
         return paymentName;
     }
 
-
     public BillDetail getBillDetail(int billID) {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -330,6 +329,5 @@ public class BillDAO {
         }
         return billTitle;
     }
-
 
 }

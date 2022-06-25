@@ -3,7 +3,7 @@
 <div class="room-members">
         <div class="members-header">
             <div class="members-title">Danh sách thành viên</div>
-            <c:if test="${(sessionScope.room.roomStatus ne 1) && (requestScope.listRoommatesInfo.size() < sessionScope.room.capacity)}">
+            <c:if test="${(sessionScope.room.roomStatus ne 1) && (requestScope.renterAccount.status == 1) && (requestScope.listRoommatesInfo.size() < sessionScope.room.capacity)}">
                 <div class="members-actions">
                     <button class="add-member-btn" data-bs-toggle="modal"
                             data-bs-target="#add-new-member-modal">Thêm thành viên
@@ -24,7 +24,7 @@
                                       class="custom-form add-new-member-form">
                                     <input type="hidden" name="roomID" value="${sessionScope.room.roomId}" />
                                     <input type="hidden" name="room-capacity" value="${sessionScope.room.capacity}" />
-                                    <input type="hidden" name="current-room-username" value="${requestScope.userNameRenterRoom}" />
+                                    <input type="hidden" name="account-renter-id" value="${requestScope.renterAccount.accId}" />
                                     <div class="modal-body ps-5 pe-5">
                                         <div class="form-group">
                                             <div class="row align-items-center">
@@ -377,7 +377,7 @@
                                                     <div class="modal-footer justify-content-between">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
                                                         <form action="delete-roommate" method="POST">
-                                                            <input type="hidden" name="renter-account-id" value="${requestScope.renterAccountId}">
+                                                            <input type="hidden" name="renter-account-id" value="${requestScope.renterAccount.accId}">
                                                             <input type="hidden" name="roommate-id" value="${roommateList.roommateID}">
                                                             <button type="submit" class="btn btn-danger">
                                                                 Đồng ý

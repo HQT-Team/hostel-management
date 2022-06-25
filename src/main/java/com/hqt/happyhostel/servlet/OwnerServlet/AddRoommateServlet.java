@@ -2,6 +2,7 @@ package com.hqt.happyhostel.servlet.OwnerServlet;
 
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dao.RoommateInfoDAO;
+import com.hqt.happyhostel.dto.HandlerStatus;
 import com.hqt.happyhostel.dto.Information;
 import com.hqt.happyhostel.dto.RoommateInfo;
 
@@ -30,7 +31,7 @@ public class AddRoommateServlet extends HttpServlet {
         try {
             // Get parameters from client (room details -> Add roommate member button -> Form)
             int roomCapacity = Integer.parseInt(request.getParameter("room-capacity"));
-            String currentRenterAccountUsername = request.getParameter("current-room-username");
+            int accountRenterId = Integer.parseInt(request.getParameter("account-renter-id"));
             String fullName = request.getParameter("full-name");
             String dateOfBirth = request.getParameter("dob");
             int gender = Integer.parseInt(request.getParameter("gender"));
@@ -41,12 +42,9 @@ public class AddRoommateServlet extends HttpServlet {
             String parentName = request.getParameter("parent-name");
             String parentPhone = request.getParameter("parent-phone");
 
-            // Get AccountID of Current Renter by currentRenterAccountUsername
-            int accountId = accountDAO.getAccountIdByUserName(currentRenterAccountUsername);
-
             // Check get accountId is true or false
-            if (accountId >= 0)  {
-                List<RoommateInfo> listCurrentRoommate = roommateInfoDAO.getListRoommatesOfAnAccount(accountId);
+            if (accountRenterId > 0) {
+                List<RoommateInfo> listCurrentRoommate = roommateInfoDAO.getListRoommatesOfAnAccount(accountRenterId);
 
                 if (listCurrentRoommate.size() < roomCapacity) {
                     Information information = Information.builder()
@@ -63,18 +61,26 @@ public class AddRoommateServlet extends HttpServlet {
                             .parentPhone(parentPhone).build();
 
                     // Insert into RoommateInformation table
-                    boolean check = roommateInfoDAO.AddRoommateInformationOfAnAccount(roommateInfo, accountId);
+                    boolean check = roommateInfoDAO.AddRoommateInformationOfAnAccount(roommateInfo, accountRenterId);
 
                     if (check) {
-                        request.setAttribute("SUCCESS", "Thêm thành viên mới vào phòng thành công");
+                        request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                                .status(true)
+                                .content("Thêm thành viên mới vào phòng thành công!").build());
                     } else {
-                        request.setAttribute("ERROR", "Đã có lỗi xảy ra! Vui lòng thử lại sau");
+                        request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                                .status(false)
+                                .content("Đã có lỗi xảy ra! Thêm thành viên mới vào phòng thất bại!").build());
                     }
                 } else {
-                    request.setAttribute("ERROR", "Phòng đã đạt số lượng thành viên tối đa! Thêm thành viên thất bại!");
+                    request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                            .status(false)
+                            .content("Phòng đã đạt số lượng thành viên tối đa! Thêm thành viên thất bại!").build());
                 }
             } else {
-                request.setAttribute("ERROR", "Đã có lỗi xảy ra! Vui lòng thử lại sau");
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(false)
+                        .content("Đã có lỗi xảy ra! Vui lòng thử lại sau!").build());
             }
         } catch (Exception e) {
             log("Error at AddRoommateServlet: " + e.toString());

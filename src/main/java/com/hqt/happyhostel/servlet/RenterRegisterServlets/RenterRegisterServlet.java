@@ -1,8 +1,6 @@
 package com.hqt.happyhostel.servlet.RenterRegisterServlets;
 
 import com.hqt.happyhostel.dao.AccountDAO;
-import com.hqt.happyhostel.dao.InformationDAO;
-import com.hqt.happyhostel.dao.RoomDAO;
 import com.hqt.happyhostel.dao.RoomInviteDAO;
 import com.hqt.happyhostel.dto.*;
 import com.hqt.happyhostel.utils.SecurityUtils;
@@ -31,7 +29,7 @@ public class RenterRegisterServlet extends HttpServlet {
         HandlerStatus handlerStatus = null;
         try {
             HttpSession session = req.getSession(false);
-            if(session != null){
+            if (session != null) {
                 url = FAIL;
                 String username = (String) session.getAttribute("RENTER_ACCOUNT_USERNAME");
                 String fullname = req.getParameter("fullname");

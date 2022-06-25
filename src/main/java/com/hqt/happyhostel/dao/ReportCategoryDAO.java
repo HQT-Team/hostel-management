@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportCategoryDAO {
+
     private static final String GET_REPORT_CATEGORY = "SELECT * FROM ReportCategory";
+
     public List<ReportCategory> getReportCategory() throws SQLException {
         List<ReportCategory> reportCategories = new ArrayList<>();
         Connection cn = null;

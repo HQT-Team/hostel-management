@@ -3,6 +3,7 @@ package com.hqt.happyhostel.dto;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Data
@@ -22,5 +23,5 @@ public class Account {
     private String otp;
     private String expiredTimeOTP;
     private AccountInfo accountInfo;
-    private ArrayList<RoommateInfo> roommateInfo;
+    private List<RoommateInfo> roommateInfo;
 }

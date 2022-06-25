@@ -97,7 +97,7 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Tên</th>
-                                        <th>Số lượng thành viên</th>
+                                        <th>Trạng thái</th>
                                         <th>Hành động</th>
                                     </tr>
                                     </thead>
@@ -108,7 +108,16 @@
                                         <tr>
                                             <td>${count}</td>
                                             <td>${room.roomNumber}</td>
-                                            <td>${requestScope.quantityMembers.get(count-1)}/${room.capacity}</td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${room.roomStatus eq 0}">
+                                                        <span class="text-danger">Đã có người thuê</span>
+                                                    </c:when>
+                                                    <c:when test="${room.roomStatus eq 1}">
+                                                        <span class="text-success">Sẵn sàng cho thuê</span>
+                                                    </c:when>
+                                                </c:choose>
+                                            </td>
                                             <td>
                                                 <!-- Room detail link -->
                                                 <a href="roomDetail?roomID=${room.roomId}" class="room-detail-link">Chi tiết</a>
@@ -137,9 +146,7 @@
                                     <div class="service-group">
                                         <div class="service-name">${serviceList.serviceName}</div>
                                         <div class="service-price">
-                                            <span>
-                                                <fmt:formatNumber value="${serviceList.servicePrice}" type="currency" />
-                                            </span>/${serviceList.unit}</div>
+                                                <fmt:formatNumber value="${serviceList.servicePrice}" type="currency" currencySymbol="VNĐ"/>/${serviceList.unit}</div>
                                     </div>
                                 </c:forEach>
                             </div>
@@ -277,7 +284,7 @@
                             </div>
                             <div class="col-3">
                                     <input type="text" disabled class="form-control"
-                                           value="đ/${serviceList.unit}">
+                                           value="VNĐ/${serviceList.unit}">
                             </div>
                             <div class="form-message"></div>
                         </div>

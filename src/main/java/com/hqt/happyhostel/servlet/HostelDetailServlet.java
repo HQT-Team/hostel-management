@@ -2,6 +2,7 @@ package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
+import com.hqt.happyhostel.dao.ServiceInfoDAO;
 import com.hqt.happyhostel.dao.ServicesDAO;
 import com.hqt.happyhostel.dto.*;
 
@@ -9,8 +10,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.security.Provider;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "HostelDetailServlet", value = "/HostelDetailServlet")
@@ -34,16 +33,10 @@ public class HostelDetailServlet extends HttpServlet {
             if (hostel == null) {
                 url = "list-hostels";
             } else {
-                ArrayList<Room> rooms = roomDao.getListRoomByHostelID(hostelId);
+                List<Room> rooms = roomDao.getListRoomsByHostelId(hostelId);
                 int numberRoom = roomDao.getNumberRoomSpecificHostel(hostelId);
 
-                ArrayList<Integer> quantityMembers = new ArrayList<>();
-                for (Room roomItem : rooms) {
-                    int quantityMember = roomDao.getQuantityMember(roomItem.getRoomId());
-                    quantityMembers.add(quantityMember);
-                }
-
-                List<ServiceInfo> serviceList = roomDao.getServicesOfHostel(hostelId);
+                List<ServiceInfo> serviceList = new ServiceInfoDAO().getServicesOfHostel(hostelId);
 
                 List<Services> servicesNotInHostel = new ServicesDAO().getListServicesNotInHostel(hostelId);
 
@@ -54,7 +47,6 @@ public class HostelDetailServlet extends HttpServlet {
                 request.setAttribute("roomQuantity", numberRoom);
                 request.setAttribute("serviceInfo", serviceList);
                 request.setAttribute("services", servicesNotInHostel);
-                request.setAttribute("quantityMembers", quantityMembers);
             }
 
         } catch (Exception e) {

@@ -3,21 +3,16 @@ package com.hqt.happyhostel.dao;
 import com.hqt.happyhostel.dto.*;
 import com.hqt.happyhostel.utils.DBUtils;
 
-import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public class RoomDAO {
 
-    public ArrayList<Room> getListRoomByHostelID(int hostelID) {
+    public List<Room> getListRoomsByHostelId(int hostelID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -134,84 +129,6 @@ public class RoomDAO {
         return number;
     }
 
-    public ArrayList<ServiceInfo> getServicesOfHostel(int hostelID) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        ArrayList<ServiceInfo> servicesList = new ArrayList<>();
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-
-                String sql = "DECLARE @service_id INT\n" +
-                        "DECLARE @hostel_id INT = ?\n" +
-                        "DECLARE @NewestServicesTable TABLE (hostel_service_id int, service_id int ,hostel_id int , service_price decimal(18, 3) , valid_date datetime)\n" +
-                        "DECLARE cursorServices CURSOR FOR\n" +
-                        "SELECT service_id  FROM (SELECT DISTINCT service_id, hostel_id FROM HostelService WHERE hostel_id = @hostel_id) AS TB\n" +
-                        "Open cursorServices \n" +
-                        "FETCH NEXT FROM cursorServices\n" +
-                        "INTO @service_id\n" +
-                        "WHILE @@FETCH_STATUS = 0 \n" +
-                        "BEGIN\n" +
-                        "DECLARE @validDate datetime \n" +
-                        "Set @validDate = (SELECT MAX(valid_date) FROM HostelService WHERE hostel_id = @hostel_id AND service_id = @service_id) \n" +
-                        "DECLARE @price decimal(18, 0)\n" +
-                        "SET @price = (SELECT service_price FROM HostelService WHERE valid_date = @validDate AND hostel_id = @hostel_id AND service_id = @service_id)\n" +
-                        "DECLARE @hostel_service_id int\n" +
-                        "SET @hostel_service_id = (SELECT hostel_service_id FROM HostelService WHERE valid_date = @validDate AND hostel_id = @hostel_id AND service_id = @service_id)\n" +
-                        "INSERT @NewestServicesTable SELECT @hostel_service_id, @service_id, @hostel_id, @price, @validDate\n" +
-                        "FETCH NEXT FROM cursorServices\n" +
-                        "INTO @service_id\n" +
-                        "END\n" +
-                        "CLOSE cursorServices \n" +
-                        "DEALLOCATE cursorServices\n" +
-                        "SELECT S.service_id, service_name, valid_date, service_price, unit, N.hostel_service_id\n" +
-                        "FROM Services S RIGHT JOIN @NewestServicesTable N ON S.service_id = N.service_id";
-
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, hostelID);
-
-                rs = pst.executeQuery();
-                if (rs != null) {
-                    while (rs.next()) {
-                        int hostelServiceID = rs.getInt("hostel_service_id");
-                        int serviceID = rs.getInt("service_id");
-                        String serviceName = rs.getString("service_name");
-                        int servicePrice = rs.getInt("service_price");
-                        String unit = rs.getString("unit");
-                        String validDate = rs.getString("valid_date");
-                        servicesList.add(new ServiceInfo(hostelServiceID, hostelID, serviceID, serviceName, validDate, servicePrice, unit));
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return servicesList;
-    }
-
     public boolean addNewRoom(int hostelID, int roomNumber, int capacity, double roomArea, int attic, int roomStatus,
                               int quantity1, int status1,
                               int quantity2, int status2,
@@ -220,22 +137,11 @@ public class RoomDAO {
         Connection cn = null;
         PreparedStatement pst = null;
         boolean isInserted = false;
+
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
-//                String sql = "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
-//                        "VALUES (?, ?, ?, ?, ?, ?)\n" +
-//                        "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
-//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
-//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
-//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
-//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))";
-
+                // Insert new room include Nhà vệ sinh, cửa sổ, cửa ra vào, máy lạnh theo thứ tự
                 String sql = "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
                         "VALUES (?, ?, ?, ?, ?, ?)\n" +
                         "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
@@ -326,27 +232,6 @@ public class RoomDAO {
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-
-//                String sql = "DECLARE @room_number int = (SELECT TOP 1 room_number\n" +
-//                        "FROM dbo.Rooms\n" +
-//                        "WHERE hostel_id = ?\n" +
-//                        "ORDER BY room_number DESC)\n" +
-//                        "IF @room_number is NULL\n" +
-//                        "\tSET @room_number = 1\n" +
-//                        "ELSE\n" +
-//                        "\tSET @room_number = @room_number + 1\n" +
-//                        "INSERT INTO Rooms (hostel_id, room_number, capacity, room_area, has_attic, room_status)\n" +
-//                        "VALUES (?, @room_number, ?, ?, ?, ?)\n" +
-//                        "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
-//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Nhà vệ sinh'))\n" +
-//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa sổ'))\n" +
-//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Cửa ra vào'))\n" +
-//                        "INSERT INTO InfrastructuresRoom (room_id, quantity, status, id_infrastructure_item)\n" +
-//                        "VALUES (@roomID, ?, ?, (SELECT id_infrastructure_item FROM InfrastructureItem WHERE infrastructure_name = N'Máy lạnh'))";
-
                 String sql = "DECLARE @room_number int = (SELECT TOP 1 room_number\n" +
                         "FROM dbo.Rooms\n" +
                         "WHERE hostel_id = ?\n" +
@@ -435,7 +320,7 @@ public class RoomDAO {
         return isInserted;
     }
 
-    public Room getRoomInformationByRoomID(int roomID, int hostelID, int accountOwnerID) {
+    public Room getRoomInformationByRoomId(int roomID, int hostelID, int accountOwnerID) {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -513,247 +398,6 @@ public class RoomDAO {
             }
         }
         return room;
-    }
-
-    public List<Consume> getConsumeHistory(int roomID) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        ArrayList<Consume> consumesList = new ArrayList();
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "SELECT consume_id, number_electric, number_water, update_date, status\n" +
-                        "FROM Consumes\n" +
-                        "WHERE room_id = ?\n" +
-                        "ORDER BY consume_id DESC";
-
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, roomID);
-
-                rs = pst.executeQuery();
-                if (rs != null) {
-                    while (rs.next()) {
-                        int consumeID = rs.getInt("consume_id");
-                        int numberElectric = rs.getInt("number_electric");
-                        int numberWater = rs.getInt("number_water");
-                        String updateDate = rs.getString("update_date");
-                        int status = rs.getInt("status");
-                        consumesList.add(Consume.builder()
-                                .consumeID(consumeID)
-                                .roomID(roomID)
-                                .numberElectric(numberElectric)
-                                .numberWater(numberWater)
-                                .updateDate(updateDate)
-                                .status(status).build());
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return consumesList;
-    }
-
-    public ArrayList<Consume> getConsumeThisMonth(int roomID) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        ArrayList<Consume> consumesList = new ArrayList();
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "SELECT consume_id, number_electric, number_water, update_date, status\n" +
-                        "FROM Consumes\n" +
-                        "WHERE room_id = ?\n AND status = 0" +
-                        "ORDER BY update_date DESC";
-
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, roomID);
-
-                rs = pst.executeQuery();
-                if (rs != null) {
-                    while (rs.next()) {
-                        int consumeID = rs.getInt("consume_id");
-                        int numberElectric = rs.getInt("number_electric");
-                        int numberWater = rs.getInt("number_water");
-                        String updateDate = rs.getString("update_date");
-                        int status = rs.getInt("status");
-                        consumesList.add(Consume.builder()
-                                .consumeID(consumeID)
-                                .roomID(roomID)
-                                .numberElectric(numberElectric)
-                                .numberWater(numberWater)
-                                .updateDate(updateDate)
-                                .status(status).build());
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return consumesList;
-    }
-
-    public ArrayList<RoommateInfo> getRoommateInformation(int roomID) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        ArrayList<RoommateInfo> roommateInformationArrayList = new ArrayList();
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-                String sql = "SELECT roomate_info_id, fullname, email, birthday, sex, phone, address, CCCD, parent_name, parent_phone, account_renter_id\n" +
-                        "FROM RoomateInformations\n" +
-                        "WHERE account_renter_id = (SELECT TOP 1 account_id\n" +
-                        "\t\t\t\t\t\tFROM Accounts\n" +
-                        "\t\t\t\t\t\tWHERE room_id = ?\n" +
-                        "\t\t\t\t\t\tAND role = 2\n" +
-                        "\t\t\t\t\t\tAND status = 1\n" +
-                        "\t\t\t\t\t\tORDER BY create_date DESC)";
-
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, roomID);
-
-                rs = pst.executeQuery();
-                if (rs != null) {
-                    while (rs.next()) {
-                        int roommateInfoID = rs.getInt("roomate_info_id");
-                        String fullName = rs.getString("fullname");
-                        String email = rs.getString("email");
-                        String birthday = rs.getString("birthday");
-                        int sex = rs.getInt("sex");
-                        String phone = rs.getString("phone");
-                        String address = rs.getString("address");
-                        String CCCD = rs.getString("CCCD");
-                        String parent_name = rs.getString("parent_name");
-                        String parent_phone = rs.getString("parent_phone");
-                        roommateInformationArrayList.add(new RoommateInfo(roommateInfoID, new Information(fullName, email, birthday, sex, phone, address, CCCD), parent_name, parent_phone));
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return roommateInformationArrayList;
-    }
-
-    public Integer getQuantityMember(int roomID) {
-        Connection cn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        int quantity = 0;
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn != null) {
-
-                String sql = "SELECT COUNT(roomate_info_id) as 'quantityMember'\n" +
-                        "FROM RoomateInformations\n" +
-                        "WHERE account_renter_id = (SELECT TOP 1 account_id\n" +
-                        "FROM Accounts\n" +
-                        "WHERE room_id = ? AND role = 2\n" +
-                        "ORDER BY create_date DESC)";
-
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, roomID);
-
-                rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    quantity = rs.getInt("quantityMember");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return quantity;
     }
 
     public boolean updateRoom(int roomID, int roomNumber, int capacity, double roomArea, int hasAttic) {
@@ -849,33 +493,30 @@ public class RoomDAO {
         return isSuccess;
     }
 
-    // Renter handler
-    private static final String GET_HOSTEL_ROOM_INFOR_BY_RENTER_ID =
-            "SELECT R.* FROM Rooms AS R INNER JOIN Contracts AS C \n" +
-                    "ON R.room_id = C.room_id WHERE C.renter_id = ?";
-//            "SELECT Rooms.room_number,Rooms.capacity,Rooms.room_area, COUNT(RoomateInformations.roomate_info_id) AS numberOfMembers\n" +
-//                    "FROM Rooms INNER JOIN Contracts ON Rooms.room_id=Contracts.room_id \n" +
-//                    "INNER JOIN Accounts ON Contracts.renter_id=Accounts.account_id \n" +
-//                    "INNER JOIN RoomateInformations ON Accounts.account_id=RoomateInformations.account_renter_id\n" +
-//                    "WHERE Accounts.account_id = ?\n" +
-//                    "GROUP BY Rooms.room_number,Rooms.room_area,Rooms.capacity";
-    public Room getHostelRoomInforByRenterId(int renterId) throws SQLException {
+    public Room getRoomInfoByRenterId(int renterId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        Room roomInfor = null;
+        Room roomInfo = null;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                pst = cn.prepareStatement(GET_HOSTEL_ROOM_INFOR_BY_RENTER_ID);
+                String sql = "SELECT R.* FROM Rooms AS R INNER JOIN Contracts AS C \n" +
+                        "ON R.room_id = C.room_id WHERE C.renter_id = ?";
+
+                pst = cn.prepareStatement(sql);
                 pst.setInt(1, renterId);
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
+                    int room_id = rs.getInt("room_id");
+                    int hostel_id = rs.getInt("hostel_id");
                     int roomNumber = rs.getInt("room_number");
                     double roomArea = rs.getInt("room_area");
                     int capacity = rs.getInt("capacity");
-                    roomInfor = Room
+                    roomInfo = Room
                             .builder()
+                            .roomId(room_id)
+                            .hostelId(hostel_id)
                             .roomNumber(roomNumber)
                             .capacity(capacity)
                             .roomArea(roomArea)
@@ -895,7 +536,7 @@ public class RoomDAO {
                 cn.close();
             }
         }
-        return roomInfor;
+        return roomInfo;
     }
 
     public Room getRoomById(int roomId) throws SQLException {
@@ -947,6 +588,4 @@ public class RoomDAO {
         }
         return roomInfor;
     }
-
-
 }

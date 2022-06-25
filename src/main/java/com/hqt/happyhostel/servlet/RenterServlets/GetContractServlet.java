@@ -40,7 +40,7 @@ public class GetContractServlet extends HttpServlet {
                 url = SUCCESS;
             }
             //Get Hostel Owner
-            Information ownerInfo = infoDao.getHostelOwnerInforByRenterId(accId);
+            Information ownerInfo = infoDao.getHostelOwnerInfoByRenterId(accId);
             if (ownerInfo!=null){
                 req.setAttribute("OWNER_INFO", ownerInfo);
                 url = SUCCESS;

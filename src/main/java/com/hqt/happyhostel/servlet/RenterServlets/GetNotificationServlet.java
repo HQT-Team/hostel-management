@@ -33,7 +33,7 @@ public class GetNotificationServlet extends HttpServlet {
             int accId = acc.getAccId();
             HostelDAO hostelDAO = new HostelDAO();
 
-            notifications = new NotificationDAO().getNotificationById(accId);
+            notifications = new NotificationDAO().getNotificationByRenterId(accId);
             if (notifications.size()>0){
                 req.setAttribute("NOTIFY", notifications);
                 url = SUCCESS;

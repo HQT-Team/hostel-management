@@ -29,10 +29,10 @@ public class CreateRenterAccountServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         AccountDAO accountDAO = new AccountDAO();
         HandlerStatus handlerStatus = null;
-        Account owner = null;
-        String url = null;
-        int ownerId = -1;
-        int roomID = -1;
+        Account owner;
+        String url;
+        int ownerId;
+        int roomID;
         url = ERROR;
         try {
             HttpSession session = req.getSession(false);
@@ -126,7 +126,7 @@ public class CreateRenterAccountServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at CreateRenterAccountServlet: " + e);
         } finally {
-            if(ERROR.equalsIgnoreCase(url)) resp.sendRedirect(url);
+            if (ERROR.equalsIgnoreCase(url)) resp.sendRedirect(url);
             else req.getRequestDispatcher(url).forward(req, resp);
         }
     }

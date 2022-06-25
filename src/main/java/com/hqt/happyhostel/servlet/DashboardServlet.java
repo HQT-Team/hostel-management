@@ -16,7 +16,7 @@ public class DashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             HttpSession session = req.getSession();
-            Account account = (Account)session.getAttribute("USER");
+            Account account = (Account) session.getAttribute("USER");
 
             if (account != null) {
                 switch (account.getRole()) {

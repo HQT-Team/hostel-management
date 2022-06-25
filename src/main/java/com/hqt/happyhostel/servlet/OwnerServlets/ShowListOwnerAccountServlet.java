@@ -7,7 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "ShowListOwnerAccountServlet", value = "/ShowListOwnerAccountServlet")
 public class ShowListOwnerAccountServlet extends HttpServlet {
@@ -20,7 +20,7 @@ public class ShowListOwnerAccountServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
 
-            ArrayList<Account> list = accountDAO.GetAllByRole(1);
+            List<Account> list = accountDAO.GetAccountsByRole(1);
 
             request.setAttribute("OWNER_LIST", list);
             session.setAttribute("CURRENT_PAGE", "account");

@@ -46,7 +46,7 @@
             <span>
                 <c:choose>
                     <c:when test="${requestScope.contractRoom.deposit ne null}">
-                        <fmt:formatNumber value="${requestScope.contractRoom.deposit}" type="currency"/>
+                        <fmt:formatNumber value="${requestScope.contractRoom.deposit}" type="currency" currencySymbol="VNĐ"/>
                     </c:when>
                     <c:otherwise>
                         Trống
@@ -58,7 +58,7 @@
             <span>
                 <c:choose>
                     <c:when test="${requestScope.contractRoom.price ne null}">
-                        <fmt:formatNumber value="${requestScope.contractRoom.price}" type="currency"/>
+                        <fmt:formatNumber value="${requestScope.contractRoom.price}" type="currency" currencySymbol="VNĐ"/>
                     </c:when>
                     <c:otherwise>
                         Trống

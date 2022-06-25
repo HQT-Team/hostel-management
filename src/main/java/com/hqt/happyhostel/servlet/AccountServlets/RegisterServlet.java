@@ -12,7 +12,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.Locale;
 
 @WebServlet(name = "RegisterServlet", value = "/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
@@ -61,14 +60,14 @@ public class RegisterServlet extends HttpServlet {
                         boolean check = accountDAO.addAnAccount(registerAccount);
                         if (check) {
                             req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
-                                            .status(true)
-                                            .content("Đăng ký tài khoản thành công! Tài khoản sẽ được quản trị viên xem xét và thông báo kết quả qua email!")
-                                            .build());
+                                    .status(true)
+                                    .content("Đăng ký tài khoản thành công! Tài khoản sẽ được quản trị viên xem xét và thông báo kết quả qua email!")
+                                    .build());
                             req.getRequestDispatcher(url).forward(req, resp);
                         } else {
                             req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
-                                                .status(false)
-                                                .content("Đã có lỗi xảy ra, vui lòng thử lại sau!").build());
+                                    .status(false)
+                                    .content("Đã có lỗi xảy ra, vui lòng thử lại sau!").build());
                             req.getRequestDispatcher(url).forward(req, resp);
                         }
 
@@ -76,8 +75,8 @@ public class RegisterServlet extends HttpServlet {
                         // email has been existed
                         req.setAttribute("ERROR_TYPE", "email");
                         req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
-                                                            .status(false)
-                                                            .content("Email đã tồn tại trong hệ thống!").build());
+                                .status(false)
+                                .content("Email đã tồn tại trong hệ thống!").build());
                         req.setAttribute("fullname", fullname);
                         req.setAttribute("username", username);
                         req.setAttribute("email", email);
@@ -89,8 +88,8 @@ public class RegisterServlet extends HttpServlet {
                     // username has been existed
                     req.setAttribute("ERROR_TYPE", "username");
                     req.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
-                                                        .status(false)
-                                                        .content("Tài khoản đã tồn tại trong hệ thống!").build());
+                            .status(false)
+                            .content("Tài khoản đã tồn tại trong hệ thống!").build());
                     req.setAttribute("fullname", fullname);
                     req.setAttribute("username", username);
                     req.setAttribute("email", email);

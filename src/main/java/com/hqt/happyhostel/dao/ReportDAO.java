@@ -1,9 +1,6 @@
 package com.hqt.happyhostel.dao;
 
-import com.hqt.happyhostel.dto.Hostel;
-import com.hqt.happyhostel.dto.HostelService;
 import com.hqt.happyhostel.dto.Report;
-import com.hqt.happyhostel.dto.ReportCategory;
 import com.hqt.happyhostel.utils.DBUtils;
 
 import java.sql.*;
@@ -14,11 +11,11 @@ public class ReportDAO {
     private static final String INSERT_REPORT =
             "INSERT INTO [dbo].[Reports](send_date, [content], status, reply_account_id, send_account_id, cate_id) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String GET_REPORT = "SELECT * FROM Reports";
-    public boolean addReport(Report report, int cateID) throws SQLException {
+
+    public boolean addReport(Report report) throws SQLException {
         boolean check = false;
         Connection cn = null;
         PreparedStatement ptm = null;
-        ResultSet rs = null;
         try {
             cn = DBUtils.makeConnection();
             //Insert table Hostel
@@ -44,9 +41,6 @@ public class ReportDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (rs != null) {
-                rs.close();
-            }
             if (ptm != null) {
                 ptm.close();
             }
@@ -56,6 +50,7 @@ public class ReportDAO {
         }
         return check;
     }
+
     public List<Report> getReport() throws SQLException {
         List<Report> reports = new ArrayList<>();
         Connection cn = null;

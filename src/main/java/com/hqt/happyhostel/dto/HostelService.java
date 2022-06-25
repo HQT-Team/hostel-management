@@ -13,6 +13,6 @@ import lombok.*;
 public class HostelService {
     private int hostelID;
     private int serviceID;
-    private double servicePrice;
+    private int servicePrice;
     private String validDate;
 }
