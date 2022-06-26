@@ -30,4 +30,16 @@
             <div class="group-option__label">Báo cáo</div>
         </a>
     </div>
+    <div class="group-option ${sessionScope.CURRENT_PAGE eq "invoice" ? "active" : ""}">
+        <a href="" class="group-option__link">
+            <i class="group-option__icon fa-solid fa-file-invoice-dollar"></i>
+            <div class="group-option__label">Hóa đơn</div>
+        </a>
+    </div>
+    <div class="group-option ${sessionScope.CURRENT_PAGE eq "account" ? "active" : ""}">
+        <a href="" class="group-option__link">
+            <i class="group-option__icon fa-solid fa-user"></i>
+            <div class="group-option__label">Tài khoản</div>
+        </a>
+    </div>
 </div>

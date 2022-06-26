@@ -1,0 +1,135 @@
+@import "../_common-style/navbar";
+@import "../_common-style/sidebar";
+@import "../_common-style/footer";
+
+// Body
+.content-group {
+  min-height: var(--min-body-height);
+}
+
+// Tabs
+.tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 30px;
+  margin-bottom: 30px;
+  position: relative;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    .line {
+      display: none;
+    }
+  }
+
+  .line {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 4px;
+    border-radius: 15px;
+    background-color: var(--primary-color);
+    transition: all 0.2s ease;
+  }
+
+  .tabs-item {
+    font-size: 1.8rem;
+    font-weight: 500;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 4px solid #ffffff;
+
+    &:hover {
+      color: var(--primary-color);
+      background-color: rgba(53, 105, 194, 0.05);
+      border-bottom: 4px solid var(--primary-color);
+    }
+  }
+
+  .tabs-item.active {
+    color: var(--primary-color);
+
+    .tabs-icon {
+      color: var(--primary-color);
+    }
+  }
+
+  .tabs-icon {
+    margin-right: 10px;
+    font-size: 24px;
+  }
+}
+
+.content__item {
+  display: none;
+
+  .filter__wrapper {
+    margin-bottom: 24px;
+
+    table {
+      tr {
+        &:first-of-type {
+          td {
+            text-align: center;
+            padding-top: 0;
+          }
+        }
+
+        &:last-of-type {
+          td {
+            &:first-of-type {
+              padding-left: 0;
+            }
+          }
+        }
+
+        td {
+          font-size: 1.8rem;
+          font-weight: 600;
+          padding: 8px 12px;
+        }
+      }
+    }
+  }
+}
+
+.content__item.active {
+  display: block;
+}
+
+.content__body {
+  padding: 16px 16px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.dataTables_length,
+.dataTables_filter {
+  margin-bottom: 16px;
+}
+
+.dataTables_info,
+.dataTables_paginate {
+  margin-top: 16px;
+}
+
+.content__tbody {
+  tr {
+    td {
+      a {
+        color: var(--primary-color);
+        font-style: italic;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
