@@ -255,15 +255,15 @@
                       <label for="old-password" class="form-label">
                         Mật khẩu cũ: <span>*</span>
                       </label>
-                      <input id="old-password" type="password" placeholder="Nhập mật khẩu hiện tại"
+                      <input id="old-password" name="old-password" type="password" placeholder="Nhập mật khẩu hiện tại"
                              class="form-control">
-                      <span class="form-message"></span>
+                      <span class="form-message">${requestScope.ERROR ne null && requestScope.RESPONSE_MSG ne null ? requestScope.RESPONSE_MSG.content : ""}</span>
                     </div>
                     <div class="form-group">
                       <label for="new-password" class="form-label">
                         Mật khẩu mới: <span>*</span>
                       </label>
-                      <input id="new-password" type="password" placeholder="Nhập mật khẩu mới"
+                      <input id="new-password" name="new-password" type="password" placeholder="Nhập mật khẩu mới"
                              class="form-control">
                       <span class="form-message"></span>
                     </div>
