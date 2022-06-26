@@ -12,25 +12,7 @@
 body{
   overflow-x: hidden;
 }
-.dropdown {
-  #dropdownMenuButton {
-    width: 130px;
-    height: 45px;
-    background-color: #6A5Af9;
-    font-size: 16px;
-  }
 
-  .dropdown-menu {
-    a {
-      font-size: 14px;
-    }
-
-    a:hover {
-      background-color: #6A5Af9;
-      color: #eee;
-    }
-  }
-}
 
 .content {
   width: 100%;
@@ -98,26 +80,6 @@ footer {
 }
 
 @media screen and (max-width: 600px) {
-  .dropdown {
-    #dropdownMenuButton {
-      width: 80px;
-      height: 35px;
-      background-color: #6A5Af9;
-      font-size: 16px;
-    }
-
-    .dropdown-menu {
-      a {
-        font-size: 10px;
-      }
-
-      a:hover {
-        background-color: #6A5Af9;
-        color: #eee;
-      }
-    }
-  }
-
   .navbar {
     height: 60px;
 

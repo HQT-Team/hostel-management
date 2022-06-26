@@ -31,22 +31,22 @@
   <!-- navbar -->
   <nav class="navbar row">
     <div class="navbar-left">
-      <div class="dropdown">
+      <div class="dropdown"  style="padding-left: 15px;">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+                aria-haspopup="true" aria-expanded="false"style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
           Menu
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
-          <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
-          <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
-          <a class="dropdown-item" href="Renter-bill">Hóa đơn</a>
-          <a class="dropdown-item" href="Renter-report">Báo cáo</a>
-          <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
-          <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
-          <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
-          <a class="dropdown-item" href="Get-report">Xem báo cáo</a>
-          <a class="dropdown-item" href="logout">Đăng xuất</a>
+          <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
+          <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
+          <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
+          <a class="dropdown-item" href="Renter-bill"style="font-size: 15px;">Hóa đơn</a>
+          <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
+          <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
+          <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
+          <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
+          <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
+          <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
         </div>
       </div>
       <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">

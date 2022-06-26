@@ -2,8 +2,7 @@
 
   width: 100%;
   height: 80px;
-  background: rgb(63, 63, 240);
-  background: linear-gradient(90deg, rgba(63, 63, 240, 1) 0%, rgb(199, 212, 218) 50%, rgb(66, 87, 202) 100%);
+  background-color: #000000;
   border-bottom: 1px solid rgb(128, 125, 125);
   margin: 0px;
 
@@ -40,16 +39,18 @@
   .navbar-right {
     width: 30%;
     text-align: right;
+    padding-right: 30px;
 
     a {
       font-size: 20px;
-      color: black;
+      color: rgb(255, 255, 255);
       text-decoration: none;
       font-weight: 500;
+      transition: 0.2s;
 
       img {
-        height: 40px;
-        width: 40px;
+        height: 30px;
+        width: 30px;
       }
     }
 
@@ -58,10 +59,11 @@
       color: rgb(47, 0, 255);
       text-decoration: none;
       font-weight: 500;
+      transition: 0.2s;
 
       img {
-        height: 40px;
-        width: 40px;
+        height: 25px;
+        width: 25px;
       }
     }
   }
