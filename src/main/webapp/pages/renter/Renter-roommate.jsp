@@ -46,9 +46,9 @@
           <a class="dropdown-item" href="Renter-bill"style="font-size: 15px;">Hóa đơn</a>
           <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
           <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
-          <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
           <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
           <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
+          <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
           <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
         </div>
       </div>
@@ -148,12 +148,12 @@
             <tr>
               <td><%=x%></td>
               <td><span>${roommateinfor.getInformation().getFullname()}</span></td>
-              <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%=x%>">
+              <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%=x%>" style="margin: 5px;">
                 Xem chi tiết
               </button></td>
               <td><a href="DeleteRoommatePage?roommateID=${roommateinfor.roommateID}" role="button" class="btn btn-primary"
-                     style="width:60px; height:30px; color: #ffffff; padding-top: 7px;">Xoá</a></td>
-              <td><a href="Renter-update-roommate" role="button" class="btn btn-primary" style="width:60px; height:30px; color: #ffffff; padding-top: 7px;">Chỉnh Sửa</a></td>
+                     style="width: 60px;height:30px;color: #ffffff;padding-top: 7px; margin: 5px;">Xoá</a></td>
+              <td><a href="Renter-update-roommate" role="button" class="btn btn-primary" style="width: 60px;height:30px;color: #ffffff;padding-top: 7px; margin: 5px;">Chỉnh Sửa</a></td>
             </tr>
 
             <%

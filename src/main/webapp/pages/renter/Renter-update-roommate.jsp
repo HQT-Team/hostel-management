@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/renter_page/Renter-add-roommate.css">
+    <link rel="stylesheet" href="./assets/css/renter_page/Renter-update-roommate.css">
 
 </head>
 
@@ -46,9 +46,9 @@
                     <a class="dropdown-item" href="Renter-bill"style="font-size: 15px;">Hóa đơn</a>
                     <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
                     <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
-                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
                     <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
                     <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
+                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
                     <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
                 </div>
             </div>
@@ -136,9 +136,11 @@
                         <span id="mes-3"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-4" type="text" placeholder="Giới tính">
-                        <p class="border-bottom"></p>
-                        <span id="mes-4"></span>
+                        <select name="sex" id="form-item-input-4">
+                            <option value="0">Nam</option>
+                            <option value="1">Nữ</option>
+                            <option value="2">Khác</option>
+                        </select>
                     </div>
                     <div class="form-item">
                         <input id="form-item-input-5" type="text" placeholder="Số điện thoại">

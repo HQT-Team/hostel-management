@@ -1,0 +1,152 @@
+@import "./_common-style/_navbar";
+@import "./_common-style/_footer";
+@import "./_common-style/_sidebar";
+
+
+.dropdown {
+  display: none;
+}
+
+body{
+  overflow-x: hidden;
+}
+.content {
+  width: 80%;
+
+  .div-controll-form {
+    width: 50%;
+    margin: 100px auto;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 20px;
+
+    h1 {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .form {
+      .form-item {
+        margin: 5px;
+        #form-item-input-4 {
+          line-height: 18px;
+          width: 100%;
+          height: 40px;
+          border: 1px solid #c4c4c4;
+          border-radius: 6px;
+          font-size: 14px;
+          padding-left: 20px;
+        }
+
+        input {
+          line-height: 18px;
+          width: 100%;
+          height: 40px;
+          border: none;
+          font-size: 14px;
+          padding-left: 20px;
+          border-bottom: 1px solid rgb(197, 195, 195);
+        }
+
+        p {
+          width: 0%;
+          transition: 0.5s;
+        }
+
+        input:focus~p {
+          width: 100%;
+          outline: none;
+          border-bottom: none;
+          border-top: 2px solid #5846f8;
+        }
+
+        span {
+          padding-left: 20px;
+          color: red;
+        }
+      }
+
+      #form-item-submit {
+        width: 100%;
+        height: 40px;
+        border: none;
+        border-radius: 5px;
+        background-color: #6A5Af9;
+        color: aliceblue;
+        font-size: large;
+        margin-top: 10px;
+      }
+
+      #form-item-submit:hover {
+        background-color: #5846f8;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 740px) and (max-width: 1024px) {
+  .dropdown {
+    display: block;
+  }
+
+  .link {
+    display: none;
+  }
+
+  .dashboard {
+    display: none;
+  }
+
+  .content {
+    width: 100%;
+
+    .div-controll-form {
+      width: 80%;
+    }
+  }
+}
+
+
+
+@media screen and (max-width: 740px) {
+  .dropdown {
+    display: block;
+  }
+
+  .link {
+    display: none;
+  }
+
+  .dashboard {
+    display: none;
+  }
+
+  .navbar {
+    .navbar-center {
+      img {
+        width: 130px;
+        height: 40px;
+      }
+    }
+
+    .navbar-right {
+      img {
+        display: none;
+      }
+
+      a {
+
+        font-size: 13px;
+      }
+    }
+  }
+
+  .content {
+    width: 100%;
+
+    .div-controll-form {
+      width: 80%;
+    }
+  }
+}
+
+

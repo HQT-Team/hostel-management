@@ -25,13 +25,14 @@ body{
     margin: 0px;
     padding: 50px 20px;
 
-    input {
+    #myInput {
       width: 30%;
-      height: 30px;
+      height: 35px;
       border: 2px solid #7b7b7b;
       margin-bottom: 10px;
       border-radius: 6px;
       padding-left: 10px;
+      font-size: 17px;
     }
 
     input:focus {
