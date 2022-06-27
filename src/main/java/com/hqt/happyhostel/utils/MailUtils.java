@@ -14,7 +14,7 @@ public class MailUtils {
         try {
             final String fromEmail = "hqthostel@gmail.com";
             // Mat khai email cua ban
-            final String password = "twumxdfwdcfxrbfx";
+            final String password = "jynlfoueiwkrmrbp";
             // dia chi email nguoi nhan
 //        final String toEmail = "honam267@gmail.com";
 //        final String subject = "Hai Nam test gui mail cang cuc";
@@ -33,7 +33,6 @@ public class MailUtils {
             };
             Session session = Session.getInstance(props, auth);
 
-
             MimeMessage msg = new MimeMessage(session);
             //set message headers
             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
@@ -46,7 +45,7 @@ public class MailUtils {
 
             msg.setSubject(subject, "UTF-8");
 
-            msg.setContent(body, "text/html");
+            msg.setContent(body, "text/HTML;charset=UTF-8");
 
             msg.setSentDate(new Date());
 

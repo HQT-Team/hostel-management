@@ -31,7 +31,7 @@
     <div class="row">
       <div class="col-3">
         <div class="main-nav__logo">
-          <a href="" class="main-nav__logo-link">
+          <a href="HomePage" class="main-nav__logo-link">
             <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
           </a>
         </div>
@@ -50,7 +50,7 @@
   <div class="row">
     <!-- Turn back -->
     <div class="col-12">
-      <a href="" class="turn-back__link">
+      <a href="HomePage" class="turn-back__link">
         <i class="turn-back__link-icon fa-solid fa-caret-left"></i>
         Quay về trang chủ
       </a>
