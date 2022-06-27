@@ -40,7 +40,7 @@
           <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
           <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
           <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
-          <a class="dropdown-item" href="Renter-bill"style="font-size: 15px;">Hóa đơn</a>
+          <a class="dropdown-item" href="Renter-invoice-page"style="font-size: 15px;">Hóa đơn</a>
           <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
           <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
           <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
@@ -58,7 +58,7 @@
       </nav>
     </div>
     <div class="navbar-center">
-      <a href="" role="button"><img src="./assets/images/logos/logo.png" alt=""></a>
+      <a href="" role="button"><img src="./assets/images/logos/logowhite.png" alt=""></a>
     </div>
     <div class="navbar-right">
       <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>

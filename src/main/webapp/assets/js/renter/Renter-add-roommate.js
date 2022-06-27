@@ -7,6 +7,8 @@ var input_4 = document.getElementById("form-item-input-4")
 var input_5 = document.getElementById("form-item-input-5")
 var input_6 = document.getElementById("form-item-input-6")
 var input_7 = document.getElementById("form-item-input-7")
+var input_8 = document.getElementById("form-item-input-8")
+var input_9 = document.getElementById("form-item-input-9")
 var submit = document.getElementById("form-item-submit")
 
 function showMessageError(input, x) {
@@ -106,7 +108,7 @@ function checkEmpty(list) {
 
 submit.addEventListener('click', function () {
     let check = true;
-    check = checkEmpty([input_1, input_2, input_3, input_5, input_6, input_7])
+    check = checkEmpty([input_1, input_2, input_3, input_5, input_6, input_7, input_8, input_9])
     if (document.getElementById("mes-3").value == undefined) {
         console.log(document.getElementById("mes-3"));
         var check_date = isValidDate(input_3)

@@ -57,7 +57,7 @@
             </nav>
         </div>
         <div class="navbar-center">
-            <a href="" role="button"><img src="./assets/images/logos/logo.png" alt=""></a>
+            <a href="" role="button"><img src="./assets/images/logos/logowhite.png" alt=""></a>
         </div>
         <div class="navbar-right">
             <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>

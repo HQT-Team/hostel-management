@@ -57,7 +57,7 @@
                 </nav>
             </div>
             <div class="navbar-center">
-                <a href="" role="button"><img src="./assets/images/logos/logo.png" alt=""></a>
+                <a href="" role="button"><img src="./assets/images/logos/logowhite.png" alt=""></a>
             </div>
             <div class="navbar-right">
                 <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>
@@ -87,7 +87,7 @@
                             <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
                             <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
                             <h3><a href="ContractPage">Hợp đồng</a></h3>
-                            <h3><a href="Renter-bill">Hóa đơn</a></h3>
+                            <h3><a href="Renter-invoice-page">Hóa đơn</a></h3>
                             <h3><a href="Renter-report" style="color:rgb(4, 4, 255)">Gửi báo cáo</a></h3>
                             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
                             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>

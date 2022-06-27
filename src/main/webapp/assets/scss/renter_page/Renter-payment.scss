@@ -1,0 +1,198 @@
+@import "./_common-style/_navbar";
+@import "./_common-style/_footer";
+@import "./_common-style/_sidebar";
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+
+
+.dropdown {
+  display: none;
+}
+
+.content {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 80%;
+  h1 {
+    display: block;
+    height: 50px;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 40px;
+    font-weight: 550;
+  }
+  #invoice-cover {
+    width: 60%;
+    min-height: 340px;
+    border-radius: 8px;
+    border: 1px solid black;
+    margin: 40px auto;
+    padding: 10px 50px;
+    h2 {
+      font-size: 24px;
+      color: blue;
+      font-weight: 500;
+      text-align: center;
+    }
+    h3 {
+      font-size: 20px;
+      color: red;
+      text-align: center;
+    }
+    #water {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      p {
+        font-size: 20px;
+      }
+    }
+    #electric {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      p {
+        font-size: 20px;
+      }
+    }
+    p {
+      font-size: 20px;
+    }
+    #action {
+      display: flex;
+      justify-content: space-between;
+      a:first-child {
+        width: 120px;
+        height: 40px;
+        border: 1px solid red;
+        text-decoration: none;
+        text-align: center;
+        font-size: 18px;
+        line-height: 40px;
+        border-radius: 8px;
+      }
+      a:first-child:hover {
+        width: 120px;
+        height: 40px;
+        border: 1px solid red;
+        text-decoration: none;
+        text-align: center;
+        font-size: 18px;
+        line-height: 40px;
+        border-radius: 8px;
+        color: rgb(255, 0, 0);
+      }
+      a:last-child {
+        width: 120px;
+        height: 40px;
+        border: 1px solid rgb(25, 0, 255);
+        text-decoration: none;
+        text-align: center;
+        font-size: 18px;
+        line-height: 40px;
+        border-radius: 8px;
+      }
+      a:last-child:hover {
+        width: 120px;
+        height: 40px;
+        border: 1px solid rgb(25, 0, 255);
+        text-decoration: none;
+        text-align: center;
+        font-size: 18px;
+        line-height: 40px;
+        border-radius: 8px;
+        color: blue;
+      }
+    }
+  }
+  .table{
+    width: 70%;
+    margin: 50px auto;
+    thead{
+      tr{
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+        border-style:none ;
+        th{
+          font-size: 22px;
+          color: black;
+          text-align: center;
+          border: 1px solid black;
+        }
+      }
+    }
+    tbody{
+      tr{
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+        td{
+          color: black;
+          text-align: center;
+          border: 1px solid black;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+}
+
+
+@media screen  and (min-width:650px ) and (max-width: 1000px){
+  .dashboard{
+    display: none;
+  }
+  .link{
+    display: none;
+  }
+  .dropdown{
+    display: block;
+  }
+  .content{
+    width: 100%;
+    #invoice-cover{
+      width: 90%;
+    }
+    .table{
+      width: 90%;
+    }
+  }
+
+}
+@media screen and (max-width: 650px){
+  .dashboard{
+    display: none;
+  }
+  .link{
+    display: none;
+  }
+  .dropdown{
+    display: block;
+  }
+  .navbar{
+    .navbar-left{
+      padding-left: 0;
+    }
+    .navbar-right{
+      a{
+        img{
+          display: none;
+        }
+      }
+      padding-right: 5px;
+    }
+  }
+  .content{
+    width: 100%;
+    #invoice-cover{
+      width: 90%;
+    }
+    .table{
+      width: 90%;
+    }
+  }
+
+}

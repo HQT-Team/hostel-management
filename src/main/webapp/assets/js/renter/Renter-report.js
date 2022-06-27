@@ -1,6 +1,6 @@
 var select = document.getElementById("select");
 var input = document.getElementById("form-input");
-var submit = document.getElementById("submit");
+var submit = document.getElementById("Submit");
 function showMessageError(data, x, mes) {
     if (x == 0) {
         let parent = data.parentElement;
@@ -51,8 +51,8 @@ function validateDatetime(input) {
 }
 
 
-Submit.addEventListener('click', function (e) {
-    let check;
+submit.addEventListener('click', function (e) {
+    let check = true;
     e.preventDefault();
     check = checkEmpty([select, input])
     if (check) {

@@ -61,7 +61,7 @@
       </nav>
     </div>
     <div class="navbar-center">
-      <a href="" role="button"><img src="./assets/images/logos/logo.png" alt=""></a>
+      <a href="" role="button"><img src="./assets/images/logos/logowhite.png" alt=""></a>
     </div>
     <div class="navbar-right">
       <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>
@@ -91,7 +91,7 @@
             <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
             <h3><a href="get-roommate-infor" style="color:rgb(4, 4, 255)">Bạn cùng phòng</a></h3>
             <h3><a href="ContractPage">Hợp đồng</a></h3>
-            <h3><a href="Renter-bill">Hóa đơn</a></h3>
+            <h3><a href="Renter-invoice-page">Hóa đơn</a></h3>
             <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
@@ -115,6 +115,17 @@
         </div>
       </div>
     </div>
+    <%if(listroommateinfor.isEmpty()){
+      %>
+    <style>
+      .table-1{
+        display: none;
+      }
+    </style>
+    <%
+    } %>
+
+
     <div class="content row">
       <div class="table-1">
         <table border="1">
@@ -221,6 +232,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+    <script src="./assets/js/renter/Renter-roommate.js"></script>
 </body>
 
 </html>

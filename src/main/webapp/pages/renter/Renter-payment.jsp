@@ -1,5 +1,10 @@
-<%@ page import="com.hqt.happyhostel.dto.Account" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.hqt.happyhostel.dto.Account" %><%--
+  Created by IntelliJ IDEA.
+  User: 84337
+  Date: 6/18/2022
+  Time: 12:28 PM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,10 +13,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
     <title>Renter</title>
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,7 +23,8 @@
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/renter_page/Renter-notification.css">
+    <link rel="stylesheet" href="./assets/css/renter_page/Renter-payment.css">
+
 </head>
 
 <body>
@@ -28,7 +32,6 @@
     Account account = (Account)session.getAttribute("USER");
 %>
 <div>
-    <!-- navbar -->
     <nav class="navbar row">
         <div class="navbar-left">
             <div class="dropdown"  style="padding-left: 15px;">
@@ -53,7 +56,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:blue">Người thuê</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Thông báo</li>
+                    <li class="breadcrumb-item active" aria-current="page">Thông tin phòng</li>
                 </ol>
             </nav>
         </div>
@@ -66,12 +69,11 @@
 
     </nav>
 
-    <!-- content -->
-    <div class="main-body row">
-        <div class="dashboard">
+    <div class="row">
+        <div class="dashboard hidden" id="dashboard">
             <div class="infor-top">
                 <img src="./assets/images/avatars/user-avatar.jpg" alt="">
-                <h3>Trần Hoài Nam</h3>
+                <h3><%=account.getUsername()%></h3>
                 <p>Renter</p>
             </div>
             <div class="card">
@@ -85,12 +87,12 @@
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
+                        <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
                         <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
                         <h3><a href="ContractPage">Hợp đồng</a></h3>
                         <h3><a href="Renter-invoice-page">Hóa đơn</a></h3>
                         <h3><a href="Renter-report">Gửi báo cáo</a></h3>
-                        <h3><a href="RenterNotificationPage" style="color:rgb(4, 4, 255)">Xem thông báo</a></h3>
+                        <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
                         <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
                         <h3><a href="Get-report">Xem báo cáo</a></h3>
                     </div>
@@ -106,61 +108,87 @@
                 </div>
                 <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
-                        <h3><a href="HostelRenterProfilePage">Hồ sơ</a></h3>
+                        <h3><a href="HostelRenterProfilePage?<%=account.getAccId()%>">Hồ sơ</a></h3>
                         <h3><a href="logout">Đăng xuất</a></h3>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="content row">
-            <div class="notification">
-                <table class="table table-striped">
+
+
+        <div class="content">
+            <h1>Hóa Đơn</h1>
+            <div id="invoice-cover">
+                <h2>#2022060600</h2>
+                <h3>Chưa thanh toán</h3>
+                <p></p>
+                <div id="water">
+                    <p>Số nước: 5</p>
+                    <p>Cũ: 195</p>
+                    <p>Mới: 200</p>
+                </div>
+                <div id="electric">
+                    <p>Số điện: 100</p>
+                    <p>Cũ: 100</p>
+                    <p>Mới: 200</p>
+                </div>
+                <p>Ngày tạo hóa đơn: 2022-06-06</p>
+                <p>Hạn thanh toán: 2022-06-13</p>
+                <p>Tổng: 2,000,000</p>
+                <div id="action">
+                    <a href="#" role="button">Quay Lại</a>
+                    <a href="#" role="button">Thanh Toán</a>
+                </div>
+            </div>
+            <div id="table">
+                <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th scope="col">Stt</th>
-                        <th scope="col">Chủ đề</th>
-                        <th scope="col">Nội dung</th>
-                        <th scope="col">Ngày tạo</th>
+                        <th>STT</th>
+                        <th>Tên</th>
+                        <th>Đơn vị</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:set var="count" value="0" scope="page"/>
-                    <c:forEach var="n" items="${NOTIFY}">
-                        <c:set var="count" value="${count + 1}" scope="page"/>
-                        <tr>
-                            <th scope="row">${count}</th>
-                            <td>${n.title}</td>
-                            <td>${n.content}</td>
-                            <td>${n.createDate}</td>
-                        </tr>
-                    </c:forEach>
+                    <tr>
+                        <td>1</td>
+                        <td>Máy lạnh</td>
+                        <td>Kw</td>
+                        <td>5</td>
+                        <td>3,000</td>
+                        <td>15,000</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Máy lạnh</td>
+                        <td>Kw</td>
+                        <td>5</td>
+                        <td>3,000</td>
+                        <td>15,000</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-
-
-<!-- footer -->
-
 <footer>
     <div>
         <div class="row">
             <div class="col-12">
                 <div class="copyright-wrapper d-flex justify-content-center">
-                    <div class="copyright-logo">
-                        <!-- <img src="../../assets/images/logos/logo-white.png" alt="Logo"> -->
-                    </div>
-                    <div class="copyright-content" style="font-size: 18px;">© 2022 HQT Team. All rights
-                        reserved.</div>
+                    <!-- <div class="copyright-logo">
+                        <img src="../../assets/images/logos/logo-white.png" alt="Logo">
+                    </div> -->
+                    <div class="copyright-content">© 2022 HQT Team. All rights reserved.</div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
-
-
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -171,9 +199,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        crossorigin="anonymous"></script>
+
 </body>
 
 </html>
