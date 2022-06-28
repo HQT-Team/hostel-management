@@ -92,7 +92,6 @@
                                                     <span class="content__tbody-status no">Chưa thanh toán</span>
                                                 </c:otherwise>
                                             </c:choose>
-
                                 </td>
                             </tr>
                         </c:forEach>
