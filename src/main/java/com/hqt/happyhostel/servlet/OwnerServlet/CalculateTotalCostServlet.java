@@ -33,6 +33,12 @@ public class CalculateTotalCostServlet extends HttpServlet {
             List<Consume> consumeThisMonth = new ConsumeDAO().getConsumeThisMonth(roomId);
             request.setAttribute("consumeListThisMonth", consumeThisMonth);
 
+            // Check hostel owner update consume or not, remind them, update is not a constraint
+            if (consumeThisMonth.get(0).getNumberWater() - consumeThisMonth.get(consumeThisMonth.size() - 1).getNumberWater() == 0 ||
+                    consumeThisMonth.get(0).getNumberElectric() - consumeThisMonth.get(consumeThisMonth.size() - 1).getNumberElectric() == 0) {
+
+            }
+
             String consumeDateStart = consumeThisMonth.get(consumeThisMonth.size() - 1).getUpdateDate().split(" ")[0];
             String consumeDateEnd = consumeThisMonth.get(0).getUpdateDate().split(" ")[0];
 

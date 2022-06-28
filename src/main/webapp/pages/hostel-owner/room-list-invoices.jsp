@@ -74,32 +74,28 @@
                         </tr>
                         </thead>
                         <tbody class="content__tbody">
-                        <tr>
-                            <td class="mb-d-none">
-                                <a href="./room-invoice-detail.html" class="content__tbody-link">#VA123</a>
-                            </td>
-                            <td><a href="./room-invoice-detail.html" class="content__tbody-link">02/2022</a>
-                            </td>
-                            <td>29/01/2022</td>
-                            <td class="mb-d-none">2.954.000 VNĐ</td>
-                            <td><span class="content__tbody-status no">
-                                            Chưa thanh toán
-                                        </span></td>
-                        </tr>
-                        <tr>
-                            <td class="mb-d-none">
-                                <a href="./room-invoice-detail.html" class="content__tbody-link">#VA123</a>
-                            </td>
-                            <td><a href="./room-invoice-detail.html" class="content__tbody-link">02/2022</a>
-                            </td>
-                            <td>29/01/2022</td>
-                            <td class="mb-d-none">2.954.000 VNĐ</td>
-                            <td>
-                                <span class="content__tbody-status yes">
-                                            Đã thanh toán
-                                </span>
-                            </td>
-                        </tr>
+                        <c:forEach var="invoice" items="${requestScope.listRoomBill}">
+                            <tr>
+                                <td class="mb-d-none">
+                                    <a href="./room-invoice-detail.html" class="content__tbody-link">#VA${invoice.billID}</a>
+                                </td>
+                                <td><a href="./room-invoice-detail.html" class="content__tbody-link">${invoice.billTitle}</a>
+                                </td>
+                                <td>${invoice.createdDate}</td>
+                                <td class="mb-d-none">${invoice.totalMoney} VNĐ</td>
+                                <td>
+                                            <c:choose>
+                                                <c:when test="${invoice.status eq 0}">
+                                                    <span class="content__tbody-status yes">Đã thanh toán</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="content__tbody-status no">Chưa thanh toán</span>
+                                                </c:otherwise>
+                                            </c:choose>
+
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                     <div class="content__action">
