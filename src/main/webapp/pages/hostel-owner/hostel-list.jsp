@@ -67,21 +67,21 @@
                             </a>
                         </div>
                     </div>
-                    <div class="content-body">
+                    <div class="content-body mb-5">
                         <div class="hostel-list">
                             <div class="hostel-list__header">
                                 Các khu trọ hiện tại
                             </div>
                             <div class="hostel-list__items mt-4">
                                 <table id="hostel-table"
-                                    class="mt-4 mb-4 table table-hover table-bordered table-striped hostel-table">
+                                    class="mt-4 table table-hover table-bordered table-striped hostel-table">
                                     <thead class="table-dark">
                                         <tr>
                                             <th>STT</th>
                                             <th>Tên</th>
                                             <th>Địa chỉ</th>
-                                            <th>Hành động</th>
-                                            <th>Hành động</th>
+                                            <th>Số phòng</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-light hostel-table__body">
@@ -95,19 +95,17 @@
                                             <td>${hostels.address}, ${hostels.ward.split('-')[1]},
                                                     ${hostels.district.split('-')[1]}, ${hostels.city.split('-')[1]}
                                             </td>
-                                            <td>
-                                                <a href="detailHostel?hostelID=${hostels.hostelID}"
-                                                   class="hostel-table__body-link-detail"
-                                                >
-                                                    Chi tiết
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="update-hostel?hostelID=${hostels.hostelID}"
-                                                   class="hostel-table__body-btn-edit"
-                                                >
-                                                    Chỉnh sửa
-                                                </a>
+                                            <td>...</td>
+                                            <td class="hostel-table__body-link">
+                                                <div class="hostel-table__body-wrapper">
+                                                    <a href="detailHostel?hostelID=${hostels.hostelID}"
+                                                       class="hostel-table__body-link-detail">
+                                                        <i class="fa-solid fa-building-circle-arrow-right"></i>
+                                                    </a>
+                                                    <a href="update-hostel?hostelID=${hostels.hostelID}"
+                                                       class="hostel-table__body-btn-edit"><i
+                                                            class="fa-solid fa-pen-to-square"></i></a>
+                                                </div>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -138,34 +136,40 @@
     <script src="./assets/js/handle-main-navbar.js"></script>
     <!-- Simple Datatable JS -->
     <script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <!-- Toast Alert -->
+    <script src="./assets/js/toast-alert.js"></script>
     <script>
         $(document).ready(function () {
             // Initial datatable
-            $('#hostel-table').DataTable();
+            $('#hostel-table').DataTable({
+                columnDefs: [
+                    { orderable: false, targets: 0 },
+                    { orderable: false, targets: 3 },
+                    { orderable: false, targets: 4 }
+                ],
+                "order": [],
+            });
+
+            <c:choose>
+                <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+                    toast({
+                        title: 'Thành công',
+                        message: '${requestScope.RESPONSE_MSG.content}',
+                        type: 'success',
+                        duration: 5000
+                    });
+                </c:when>
+                <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+                    toast({
+                        title: 'Lỗi',
+                        message: '${requestScope.RESPONSE_MSG.content}',
+                        type: 'error',
+                        duration: 5000
+                    });
+                </c:when>
+            </c:choose>
         });
     </script>
-    <script src="./assets/js/toast-alert.js"></script>
-    <script>
-        <c:choose>
-            <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
-                toast({
-                    title: 'Thành công',
-                    message: '${requestScope.RESPONSE_MSG.content}',
-                    type: 'success',
-                    duration: 4000
-                });
-            </c:when>
-            <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
-                toast({
-                    title: 'Lỗi',
-                    message: '${requestScope.RESPONSE_MSG.content}',
-                    type: 'error',
-                    duration: 4000
-                });
-            </c:when>
-        </c:choose>
-    </script>
-
     <c:if test="${requestScope.RESPONSE_MSG eq null}">
         <!-- Loader -->
         <script src="./assets/js/loading-handler.js"></script>

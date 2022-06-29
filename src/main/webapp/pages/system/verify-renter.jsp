@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -7,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
 
     <!-- Title -->
     <title>Xác thực</title>
@@ -73,8 +74,9 @@
                             <div class="col-4">
                                 <label class="form-label"
                                        style="color: transparent; user-select: none;">Button</label>
-                                <button id="resend-btn" class="form-control btn btn-primary disabled">180
-                                    giây</button>
+                                <button id="resend-btn" class="form-control btn btn-primary disabled">
+                                    Đang gửi
+                                </button>
                             </div>
                             <span class="form-message">
                                 ${requestScope.RESPONSE_MSG.content}
@@ -102,12 +104,19 @@
     </div>
 </footer>
 
+<!-- Toast element -->
+<div id="toast">&nbsp;</div>
+
 <!-- Script Bootstrap -->
 <script src="./assets/js/bootstrap/bootstrap.bundle.min.js"></script>
 <!-- Axios -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- Link your script here -->
 <script src="./assets/js/valid-form.js"></script>
+<!-- Axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- Toast -->
+<script src="./assets/js/toast-alert.js"></script>
 <script>
     $ = document.querySelector.bind(document);
 
@@ -122,12 +131,12 @@
 
     const resendBtnElement = $('#resend-btn');
 
-    const handleResendCode = (currentSecond) => {
+    const handleResendBtn = (currentSecond) => {
         let count = currentSecond ? currentSecond : 180;
 
         let intervalId = setInterval(() => {
             count--;
-            resendBtnElement.innerHTML = `${count} giây`;
+            resendBtnElement.innerHTML = count + ` giây`;
 
             if (count == 0) {
                 clearInterval(intervalId);
@@ -137,15 +146,53 @@
         }, 1000);
     }
 
-    handleResendCode(Number(30));
+    const handleSendOtp = () => {
+        axios.get('http://localhost:8080/HappyHostel/send-otp', {
+            params: {
+                account_id: '${requestScope.ACCOUNT_ID}'
+            }
+        })
+            .then(function (response) {
+                if (response.data.status === true) {
+                    handleResendBtn(180);
+                    toast({
+                        title: 'Thành công',
+                        message: response.data.content,
+                        type: 'success',
+                        duration: 10000
+                    });
+                } else {
+                    resendBtnElement.innerHTML = "Gửi lại"
+                    resendBtnElement.classList.remove("disabled");
+                    toast({
+                        title: 'Thất bại',
+                        message: response.data.content,
+                        type: 'error',
+                        duration: 10000
+                    });
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 
     resendBtnElement.addEventListener('click', (e) => {
         e.preventDefault();
-
-        // Handle Ajax
         resendBtnElement.classList.add("disabled");
-        handleResendCode();
+        resendBtnElement.innerHTML = 'Đang gửi';
+        handleSendOtp();
     })
+
+    <c:choose>
+        <c:when test="${requestScope.RESPONSE_MSG eq null}">
+            handleSendOtp();
+        </c:when>
+        <c:otherwise>
+            resendBtnElement.classList.remove("disabled");
+            resendBtnElement.innerHTML = "Gửi lại";
+        </c:otherwise>
+    </c:choose>
 </script>
 </body>
 
