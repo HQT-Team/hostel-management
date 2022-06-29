@@ -12,8 +12,8 @@ import java.io.IOException;
 
 @WebServlet(name = "AddNotificationServlet", value = "/AddNotificationServlet")
 public class AddNotificationServlet extends HttpServlet {
-    private final String SUCCESS = "review-notification";
-    private final String FAIL = "add-notification-page";
+    private final String SUCCESS = "owner-review-notification";
+    private final String FAIL = "notification-page";
     private final String ERROR = "error-page";
 
     @Override
@@ -36,9 +36,9 @@ public class AddNotificationServlet extends HttpServlet {
                 if (owner != null){
                     url = FAIL;
                     ownerId = owner.getAccId();
-                    hostelId = Integer.parseInt(request.getParameter("hostel_id"));
-                    title = request.getParameter("title");
-                    content = request.getParameter("content");
+                    hostelId = Integer.parseInt(request.getParameter("noti-hostel-id"));
+                    title = request.getParameter("noti-title");
+                    content = request.getParameter("noti-content");
 
                     if(new HostelOwnerDAO().checkOwnerHostel(ownerId)){
                         int notiId = new NotificationDAO().creatNotification(ownerId, hostelId, title, content);

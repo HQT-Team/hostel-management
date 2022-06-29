@@ -57,24 +57,23 @@
       <div class="col-xl-9 col-xxl-7 m-auto">
         <div class="content__body">
           <div class="notification">
-            <h1 class="notification__title">Thông báo #TB123</h1>
+            <h1 class="notification__title">Thông báo #NT${requestScope.NOTIFICATION.notification_id}</h1>
             <div class="row">
               <div class="col-12 col-sm-6">
-                <p class="notification__item">Khu trọ: <span>Nova land</span></p>
+                <p class="notification__item">Khu trọ: <span>
+                  <c:forEach var="hostelList" items="${sessionScope.HOSTEL_LIST}">
+                    ${requestScope.NOTIFICATION.hostel_id == hostelList.hostelID ? hostelList.hostelName : ""}
+                  </c:forEach>
+                  </span>
+                </p>
               </div>
               <div class="col-12 col-sm-6">
-                <p class="notification__item">Ngày tạo: <span>22/02/2022</span></p>
+                <p class="notification__item">Ngày tạo: <span>${requestScope.NOTIFICATION.createDate}</span></p>
               </div>
             </div>
             <div class="notification__item">Nội dung:</div>
             <p class="mt-3">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-              has been the industry's standard dummy text ever since the 1500s, when an unknown
-              printer took a galley of type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into electronic typesetting,
-              remaining essentially unchanged. It was popularised in the 1960s with the release of
-              Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+              ${requestScope.NOTIFICATION.content}
             </p>
             <div class="notification__spacer"></div>
             <div class="notification__action">

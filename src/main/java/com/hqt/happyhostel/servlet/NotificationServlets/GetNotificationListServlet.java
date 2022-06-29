@@ -1,8 +1,10 @@
 package com.hqt.happyhostel.servlet.NotificationServlets;
 
+import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dao.NotificationDAO;
 import com.hqt.happyhostel.dto.Account;
 import com.hqt.happyhostel.dto.HandlerStatus;
+import com.hqt.happyhostel.dto.Hostel;
 import com.hqt.happyhostel.dto.Notification;
 
 import javax.servlet.*;
@@ -30,12 +32,15 @@ public class GetNotificationListServlet extends HttpServlet {
                     int ownerId = owner.getAccId();
                     List<Notification> notificationList = new NotificationDAO().getNotificationByOwnerId(ownerId);
                     if (notificationList != null && !notificationList.isEmpty()) {
+                        List<Hostel> hostelList = new HostelDAO().getHostelByOwnerId(ownerId);
                         request.setAttribute("NOTIFICATION_LIST", notificationList);
+                        session.setAttribute("HOSTEL_LIST", hostelList);
                         url = SUCCESS;
                     }
                     else {
                         handlerStatus = HandlerStatus.builder().status(false).content("Hiện tại chưa có thông báo nào").build();
                     }
+                    session.setAttribute("CURRENT_PAGE", "notification");
                     request.setAttribute("RESPONE_MSG", handlerStatus);
                 }
             }

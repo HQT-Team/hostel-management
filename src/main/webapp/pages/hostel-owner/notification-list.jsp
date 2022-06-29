@@ -101,29 +101,18 @@
                             <th class="text-center">Khu trọ</th>
                             </thead>
                             <tbody class="content__tbody">
-                            <tr>
-                                <td class="text-center">
-                                    <a href="./notification-detail.html">#IV123</a>
-                                </td>
-                                <td class="text-center">
-                                    <a href="./notification-detail.html">Cúp nước bà con êi</a>
-                                </td>
-                                <td class="text-center">01/02/2022</td>
-                                <td class="text-center">Nova Land</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <a href="./notification-detail.html">#IV124</a>
-                                </td>
-                                <td class="text-center content__label">
-                                    <a href="./notification-detail.html">
-                                        Vì chúng tôi thích nên sẽ tăng dịch vụ. Vì
-                                        chúng tôi thích nên sẽ tăng dịch vụ. Vì
-                                        chúng tôi thích nên sẽ tăng dịch vụ</a>
-                                </td>
-                                <td class="text-center">01/02/2022</td>
-                                <td class="text-center">Nova Land</td>
-                            </tr>
+                            <c:forEach var="notification" items="${requestScope.NOTIFICATION_LIST}">
+                                <tr>
+                                    <td class="text-center">
+                                        <a href="owner-review-notification?notification_id=${notification.notification_id}">#NF${notification.notification_id}</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="owner-review-notification?notification_id=${notification.notification_id}">${notification.title}</a>
+                                    </td>
+                                    <td class="text-center">${notification.createDate}</td>
+                                    <td class="text-center">${notification.hostel_id}</td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -132,7 +121,7 @@
                 <!-- Content item - Send notification -->
                 <div class="content__item active">
                     <div class="col-12 col-xl-9 m-auto mb-5 content__body">
-                        <form action="" class="custom-form">
+                        <form action="add-notification" method="post" class="custom-form">
                             <div class="form-header">
                                 <h1 class="form-title">Gửi thông báo mới</h1>
                             </div>
@@ -141,7 +130,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="noti-title" class="form-label">Tiêu đề: <span>*</span></label>
-                                        <input type="text" id="noti-title" placeholder="Nhập tiêu đề"
+                                        <input type="text" id="noti-title" name="noti-title" placeholder="Nhập tiêu đề"
                                                class="form-control">
                                         <span class="form-message"></span>
                                     </div>
@@ -150,18 +139,19 @@
                                     <div class="form-group">
                                         <label for="noti-hostel-id" class="form-label">Khu trọ:
                                             <span>*</span></label>
-                                        <select name="" id="noti-hostel-id" class="form-control">
+                                        <select name="noti-hostel-id" id="noti-hostel-id" class="form-control">
                                             <option value="">Chọn khu trọ nhận thông báo</option>
-                                            <option value="">Nova Land</option>
-                                            <option value="">Nova Sky</option>
+                                            <c:forEach var="hostel" items="${sessionScope.HOSTEL_LIST}">
+                                                <option value="${hostel.hostelID}">${hostel.hostelName}</option>
+                                            </c:forEach>
                                         </select>
                                         <span class="form-message"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="noti-content" class="form-label">Khu trọ:
+                                    <label for="noti-content" class="form-label">Nội dung:
                                         <span>*</span></label>
-                                    <textarea name="" id="noti-content" class="form-control textarea"></textarea>
+                                    <textarea name="noti-content" id="noti-content" class="form-control textarea"></textarea>
                                     <span class="form-message"></span>
                                 </div>
                             </div>
