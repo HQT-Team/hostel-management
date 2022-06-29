@@ -30,18 +30,23 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
-<body class="over-flow-hidden">
-<!-- Loader -->
-<div id="preloader">
-    <div class="dots">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-</div>
+<body class="${requestScope.STATE eq null ? "over-flow-hidden" : ""}">
+
 
 <!-- Navbar -->
 <%@include file="./components/navbar.jsp"%>
+
+<!-- Loader -->
+<c:if test="${requestScope.STATE eq null}" >
+    <!-- Loader -->
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</c:if>
 
 <!-- Body -->
 <div class="container">
@@ -82,26 +87,44 @@
                             <tr>
                                 <td><i class="fa-solid fa-sliders"></i> Lọc</td>
                                 <form action="report" method="post" id="form-noreply-report">
-                                    <input type="hidden" name="status" value="0" />
+                                    <input type="hidden" name="type" value="0" />
                                     <td>
-                                        <select name="hostelId" id="filter__hostel-select-1">
+                                        <select name="hostelId" id="filter__hostel-select-1" onchange="this.form.submit()"
+                                                style="min-width: 100px; max-width: 200px;">
                                             <option value="">Tất cả</option>
                                             <c:forEach var="hostel" items="${requestScope.HOSTEL_LIST}">
-                                                <option value="${hostel.hostelID}">${hostel.hostelName}</option>
+                                                <option value="${hostel.hostelID}" ${requestScope.TYPE eq 0 && requestScope.CURRENT_HOSTEL eq hostel.hostelID ? "selected" : ""}>
+                                                        ${hostel.hostelName}
+                                                </option>
                                             </c:forEach>
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="roomId" disabled id="filter__room-select-1">
-                                            <option value="">Tất cả</option>
-                                        </select>
+                                        <c:choose>
+                                            <c:when test="${requestScope.TYPE eq 0 && requestScope.ROOM_LIST ne null}">
+                                                <select name="roomId" id="filter__room-select-1" onchange="this.form.submit()"
+                                                        style="min-width: 100px; max-width: 200px;">
+                                                    <option value="">Tất cả</option>
+                                                    <c:forEach var="room" items="${requestScope.ROOM_LIST}">
+                                                        <option value="${room.roomId}" ${requestScope.TYPE eq 0 && requestScope.CURRENT_ROOM eq room.roomId ? "selected" : ""}>${room.roomNumber}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <select name="roomId" disabled id="filter__room-select-1"
+                                                        style="min-width: 100px; max-width: 200px;">
+                                                    <option value="">Tất cả</option>
+                                                </select>
+                                            </c:otherwise>
+                                        </c:choose>
+
                                     </td>
                                 </form>
                             </tr>
                         </table>
                     </div>
                     <!-- Infor box -->
-                    <div class="content__body">
+                    <div class="content__body" id="content__body-1">
                         <table id="report-table-1" class="content__table table table-bordered table-striped">
                             <thead class="content__thead">
                                 <tr>
@@ -114,7 +137,7 @@
                                 </tr>
                             </thead>
                             <tbody class="content__tbody">
-                                <c:forEach var="reportList" items="${requestScope.REPORT_DETAIL_LIST}">
+                                <c:forEach var="reportList" items="${requestScope.REPORT_NO_REPLY_DETAIL_LIST}">
                                     <c:if test="${reportList.report.status eq 0}">
                                         <tr>
                                             <td class="text-center">
@@ -149,24 +172,37 @@
                             </tr>
                             <tr>
                                 <td><i class="fa-solid fa-sliders"></i> Lọc</td>
-                                <form action="" method="post">
+                                <form action="report" method="post" id="form-process-report">
+                                    <input type="hidden" name="type" value="1" />
                                     <td>
-                                        <select name="" id="filter__hostel-select-2"
+                                        <select name="hostelId" id="filter__hostel-select-2" onchange="this.form.submit()"
                                                 style="min-width: 100px; max-width: 200px;">
                                             <option value="">Tất cả</option>
-                                            <option value="">Fake Land</option>
-                                            <option value="">Fake Sky</option>
+                                            <c:forEach var="hostel" items="${requestScope.HOSTEL_LIST}">
+                                                <option value="${hostel.hostelID}" ${requestScope.TYPE eq 1 && requestScope.CURRENT_HOSTEL eq hostel.hostelID ? "selected" : ""}>
+                                                        ${hostel.hostelName}
+                                                </option>
+                                            </c:forEach>
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="" id="filter__room-select-2"
-                                                style="min-width: 100px; max-width: 200px;">
-                                            <option value="">Tất cả</option>
-                                            <option value="">7</option>
-                                            <option value="">8</option>
-                                            <option value="">9</option>
-                                            <option value="">10</option>
-                                        </select>
+                                        <c:choose>
+                                            <c:when test="${requestScope.TYPE eq 1 && requestScope.ROOM_LIST ne null}">
+                                                <select name="roomId" id="filter__room-select-2" onchange="this.form.submit()"
+                                                        style="min-width: 100px; max-width: 200px;">
+                                                    <option value="">Tất cả</option>
+                                                    <c:forEach var="room" items="${requestScope.ROOM_LIST}">
+                                                        <option value="${room.roomId}" ${requestScope.TYPE eq 1 && requestScope.CURRENT_ROOM eq room.roomId ? "selected" : ""}>${room.roomNumber}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <select name="roomId" disabled id="filter__room-select-2"
+                                                        style="min-width: 100px; max-width: 200px;">
+                                                    <option value="">Tất cả</option>
+                                                </select>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </td>
                                 </form>
                             </tr>
@@ -184,7 +220,7 @@
                             <th class="text-center">Ngày tiếp nhận</th>
                             </thead>
                             <tbody class="content__tbody">
-                                <c:forEach var="reportList" items="${requestScope.REPORT_DETAIL_LIST}">
+                                <c:forEach var="reportList" items="${requestScope.REPORT_PROCESS_DETAIL_LIST}">
                                     <c:if test="${reportList.report.status eq 1}">
                                         <tr>
                                             <td class="text-center">
@@ -219,24 +255,38 @@
                             </tr>
                             <tr>
                                 <td><i class="fa-solid fa-sliders"></i> Lọc</td>
-                                <form action="" method="post">
+                                <form action="report" method="post" id="form-finished-report">
+                                    <input type="hidden" name="type" value="2" />
                                     <td>
-                                        <select name="" id="filter__hostel-select-3"
+                                        <select name="hostelId" id="filter__hostel-select-3" onchange="this.form.submit()"
                                                 style="min-width: 100px; max-width: 200px;">
                                             <option value="">Tất cả</option>
-                                            <option value="">Nihon Land</option>
-                                            <option value="">Nihon Sky</option>
+                                            <c:forEach var="hostel" items="${requestScope.HOSTEL_LIST}">
+                                                <option value="${hostel.hostelID}" ${requestScope.TYPE eq 2 && requestScope.CURRENT_HOSTEL eq hostel.hostelID ? "selected" : ""}>
+                                                        ${hostel.hostelName}
+                                                </option>
+                                            </c:forEach>
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="" id="filter__room-select-3"
-                                                style="min-width: 100px; max-width: 200px;">
-                                            <option value="">Tất cả</option>
-                                            <option value="">11</option>
-                                            <option value="">12</option>
-                                            <option value="">13</option>
-                                            <option value="">14</option>
-                                        </select>
+                                        <c:choose>
+                                            <c:when test="${requestScope.TYPE eq 2 && requestScope.ROOM_LIST ne null}">
+                                                <select name="roomId" id="filter__room-select-3" onchange="this.form.submit()"
+                                                        style="min-width: 100px; max-width: 200px;">
+                                                    <option value="">Tất cả</option>
+                                                    <c:forEach var="room" items="${requestScope.ROOM_LIST}">
+                                                        <option value="${room.roomId}" ${requestScope.TYPE eq 2 && requestScope.CURRENT_ROOM eq room.roomId ? "selected" : ""}>${room.roomNumber}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <select name="roomId" disabled id="filter__room-select-3"
+                                                        style="min-width: 100px; max-width: 200px;">
+                                                    <option value="">Tất cả</option>
+                                                </select>
+                                            </c:otherwise>
+                                        </c:choose>
+
                                     </td>
                                 </form>
                             </tr>
@@ -254,7 +304,7 @@
                             <th class="text-center">Ngày hoàn thành</th>
                             </thead>
                             <tbody class="content__tbody">
-                                <c:forEach var="reportList" items="${requestScope.REPORT_DETAIL_LIST}">
+                                <c:forEach var="reportList" items="${requestScope.REPORT_FINISHED_DETAIL_LIST}">
                                     <c:if test="${reportList.report.status eq 2}">
                                         <tr>
                                             <td class="text-center">
@@ -300,7 +350,6 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     $(document).ready(function () {
-        const type = ${requestScope.TYPE};
 
         const tabs = document.querySelectorAll(".tabs-item");
         const contents = document.querySelectorAll(".content__item");
@@ -351,32 +400,14 @@
         line.style.left = tabActive.offsetLeft + "px";
         line.style.width = tabActive.offsetWidth + "px";
 
-        // Filter handler
-        $('#filter__hostel-select-1').change(() => {
-            $('#form-noreply-report').submit();
-        })
-
-        $('#form-noreply-report').submit((e) => {
-            e.preventDefault();
-            axios({
-                method: 'post',
-                url: 'http://localhost:8080/HappyHostel/report?hostelId='
-                    + $('#filter__hostel-select-1').val()
-                    + '&roomId=' + $('#filter__room-select-1').val()
-                    + '&status=1',
-            })
-            .then(function (response) {
-                console.log(response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        })
-
     });
 </script>
-<!-- Preload -->
-<script src="./assets/js/handle-preloader.js" type="text/javascript"></script>
+
+<c:if test="${requestScope.STATE eq null}">
+    <!-- Preload -->
+    <script src="./assets/js/handle-preloader.js" type="text/javascript"></script>
+</c:if>
+
 </body>
 
 </html>
