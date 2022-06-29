@@ -263,9 +263,11 @@
 
             <c:choose>
                 <c:when test="${requestScope.billRoom ne null}">
-                    <button class="invoice-action-btn list-invoices-btn">
-                        Danh sách hóa đơn
-                    </button>
+                    <form action="roomInvoiceList" method="post">
+                        <button class="invoice-action-btn list-invoices-btn">
+                            Danh sách hóa đơn
+                        </button>
+                    </form>
                 </c:when>
             </c:choose>
 

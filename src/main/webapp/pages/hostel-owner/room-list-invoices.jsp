@@ -37,8 +37,10 @@
 </div>
 
 <!-- Navbar -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="./components/navbar.jsp"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="vi_VN"/>
 <!-- Body -->
 <div class="container">
     <div class="row position-relative">
@@ -51,11 +53,11 @@
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
             <!-- History link bar -->
             <div class="content-history">
-                <a href="../list-hostels/hostel-list.html" class="history-link">Danh sách khu trọ</a>
+                <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
                 <i class="fa-solid fa-chevron-right"></i>
-                <a href="../list-hostels/hostel-detail.html" class="history-link">NovaLand Sky</a>
+                <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}" class="history-link">${sessionScope.hostel.hostelName}</a>
                 <i class="fa-solid fa-chevron-right"></i>
-                <a href="./room-detail.html" class="history-link">Phòng 11</a>
+                <a href="GetRoomDetailServlet?roomID=${sessionScope.room.roomId}" class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
                 <i class="fa-solid fa-chevron-right"></i>
                 <div class="current">Danh sách hóa đơn</div>
             </div>
@@ -74,32 +76,34 @@
                         </tr>
                         </thead>
                         <tbody class="content__tbody">
-                        <tr>
-                            <td class="mb-d-none">
-                                <a href="./room-invoice-detail.html" class="content__tbody-link">#VA123</a>
-                            </td>
-                            <td><a href="./room-invoice-detail.html" class="content__tbody-link">02/2022</a>
-                            </td>
-                            <td>29/01/2022</td>
-                            <td class="mb-d-none">2.954.000 VNĐ</td>
-                            <td><span class="content__tbody-status no">
-                                            Chưa thanh toán
-                                        </span></td>
-                        </tr>
-                        <tr>
-                            <td class="mb-d-none">
-                                <a href="./room-invoice-detail.html" class="content__tbody-link">#VA123</a>
-                            </td>
-                            <td><a href="./room-invoice-detail.html" class="content__tbody-link">02/2022</a>
-                            </td>
-                            <td>29/01/2022</td>
-                            <td class="mb-d-none">2.954.000 VNĐ</td>
-                            <td>
-                                <span class="content__tbody-status yes">
-                                            Đã thanh toán
-                                </span>
-                            </td>
-                        </tr>
+                        <c:forEach var="invoice" items="${requestScope.listRoomBill}">
+                            <tr>
+                                <td class="mb-d-none">
+                                    <a href="getRoomInvoiceDetail?billID=${invoice.billID}" class="content__tbody-link">#B${invoice.billID}</a>
+                                </td>
+                                <td><a href="getRoomInvoiceDetail?billID=${invoice.billID}" class="content__tbody-link">${invoice.billTitle}</a>
+                                </td>
+                                <td>
+<%--                                        ${invoice.createdDate.split(" ")[0]}--%>
+                                            <fmt:parseDate pattern="yyyy-MM-dd" value="${invoice.createdDate.split(' ')[0]}"
+                                                           var="createdDate"/>
+                                            <fmt:formatDate pattern="dd/MM/yyyy" value="${createdDate}"/>
+                                </td>
+                                <td>
+                                    <fmt:formatNumber value="${invoice.totalMoney}" type="currency" currencySymbol="VNĐ"/>
+                                </td>
+                                <td>
+                                            <c:choose>
+                                                <c:when test="${invoice.status eq 1}">
+                                                    <span class="content__tbody-status yes">Đã thanh toán</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="content__tbody-status no">Chưa thanh toán</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                     <div class="content__action">
