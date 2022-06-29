@@ -36,7 +36,6 @@ public class CalculateTotalCostServlet extends HttpServlet {
             // Check hostel owner update consume or not, remind them, update is not a constraint
             if (consumeThisMonth.get(0).getNumberWater() - consumeThisMonth.get(consumeThisMonth.size() - 1).getNumberWater() == 0 ||
                     consumeThisMonth.get(0).getNumberElectric() - consumeThisMonth.get(consumeThisMonth.size() - 1).getNumberElectric() == 0) {
-
             }
 
             String consumeDateStart = consumeThisMonth.get(consumeThisMonth.size() - 1).getUpdateDate().split(" ")[0];
@@ -47,8 +46,13 @@ public class CalculateTotalCostServlet extends HttpServlet {
                 String billTitleOld = new BillDAO().getBillTitle(roomId, contract.getStartDate());
                 String month = billTitleOld.split("/")[0];
                 String year = billTitleOld.split("/")[1];
+                int yearInteger = Integer.parseInt(year);
                 int monthInteger = Integer.parseInt(month) + 1;
-                billTitle = "" + monthInteger + "/" + year;
+                if (monthInteger == 13) {
+                    monthInteger = 1;
+                    yearInteger += 1;
+                }
+                billTitle = "" + monthInteger + "/" + yearInteger;
             } else {
                 long monthsBetween = ChronoUnit.MONTHS.between(
                         YearMonth.from(LocalDate.parse(consumeDateStart)),

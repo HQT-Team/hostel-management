@@ -127,7 +127,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="history-update-consume-modal-label">
-                            Lịch sử số điện/nước tiêu thụ
+                            Lịch sử thay đổi số điện/nước
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>

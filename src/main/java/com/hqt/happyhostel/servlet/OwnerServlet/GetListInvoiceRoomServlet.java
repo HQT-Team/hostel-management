@@ -16,7 +16,21 @@ import java.util.List;
 public class GetListInvoiceRoomServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = "RoomListBill";
+        try {
+            HttpSession session = request.getSession();
+            int hostelID = ((Hostel) session.getAttribute("hostel")).getHostelID();
+            int accID = ((Account) session.getAttribute("USER")).getAccId();
+            int roomId = ((Room) session.getAttribute("room")).getRoomId();
 
+            List<Bill> listRoomBill = new BillDAO().getListBillByRoomID(roomId);
+            request.setAttribute("listRoomBill", listRoomBill);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
     }
 
     @Override

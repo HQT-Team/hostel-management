@@ -1,160 +1,251 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Favicon -->
-  <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
 
-  <!-- Title -->
-  <title>Danh sách hóa đơn</title>
+    <!-- Title -->
+    <title>Danh sách hóa đơn</title>
 
-  <!-- Link Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Link Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-  <!-- Core CSS -->
-  <link rel="stylesheet" href="./assets/css/core_style/core.css">
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
-  <!-- Link your CSS here -->
-  <link rel="stylesheet" href="./assets/css/hostel_owner_style/room-invoice-detail_style/style.css">
+    <!-- Link your CSS here -->
+    <link rel="stylesheet" href="./assets/css/hostel_owner_style/room-invoice-detail_style/style.css">
 
 </head>
 
 <body class="over-flow-hidden">
 <!-- Loader -->
 <div id="preloader">
-  <div class="dots">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
+    <div class="dots">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
 </div>
 
 <!-- Navbar -->
-<%@include file="./components/navbar.jsp"%>
+<%@include file="./components/navbar.jsp" %>
 
 <!-- Body -->
 <div class="container">
-  <div class="row position-relative">
-    <!-- Side bar -->
-    <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
-      <%@include file="./components/sidebar.jsp"%>
-    </div>
-
-    <!-- Content -->
-    <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
-      <!-- History link bar -->
-      <div class="content-history">
-        <a href="../list-hostels/hostel-list.html" class="history-link">Danh sách khu trọ</a>
-        <i class="fa-solid fa-chevron-right"></i>
-        <a href="../list-hostels/hostel-detail.html" class="history-link">NovaLand Sky</a>
-        <i class="fa-solid fa-chevron-right"></i>
-        <a href="./room-detail.html" class="history-link">Phòng 11</a>
-        <i class="fa-solid fa-chevron-right"></i>
-        <a href="./room-list-invoices.html" class="history-link">Danh sách hóa đơn</a>
-        <i class="fa-solid fa-chevron-right"></i>
-        <div class="current">#VA123</div>
-      </div>
-      <!-- Infor box -->
-      <div class="col-xxl-9 m-auto">
-        <div class="content__body">
-          <div class="bill">
-            <h1 class="bill__title">Hóa đơn tháng 05/2022</h1>
-            <div class="row">
-              <div class="col-12 col-sm-6">
-                <p class="bill__item">Khu trọ: <span>Nova land</span></p>
-                <p class="bill__item">Phòng số: <span>11</span></p>
-                <p class="bill__item">Địa chỉ: <span>999 Hoàng Hữu Nam, phường Long Thạnh Mỹ, thành
-                                            phố Thủ Đức, thành phố Hồ Chí Minh</span></p>
-                <div class="bill__consume">
-                  <div class="bill__consume-name">Điện</div>
-                  <div class="bill__consume-number">
-                    Số cũ: <span>20</span>, Số mới: <span>40</span>, Tiêu thụ: <span>20</span>
-                  </div>
-                </div>
-                <div class="bill__consume">
-                  <div class="bill__consume-name">Nước</div>
-                  <div class="bill__consume-number">
-                    Số cũ: <span>20</span>, Số mới: <span>40</span>, Tiêu thụ: <span>20</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6">
-                <p class="bill__item">Ngày tạo hóa đơn: <span>22/02/2022</span></p>
-                <p class="bill__item">Hạn chót thanh toán: <span>Trống</span></p>
-                <p class="bill__item">Ngày thanh toán: <span>Trống</span></p>
-                <p class="bill__item">Trạng thái: <span class="status--no">Chưa thanh toán</span>
-                </p>
-              </div>
-            </div>
-            <div class="bill__table">
-              <table class="table table-secondary table-striped table-bordered">
-                <thead>
-                <tr class="text-center">
-                  <th>STT</th>
-                  <th>Tên</th>
-                  <th>Đơn vị tính</th>
-                  <th>Số lượng</th>
-                  <th>Đơn giá</th>
-                  <th>Thành tiền</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Điện</td>
-                  <td>1 Kwh</td>
-                  <td>20</td>
-                  <td>3.500 đ</td>
-                  <td>70.000 đ</td>
-                </tr>
-
-                <!-- Total money -->
-                <tr>
-                  <td colspan="5" class="total">Tổng tiền</td>
-                  <td class="total-money">70.000 đ</td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="bill__sign">
-              <div class="row">
-                <div class="col-6">
-                  <div class="bill__sign-label">Người lập hóa đơn</div>
-                  <div class="bill__sign-name">Nguyễn Văn A</div>
-                </div>
-                <div class="col-6">
-                  <div class="bill__sign-label">Người thanh toán</div>
-                  <div class="bill__sign-name">Trống</div>
-                </div>
-              </div>
-            </div>
-            <div class="bill__spacer"></div>
-            <div class="bill__action">
-              <a href="./room-list-invoices.html" class="bill__action-link">
-                <i class="fa-solid fa-circle-arrow-left"></i> Quay lại
-              </a>
-              <form action="" method="POST" class="bill__form d-flex justify-content-end">
-                <input type="hidden" name="roomID" value="" />
-                <!-- Change type="submit" of button tag below when implement -->
-                <button type="button" class="bill__action-btn btn btn-outline-primary">
-                  Xác nhận đã thanh toán
-                </button>
-              </form>
-            </div>
-          </div>
+    <div class="row position-relative">
+        <!-- Side bar -->
+        <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
+            <%@include file="./components/sidebar.jsp" %>
         </div>
-      </div>
+
+        <!-- Content -->
+        <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
+            <!-- History link bar -->
+            <div class="content-history">
+                <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}"
+                   class="history-link">${sessionScope.hostel.hostelName}</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="GetRoomDetailServlet?roomID=${sessionScope.room.roomId}"
+                   class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="roomInvoiceList?roomId=${sessionScope.room.roomId}" class="history-link">Danh sách hóa đơn</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <div class="current">#B${requestScope.billRoom.billID}</div>
+            </div>
+            <!-- Infor box -->
+            <div class="col-xxl-9 m-auto">
+                <div class="content__body">
+                    <div class="bill">
+                        <h1 class="bill__title">Hóa đơn tháng ${requestScope.billRoom.billTitle}</h1>
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <p class="bill__item">Khu trọ: <span>${sessionScope.hostel.hostelName}</span></p>
+                                <p class="bill__item">Phòng số: <span>${sessionScope.room.roomNumber}</span></p>
+                                <p class="bill__item">Địa chỉ:
+                                    <span>${sessionScope.hostel.address}, ${sessionScope.hostel.ward.split('-')[1]}, ${sessionScope.hostel.district.split('-')[1]}, ${sessionScope.hostel.city.split('-')[1]}</span>
+                                </p>
+                                <c:set var="consumeBeginMonth" value="${requestScope.consumeStart}"/>
+                                <c:set var="consumeEndMonth" value="${requestScope.consumeEnd}"/>
+                                <div class="bill__consume">
+                                    <c:set var="consumeNumberElectric"
+                                           value="${consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric}"/>
+                                    <div class="bill__consume-name">Điện</div>
+                                    <div class="bill__consume-number">
+                                        Số cũ: <span>${consumeBeginMonth.numberElectric}</span>, Số mới:
+                                        <span>${consumeEndMonth.numberElectric}</span>, Tiêu thụ:
+                                        <span>${consumeNumberElectric}</span>
+                                    </div>
+                                </div>
+                                <div class="bill__consume">
+                                    <c:set var="consumeNumberWater"
+                                           value="${consumeEndMonth.numberWater - consumeBeginMonth.numberWater}"/>
+                                    <div class="bill__consume-name">Nước</div>
+                                    <div class="bill__consume-number">
+                                        Số cũ: <span>${consumeBeginMonth.numberWater}</span>, Số mới:
+                                        <span>${consumeEndMonth.numberWater}</span>, Tiêu thụ:
+                                        <span>${consumeNumberWater}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <p class="bill__item">Ngày tạo hóa đơn: <span>
+                                    <fmt:parseDate pattern="yyyy-MM-dd"
+                                                   value="${requestScope.billRoom.createdDate}"
+                                                   var="createdDate"/>
+                                    <fmt:formatDate pattern="dd/MM/yyyy" value="${createdDate}"/>
+                                </span></p>
+                                <p class="bill__item">Hạn chót thanh toán: <span>
+                                    <fmt:parseDate pattern="yyyy-MM-dd"
+                                                   value="${requestScope.billRoom.expiredPaymentDate}"
+                                                   var="expiredPaymentDate"/>
+                                                <fmt:formatDate pattern="dd/MM/yyyy" value="${expiredPaymentDate}"/>
+                                </span></p>
+
+                                <c:choose>
+                                    <c:when test="${requestScope.billRoom.status eq 1}">
+                                        <p class="bill__item">Ngày thanh toán: <span>
+                                            <fmt:parseDate pattern="yyyy-MM-dd"
+                                                           value="${requestScope.billRoom.paymentDate == null ? '2022/10/10' : requestScope.billRoom.paymentDate}"
+                                                           var="paymentDate"/>
+                                            <fmt:formatDate pattern="dd/MM/yyyy" value="${paymentDate}"/>
+                                        </span></p>
+                                        <p class="bill__item">
+                                            Phương thức thanh toán:
+                                            <span>${requestScope.paymentName == null ? "Trống" : requestScope.paymentName}</span>
+                                        </p>
+                                    </c:when>
+                                </c:choose>
+                                <p class="bill__item">Trạng thái:
+                                    <c:choose>
+                                        <c:when test="${requestScope.billRoom.status == 0}">
+                                            <span class="status--no">Chưa thanh toán</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="status--yes">Đã thanh toán</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="bill__table">
+                            <table class="table table-secondary table-striped table-bordered">
+                                <thead>
+                                <tr class="text-center">
+                                    <th>STT</th>
+                                    <th>Tên</th>
+                                    <th>Đơn vị tính</th>
+                                    <th>Số lượng</th>
+                                    <th>Đơn giá</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:set var="count" value="0"/>
+                                <c:set var="totalCost" value="0"/>
+                                <c:forEach var="service" items="${requestScope.serviceInfo}">
+                                    <c:set var="count" value="${count+1}"/>
+                                    <c:set var="quantity" value="1"/>
+                                    <tr>
+                                        <td>${count}</td>
+                                        <td>${service.serviceName}</td>
+                                        <td>${service.unit}</td>
+                                        <c:choose>
+                                            <c:when test="${service.serviceName eq 'Điện'}">
+                                                <c:set var="quantity" value="${consumeNumberElectric}"/>
+                                                <td>${consumeNumberElectric}</td>
+                                            </c:when>
+                                            <c:when test="${service.serviceName eq 'Nước'}">
+                                                <c:set var="quantity" value="${consumeNumberWater}"/>
+                                                <td>${consumeNumberWater}</td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="quantity" value="1"/>
+                                                <td>1</td>
+                                            </c:otherwise>
+                                        </c:choose>
+
+                                        <td>
+                                            <fmt:formatNumber value="${service.servicePrice}" type="currency" currencySymbol="VNĐ"/>
+                                        </td>
+
+                                        <c:set var="totalCost"
+                                               value="${totalCost + service.servicePrice * quantity}"/>
+                                        <td><fmt:formatNumber value="${service.servicePrice * quantity}"
+                                                              type="currency" currencySymbol="VNĐ"/></td>
+                                    </tr>
+                                </c:forEach>
+                                <tr>
+                                    <td>${count+1}</td>
+                                    <td>Tiền phòng</td>
+                                    <td>phòng</td>
+                                    <td>1</td>
+                                    <td>
+                                        <fmt:formatNumber value="${requestScope.contractRoom.price}" type="currency" currencySymbol="VNĐ"/>
+                                    </td>
+                                    <c:set var="totalCost"
+                                           value="${totalCost + requestScope.contractRoom.price}"/>
+                                    <td><fmt:formatNumber value="${requestScope.contractRoom.price}"
+                                                          type="currency" currencySymbol="VNĐ"/></td>
+                                </tr>
+                                <!-- Total -->
+                                <td colspan="5" class="text-end total">Tổng
+                                    tiền:
+                                </td>
+                                <td><fmt:formatNumber value="${requestScope.billRoom.totalMoney}" type="currency" currencySymbol="VNĐ"/></td>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="bill__sign">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="bill__sign-label">Người lập hóa đơn</div>
+                                    <div class="bill__sign-name">${requestScope.billMakerFullName}</div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="bill__sign-label">Người thanh toán</div>
+                                    <div class="bill__sign-name">${requestScope.billPaymenterFullName}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bill__spacer"></div>
+                        <div class="bill__action">
+                            <a href="roomInvoiceList?roomId=${sessionScope.room.roomId}" class="bill__action-link">
+                                <i class="fa-solid fa-circle-arrow-left"></i> Quay lại
+                            </a>
+                            <form action="updateBilLStatus" method="post" class="bill__form d-flex justify-content-end">
+                                <input type="hidden" name="roomID" value=""/>
+                                <!-- Change type="submit" of button tag below when implement -->
+                                <c:choose>
+                                    <c:when test="${requestScope.billRoom.status eq 0}">
+                                        <input type="hidden" name="billID" value="${requestScope.billRoom.billID}">
+                                        <button type="submit" class="bill__action-btn btn btn-outline-primary">
+                                            Xác nhận đã thanh toán
+                                        </button>
+                                    </c:when>
+                                </c:choose>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- Footer -->
-<%@include file="./components/footer.jsp"%>
+<%@include file="./components/footer.jsp" %>
 
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

@@ -183,6 +183,67 @@ public class BillDAO {
         return bill;
     }
 
+    public Bill getBillByID(int billID) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Bill bill = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT room_id, total_money, created_date, bill_title, expired_payment_date, payment_date, status, Bill.payment_id as 'payment_id'\n" +
+                        "FROM Bill\n" +
+                        "WHERE bill_id = ?\n";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, billID);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int roomID = rs.getInt("room_id");
+                    int totalMoney = rs.getInt("total_money");
+                    String createdDate = rs.getString("created_date");
+                    String billTitle = rs.getString("bill_title");
+                    String expiredPaymentDate = rs.getString("expired_payment_date");
+                    String paymentDate = rs.getString("payment_date");
+                    int status = rs.getInt("status");
+                    if (rs.getString("payment_id") == null) {
+                        bill = new Bill(billID, roomID, totalMoney, createdDate, billTitle, expiredPaymentDate, paymentDate, status, new Payment(0, null));
+                    } else {
+                        int paymentID = rs.getInt("payment_id");
+                        String paymentName = getPaymentName(paymentID);
+                        bill = new Bill(billID, roomID, totalMoney, createdDate, billTitle, expiredPaymentDate, paymentDate, status, new Payment(paymentID, paymentName));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return bill;
+    }
+
     public String getPaymentName(int paymentID) {
         Connection cn = null;
         PreparedStatement pst = null;
