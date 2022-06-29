@@ -1,0 +1,70 @@
+@import "../_common-style/navbar";
+@import "../_common-style/sidebar";
+@import "../_common-style/footer";
+
+// Body
+.content-group {
+  min-height: var(--min-body-height);
+}
+
+.content__body {
+  padding: 16px 16px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.report {
+  .report__title {
+    margin: 0;
+  }
+
+  .report__spacer {
+    background-color: rgba(0, 0, 0, 0.12);
+    height: 0.4px;
+    margin: 16px 0;
+  }
+
+  .report__item {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 8px 0;
+
+    span {
+      font-weight: 400;
+    }
+
+    span.red {
+      color: #d90000;
+    }
+
+    span.notyet {
+      color: #f50000;
+    }
+
+    span.process {
+      color: rgb(255, 140, 0);
+    }
+
+    span.finished {
+      color: #009a13;
+    }
+  }
+
+  .form-control {
+    font-size: 1.6rem;
+    min-height: 100px;
+    padding: 16px;
+
+    &:focus {
+      border: 2px solid #009a13;
+    }
+  }
+
+  .report__action {
+    a,
+    button {
+      font-size: 1.8rem;
+      border-radius: 4px;
+    }
+  }
+}

@@ -224,7 +224,6 @@
 <!-- Link your script here -->
 <script src="./assets/js/handle-main-navbar.js"></script>
 
-
 </body>
 
 </html>

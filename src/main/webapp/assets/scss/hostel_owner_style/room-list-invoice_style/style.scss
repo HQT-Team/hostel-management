@@ -1,0 +1,66 @@
+@import "../_common-style/navbar";
+@import "../_common-style/sidebar";
+@import "../_common-style/footer";
+
+// Body
+.content-group {
+  min-height: var(--min-body-height);
+}
+
+.content__body {
+  padding: 16px 16px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.content__title {
+  margin: 8px 0 16px 0;
+}
+
+// Table css
+.dataTables_length,
+.invoices-table_filter {
+  margin-bottom: 16px;
+}
+
+.content__tbody {
+  .content__tbody-link {
+    color: var(--primary-color);
+
+    &:hover {
+      text-decoration: underline;
+      color: rgb(0, 170, 255);
+    }
+  }
+
+  .content__tbody-status {
+    font-weight: 500;
+  }
+
+  .content__tbody-status.yes {
+    color: #00b900;
+  }
+
+  .content__tbody-status.no {
+    color: #ff0000;
+  }
+}
+
+.mb-d-none {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.content__action {
+  margin-top: 16px;
+
+  .content__action-link {
+    font-size: 1.8rem;
+    transition: color 0.2s ease;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -3,7 +3,6 @@ package com.hqt.happyhostel.servlet.OwnerServlet;
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dao.ContractDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
-import com.hqt.happyhostel.dto.Contract;
 import com.hqt.happyhostel.dto.HandlerStatus;
 
 import javax.servlet.*;

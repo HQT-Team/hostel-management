@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-3">
                 <div class="main-nav__logo">
-                    <a href="" class="main-nav__logo-link">
+                    <a href="HomePage" class="main-nav__logo-link">
                         <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
                     </a>
                 </div>
@@ -68,9 +68,9 @@
                         <p class="content__infor-item">Địa chỉ:
                             <span>
                                 ${sessionScope.CONTRACT_HOSTEL.address},
-                                ${sessionScope.CONTRACT_HOSTEL.ward},
-                                ${sessionScope.CONTRACT_HOSTEL.district},
-                                ${sessionScope.CONTRACT_HOSTEL.city},
+                                ${sessionScope.CONTRACT_HOSTEL.ward.split("-")[1]},
+                                ${sessionScope.CONTRACT_HOSTEL.district.split("-")[1]},
+                                ${sessionScope.CONTRACT_HOSTEL.city.split("-")[1]},
                             </span></p>
                     </div>
                     <div class="col-12 col-md-6">
@@ -85,15 +85,17 @@
                 <div class="row">
                     <div class="col-12 col-sm-6">
                         <p class="content__infor-item">Phòng số: <span>${sessionScope.CONTRACT_ROOM.roomNumber}</span></p>
-                        <p class="content__infor-item">Diện tích: <span>${sessionScope.CONTRACT_ROOM.roomArea}</span></p>
-                        <p class="content__infor-item">Gác: <span>${sessionScope.CONTRACT_ROOM.capacity}</span></p>
+                        <p class="content__infor-item">Diện tích: <span>${sessionScope.CONTRACT_ROOM.roomArea} m2</span></p>
+                        <p class="content__infor-item">Gác: <span>${sessionScope.CONTRACT_ROOM.hasAttic eq 0 ? "Không" : "Có"}</span></p>
                         <p class="content__infor-item">Số lượng thành viên tối đa: <span>${sessionScope.CONTRACT_ROOM.capacity}</span></p>
                     </div>
                     <div class="col-12 col-sm-6">
-                        <p class="content__infor-item">Ngày bắt đầu thuê: <span>${sessionScope.CONTRACT.startDate}</span></p>
-                        <p class="content__infor-item">Ngày kết thúc thuê: <span>${sessionScope.CONTRACT.expiration}</span></p>
-                        <p class="content__infor-item">Tiền cọc: <span>${sessionScope.CONTRACT.deposit}vnđ</span></p>
-                        <p class="content__infor-item">Tiền phòng: <span>${sessionScope.CONTRACT.price}vnđ</span></p>
+                        <fmt:parseDate pattern="yyyy-MM-dd" value="${sessionScope.CONTRACT.startDate}" var="startDate"/>
+                        <p class="content__infor-item">Ngày bắt đầu thuê: <span><fmt:formatDate pattern="dd/MM/yyyy" value="${startDate}"/></span></p>
+                        <fmt:parseDate pattern="yyyy-MM-dd" value="${sessionScope.CONTRACT.expiration}" var="endDate"/>
+                        <p class="content__infor-item">Ngày kết thúc thuê: <span><fmt:formatDate pattern="dd/MM/yyyy" value="${endDate}"/></span></p>
+                        <p class="content__infor-item">Tiền cọc: <span><fmt:formatNumber value="${sessionScope.CONTRACT.deposit}" type="currency" currencySymbol="VNĐ"/></span></p>
+                        <p class="content__infor-item">Tiền phòng: <span><fmt:formatNumber value="${sessionScope.CONTRACT.price}" type="currency" currencySymbol="VNĐ"/></span></p>
                     </div>
                 </div>
             </div>
@@ -114,7 +116,7 @@
                             <tr>
                                 <td>${listServices.serviceName}</td>
                                 <td>
-                                    <fmt:formatNumber value="${listServices.servicePrice}" type="currency"  />
+                                    <fmt:formatNumber value="${listServices.servicePrice}" type="currency" currencySymbol="VNĐ"/>
                                 </td>
                                 <td>1 ${listServices.unit}</td>
                             </tr>
@@ -162,7 +164,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary fs-3">Tiếp tục</button>
-                    <a href="" class="btn btn-outline-danger fs-3"> Có sai sót, hủy bỏ </a>
+                    <a href="renter-register-page" class="btn btn-outline-danger fs-3"> Có sai sót, hủy bỏ </a>
                 </div>
             </form>
         </div>

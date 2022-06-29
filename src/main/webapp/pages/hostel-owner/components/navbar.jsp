@@ -29,6 +29,12 @@
                             <c:when test="${sessionScope.CURRENT_PAGE eq 'report'}">
                                 Báo cáo
                             </c:when>
+                            <c:when test="${sessionScope.CURRENT_PAGE eq 'invoice'}">
+                                Hóa đơn
+                            </c:when>
+                            <c:when test="${sessionScope.CURRENT_PAGE eq 'account'}">
+                                Tài khoản
+                            </c:when>
                         </c:choose>
                     </h3>
                 </div>
@@ -193,7 +199,7 @@
 
             <!-- Profile dropdown -->
             <div id="nav-profile-dropdown" class="profile__actions">
-                <a href="" class="action__view-profile-link">
+                <a href="profile" class="action__view-profile-link">
                     <div class="action__image">
                         <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                     </div>

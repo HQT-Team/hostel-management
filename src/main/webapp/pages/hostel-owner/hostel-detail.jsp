@@ -96,9 +96,9 @@
                                     <thead class="table-dark">
                                     <tr>
                                         <th>STT</th>
-                                        <th>Tên</th>
+                                        <th>Phòng số</th>
                                         <th>Trạng thái</th>
-                                        <th>Hành động</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody class="table-light">
@@ -120,7 +120,7 @@
                                             </td>
                                             <td>
                                                 <!-- Room detail link -->
-                                                <a href="roomDetail?roomID=${room.roomId}" class="room-detail-link">Chi tiết</a>
+                                                <a href="roomDetail?roomID=${room.roomId}" class="room-detail-link">Xem chi tiết</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -253,7 +253,7 @@
                 <div class="modal-body updateServiceInputModal-content" style="max-height: 60vh; overflow-y: auto;">
                     <div class="container">
                         <!-- Label - Dont't update this! -->
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col-4">
                                 <div class="form-group">
                                     <label for="service-name" class="form-label">Tên dịch vụ</label>
@@ -273,7 +273,7 @@
                         <!-- Each service -->
                         <c:forEach var="serviceList" items="${requestScope.serviceInfo}">
                         <input type="hidden" name="update-service-id" value="${serviceList.serviceID}" />
-                        <div class="row form-group">
+                        <div class="row form-group mb-4">
                             <div class="col-4">
                                     <input type="text" id="service-name" name="service-name" value="${serviceList.serviceName}" disabled
                                            class="form-control">
@@ -286,7 +286,7 @@
                                     <input type="text" disabled class="form-control"
                                            value="VNĐ/${serviceList.unit}">
                             </div>
-                            <div class="form-message"></div>
+                            <span class="form-message"></span>
                         </div>
                         </c:forEach>
                     </div>
@@ -321,7 +321,13 @@
 <script>
     $(document).ready(function () {
         // Initial datatable
-        $('#rooms-table').DataTable();
+        $('#rooms-table').DataTable({
+            columnDefs: [
+                { orderable: false, targets: 0 },
+                { orderable: false, targets: 3 },
+            ],
+            "order": [],
+        });
     });
 </script>
 <script src="./assets/js/toast-alert.js"></script>
@@ -354,6 +360,7 @@
             Validator.isRequired("#service-id", "Vui lòng chọn loại dịch vụ cần thêm mới vào khu trọ!"),
             Validator.isRequired("#service-price", "Vui lòng nhập giá tiền của dịch vụ!"),
             Validator.minNumber("#service-price", 1, "Vui lòng nhập giá tối thiểu là 1!"),
+            Validator.isInteger("#service-price", "Vui lòng nhập đúng giá trị số nguyên"),
         ]
     });
 
@@ -365,10 +372,12 @@
             <c:forEach var="serviceList" items="${requestScope.serviceInfo}">
                 Validator.isRequired("#update-service-price-${serviceList.serviceID}", "Vui lòng nhập giá dịch vụ!"),
                 Validator.minNumber("#update-service-price-${serviceList.serviceID}", 0, "Vui lòng nhập giá tối thiểu là 0!"),
+                Validator.isInteger("#update-service-price-${serviceList.serviceID}", "Vui lòng nhập đúng giá trị số nguyên"),
             </c:forEach>
         ]
     });
 </script>
+
 <c:if test="${requestScope.RESPONSE_MSG eq null}">
     <!-- Loader -->
     <script src="./assets/js/loading-handler.js"></script>
