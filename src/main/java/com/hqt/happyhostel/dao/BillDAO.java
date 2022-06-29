@@ -22,6 +22,7 @@ public class BillDAO {
     // After insert new bill, you need to set all old consume to 1, and insert 1 new consume start with status = 0
     private static final String INSERT_NEW_BILL_TAIL = "UPDATE Consumes SET status = 1 WHERE room_id = 1\n" +
             "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id) VALUES (?, ?, GETDATE(), 0, ?)\n";
+    private static final String UPDATE_BILL_STATUS = "UPDATE [dbo].[Bill] SET [status] = ?, [payment_date] = ? WHERE [bill_id] = ?";
 
     public boolean InsertANewBill(int totalMoney, String billTitle, String expiredPaymentDate, int roomID,
                                   int consumeIDStart, int consumeIDEnd, int accountHostelOwner, int accountRenterID,
@@ -328,6 +329,124 @@ public class BillDAO {
             }
         }
         return billTitle;
+
+    }
+
+    public Bill getBillById(int billId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Bill bill = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT [bill_id], [total_money], [created_date], [bill_title], [expired_payment_date], [payment_date], [status], [payment_id], [room_id]\n" +
+                        "FROM [dbo].[Bill]\n" +
+                        "WHERE [bill_id] = ?";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, billId);
+
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    billId = rs.getInt("bill_id");
+                    int roomId = rs.getInt("");
+                    int totalMoney = rs.getInt("total_money");
+                    String createdDate = rs.getString("created_date");
+                    String billTitle = rs.getString("bill_title");
+                    String expiredPaymentDate = rs.getString("expired_payment_date");
+                    String paymentDate = rs.getString("payment_date");
+                    int status = rs.getInt("status");
+                    int paymentId = rs.getInt("payment_id");
+                    String paymentName = getPaymentName(paymentId);
+                    Payment payment =
+                            Payment.builder()
+                                    .paymentID(paymentId)
+                                    .paymentName(paymentName)
+                                    .build();
+                    bill = Bill.builder()
+                            .billID(billId)
+                            .roomID(roomId)
+                            .totalMoney(totalMoney)
+                            .createdDate(createdDate)
+                            .billTitle(billTitle)
+                            .expiredPaymentDate(expiredPaymentDate)
+                            .paymentDate(paymentDate)
+                            .status(status)
+                            .payment(payment)
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return bill;
+    }
+
+    public boolean updateBillStatus(int billId, int status, String payDate) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean result = false;
+        try {
+            cn.setAutoCommit(false);
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = UPDATE_BILL_STATUS;
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, status);
+                pst.setString(2, payDate);
+                pst.setInt(3, billId);
+
+                if (pst.executeUpdate() > 0) {
+                    result = true;
+                    cn.commit();
+                } else {
+                    cn.rollback();
+                }
+                cn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return result;
     }
 
 }

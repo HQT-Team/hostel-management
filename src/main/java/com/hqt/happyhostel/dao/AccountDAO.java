@@ -610,6 +610,7 @@ public class AccountDAO {
     private static final String UPDATE_ACCOUNT_PASSWORD = "Update [dbo].[Accounts] Set [password] = ? Where [account_id] = ?";
     private static final String UPDATE_ACCOUNT_FULLNAME = "Update [dbo].[AccountInformations] Set [fullname] = ? Where [account_id] = ?";
     private static final String UPDATE_ACCOUNT_OTP = "Update [dbo].[Accounts] Set [otp]  = ?, [expired_time_otp] = ? Where [account_id] = ? ";
+    private static final String GET_ACCOUNT_OTP_EXPIRED = "SELECT [expired_time_otp] FROM [dbo].[Accounts] WHERE [account_id] = ? ";
 
     public boolean updateAccountPass(int accId, String pass) {
         Connection cn = null;
@@ -739,6 +740,48 @@ public class AccountDAO {
             }
         }
         return isSuccess;
+    }
+
+    public String getAccountOTPExpired(int accId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        Account acc = null;
+        boolean isSuccess = false;
+        ResultSet rs = null;
+        String expiredTime = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+                String sql = GET_ACCOUNT_OTP_EXPIRED;
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, accId);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    expiredTime = rs.getString("expired_time_otp");
+                }
+                cn.setAutoCommit(true);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return expiredTime;
     }
 
 }
