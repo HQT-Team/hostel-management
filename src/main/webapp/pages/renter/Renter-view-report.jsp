@@ -39,7 +39,7 @@
                     <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
                     <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
                     <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
-                    <a class="dropdown-item" href="Renter-bill"style="font-size: 15px;">Hóa đơn</a>
+                    <a class="dropdown-item" href="Renter-bill"style="font-size: 15px;">Hoá Đơn</a>
                     <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
                     <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
                     <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>

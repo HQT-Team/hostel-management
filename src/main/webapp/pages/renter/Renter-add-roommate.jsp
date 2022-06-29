@@ -49,7 +49,7 @@
                     <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
                     <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
                     <a class="dropdown-item" href="HostelRenterProfilePage?<%=account.getAccId()%>" style="font-size: 15px;">Hồ sơ</a>
-                    <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
+                    <   a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
                 </div>
             </div>
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
