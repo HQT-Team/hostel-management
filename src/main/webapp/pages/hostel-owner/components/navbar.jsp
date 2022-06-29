@@ -199,7 +199,7 @@
 
             <!-- Profile dropdown -->
             <div id="nav-profile-dropdown" class="profile__actions">
-                <a href="" class="action__view-profile-link">
+                <a href="profile" class="action__view-profile-link">
                     <div class="action__image">
                         <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                     </div>

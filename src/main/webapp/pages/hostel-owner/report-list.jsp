@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -29,18 +30,23 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
-<body class="over-flow-hidden">
-<!-- Loader -->
-<div id="preloader">
-    <div class="dots">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-</div>
+<body class="${requestScope.STATE eq null ? "over-flow-hidden" : ""}">
+
 
 <!-- Navbar -->
 <%@include file="./components/navbar.jsp"%>
+
+<!-- Loader -->
+<c:if test="${requestScope.STATE eq null}" >
+    <!-- Loader -->
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</c:if>
 
 <!-- Body -->
 <div class="container">
@@ -80,51 +86,75 @@
                             </tr>
                             <tr>
                                 <td><i class="fa-solid fa-sliders"></i> Lọc</td>
-                                <form action="" method="post">
+                                <form action="report" method="post" id="form-noreply-report">
+                                    <input type="hidden" name="type" value="0" />
                                     <td>
-                                        <select name="" id="filter__hostel-select-1"
+                                        <select name="hostelId" id="filter__hostel-select-1" onchange="this.form.submit()"
                                                 style="min-width: 100px; max-width: 200px;">
                                             <option value="">Tất cả</option>
-                                            <option value="">Nova Land</option>
-                                            <option value="">Nova Sky</option>
+                                            <c:forEach var="hostel" items="${requestScope.HOSTEL_LIST}">
+                                                <option value="${hostel.hostelID}" ${requestScope.TYPE eq 0 && requestScope.CURRENT_HOSTEL eq hostel.hostelID ? "selected" : ""}>
+                                                        ${hostel.hostelName}
+                                                </option>
+                                            </c:forEach>
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="" id="filter__room-select-1"
-                                                style="min-width: 100px; max-width: 200px;">
-                                            <option value="">Tất cả</option>
-                                            <option value="">1</option>
-                                            <option value="">2</option>
-                                            <option value="">3</option>
-                                            <option value="">4</option>
-                                        </select>
+                                        <c:choose>
+                                            <c:when test="${requestScope.TYPE eq 0 && requestScope.ROOM_LIST ne null}">
+                                                <select name="roomId" id="filter__room-select-1" onchange="this.form.submit()"
+                                                        style="min-width: 100px; max-width: 200px;">
+                                                    <option value="">Tất cả</option>
+                                                    <c:forEach var="room" items="${requestScope.ROOM_LIST}">
+                                                        <option value="${room.roomId}" ${requestScope.TYPE eq 0 && requestScope.CURRENT_ROOM eq room.roomId ? "selected" : ""}>${room.roomNumber}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <select name="roomId" disabled id="filter__room-select-1"
+                                                        style="min-width: 100px; max-width: 200px;">
+                                                    <option value="">Tất cả</option>
+                                                </select>
+                                            </c:otherwise>
+                                        </c:choose>
+
                                     </td>
                                 </form>
                             </tr>
                         </table>
                     </div>
                     <!-- Infor box -->
-                    <div class="content__body">
+                    <div class="content__body" id="content__body-1">
                         <table id="report-table-1" class="content__table table table-bordered table-striped">
                             <thead class="content__thead">
-                            <th class="text-center">Mã</th>
-                            <th class="text-center">Loại</th>
-                            <th class="text-center">Phòng số</th>
-                            <th class="text-center">Khu trọ</th>
-                            <th class="text-center">Người gửi</th>
-                            <th class="text-center">Ngày gửi</th>
+                                <tr>
+                                    <th class="text-center">Mã</th>
+                                    <th class="text-center">Loại</th>
+                                    <th class="text-center">Phòng số</th>
+                                    <th class="text-center">Khu trọ</th>
+                                    <th class="text-center">Người gửi</th>
+                                    <th class="text-center">Ngày gửi</th>
+                                </tr>
                             </thead>
                             <tbody class="content__tbody">
-                            <tr>
-                                <td class="text-center">
-                                    <a href="./report-detail.html">#RP1232132</a>
-                                </td>
-                                <td class="text-center">Hư hỏng</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">Nova Land</td>
-                                <td class="text-center">Kiều Minh Tuấn</td>
-                                <td class="text-center">21/01/2022</td>
-                            </tr>
+                                <c:forEach var="reportList" items="${requestScope.REPORT_NO_REPLY_DETAIL_LIST}">
+                                    <c:if test="${reportList.report.status eq 0}">
+                                        <tr>
+                                            <td class="text-center">
+                                                <a href="report-detail?reportId=${reportList.report.reportID}">#RP${reportList.report.reportID}</a>
+                                            </td>
+                                            <td class="text-center">${reportList.category.cateTitle}</td>
+                                            <td class="text-center">${reportList.room.roomNumber}</td>
+                                            <td class="text-center">${reportList.hostel.hostelName}</td>
+                                            <td class="text-center">${reportList.renterInformation.fullname}</td>
+                                            <fmt:parseDate pattern="yyyy-MM-dd" value="${reportList.report.sendDate}"
+                                                           var="sendDate"/>
+                                            <td class="text-center">
+                                                <fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${sendDate}"/>
+                                            </td>
+                                        </tr>
+                                    </c:if>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -142,24 +172,37 @@
                             </tr>
                             <tr>
                                 <td><i class="fa-solid fa-sliders"></i> Lọc</td>
-                                <form action="" method="post">
+                                <form action="report" method="post" id="form-process-report">
+                                    <input type="hidden" name="type" value="1" />
                                     <td>
-                                        <select name="" id="filter__hostel-select-2"
+                                        <select name="hostelId" id="filter__hostel-select-2" onchange="this.form.submit()"
                                                 style="min-width: 100px; max-width: 200px;">
                                             <option value="">Tất cả</option>
-                                            <option value="">Fake Land</option>
-                                            <option value="">Fake Sky</option>
+                                            <c:forEach var="hostel" items="${requestScope.HOSTEL_LIST}">
+                                                <option value="${hostel.hostelID}" ${requestScope.TYPE eq 1 && requestScope.CURRENT_HOSTEL eq hostel.hostelID ? "selected" : ""}>
+                                                        ${hostel.hostelName}
+                                                </option>
+                                            </c:forEach>
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="" id="filter__room-select-2"
-                                                style="min-width: 100px; max-width: 200px;">
-                                            <option value="">Tất cả</option>
-                                            <option value="">7</option>
-                                            <option value="">8</option>
-                                            <option value="">9</option>
-                                            <option value="">10</option>
-                                        </select>
+                                        <c:choose>
+                                            <c:when test="${requestScope.TYPE eq 1 && requestScope.ROOM_LIST ne null}">
+                                                <select name="roomId" id="filter__room-select-2" onchange="this.form.submit()"
+                                                        style="min-width: 100px; max-width: 200px;">
+                                                    <option value="">Tất cả</option>
+                                                    <c:forEach var="room" items="${requestScope.ROOM_LIST}">
+                                                        <option value="${room.roomId}" ${requestScope.TYPE eq 1 && requestScope.CURRENT_ROOM eq room.roomId ? "selected" : ""}>${room.roomNumber}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <select name="roomId" disabled id="filter__room-select-2"
+                                                        style="min-width: 100px; max-width: 200px;">
+                                                    <option value="">Tất cả</option>
+                                                </select>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </td>
                                 </form>
                             </tr>
@@ -174,19 +217,27 @@
                             <th class="text-center">Phòng số</th>
                             <th class="text-center">Khu trọ</th>
                             <th class="text-center">Người gửi</th>
-                            <th class="text-center">Ngày gửi</th>
+                            <th class="text-center">Ngày tiếp nhận</th>
                             </thead>
                             <tbody class="content__tbody">
-                            <tr>
-                                <td class="text-center">
-                                    <a href="./report-detail.html">#RP1232132</a>
-                                </td>
-                                <td class="text-center">Hư hỏng</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">Nova Land</td>
-                                <td class="text-center">Kiều Minh Tuấn</td>
-                                <td class="text-center">21/01/2022</td>
-                            </tr>
+                                <c:forEach var="reportList" items="${requestScope.REPORT_PROCESS_DETAIL_LIST}">
+                                    <c:if test="${reportList.report.status eq 1}">
+                                        <tr>
+                                            <td class="text-center">
+                                                <a href="report-detail?reportId=${reportList.report.reportID}">#RP${reportList.report.reportID}</a>
+                                            </td>
+                                            <td class="text-center">${reportList.category.cateTitle}</td>
+                                            <td class="text-center">${reportList.room.roomNumber}</td>
+                                            <td class="text-center">${reportList.hostel.hostelName}</td>
+                                            <td class="text-center">${reportList.renterInformation.fullname}</td>
+                                            <fmt:parseDate pattern="yyyy-MM-dd" value="${reportList.report.replyDate}"
+                                                           var="replyDate"/>
+                                            <td class="text-center">
+                                                <fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${replyDate}"/>
+                                            </td>
+                                        </tr>
+                                    </c:if>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -204,24 +255,38 @@
                             </tr>
                             <tr>
                                 <td><i class="fa-solid fa-sliders"></i> Lọc</td>
-                                <form action="" method="post">
+                                <form action="report" method="post" id="form-finished-report">
+                                    <input type="hidden" name="type" value="2" />
                                     <td>
-                                        <select name="" id="filter__hostel-select-3"
+                                        <select name="hostelId" id="filter__hostel-select-3" onchange="this.form.submit()"
                                                 style="min-width: 100px; max-width: 200px;">
                                             <option value="">Tất cả</option>
-                                            <option value="">Nihon Land</option>
-                                            <option value="">Nihon Sky</option>
+                                            <c:forEach var="hostel" items="${requestScope.HOSTEL_LIST}">
+                                                <option value="${hostel.hostelID}" ${requestScope.TYPE eq 2 && requestScope.CURRENT_HOSTEL eq hostel.hostelID ? "selected" : ""}>
+                                                        ${hostel.hostelName}
+                                                </option>
+                                            </c:forEach>
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="" id="filter__room-select-3"
-                                                style="min-width: 100px; max-width: 200px;">
-                                            <option value="">Tất cả</option>
-                                            <option value="">11</option>
-                                            <option value="">12</option>
-                                            <option value="">13</option>
-                                            <option value="">14</option>
-                                        </select>
+                                        <c:choose>
+                                            <c:when test="${requestScope.TYPE eq 2 && requestScope.ROOM_LIST ne null}">
+                                                <select name="roomId" id="filter__room-select-3" onchange="this.form.submit()"
+                                                        style="min-width: 100px; max-width: 200px;">
+                                                    <option value="">Tất cả</option>
+                                                    <c:forEach var="room" items="${requestScope.ROOM_LIST}">
+                                                        <option value="${room.roomId}" ${requestScope.TYPE eq 2 && requestScope.CURRENT_ROOM eq room.roomId ? "selected" : ""}>${room.roomNumber}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <select name="roomId" disabled id="filter__room-select-3"
+                                                        style="min-width: 100px; max-width: 200px;">
+                                                    <option value="">Tất cả</option>
+                                                </select>
+                                            </c:otherwise>
+                                        </c:choose>
+
                                     </td>
                                 </form>
                             </tr>
@@ -236,19 +301,27 @@
                             <th class="text-center">Phòng số</th>
                             <th class="text-center">Khu trọ</th>
                             <th class="text-center">Người gửi</th>
-                            <th class="text-center">Ngày gửi</th>
+                            <th class="text-center">Ngày hoàn thành</th>
                             </thead>
                             <tbody class="content__tbody">
-                            <tr>
-                                <td class="text-center">
-                                    <a href="./report-detail.html">#RP1232132</a>
-                                </td>
-                                <td class="text-center">Hư hỏng</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">Nova Land</td>
-                                <td class="text-center">Kiều Minh Tuấn</td>
-                                <td class="text-center">21/01/2022</td>
-                            </tr>
+                                <c:forEach var="reportList" items="${requestScope.REPORT_FINISHED_DETAIL_LIST}">
+                                    <c:if test="${reportList.report.status eq 2}">
+                                        <tr>
+                                            <td class="text-center">
+                                                <a href="report-detail?reportId=${reportList.report.reportID}">#RP${reportList.report.reportID}</a>
+                                            </td>
+                                            <td class="text-center">${reportList.category.cateTitle}</td>
+                                            <td class="text-center">${reportList.room.roomNumber}</td>
+                                            <td class="text-center">${reportList.hostel.hostelName}</td>
+                                            <td class="text-center">${reportList.renterInformation.fullname}</td>
+                                            <fmt:parseDate pattern="yyyy-MM-dd" value="${reportList.report.completeDate}"
+                                                           var="completeDate"/>
+                                            <td class="text-center">
+                                                <fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${completeDate}"/>
+                                            </td>
+                                        </tr>
+                                    </c:if>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -273,19 +346,17 @@
 <script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <!-- Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<!-- Axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     $(document).ready(function () {
 
         const tabs = document.querySelectorAll(".tabs-item");
         const contents = document.querySelectorAll(".content__item");
 
-        const tabActive = document.querySelector(".tabs-item.active");
         const line = document.querySelector(".tabs .line");
 
-        let i = 0, lengthTabs = tabs.length;
-
-        line.style.left = tabActive.offsetLeft + "px";
-        line.style.width = tabActive.offsetWidth + "px";
+        let i = 0;
 
         tabs.forEach((tab, index) => {
             const content = contents[index];
@@ -307,11 +378,11 @@
 
         for (let i = 1; i <= 3; i++) {
             // Select 2
-            $(`#filter__hostel-select-${i}`).select2();
-            $(`#filter__room-select-${i}`).select2();
+            $(`#filter__hostel-select-` + i).select2();
+            $(`#filter__room-select-` + i).select2();
 
             // Initial datatable
-            $(`#report-table-${i}`).DataTable();
+            $(`#report-table-` + i).DataTable();
         }
 
         for (let i = 0; i < 3; i++) {
@@ -322,12 +393,21 @@
         ((index = 0) => {
             tabs[index].classList.add("active");
             contents[index].classList.add("active");
-        })();
+        })(${requestScope.TYPE});
+
+        const tabActive = document.querySelector(".tabs-item.active");
+
+        line.style.left = tabActive.offsetLeft + "px";
+        line.style.width = tabActive.offsetWidth + "px";
 
     });
 </script>
-<!-- Preload -->
-<script src="./assets/js/handle-preloader.js" type="text/javascript"></script>
+
+<c:if test="${requestScope.STATE eq null}">
+    <!-- Preload -->
+    <script src="./assets/js/handle-preloader.js" type="text/javascript"></script>
+</c:if>
+
 </body>
 
 </html>

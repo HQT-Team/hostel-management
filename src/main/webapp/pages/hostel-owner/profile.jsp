@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -24,18 +25,21 @@
 
 </head>
 
-<body class="over-flow-hidden">
-<!-- Loader -->
-<div id="preloader">
-  <div class="dots">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-</div>
+<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
 
 <!-- Navbar -->
 <%@include file="./components/navbar.jsp"%>
+
+<!-- Loader -->
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+  <div id="preloader">
+    <div class="dots">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</c:if>
 
 <!-- Body -->
 <div class="container">
@@ -71,45 +75,66 @@
                 <img src="./assets/images/avatars/user-avatar.jpg" alt=""
                      class="account__sub-img">
                 <div class="account__sub-info">
-                  <h2 class="account__sub-name">Sejima Kouga</h2>
+                  <h2 class="account__sub-name">${sessionScope.USER.accountInfo.information.fullname}</h2>
                   <p class="account__sub-role">Chủ trọ</p>
                 </div>
               </div>
               <div class="account__wrapper">
                 <div class="account__group">
                   <p class="account__title">Họ và tên:</p>
-                  <h3 class="account__content">Sejima Kouga</h3>
+                  <h3 class="account__content">${sessionScope.USER.accountInfo.information.fullname}</h3>
                 </div>
                 <div class="account__group">
                   <p class="account__title">Giới tính:</p>
-                  <h3 class="account__content">Trống</h3>
+                  <h3 class="account__content">
+                    <c:choose>
+                      <c:when test="${sessionScope.USER.accountInfo.information.sex ne null}">
+                        ${sessionScope.USER.accountInfo.information.sex eq 1 ? "Nam" : "Nữ"}
+                      </c:when>
+                      <c:otherwise>
+                        Trống
+                      </c:otherwise>
+                    </c:choose>
+                  </h3>
                 </div>
                 <div class="account__group">
                   <p class="account__title">Ngày tháng năm sinh:</p>
-                  <h3 class="account__content">12/12/2022</h3>
+                  <h3 class="account__content">
+                    <c:choose>
+                      <c:when test="${sessionScope.USER.accountInfo.information.birthday ne null}">
+                        <fmt:parseDate pattern="yyyy-MM-dd" value="${sessionScope.USER.accountInfo.information.birthday}" var="dateOfBirth"/>
+                        <fmt:formatDate var="dateOfBirthFormatted" pattern="dd/MM/yyyy" value="${dateOfBirth}"/>
+                        ${dateOfBirthFormatted}
+                      </c:when>
+                      <c:otherwise>
+                        Trống
+                      </c:otherwise>
+                    </c:choose>
+                  </h3>
                 </div>
                 <div class="account__group">
                   <p class="account__title">Email:</p>
-                  <h3 class="account__content">trống</h3>
+                  <h3 class="account__content">${sessionScope.USER.accountInfo.information.email eq null ? "Trống" : sessionScope.USER.accountInfo.information.email}</h3>
                 </div>
                 <div class="account__group">
                   <p class="account__title">Số điện thoại:</p>
-                  <h3 class="account__content">Trống</h3>
+                  <h3 class="account__content">${sessionScope.USER.accountInfo.information.phone eq null ? "Trống" : sessionScope.USER.accountInfo.information.phone}</h3>
                 </div>
                 <div class="account__group">
                   <p class="account__title">Địa chỉ:</p>
                   <h3 class="account__content">
-                    999 Hoàng Hữu Nam, phường Long Thạnh Mỹ, thành phố Thủ Đức, thành phố Hồ Chí
-                    Minh
+                    ${sessionScope.USER.accountInfo.information.address eq null ? "Trống" : sessionScope.USER.accountInfo.information.address}
                   </h3>
                 </div>
                 <div class="account__group">
                   <p class="account__title">Số CMND/CCCD:</p>
-                  <h3 class="account__content">Trống</h3>
+                  <h3 class="account__content">
+                    ${sessionScope.USER.accountInfo.information.cccd eq null ? "Trống" : sessionScope.USER.accountInfo.information.cccd}
+                  </h3>
                 </div>
               </div>
               <div class="account__actions">
-                <a href="../../system/login.html" class="account__action account__logout">
+                <a href="logout" class="account__action account__logout">
                   Đăng xuất
                 </a>
                 <button id="account__btn-update" class="account__action account__update">
@@ -132,57 +157,55 @@
                          accept="image/x-png,image/gif,image/jpeg" class="update__input-img">
                   <button id="update__reset-img" class="update__reset-img">Đặt lại</button>
                 </div>
-                <form class="row mt-4">
+                <form action="update-profile" method="POST" class="row mt-4" id="form-update-information">
                   <div class="form-group col-6">
                     <label for="fullname" class="form-label">Họ và tên:
                       <span>*</span></label>
-                    <input id="fullname" name="fullname" value="" type="text"
+                    <input id="fullname" name="fullname" value="${sessionScope.USER.accountInfo.information.fullname}" type="text"
                            class="form-control" placeholder="Nhập ...">
                     <span class="form-message"></span>
                   </div>
                   <div class="form-group col-6">
-                    <label for="gender" class="form-label">Giới tính: <span>*</span></label>
+                    <label for="gender" class="form-label">Giới tính:</label>
                     <select id="gender" name="gender" class="form-control">
-                      <option value="1">Nam</option>
-                      <option value="0">Nữ</option>
+                      <option value="1" ${sessionScope.USER.accountInfo.information.sex eq 1 ? "selected" : ""}>Nam</option>
+                      <option value="0" ${sessionScope.USER.accountInfo.information.sex eq 0 ? "selected" : ""}>Nữ</option>
                     </select>
                     <span class="form-message"></span>
                   </div>
                   <div class="form-group col-6">
-                    <label for="birthday" class="form-label">Ngày sinh:
-                      <span>*</span></label>
-                    <input id="birthday" name="birthday" value="" type="text"
+                    <label for="birthday" class="form-label">Ngày sinh:</label>
+                    <input id="birthday" name="birthday" value="${dateOfBirthFormatted}" type="text"
                            class="form-control" placeholder="Nhập ...">
                     <span class="form-message"></span>
                   </div>
                   <div class="form-group col-6">
                     <label for="cccd" class="form-label">Số CMND/CCCD:
                       <span>*</span></label>
-                    <input id="cccd" name="cccd" value="" type="text" class="form-control"
+                    <input id="cccd" name="cccd" value="${sessionScope.USER.accountInfo.information.cccd}" type="text" class="form-control"
                            placeholder="Nhập ...">
                     <span class="form-message"></span>
                   </div>
                   <div class="form-group col-6">
                     <label for="email" class="form-label">Email: <span>*</span></label>
-                    <input id="email" name="email" value="" type="text" class="form-control"
+                    <input id="email" name="email" value="${sessionScope.USER.accountInfo.information.email}" type="text" class="form-control"
                            placeholder="Nhập ...">
                     <span class="form-message"></span>
                   </div>
                   <div class="form-group col-6">
-                    <label for="phone" class="form-label">Số điện thoại:
-                      <span>*</span></label>
-                    <input id="phone" name="phone" value="" type="text" class="form-control"
+                    <label for="phone" class="form-label">Số điện thoại:</label>
+                    <input id="phone" name="phone" value="${sessionScope.USER.accountInfo.information.phone}" type="text" class="form-control"
                            placeholder="Nhập ...">
                     <span class="form-message"></span>
                   </div>
                   <div class="form-group col-12">
-                    <label for="address" class="form-label">Địa chỉ: <span>*</span></label>
-                    <input id="address" name="address" value="" type="text" class="form-control"
+                    <label for="address" class="form-label">Địa chỉ:</label>
+                    <input id="address" name="address" value="${sessionScope.USER.accountInfo.information.address}" type="text" class="form-control"
                            placeholder="Nhập ...">
                     <span class="form-message"></span>
                   </div>
                   <div class="form-actions">
-                    <button class="update-btn update-submit-btn">
+                    <button type="submit" class="update-btn update-submit-btn">
                       Lưu thay đổi
                     </button>
                     <button id="update-cancel-btn" class="update-btn update-cancel-btn">
@@ -201,7 +224,7 @@
             <div class="col-md-12 m-auto">
               <div class="change-psw__wrapper">
                 <h1 class="change-psw__title">Thay đổi mật khẩu</h1>
-                <form class="row">
+                <form action="change-password" method="POST" class="row" id="form-update-password">
                   <div class="col-6 d-none d-md-block">
                     <div class="change-psw__suggest">Mật khẩu nên chứa</div>
                     <ul class="change-psw__list">
@@ -232,15 +255,15 @@
                       <label for="old-password" class="form-label">
                         Mật khẩu cũ: <span>*</span>
                       </label>
-                      <input id="old-password" type="password" placeholder="Nhập ..."
+                      <input id="old-password" name="old-password" type="password" placeholder="Nhập mật khẩu hiện tại"
                              class="form-control">
-                      <span class="form-message"></span>
+                      <span class="form-message">${requestScope.ERROR ne null && requestScope.RESPONSE_MSG ne null ? requestScope.RESPONSE_MSG.content : ""}</span>
                     </div>
                     <div class="form-group">
                       <label for="new-password" class="form-label">
                         Mật khẩu mới: <span>*</span>
                       </label>
-                      <input id="new-password" type="password" placeholder="Nhập ..."
+                      <input id="new-password" name="new-password" type="password" placeholder="Nhập mật khẩu mới"
                              class="form-control">
                       <span class="form-message"></span>
                     </div>
@@ -248,7 +271,7 @@
                       <label for="confirm-password" class="form-label">
                         Xác nhận mật khẩu: <span>*</span>
                       </label>
-                      <input id="confirm-password" type="password" placeholder="Nhập ..."
+                      <input id="confirm-password" type="password" placeholder="Xác nhận mật khẩu mới"
                              class="form-control">
                       <span class="form-message"></span>
                     </div>
@@ -257,7 +280,7 @@
                     <button id="change-psw-cancel-btn" class="update-btn update-cancel-btn">
                       Hủy bỏ
                     </button>
-                    <button class="update-btn update-submit-btn">
+                    <button type="submit" class="update-btn update-submit-btn">
                       Lưu thay đổi
                     </button>
                   </div>
@@ -274,6 +297,9 @@
 <!-- Footer -->
 <%@include file="./components/footer.jsp"%>
 
+<!-- Toast element -->
+<div id="toast">&nbsp;</div>
+
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -282,7 +308,46 @@
 <script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <!-- Navbar -->
 <script src="./assets/js/handle-main-navbar.js"></script>
+<!-- Validation -->
+<script src="./assets/js/valid-form.js" charset="UTF-8"></script>
+<!-- Toast -->
+<script src="./assets/js/toast-alert.js"></script>
+<script>
+  Validator({
+    form: "#form-update-information",
+    formGroupSelector: ".form-group",
+    errorSelector: ".form-message",
+    rules: [
+      Validator.isRequired("#fullname", "Vui lòng nhập tên đầy đủ của bạn"),
+      Validator.isRequired("#cccd", "Vui lòng nhập số CMND hoặc CCCD của bạn"),
+      Validator.isCCCD("#cccd"),
+      Validator.isViePhoneNumber("#phone"),
+      Validator.isRequired("#email", "Vui lòng nhập email của bạn"),
+      Validator.isEmail("#email"),
+    ]
+  });
 
+  Validator({
+    form: "#form-update-password",
+    formGroupSelector: ".form-group",
+    errorSelector: ".form-message",
+    rules: [
+      Validator.isRequired("#old-password", "Vui lòng nhập mật khẩu cũ"),
+      Validator.isRequired("#new-password", "Vui lòng nhập mật khẩu mới"),
+      Validator.minLength("#new-password", 6, "Mật khẩu mới phải chứa ít nhất 6 kí tự"),
+      Validator.maxLength("#new-password", 50, "Mật khẩu mới dài tối đa 50 kí tự"),
+      Validator.isRequired("#confirm-password", "Vui lòng xác nhận lại mật khẩu mới đã nhập"),
+      Validator.isConfirmed(
+              "#confirm-password",
+              function () {
+                return document.querySelector("#form-update-password #new-password").value;
+              },
+              "Mật khẩu nhập lại không chính xác"
+      ),
+    ]
+  });
+
+</script>
 <script>
   $(document).ready(function () {
 
@@ -292,7 +357,7 @@
     ((index = 0) => {
       tabs[index].classList.add("active");
       contents[index].classList.add("active");
-    })(0);
+    })(${requestScope.TYPE});
 
     const tabActive = document.querySelector(".tabs-item.active");
     const line = document.querySelector(".tabs .line");
@@ -336,6 +401,8 @@
     $('#change-psw-cancel-btn').click((e) => {
       e.preventDefault();
       tabs[0].click();
+      $('#form-update-password').trigger("reset");
+      $('#form-update-password .form-message').html("");
     });
 
     // Handle reset image
@@ -364,8 +431,30 @@
 
   });
 </script>
-<!-- Preload -->
-<script src="./assets/js/handle-preloader.js" type="text/javascript"></script>
+<script>
+  <c:choose>
+  <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+  toast({
+    title: 'Thành công',
+    message: '${requestScope.RESPONSE_MSG.content}',
+    type: 'success',
+    duration: 5000
+  });
+  </c:when>
+  <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+  toast({
+    title: 'Lỗi',
+    message: '${requestScope.RESPONSE_MSG.content}',
+    type: 'error',
+    duration: 5000
+  });
+  </c:when>
+  </c:choose>
+</script>
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+  <!-- Loader -->
+  <script src="./assets/js/loading-handler.js"></script>
+</c:if>
 </body>
 
 </html>

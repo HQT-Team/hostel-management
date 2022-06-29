@@ -192,7 +192,7 @@ Validator.isUsername = function (selector, message) {
   return {
     selector: selector,
     test: function (value) {
-      var regex = /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
+      var regex = /^(?=[a-zA-Z0-9._]{6,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
       return regex.test(value)
           ? undefined
           : message || "Vui lòng nhập tài khoản hợp lệ";

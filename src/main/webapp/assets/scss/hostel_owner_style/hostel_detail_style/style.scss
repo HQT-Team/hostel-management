@@ -80,6 +80,10 @@
 
 // Hostel detail
 // Rooms table
+.hostel-rooms {
+  overflow-x: auto;
+}
+
 .hostel-rooms,
 .hostel-services {
   padding: 16px 16px;
@@ -109,6 +113,11 @@
 }
 
 // Rooms table
+.rooms-table {
+  width: 100%;
+  min-width: 650px;
+}
+
 .dataTables_length,
 .dataTables_filter {
   margin-bottom: 16px;
@@ -125,6 +134,17 @@
       opacity: 0.6;
       text-decoration: underline;
     }
+  }
+}
+
+// Update services
+.form-group {
+  .form-control {
+    margin: 0;
+  }
+
+  .form-message {
+    margin: 12px 0 0 0;
   }
 }
 
@@ -218,7 +238,8 @@
   color: #ff1700;
   padding-top: 24px;
   padding-bottom: 24px;
-  line-height: 2rem;
+  line-height: 2.8rem;
+  font-size: 1.8rem;
 }
 
 .updateServicesModel-action {
