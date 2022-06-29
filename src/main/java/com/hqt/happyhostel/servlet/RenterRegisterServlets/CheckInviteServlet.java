@@ -10,7 +10,7 @@ import java.io.IOException;
 
 @WebServlet(name = "CheckInviteServlet", value = "/CheckInviteServlet")
 public class CheckInviteServlet extends HttpServlet {
-    private final String SUCCESS = "send-otp";
+    private final String SUCCESS = "verify-renter-page";
     private final String FAIL = "renter-register-page";
     private final String ERROR = "error-page";
 

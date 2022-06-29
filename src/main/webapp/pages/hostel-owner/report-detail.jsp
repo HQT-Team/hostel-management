@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -24,18 +25,20 @@
 
 </head>
 
-<body class="over-flow-hidden">
-<!-- Loader -->
-<div id="preloader">
-    <div class="dots">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-</div>
-
+<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
 <!-- Navbar -->
 <%@include file="./components/navbar.jsp"%>
+
+<!-- Loader -->
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</c:if>
 
 <!-- Body -->
 <div class="container">
@@ -49,63 +52,116 @@
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
             <!-- History link bar -->
             <div class="content-history">
-                <a href="./reports.html" class="history-link">Danh sách báo cáo</a>
+                <c:choose>
+                    <c:when test="${requestScope.reportDetail.report.status eq 0}">
+                        <a href="report?type=0" class="history-link">Danh sách báo cáo chưa tiếp nhận</a>
+                    </c:when>
+                    <c:when test="${requestScope.reportDetail.report.status eq 1}">
+                        <a href="report?type=1" class="history-link">Danh sách báo cáo đang xử lý</a>
+                    </c:when>
+                    <c:when test="${requestScope.reportDetail.report.status eq 2}">
+                        <a href="report?type=2" class="history-link">Danh sách báo cáo đã hoàn thành</a>
+                    </c:when>
+                </c:choose>
                 <i class="fa-solid fa-chevron-right"></i>
-                <div class="current">Báo cáo #VA123</div>
+                <div class="current">Báo cáo #RP${requestScope.reportDetail.report.reportID}</div>
             </div>
             <!-- Infor box -->
             <div class="col-xxl-9 m-auto">
                 <div class="content__body">
                     <div class="report">
-                        <h1 class="report__title">Báo cáo #VA123</h1>
+                        <h1 class="report__title">Báo cáo #RP${requestScope.reportDetail.report.reportID}</h1>
                         <div class="report__spacer"></div>
                         <div class="report__info row">
                             <div class="col-6">
-                                <div class="report__item">Khu trọ: <span>Nova Land</span></div>
-                                <div class="report__item">Phòng số: <span>1</span></div>
-                                <div class="report__item">Người đại diện: <span>Nguyễn Văn A</span></div>
-                                <div class="report__item">Số điện thoại: <span>0792111222</span></div>
+                                <div class="report__item">Khu trọ: <span>${requestScope.reportDetail.hostel.hostelName}</span></div>
+                                <div class="report__item">Phòng số: <span>${requestScope.reportDetail.room.roomNumber}</span></div>
+                                <div class="report__item">Người đại diện: <span>${requestScope.reportDetail.renterInformation.fullname}</span></div>
+                                <div class="report__item">Số điện thoại: <span>${requestScope.reportDetail.renterInformation.phone}</span></div>
                             </div>
                             <div class="col-6">
-                                <div class="report__item">Loại: <span class="red">Hư hỏng cơ sở vật chất</span>
+                                <div class="report__item">Loại: <span class="red">${requestScope.reportDetail.category.cateTitle}</span>
                                 </div>
-                                <div class="report__item">Trạng thái hiện tại: <span class="notyet">Chưa tiếp
-                                            nhận</span></div>
-                                <div class="report__item">Ngày gửi: <span>21/02/2022</span></div>
+                                <div class="report__item">Trạng thái hiện tại:
+                                    <c:choose>
+                                        <c:when test="${requestScope.reportDetail.report.status eq 0}">
+                                            <span class="notyet">Chưa tiếp nhận</span>
+                                        </c:when>
+                                        <c:when test="${requestScope.reportDetail.report.status eq 1}">
+                                            <span class="process">Đang xử lý</span>
+                                        </c:when>
+                                        <c:when test="${requestScope.reportDetail.report.status eq 2}">
+                                            <span class="finished">Hoàn thành</span>
+                                        </c:when>
+                                    </c:choose>
+                                </div>
+                                <fmt:parseDate pattern="yyyy-MM-dd" value="${requestScope.reportDetail.report.sendDate}" var="sendDate"/>
+                                <div class="report__item">Ngày gửi:
+                                    <span><fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${sendDate}"/></span>
+                                </div>
                             </div>
                             <div class="col-12">
-                                <div class="report__item">Nội dung: <span>Anh ơi phòng em bị hư ống nước ạ! Anh qua
-                                            xem giúp em với nhé! Em có chuẩn bị vài đồ cần thiết cho chúng mình
-                                            rùi :3 </span></div>
+                                <div class="report__item">Nội dung:
+                                    <span>${requestScope.reportDetail.report.content}</span>
+                                </div>
                             </div>
                         </div>
                         <div class="report__spacer"></div>
-                        <div class="report__reply d-none">
-                            <div class="report__item">Ngày tiếp nhận: <span>trống</span></div>
-                            <div class="report__item">Phản hồi: <span>trống</span></div>
-                        </div>
-                        <form action="" method="">
-                            <div class="form-group">
-                                <label for="" class="form-label">Phản hồi: <span>*</span></label>
-                                <textarea name="" id="" class="form-control" placeholder="Nhập phản hồi"></textarea>
-                            </div>
-                            <div class="report__spacer"></div>
-                            <div class="report__action d-flex justify-content-between">
-                                <a href="" class="btn btn-outline-dark">Quay lại</a>
-                                <button class="btn btn-danger">Xác nhận và xử lý báo cáo</button>
-                            </div>
-                        </form>
-                        <div class="report__spacer d-none"></div>
-                        <div class="report__finish d-none">
-                            <div class="report__item">Ngày hoàn thành: <span>trống</span></div>
-                        </div>
-                        <form action="" method="" class="d-none">
-                            <div class="report__spacer"></div>
-                            <div class="report__action d-flex justify-content-between">
-                                <a href="./reports.html" class="btn btn-outline-dark">Quay lại</a>
-                                <button class="btn btn-danger">Hoàn thành báo cáo</button>
-                            </div>
-                        </form>
+                        <c:choose>
+                            <c:when test="${requestScope.reportDetail.report.status eq 0}">
+                                <form action="update-report" method="POST">
+                                    <input type="hidden" name="reportId" value="${requestScope.reportDetail.report.reportID}" />
+                                    <input type="hidden" name="action" value="reply" />
+                                    <div class="form-group">
+                                        <label for="response" class="form-label">Phản hồi: <span>*</span></label>
+                                        <textarea name="response" id="response" class="form-control" placeholder="Nhập phản hồi"></textarea>
+                                    </div>
+                                    <div class="report__spacer"></div>
+                                    <div class="report__action d-flex justify-content-between">
+                                        <a href="report?type=0" class="btn btn-outline-dark">Quay lại</a>
+                                        <button type="submit" class="btn btn-danger">Xác nhận và xử lý báo cáo</button>
+                                    </div>
+                                </form>
+                            </c:when>
+                            <c:when test="${requestScope.reportDetail.report.status eq 1}">
+                                <div class="report__reply">
+                                    <fmt:parseDate pattern="yyyy-MM-dd" value="${requestScope.reportDetail.report.replyDate}" var="replyDate"/>
+                                    <div class="report__item">Ngày tiếp nhận:
+                                        <span><fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${replyDate}"/></span>
+                                    </div>
+                                    <div class="report__item">Phản hồi: <span>${requestScope.reportDetail.report.reply}</span></div>
+                                </div>
+                                <form action="update-report" method="POST">
+                                    <input type="hidden" name="reportId" value="${requestScope.reportDetail.report.reportID}" />
+                                    <input type="hidden" name="action" value="finished" />
+                                    <div class="report__spacer"></div>
+                                    <div class="report__action d-flex justify-content-between">
+                                        <a href="report?type=1" class="btn btn-outline-dark">Quay lại</a>
+                                        <button type="submit" class="btn btn-danger">Hoàn thành báo cáo</button>
+                                    </div>
+                                </form>
+                            </c:when>
+                            <c:when test="${requestScope.reportDetail.report.status eq 2}">
+                                <div class="report__reply">
+                                    <fmt:parseDate pattern="yyyy-MM-dd" value="${requestScope.reportDetail.report.replyDate}" var="replyDate"/>
+                                    <div class="report__item">Ngày tiếp nhận:
+                                        <span><fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${replyDate}"/></span>
+                                    </div>
+                                    <div class="report__item">Phản hồi: <span>${requestScope.reportDetail.report.reply}</span></div>
+                                </div>
+                                <div class="report__spacer"></div>
+                                <div class="report__finish">
+                                    <fmt:parseDate pattern="yyyy-MM-dd" value="${requestScope.reportDetail.report.completeDate}" var="completeDate"/>
+                                    <div class="report__item">Ngày hoàn thành:
+                                        <span><fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${completeDate}"/></span>
+                                    </div>
+                                </div>
+                                <div class="report__spacer"></div>
+                                <div class="report__action d-flex justify-content-between">
+                                    <a href="report?type=2" class="btn btn-outline-dark">Quay lại</a>
+                                </div>
+                            </c:when>
+                        </c:choose>
                     </div>
                 </div>
             </div>
@@ -116,6 +172,9 @@
 <!-- Footer -->
 <%@include file="./components/footer.jsp"%>
 
+<!-- Toast element -->
+<div id="toast">&nbsp;</div>
+
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -125,10 +184,32 @@
 <!-- Navbar -->
 <script src="./assets/js/handle-main-navbar.js"></script>
 <!-- Link your script here -->
+<script src="./assets/js/toast-alert.js"></script>
+<script>
+    <c:choose>
+        <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+            toast({
+                title: 'Thành công',
+                message: '${requestScope.RESPONSE_MSG.content}',
+                type: 'success',
+                duration: 5000
+            });
+        </c:when>
+        <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+            toast({
+                title: 'Lỗi',
+                message: '${requestScope.RESPONSE_MSG.content}',
+                type: 'error',
+                duration: 5000
+            });
+        </c:when>
+    </c:choose>
+</script>
 
-
-<!-- Preload -->
-<script src="./assets/js/handle-preloader.js" type="text/javascript"></script>
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <!-- Loader -->
+    <script src="./assets/js/loading-handler.js"></script>
+</c:if>
 </body>
 
 </html>

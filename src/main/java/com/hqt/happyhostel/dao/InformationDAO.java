@@ -23,7 +23,7 @@ public class InformationDAO {
             "FROM [dbo].[AccountInformations]\n" +
             "WHERE [account_id] = ?";
     private static final String UPDATE_PROFILE =
-            "UPDATE AccountInformations SET fullname = ?, email = ?, birthday = ?, phone = ?, address = ?, identity_card_number = ? WHERE account_id = ?";
+            "UPDATE AccountInformations SET fullname = ?, email = ?, birthday = ?, phone = ?, address = ?, identity_card_number = ?, sex = ? WHERE account_id = ?";
 
     public boolean isExistEmail(String email) {
         boolean check = false;
@@ -174,7 +174,8 @@ public class InformationDAO {
                 ptm.setString(4, accountInfos.getPhone());
                 ptm.setString(5, accountInfos.getAddress());
                 ptm.setString(6, accountInfos.getCccd());
-                ptm.setInt(7, accId);
+                ptm.setInt(7, accountInfos.getSex());
+                ptm.setInt(8, accId);
 
                 checkUpdate = ptm.executeUpdate() > 0;
 

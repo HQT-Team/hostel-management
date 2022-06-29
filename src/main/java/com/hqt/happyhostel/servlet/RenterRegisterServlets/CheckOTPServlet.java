@@ -16,7 +16,7 @@ public class CheckOTPServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.sendRedirect(ERROR);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class CheckOTPServlet extends HttpServlet {
             userEmail = new AccountDAO().getAccountInformationById(accId).getInformation().getEmail();
             if (otp != null && !otp.isBlank() && userEmail != null) {
                 int accID = new AccountDAO().checkAccountByOTP(accId, otp);
-                if (accId > 0) {
+                if (accID > 0) {
                     request.setAttribute("ACCOUNT_ID", accID);
                     HttpSession session = request.getSession(false);
                     if (session != null) {
@@ -42,8 +42,9 @@ public class CheckOTPServlet extends HttpServlet {
 
                 } else {
                     url = FAIL;
-                    handlerStatus = HandlerStatus.builder().status(false).content("Mã OTP không hợp lệ").build();
+                    handlerStatus = HandlerStatus.builder().status(false).content("Mã OTP không hợp lệ! Vui lòng kiểm tra lại email hoặc nhấn nút gửi lại để nhận mã mới!").build();
                     request.setAttribute("RESPONSE_MSG", handlerStatus);
+                    request.setAttribute("ACCOUNT_ID", accId);
                 }
             }
         } catch (Exception e) {

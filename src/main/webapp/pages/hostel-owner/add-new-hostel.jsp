@@ -63,19 +63,19 @@
                             </div>
                             <div class="spacer"></div>
                             <div class="form-group">
-                                <label for="hostel-name" class="form-label">Tên:</label>
-                                <input id="hostel-name" name="hostel-name" type="text" class="form-control">
+                                <label for="hostel-name" class="form-label">Tên: <span>*</span></label>
+                                <input id="hostel-name" name="hostel-name" type="text" class="form-control" placeholder="Điền tên khu trọ">
                                 <span class="form-message"></span>
                             </div>
                             <div class="form-group">
-                                <label for="hostel-address" class="form-label">Địa chỉ:</label>
-                                <input id="hostel-address" name="hostel-address" type="text" class="form-control">
+                                <label for="hostel-address" class="form-label">Địa chỉ: <span>*</span></label>
+                                <input id="hostel-address" name="hostel-address" type="text" class="form-control" placeholder="Điền số nhà, tên đường">
                                 <span class="form-message"></span>
                             </div>
                             <div class="row">
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="hostel-province" class="form-label">Tỉnh/TP:</label>
+                                        <label for="hostel-province" class="form-label">Tỉnh/TP: <span>*</span></label>
                                         <select name="hostel-province" id="hostel-province"
                                             class="form-control form-select">
                                         </select>
@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="hostel-district" class="form-label">Quận/Huyện:</label>
+                                        <label for="hostel-district" class="form-label">Quận/Huyện: <span>*</span></label>
                                         <select name="hostel-district" id="hostel-district"
                                             class="form-control form-select" disabled>
                                             <option value="">Chọn quận/huyện</option>
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="hostel-ward" class="form-label">Phường/Xã:</label>
+                                        <label for="hostel-ward" class="form-label">Phường/Xã: <span>*</span></label>
                                         <select name="hostel-ward" id="hostel-ward" class="form-control form-select"
                                             disabled>
                                             <option value="">Chọn phường/xã</option>
@@ -109,61 +109,58 @@
                                     <div class="form-title price-service-title">Giá dịch vụ</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 col-md-8 m-auto">
+                                    <div class="col-12 col-md-10 m-auto">
                                         <div class="form-group price-service-fill">
                                             <div class="fill-group">
-                                                <label for="hostel-electric" class="form-label fill-label">Điện:</label>
-                                                <input id="hostel-electric" name="hostel-electric" value="0"
+                                                <label for="hostel-electric" class="form-label fill-label">Điện: <span>*</span></label>
+                                                <input id="hostel-electric" name="hostel-electric" value="3500" placeholder="Nhập giá"
                                                     type="number" class="form-control fill-input">
-                                                <span class="fill-unit">/KwH</span>
+                                                <span class="fill-unit">VNĐ/Kwh</span>
                                             </div>
                                             <span class="form-message"></span>
                                         </div>
                                         <div class="form-group price-service-fill">
                                             <div class="fill-group">
-                                                <label for="hostel-water" class="form-label fill-label">Nước:</label>
-                                                <input id="hostel-water" value="0" type="number"
+                                                <label for="hostel-water" class="form-label fill-label">Nước: <span>*</span></label>
+                                                <input id="hostel-water" value="15000" type="number" placeholder="Nhập giá"
                                                     class="form-control fill-input" name="hostel-water">
-                                                <span class="fill-unit">/m3</span>
+                                                <span class="fill-unit">VNĐ/m3</span>
                                             </div>
                                             <span class="form-message"></span>
                                         </div>
                                         <div class="form-group price-service-fill">
                                             <div class="fill-group">
-                                                <label for="hostel-wifi" class="form-label fill-label">Wifi:</label>
-                                                <input id="hostel-wifi" name="hostel-wifi" value="0" type="number"
+                                                <label for="hostel-wifi" class="form-label fill-label">Wifi: <span>*</span></label>
+                                                <input id="hostel-wifi" name="hostel-wifi" value="100000" type="number" placeholder="Nhập giá"
                                                     class="form-control fill-input">
-                                                <span class="fill-unit">/phòng</span>
+                                                <span class="fill-unit">VNĐ/phòng</span>
                                             </div>
                                             <span class="form-message"></span>
                                         </div>
                                         <div class="form-group price-service-fill">
                                             <div class="fill-group">
-                                                <label for="hostel-manage" class="form-label fill-label">Phí quản
-                                                    lý:</label>
-                                                <input id="hostel-manage" name="hostel-manage" value="0" type="number"
+                                                <label for="hostel-manage" class="form-label fill-label">Phí quản lý: <span>*</span></label>
+                                                <input id="hostel-manage" name="hostel-manage" value="30000" type="number" placeholder="Nhập giá"
                                                     class="form-control fill-input">
-                                                <span class="fill-unit">/phòng</span>
+                                                <span class="fill-unit">VNĐ/phòng</span>
                                             </div>
                                             <span class="form-message"></span>
                                         </div>
                                         <div class="form-group price-service-fill">
                                             <div class="fill-group">
-                                                <label for="hostel-vehicle" class="form-label fill-label">Phí giữ
-                                                    xe:</label>
-                                                <input id="hostel-vehicle" name="hostel-vehicle" value="0" type="number"
+                                                <label for="hostel-vehicle" class="form-label fill-label">Phí giữ xe: <span>*</span></label>
+                                                <input id="hostel-vehicle" name="hostel-vehicle" value="10000" type="number" placeholder="Nhập giá"
                                                     class="form-control fill-input">
-                                                <span class="fill-unit">/chiếc</span>
+                                                <span class="fill-unit">VNĐ/phòng</span>
                                             </div>
                                             <span class="form-message"></span>
                                         </div>
                                         <div class="form-group price-service-fill">
                                             <div class="fill-group">
-                                                <label for="hostel-cleaning" class="form-label fill-label">Phí vệ
-                                                    sinh:</label>
-                                                <input id="hostel-cleaning" name="hostel-cleaning" value="0"
+                                                <label for="hostel-cleaning" class="form-label fill-label">Phí vệ sinh: <span>*</span></label>
+                                                <input id="hostel-cleaning" name="hostel-cleaning" value="10000" placeholder="Nhập giá"
                                                     type="number" class="form-control fill-input">
-                                                <span class="fill-unit">/phòng</span>
+                                                <span class="fill-unit">VNĐ/phòng</span>
                                             </div>
                                             <span class="form-message"></span>
                                         </div>
@@ -212,24 +209,29 @@
                 Validator.isRequired('#hostel-district', 'Vui lòng chọn quận/huyện'),
                 Validator.isRequired('#hostel-ward', 'Vui lòng chọn phường/xã'),
                 Validator.isRequired('#hostel-electric', 'Vui lòng nhập giá điện'),
-                Validator.minNumber('#hostel-electric', minNumber, 'Vui lòng nhập giá bắt đầu từ 0'),
-                Validator.maxNumber('#hostel-electric', maxNumber, 'Vui lòng nhập giá nhỏ hơn 1000000'),
+                Validator.minNumber('#hostel-electric', 1, 'Vui lòng nhập giá điện tối thiểu là 1'),
+                Validator.maxNumber('#hostel-electric', maxNumber, 'Vui lòng nhập giá điện nhỏ hơn 1000000'),
+                Validator.isInteger('#hostel-electric', 'Vui lòng nhập đúng định dạng số nguyên'),
                 Validator.isRequired('#hostel-water', 'Vui lòng nhập giá nước'),
-                Validator.minNumber('#hostel-water', minNumber, 'Vui lòng nhập giá bắt đầu từ 0'),
-                Validator.maxNumber('#hostel-water', maxNumber, 'Vui lòng nhập giá nhỏ hơn 1000000'),
+                Validator.minNumber('#hostel-water', 1, 'Vui lòng nhập giá nước tối thiểu là 1'),
+                Validator.maxNumber('#hostel-water', maxNumber, 'Vui lòng nhập giá nước nhỏ hơn 1000000'),
+                Validator.isInteger('#hostel-water', 'Vui lòng nhập đúng định dạng số nguyên'),
                 Validator.isRequired('#hostel-wifi', 'Vui lòng nhập giá wifi'),
                 Validator.minNumber('#hostel-wifi', minNumber, 'Vui lòng nhập giá bắt đầu từ 0'),
                 Validator.maxNumber('#hostel-wifi', maxNumber, 'Vui lòng nhập giá nhỏ hơn 1000000'),
+                Validator.isInteger('#hostel-wifi', 'Vui lòng nhập đúng định dạng số nguyên'),
                 Validator.isRequired('#hostel-manage', 'Vui lòng nhập phí quản lý'),
                 Validator.minNumber('#hostel-manage', minNumber, 'Vui lòng nhập giá bắt đầu từ 0'),
                 Validator.maxNumber('#hostel-manage', maxNumber, 'Vui lòng nhập giá nhỏ hơn 1000000'),
+                Validator.isInteger('#hostel-manage', 'Vui lòng nhập đúng định dạng số nguyên'),
                 Validator.isRequired('#hostel-vehicle', 'Vui lòng nhập phí giữ xe'),
                 Validator.minNumber('#hostel-vehicle', minNumber, 'Vui lòng nhập giá bắt đầu từ 0'),
                 Validator.maxNumber('#hostel-vehicle', maxNumber, 'Vui lòng nhập giá nhỏ hơn 1000000'),
+                Validator.isInteger('#hostel-vehicle', 'Vui lòng nhập đúng định dạng số nguyên'),
                 Validator.isRequired('#hostel-cleaning', 'Vui lòng nhập phí vệ sinh'),
                 Validator.minNumber('#hostel-cleaning', minNumber, 'Vui lòng nhập giá bắt đầu từ 0'),
                 Validator.maxNumber('#hostel-cleaning', maxNumber, 'Vui lòng nhập giá nhỏ hơn 1000000'),
-
+                Validator.isInteger('#hostel-cleaning', 'Vui lòng nhập đúng định dạng số nguyên'),
             ]
         });
     </script>
@@ -285,10 +287,10 @@
     </c:when>
 </c:choose>
 
-    <c:if test="${requestScope.RESPONSE_MSG eq null}">
-        <!-- Loader -->
-        <script src="./assets/js/loading-handler.js"></script>
-    </c:if>
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <!-- Loader -->
+    <script src="./assets/js/loading-handler.js"></script>
+</c:if>
 
 </body>
 

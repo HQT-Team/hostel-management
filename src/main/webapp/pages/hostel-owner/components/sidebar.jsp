@@ -25,7 +25,7 @@
         </a>
     </div>
     <div class="group-option ${sessionScope.CURRENT_PAGE eq "report" ? "active" : ""}">
-        <a href="" class="group-option__link">
+        <a href="report" class="group-option__link">
             <i class="group-option__icon fa-solid fa-triangle-exclamation"></i>
             <div class="group-option__label">Báo cáo</div>
         </a>
@@ -37,7 +37,7 @@
         </a>
     </div>
     <div class="group-option ${sessionScope.CURRENT_PAGE eq "account" ? "active" : ""}">
-        <a href="" class="group-option__link">
+        <a href="profile" class="group-option__link">
             <i class="group-option__icon fa-solid fa-user"></i>
             <div class="group-option__label">Tài khoản</div>
         </a>

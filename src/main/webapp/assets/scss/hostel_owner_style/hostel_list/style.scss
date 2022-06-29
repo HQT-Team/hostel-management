@@ -33,40 +33,51 @@
   }
 }
 
+.hostel-list__items {
+  overflow-x: auto;
+}
+
 // Table
 .hostel-table {
+  width: 100%;
+  min-width: 600px;
+
   .hostel-table__body {
-    .hostel-table__body-link-detail,
-    .hostel-table__body-link-room-list,
-    .hostel-table__body-btn-edit {
-      display: block;
-      width: 100%;
-      text-align: center;
-      font-size: 1.8rem;
-      background-color: transparent;
-    }
+    .hostel-table__body-link {
+      .hostel-table__body-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
 
-    .hostel-table__body-link-detail {
-      color: #008000;
+        .hostel-table__body-link-detail,
+        .hostel-table__body-btn-edit {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 50px;
+          height: 100%;
+          font-size: 2.4rem;
+          background-color: transparent;
+          height: 100%;
+        }
 
-      &:hover {
-        color: #00b900;
-      }
-    }
+        .hostel-table__body-link-detail {
+          color: #008000;
 
-    .hostel-table__body-link-room-list {
-      color: var(--primary-color);
+          &:hover {
+            color: #00b900;
+          }
+        }
 
-      &:hover {
-        color: rgb(109, 170, 255);
-      }
-    }
+        .hostel-table__body-btn-edit {
+          color: var(--error-color);
 
-    .hostel-table__body-btn-edit {
-      color: var(--error-color);
-
-      &:hover {
-        color: rgb(255, 126, 126);
+          &:hover {
+            color: rgb(255, 126, 126);
+          }
+        }
       }
     }
   }

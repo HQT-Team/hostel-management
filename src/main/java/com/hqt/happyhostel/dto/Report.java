@@ -1,6 +1,5 @@
 package com.hqt.happyhostel.dto;
 
-
 import lombok.*;
 
 @Builder
@@ -16,6 +15,7 @@ public class Report {
     String content;
     int status;
     String reply;
+    String replyDate;
     String completeDate;
     int replyAccountID;
     int sendAccountID;

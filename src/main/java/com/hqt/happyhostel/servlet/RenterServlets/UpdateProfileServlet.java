@@ -42,7 +42,7 @@ public class UpdateProfileServlet extends HttpServlet {
             String profilePhone = req.getParameter("new-phone").equals("") ? accountInfor.getInformation().getPhone() : req.getParameter("new-phone");
             String profileAddress = req.getParameter("new-address").equals("") ? accountInfor.getInformation().getAddress() : req.getParameter("new-address");
             String profileCCCD = req.getParameter("new-cccd").equals("") ? accountInfor.getInformation().getCccd() : req.getParameter("new-cccd");
-            accountInfos = Information.builder().fullname(profileName).email(profileEmail).birthday(profileBirthday).phone(profilePhone).address(profileAddress).cccd(profileCCCD).build();
+            accountInfos = Information.builder().fullname(profileName).email(profileEmail).birthday(profileBirthday).phone(profilePhone).sex(1).address(profileAddress).cccd(profileCCCD).build();
             HostelDAO dao = new HostelDAO();
             boolean checkUpdateProfile = new InformationDAO().updateProfileByAccId(accountInfos, accId);
             if (checkUpdateProfile) {
