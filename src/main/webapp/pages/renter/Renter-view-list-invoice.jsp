@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %><%--
   Created by IntelliJ IDEA.
   User: 84337
@@ -43,7 +45,7 @@
           <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
           <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
           <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
-          <a class="dropdown-item" href="Renter-bill"style="font-size: 15px;">Hóa đơn</a>
+          <a class="dropdown-item" href="renter-invoice"style="font-size: 15px;">Hóa đơn</a>
           <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
           <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
           <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
@@ -73,7 +75,7 @@
     <div class="dashboard hidden" id="dashboard">
       <div class="infor-top">
         <img src="./assets/images/avatars/user-avatar.jpg" alt="">
-        <h3><%=account.getUsername()%></h3>
+        <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
         <p>Renter</p>
       </div>
       <div class="card">
@@ -90,7 +92,7 @@
             <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
             <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
             <h3><a href="ContractPage">Hợp đồng</a></h3>
-            <h3><a href="Renter-invoice-page">Hóa đơn</a></h3>
+            <h3><a href="renter-invoice">Hóa đơn</a></h3>
             <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
@@ -129,24 +131,24 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td><a href="Renter-payment">#2022060602</a></td>
-            <td>2022-06-21</td>
-            <td>2,000,000</td>
-            <td><a>Chưa Thanh Toán</a></td>
-          </tr>
-          <tr>
-            <td><a href="Renter-payment">#2022060601</a></td>
-            <td>2022-05-21</td>
-            <td>2,000,000</td>
-            <td><a>Đã Thanh Toán</a></td>
-          </tr>
-          <tr>
-            <td><a href="Renter-payment">#2022060600</a></td>
-            <td>2022-05-21</td>
-            <td>2,000,000</td>
-            <td><a>Đã Thanh Toán</a></td>
-          </tr>
+
+          <c:forEach var="b" items="${BILL_LIST}" >
+              <fmt:parseDate pattern="yyyy-MM-dd" value="${b.createdDate}" var="createdDate" />
+            <tr>
+              <td><a href="Renter-payment"> #<fmt:formatDate value="${createdDate}" type="Date" pattern="yyyyMMdd"/>${b.billID} </a></td>
+              <td><fmt:formatDate value="${createdDate}" type="Date" pattern="dd-MM-yyyy"/></td>
+              <td><fmt:setLocale value="vi_VN"/>
+                <fmt:formatNumber value="${b.totalMoney}" type="currency" currencySymbol="VNĐ"/></td>
+              <td><a>
+                <c:if test="${b.status == 1}">
+                    <p style="color: green">Đã thanh toán</p>
+                </c:if>
+                <c:if test="${b.status != 1}">
+                  <p style="color: red">Chưa thanh toán</p>
+                </c:if>
+              </a></td>
+            </tr>
+          </c:forEach>
           </tbody>
         </table>
       </div>

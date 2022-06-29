@@ -39,7 +39,7 @@
           <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
           <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
           <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
-          <a class="dropdown-item" href="Renter-bill"style="font-size: 15px;">Hóa đơn</a>
+          <a class="dropdown-item" href="renter-invoice"style="font-size: 15px;">Hóa đơn</a>
           <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
           <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
           <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
@@ -70,7 +70,7 @@
     <div class="dashboard">
       <div class="infor-top">
         <img src="./assets/images/avatars/user-avatar.jpg" alt="">
-        <h3>Trần Hoài Nam</h3>
+        <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
         <p>Renter</p>
       </div>
       <div class="card">
@@ -87,7 +87,7 @@
             <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
             <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
             <h3><a href="ContractPage">Hợp đồng</a></h3>
-            <h3><a href="Renter-invoice-page">Hóa đơn</a></h3>
+            <h3><a href="renter-invoice">Hóa đơn</a></h3>
             <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
