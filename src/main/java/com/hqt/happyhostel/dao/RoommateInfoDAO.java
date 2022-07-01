@@ -31,6 +31,11 @@ public class RoommateInfoDAO {
 
     private static final String DELETE_ROOMMATE_INFO = "DELETE FROM RoomateInformations WHERE account_renter_id = ? AND roomate_info_id = ?";
 
+    private static final String GET_ROOMMATE_BY_ID = "SELECT roomate_info_id, fullname, email, birthday,\n" +
+            "sex, phone, [address], identity_card_number,\n" +
+            "parent_name, parent_phone, account_renter_id\n" +
+            "FROM RoomateInformations\n" +
+            "WHERE roomate_info_id = ? ";
     public boolean DeleteRoommateInfo(int accountId, int roommateId) throws SQLException {
         Connection conn = null;
         PreparedStatement psm = null;
@@ -175,4 +180,43 @@ public class RoommateInfoDAO {
         return check;
     }
 
+    public RoommateInfo getRoommateByID(int roommateID) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+        ResultSet rs = null;
+
+        RoommateInfo roommateInfo = null;
+        try {
+            conn = DBUtils.makeConnection();
+            if (conn != null) {
+                psm = conn.prepareStatement(GET_ROOMMATE_BY_ID);
+                psm.setInt(1, roommateID);
+                rs = psm.executeQuery();
+
+                if (rs.next()) {
+                    Information information = Information.builder()
+                            .fullname(rs.getString("fullname"))
+                            .email(rs.getString("email"))
+                            .birthday(rs.getString("birthday"))
+                            .sex(rs.getInt("sex"))
+                            .phone(rs.getString("phone"))
+                            .address(rs.getString("address"))
+                            .cccd(rs.getString("identity_card_number"))
+                            .build();
+                    roommateInfo = RoommateInfo.builder()
+                            .roommateID(rs.getInt("roomate_info_id"))
+                            .information(information)
+                            .parentName(rs.getString("parent_name"))
+                            .parentPhone(rs.getString("parent_phone")).build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) rs.close();
+            if (psm != null) psm.close();
+            if (conn != null) conn.close();
+        }
+        return roommateInfo;
+    }
 }
