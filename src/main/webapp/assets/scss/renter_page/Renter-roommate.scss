@@ -23,23 +23,22 @@ body{
   margin: 0px;
   padding: 0px;
   position: relative;
+.title-table{
+  font-weight: 550;
+  font-size: 34px;
+  color: #6A5Af9;
+  margin: 40px 0px 10px 0px;
+  text-align: center;
+  height: 45px;
 
+}
   table {
-    margin: 100px auto;
+    margin: 40px auto;
     width: 70%;
     text-align: center;
     font-size: 25px;
 
-    h2 {
-      color: rgb(119, 0, 255);
-      font-size: 26px;
-    }
-
     tr {
-h2{
-  font-weight: 500;
-  font-size: 28px;
-}
       th {
         font-size: 24px;
         border: 1px solid black;
@@ -49,10 +48,12 @@ h2{
       td {
         border: 1px solid black;
         font-size: 20px;
-        button {
-          width: 80px;
-          height: 30px;
-        }
+.btnAction{
+  text-decoration: none;
+  background-color: #fff;
+  color: #6A5Af9;
+
+}
       }
     }
   }

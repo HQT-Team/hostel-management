@@ -126,20 +126,14 @@
     } %>
 
 
-    <div class="content row">
+    <div class="content">
+      <h2 class="title-table">Danh Sách Bạn Cùng Phòng</h2>
       <div >
         <table class="table">
           <tr>
-            <th colspan="5">
-              <h2>Danh Sách</h2>
-            </th>
-          </tr>
-          <tr>
             <th>STT</th>
             <th>Họ và tên</th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th colspan="3">Hành Động</th>
           </tr>
           <%
             int x =1;
@@ -148,12 +142,13 @@
             <tr>
               <td><%=x%></td>
               <td><span>${roommateinfor.getInformation().getFullname()}</span></td>
-              <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%=x%>" style="margin: 5px;">
-                Xem chi tiết
-              </button></td>
-              <td><a href="DeleteRoommatePage?roommateID=${roommateinfor.roommateID}" role="button" class="btn btn-success"
-                     style="width: 60px;height:30px;color: #ffffff;padding-top: 7px; margin: 5px;">Xoá</a></td>
-              <td><a href="Renter-update-roommate?roommateID=${roommateinfor.roommateID}" role="button" class="btn btn-primary" style="width: 60px;height:30px;color: #ffffff;padding-top: 7px; margin: 5px;">Chỉnh Sửa</a></td>
+              <td>
+                <button type="button" class="btnAction" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%=x%>" >Chi tiết</button>
+              </td>
+              <td>
+                <a href="DeleteRoommatePage?roommateID=${roommateinfor.roommateID}" role="button" class="btnAction">Xoá</a>
+              </td>
+              <td><a href="Renter-update-roommate?roommateID=${roommateinfor.roommateID}" role="button" class="btnAction">Chỉnh Sửa</a></td>
             </tr>
 
             <%

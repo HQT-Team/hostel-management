@@ -129,7 +129,7 @@
         <h3><strong>Địa chỉ: </strong>${ACC_INFO.address}</h3>
         <h3><strong>CCCD: </strong>${ACC_INFO.cccd}</h3>
         <% session.setAttribute("ACC_INFO", request.getAttribute("ACC_INFO")); %>
-        <a href="Renter-update-profile" role="button">Chỉnh Sửa</a>
+        <a href="Renter-update-profile">Chỉnh Sửa</a>
       </div>
     </div>
   </div>
