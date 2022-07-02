@@ -153,7 +153,7 @@
               </button></td>
               <td><a href="DeleteRoommatePage?roommateID=${roommateinfor.roommateID}" role="button" class="btn btn-success"
                      style="width: 60px;height:30px;color: #ffffff;padding-top: 7px; margin: 5px;">Xoá</a></td>
-              <td><a href="Renter-update-roommate" role="button" class="btn btn-success" style="width: 60px;height:30px;color: #ffffff;padding-top: 7px; margin: 5px;">Chỉnh Sửa</a></td>
+              <td><a href="Renter-update-roommate?roommateID=${roommateinfor.roommateID}" role="button" class="btn btn-primary" style="width: 60px;height:30px;color: #ffffff;padding-top: 7px; margin: 5px;">Chỉnh Sửa</a></td>
             </tr>
 
             <%

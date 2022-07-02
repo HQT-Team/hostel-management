@@ -118,46 +118,50 @@
 
         <div class="content">
             <div class="div-controll-form" id="div-controll-form">
-                <form action="#" class="form" id="form">
+                <form action="renter-roommate-update" method="post" class="form" id="form">
                     <h1>Cập Nhật Thông Tin</h1>
+                    <h3 style="color: green">${SUCCESS}</h3>
+                    <h3 style="color: red">${ERROR}</h3>
+
                     <div class="form-item" id="form-item">
-                        <input id="form-item-input-1" type="text" placeholder="Tên đây đủ">
+                        <input id="form-item-input-1" name="new-name" type="text" placeholder="Tên đây đủ">
                         <p class="border-bottom"></p>
                         <span id="mes-1"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-2" placeholder="Email" type="email" name="emails" multiple>
+                        <input id="form-item-input-2" placeholder="Email" type="email" name="new-email" multiple>
                         <p class="border-bottom"></p>
                         <span id="mes-2"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-3" type="text" placeholder="Ngày sinh">
+                        <input id="form-item-input-3" name="new-birthday" type="text" placeholder="Ngày sinh">
                         <p class="border-bottom"></p>
                         <span id="mes-3"></span>
                     </div>
                     <div class="form-item">
-                        <select name="sex" id="form-item-input-4">
-                            <option value="0">Nam</option>
-                            <option value="1">Nữ</option>
+                        <select name="new-gender" id="form-item-input-4">
+                            <option value="0">Nữ</option>
+                            <option value="1">Nam</option>
                             <option value="2">Khác</option>
                         </select>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-5" type="text" placeholder="Số điện thoại">
+                        <input id="form-item-input-5" name="new-phone" type="text" placeholder="Số điện thoại">
                         <p class="border-bottom"></p>
                         <span id="mes-5"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-6" type="text" placeholder="Địa chỉ">
+                        <input id="form-item-input-6" name="new-address" type="text" placeholder="Địa chỉ">
                         <p class="border-bottom"></p>
                         <span id="mes-6"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-7" type="text" placeholder="Số CCCD">
+                        <input id="form-item-input-7" name="new-cccd" type="text" placeholder="Số CCCD">
                         <p class="border-bottom"></p>
                         <span id="mes-7"></span>
                     </div>
-                    <input id="form-item-submit" type="button" value="Lưu">
+                    <input type="hidden" value="${param.roommateID}" name="roommateID">
+                    <input id="form-item-submit" type="submit" value="Lưu">
                 </form>
             </div>
         </div>

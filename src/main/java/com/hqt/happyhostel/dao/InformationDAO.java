@@ -1,6 +1,7 @@
 package com.hqt.happyhostel.dao;
 
 import com.hqt.happyhostel.dto.Information;
+import com.hqt.happyhostel.dto.RoommateInfo;
 import com.hqt.happyhostel.utils.DBUtils;
 
 import java.sql.Connection;
@@ -24,7 +25,8 @@ public class InformationDAO {
             "WHERE [account_id] = ?";
     private static final String UPDATE_PROFILE =
             "UPDATE AccountInformations SET fullname = ?, email = ?, birthday = ?, phone = ?, address = ?, identity_card_number = ? WHERE account_id = ?";
-
+    private static final String UPDATE_ROOMMATE =
+            "UPDATE [dbo].[RoomateInformations] SET fullname = ?, email = ?, birthday = ?, sex = ?, phone = ?, address = ?, identity_card_number = ? WHERE roomate_info_id = ?";
     public boolean isExistEmail(String email) {
         boolean check = false;
         Connection conn = null;
@@ -175,6 +177,46 @@ public class InformationDAO {
                 ptm.setString(5, accountInfos.getAddress());
                 ptm.setString(6, accountInfos.getCccd());
                 ptm.setInt(7, accId);
+
+                checkUpdate = ptm.executeUpdate() > 0;
+
+                if (!checkUpdate) {
+                    cn.rollback();
+                } else {
+                    cn.commit();
+                }
+                cn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return checkUpdate;
+    }
+    public boolean updateRoommateInfoByID(RoommateInfo roommateInfo, int roommateID) throws SQLException {
+        boolean checkUpdate = false;
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+
+                ptm = cn.prepareStatement(UPDATE_ROOMMATE);
+                ptm.setString(1, roommateInfo.getInformation().getFullname());
+                ptm.setString(2, roommateInfo.getInformation().getEmail());
+                ptm.setString(3, roommateInfo.getInformation().getBirthday());
+                ptm.setInt(4, roommateInfo.getInformation().getSex());
+                ptm.setString(5, roommateInfo.getInformation().getPhone());
+                ptm.setString(6, roommateInfo.getInformation().getAddress());
+                ptm.setString(7, roommateInfo.getInformation().getCccd());
+                ptm.setInt(8, roommateID);
 
                 checkUpdate = ptm.executeUpdate() > 0;
 
