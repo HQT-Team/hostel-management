@@ -12,6 +12,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/renter/Renter-payment.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/renter" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/renter/Renter-report.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/renter" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/renter/Renter-view-list-invoice.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/renter" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/renter/Renter-view-report-detail.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/renter" />
       </map>
     </option>
   </component>

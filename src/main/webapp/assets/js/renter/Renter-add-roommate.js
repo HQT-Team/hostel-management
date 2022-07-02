@@ -34,6 +34,7 @@ function isValidDate(dateString) {
     // First check for the pattern
     var date_regex = /^(0[1-9]|1\d|2\d|3[01])\/|-(0[1-9]|1[0-2])\/|-(19|20)\d{2}$/;
     if (!(date_regex.test(dateString.value))) {
+        console.log(abc)
         return false;
     }
     // Parse the date parts to integers

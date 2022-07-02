@@ -54,9 +54,9 @@
             </div>
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:blue">Người thuê</a>
+                    <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Thông tin phòng</li>
+                    <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa</li>
                 </ol>
             </nav>
         </div>
@@ -74,7 +74,7 @@
             <div class="infor-top">
                 <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                 <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
-                <p>Renter</p>
+                <p>Người Thuê</p>
             </div>
             <div class="card">
                 <div class="card-header" id="headingOne">
@@ -87,8 +87,8 @@
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
-                        <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
+                        <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
+                        <h3><a href="get-roommate-infor"  style="color:rgb(4, 4, 255)">Bạn cùng phòng</a></h3>
                         <h3><a href="ContractPage">Hợp đồng</a></h3>
                         <h3><a href="renter-invoice">Hóa đơn</a></h3>
                         <h3><a href="Renter-report">Gửi báo cáo</a></h3>

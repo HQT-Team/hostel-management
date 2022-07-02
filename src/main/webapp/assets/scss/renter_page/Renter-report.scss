@@ -58,13 +58,11 @@ body{
         clear: left;
         min-width: 100%;
         max-width: 100%;
-        min-height: 50px;
+        min-height: 180px;
         max-height: 180px;
         padding: 10px 20px;
-        transition: 0.25s;
+        transition: 0.2s;
         font-size: 17px;
-
-
       }
 
       .form-input:focus {
@@ -114,7 +112,8 @@ body{
         background-color: #6a5af9;
         color: #FFFFFF;
         border-radius: 5px;
-        margin-top: 15px;
+        font-size: 18px;
+        line-height: 100%;
       }
     }
   }

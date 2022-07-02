@@ -16,63 +16,21 @@ body{
   min-height: 600px;
 
   .report {
-    width: 100%;
-    margin: 0px;
+    width: 40%;
+    margin: 70px auto;
     padding: 50px 20px;
     text-align: center;
-    h2{
+    h2 {
+      color: #6A5Af9;
       text-align: center;
       font-size: 30px;
       font-weight: 550;
-      margin-bottom: 20px;
-
-    }
-    #myInput {
-      width: 30%;
-      height: 35px;
-      border: 2px solid #7b7b7b;
       margin-bottom: 10px;
-      border-radius: 6px;
-      padding-left: 10px;
-      font-size: 17px;
+    }
+    p{
+      font-size: 22px;
     }
 
-    input:focus {
-      border-color: #6A5Af9;
-    }
-
-    table {
-      text-align: center;
-      width: 60%;
-      margin: 10px auto;
-
-      tr {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-
-        th {
-          line-height: 22px;
-          font-size: 22px;
-        }
-      }
-
-      tbody {
-        tr {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
-
-          td {
-            line-height: 20px;
-            font-size: 18px;
-
-            p {
-              width: 100%;
-              word-wrap: break-word;
-            }
-          }
-        }
-      }
-    }
   }
 
 }
@@ -83,7 +41,7 @@ footer {
 
 @media screen and (max-width: 600px) {
   .dropdown{
-  display: block;
+    display: block;
   }
   .dashboard{
     display: none;

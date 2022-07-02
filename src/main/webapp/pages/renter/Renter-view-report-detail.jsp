@@ -9,51 +9,53 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
     <title>Renter</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/renter_page/Renter-view-report.css">
+    <link rel="stylesheet" href="./assets/css/renter_page/Renter-view-report-detail.css">
 </head>
 
 <body>
 <%
-    Account account = (Account)session.getAttribute("USER");
-
+    Account account = (Account) session.getAttribute("USER");
 %>
 <div>
     <!-- navbar -->
     <nav class="navbar row">
         <div class="navbar-left">
-            <div class="dropdown"  style="padding-left: 15px;">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
+            <div class="dropdown" style="padding-left: 15px;">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"
+                        style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
                     Menu
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
                     <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
                     <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
-                    <a class="dropdown-item" href="Renter-bill"style="font-size: 15px;">Hoá Đơn</a>
-                    <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
-                    <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
-                    <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
-                    <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
-                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
-                    <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
+                    <a class="dropdown-item" href="Renter-bill" style="font-size: 15px;">Hoá Đơn</a>
+                    <a class="dropdown-item" href="Renter-report" style="font-size: 15px;">Báo cáo</a>
+                    <a class="dropdown-item" href="RenterNotificationPage" style="font-size: 15px;">Thông báo</a>
+                    <a class="dropdown-item" href="Renter-add-roommate" style="font-size: 15px;">Thêm bạn</a>
+                    <a class="dropdown-item" href="Get-report" style="font-size: 15px;">Xem báo cáo</a>
+                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"
+                       style="font-size: 15px;">Hồ sơ</a>
+                    <a class="dropdown-item" href="logout" style="font-size: 15px;">Đăng xuất</a>
                 </div>
             </div>
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Báo cáo</li>
+                    <li class="breadcrumb-item active" aria-current="page">Chi tiết báo cáo</li>
                 </ol>
             </nav>
         </div>
@@ -114,43 +116,44 @@
         </div>
         <div class="content row">
             <div class="report">
-                <h2>Danh Sách Báo Cáo</h2>
-                <input type="text" placeholder="Tìm kiếm..." id="myInput">
-                <table class="table table-dark table-striped">
-                    <tr class="header">
-                        <th >Loại Đơn</th>
-                        <th >Ngày Gửi</th>
-                        <th >Tình Trạng</th>
-                        <th>Hành Động</th>
-                    <tbody id="myTable">
-                    <c:forEach var="rp" items="${REPORT_LIST}">
-                        <tr>
-                            <td >
-                                <c:forEach var="cate" items="${REPORT_CATE}">
-                                    <c:if test = "${rp.cateID == cate.cateID}" >
-                                            ${cate.cateTitle}
-                                    </c:if>
-                                </c:forEach>
-                            </td>
-                            <td >${rp.sendDate}</td>
-                            <td>
-                                <c:if test="${rp.status == 0}">
-                                    <p>Đang chờ</p>
-                                </c:if>
-                                <c:if test="${rp.status == 1}">
-                                    <p>Đã phản hồi</p>
-                                </c:if>
-                            </td>
-                            <td><a href="Get-report?id=${rp.reportID}">Xem Chi Tiết</a></td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                <h2>Chi Tiết Báo Cáo</h2>
+                <c:forEach var="rp" items="${REPORT_LIST}">
+                    <c:if test="${id == rp.reportID}">
+                        <p><strong>Phân Loại: </strong><c:forEach var="cate" items="${REPORT_CATE}">
+                            <c:if test="${rp.cateID == cate.cateID}">
+                                ${cate.cateTitle}
+                            </c:if>
+                        </c:forEach></p>
+                        <p><strong>Nội Dung: </strong>${rp.content}</p>
+                        <p><strong>Ngày Gửi: </strong> ${rp.sendDate}</p>
+                        <c:choose>
+                            <c:when test="${rp.reply!=null}">
+                                <p><strong>Nội Dung Phản Hồi: </strong>${rp.reply}</p>
+                            </c:when>
+                            <c:when test="${rp.reply==null}">
+                                <p><strong>Nội Dung Phản Hồi: </strong>Chưa Phản Hồi</p>
+                            </c:when>
+                        </c:choose>
+                        <c:if test="${rp.status == 0}">
+                            <p style="color: lightsalmon"><strong style="color: black">Tình Trạng: </strong>Đang chờ</p>
+                        </c:if>
+                        <c:if test="${rp.status == 1}">
+                            <p style="color: green"><strong style="color: black">Tình Trạng: </strong>Đã phản hồi</p>
+                        </c:if>
+                       <c:choose>
+                           <c:when test="${rp.completeDate!=null}">
+                               <p><strong>Ngày Trả Lời: </strong>${rp.completeDate}</p>
+                           </c:when>
+                           <c:when test="${rp.completeDate==null}">
+                               <p><strong>Ngày Trả Lời: </strong> Chưa Phản Hồi</p>
+                           </c:when>
+                       </c:choose>
+                    </c:if>
+                </c:forEach>
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- footer -->
 
@@ -159,17 +162,14 @@
         <div class="row">
             <div class="col-12">
                 <div class="copyright-wrapper d-flex justify-content-center">
-                    <div class="copyright-logo">
-                        <!-- <img src="../../assets/images/logos/logo-white.png" alt="Logo"> -->
-                    </div>
                     <div class="copyright-content" style="font-size: 18px;">© 2022 HQT Team. All rights
-                        reserved.</div>
+                        reserved.
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
-
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

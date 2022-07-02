@@ -56,9 +56,9 @@
             </div>
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:blue">Người thuê</a>
+                    <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Thông tin phòng</li>
+                    <li class="breadcrumb-item active" aria-current="page">Hợp Đồng</li>
                 </ol>
             </nav>
         </div>
@@ -77,7 +77,7 @@
             <div class="infor-top">
                 <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                 <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
-                <p>Renter</p>
+                <p>Người Thuê</p>
             </div>
             <div class="card">
                 <div class="card-header" id="headingOne">
@@ -119,39 +119,42 @@
         </div>
         <div class="content row">
             <div class="contract-content">
-                <h2>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h2>
-                <h3>Độc lập - Tự do - Hạnh phúc</h3>
-                <br>
-                <h4>Hợp đồng thuê phòng</h4>
-                <p>1. Bên cho thuê</p>
-                <h5>Ông: ${OWNER_INFO.fullname}</h5><br>
-                <h5>Ngày sinh: ${OWNER_INFO.birthday}</h5><br>
-                <h5>CCCD: ${OWNER_INFO.cccd}</h5><br>
-                <h5>SĐT: ${OWNER_INFO.phone}</h5><br>
-                <p>2. Bên thuê</p>
-                <h5>Ông: ${RENTER_INFO.fullname}</h5><br>
-                <h5>Ngày sinh: ${RENTER_INFO.birthday}</h5><br>
-                <h5>CCCD: ${RENTER_INFO.cccd}</h5><br>
-                <h5>SĐT: ${RENTER_INFO.phone}</h5><br>
-                <p>Sau khi bàn bạc :</p>
-                <h5>Bên A xác nhận cho bên B thuê phòng trọ tại địa chỉ: ${HOSTEL.address}, ${HOSTEL.ward.split('-')[1]},
-                    ${HOSTEL.district.split('-')[1]}, ${HOSTEL.city.split('-')[1]} </h5><br>
-                <h5>Giá :
-                    <fmt:setLocale value="vi_VN"/>
-                    <fmt:formatNumber value="${CONTRACT.price}" type="currency" currencySymbol="VNĐ"/>
-                </h5><br>
-                <h5>Tiền cọc:
-                    <fmt:setLocale value="vi_VN"/>
-                    <fmt:formatNumber value="${CONTRACT.deposit}" type="currency" currencySymbol="VNĐ"/>
-                </h5><br>
-                <h5>Hợp đồng có giá trị từ ngày:
-                    <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.startDate}" var="startDate" />
-                    <fmt:formatDate value="${startDate}" type="Date" pattern="dd-MM-yyyy"/>
-                    đến ngày :
-                    <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.expiration}" var="expiration" />
-                    <fmt:formatDate value="${expiration}" type="Date" pattern="dd-MM-yyyy"/>
-
-                </h5><br>
+               <div class="contract-head"><h4>Hợp Đồng Thuê Phòng</h4></div>
+              <div class="contract-body">
+                  <div class="owner-infor"> <p>Bên cho thuê</p>
+                      <h5><strong>Chủ trọ: </strong>${OWNER_INFO.fullname}</h5><br>
+                      <h5><strong>Ngày sinh: </strong>${OWNER_INFO.birthday}</h5><br>
+                      <h5><strong>CCCD: </strong>${OWNER_INFO.cccd}</h5><br>
+                      <h5><strong>SĐT: </strong>${OWNER_INFO.phone}</h5><br>
+                  </div>
+                  <div class="renter-infor">
+                      <p>Bên thuê</p>
+                      <h5><strong>Người Thuê: </strong>${RENTER_INFO.fullname}</h5><br>
+                      <h5><strong>Ngày sinh: </strong>${RENTER_INFO.birthday}</h5><br>
+                      <h5><strong>CCCD: </strong>${RENTER_INFO.cccd}</h5><br>
+                      <h5><strong>SĐT: </strong>${RENTER_INFO.phone}</h5><br>
+                  </div>
+              </div>
+                <div class="contract-result">
+                    <p>Sau khi bàn bạc</p>
+                    <h5><strong>Tại địa chỉ: </strong>${HOSTEL.address}, ${HOSTEL.ward.split('-')[1]},
+                        ${HOSTEL.district.split('-')[1]}, ${HOSTEL.city.split('-')[1]} </h5><br>
+                    <h5><strong>Giá: </strong>
+                        <fmt:setLocale value="vi_VN"/>
+                        <fmt:formatNumber value="${CONTRACT.price}" type="currency" currencySymbol="VNĐ"/>
+                    </h5><br>
+                    <h5><strong>Tiền cọc: </strong>
+                        <fmt:setLocale value="vi_VN"/>
+                        <fmt:formatNumber value="${CONTRACT.deposit}" type="currency" currencySymbol="VNĐ"/>
+                    </h5><br>
+                    <h5><strong>Hợp đồng có giá trị từ ngày: </strong>
+                        <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.startDate}" var="startDate" />
+                        <fmt:formatDate value="${startDate}" type="Date" pattern="dd-MM-yyyy"/>
+                        <strong>đến ngày: </strong>
+                        <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.expiration}" var="expiration" />
+                        <fmt:formatDate value="${expiration}" type="Date" pattern="dd-MM-yyyy"/>
+                    </h5>
+                </div>
             </div>
         </div>
     </div>

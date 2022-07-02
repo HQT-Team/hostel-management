@@ -50,7 +50,7 @@
             </div>
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:blue">Người thuê</a>
+                    <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:white">Người thuê</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">Thông tin phòng</li>
                 </ol>
@@ -60,7 +60,7 @@
             <a href="" role="button"><img src="./assets/images/logos/logowhite.png" alt=""></a>
         </div>
         <div class="navbar-right">
-            <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>
+            <a href="logout" role="button">Đăng xuất</a>
         </div>
 
     </nav>
@@ -70,7 +70,7 @@
             <div class="infor-top">
                 <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                 <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
-                <p>Renter</p>
+                <p>Người Thuê</p>
             </div>
             <div class="card">
                 <div class="card-header" id="headingOne">
@@ -112,27 +112,27 @@
         </div>
 
 
-        <div class="content row">
-            <div class="content-top row">
+        <div class="content">
+            <div class="content-top">
                 <div class="content-top-1 ">
                     <h3>Khu Trọ</h3>
-                    <p>Tên: ${HOSTEL.hostelName}</p>
-                    <p>Địa chỉ: ${HOSTEL.address},${HOSTEL.ward.split('-')[1]},${HOSTEL.district.split('-')[1]},${HOSTEL.city.split('-')[1]}</p>
+                    <p><strong>Tên: </strong>${HOSTEL.hostelName}</p>
+                    <p><strong>Địa chỉ: </strong>${HOSTEL.address},${HOSTEL.ward.split('-')[1]},${HOSTEL.district.split('-')[1]},${HOSTEL.city.split('-')[1]}</p>
                     <h3>Phòng</h3>
-                    <p>Phòng số: ${ROOM_INFOR.roomNumber}</p>
-                    <p>Diện tích: ${ROOM_INFOR.roomArea} m2</p>
-                    <p>Số thành viên: ${NUM_OF_MEMBERS}/${ROOM_INFOR.capacity}</p>
+                    <p><strong>Phòng số: </strong>${ROOM_INFOR.roomNumber}</p>
+                    <p><strong>Diện tích: </strong>${ROOM_INFOR.roomArea} m2</p>
+                    <p><strong>Số thành viên: </strong>${NUM_OF_MEMBERS}/${ROOM_INFOR.capacity}</p>
                 </div>
                 <div class="content-top-2 ">
                     <h3>Chủ Trọ</h3>
-                    <p>Tên: ${ACCOUNT_INFOR.fullname}</p>
-                    <p>Số Điện Thoại: ${ACCOUNT_INFOR.phone}</p>
+                    <p><strong>Tên: </strong>${ACCOUNT_INFOR.fullname}</p>
+                    <p><strong>Số Điện Thoại: </strong> ${ACCOUNT_INFOR.phone}</p>
                 </div>
             </div>
-            <div class="content-bottom row">
+            <div class="content-bottom">
                 <div class="content-bottom-1">
                     <h3>Thiết Bị</h3>
-                    <table>
+                    <table class="table">
                         <tr>
                             <th>Tên</th>
                             <th>Số lượng</th>
@@ -149,7 +149,7 @@
 
                 <div class="content-bottom-2">
                     <h3>Dịch vụ</h3>
-                    <table>
+                    <table class="table">
                         <tr>
                             <th>Tên</th>
                             <th>Giá</th>
@@ -176,9 +176,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="copyright-wrapper d-flex justify-content-center">
-                        <!-- <div class="copyright-logo">
-                        <img src="../../assets/images/logos/logo-white.png" alt="Logo">
-                    </div> -->
+<%--                         <div class="copyright-logo">--%>
+<%--                        <img src="./assets/images/logos/logo-white.png" alt="Logo">--%>
+<%--                        </div>--%>
                         <div class="copyright-content">© 2022 HQT Team. All rights reserved.</div>
                     </div>
                 </div>
