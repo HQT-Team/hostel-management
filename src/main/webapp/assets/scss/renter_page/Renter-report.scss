@@ -5,9 +5,11 @@
 .dropdown {
   display: none;
 }
-body{
+
+body {
   overflow-x: hidden;
 }
+
 .content {
   width: 80%;
 
@@ -17,26 +19,34 @@ body{
     margin: 100px auto;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     padding: 20px 50px;
-    height: 400px;
+    height: fit-content;
+
+    .notification-success {
+      width: 100%;
+      text-align: center;
+      font-size: 24px;
+      color: green;
+      line-height: 24px;
+      margin: 5px 0px;
+    }
 
     h2 {
-      width: 50%;
+      width: 100%;
       text-align: center;
       color: #6a5af9;
-      margin: auto;
       margin-bottom: 20px;
-      font-size: 23px;
+      font-size: 28px;
     }
 
     div {
       width: 100%;
 
       #select {
-        width: 60%;
+        width: 50%;
         height: 40px;
         border-radius: 5px;
         font-size: 16px;
-        padding-left: 20px;
+        padding: 10px 20px;
         line-height: 100%;
         margin-bottom: 4px;
       }
@@ -58,13 +68,11 @@ body{
         clear: left;
         min-width: 100%;
         max-width: 100%;
-        min-height: 50px;
+        min-height: 180px;
         max-height: 180px;
         padding: 10px 20px;
-        transition: 0.25s;
+        transition: 0.2s;
         font-size: 17px;
-
-
       }
 
       .form-input:focus {
@@ -85,8 +93,8 @@ body{
 
       }
 
-      .form-input:not(:placeholder-shown)+.form-label,
-      .form-input:focus+.form-label {
+      .form-input:not(:placeholder-shown) + .form-label,
+      .form-input:focus + .form-label {
         top: 0;
         font-size: 14px;
         display: inline-block;
@@ -114,9 +122,15 @@ body{
         background-color: #6a5af9;
         color: #FFFFFF;
         border-radius: 5px;
-        margin-top: 15px;
+        font-size: 18px;
+        line-height: 100%;
       }
     }
+  }
+}
+footer{
+  .copyright-content{
+    font-size: 18px;
   }
 }
 

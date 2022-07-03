@@ -1,4 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %>
+<%@ page import="com.hqt.happyhostel.dto.Information" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +28,7 @@
 <body>
 <%
   Account account = (Account)session.getAttribute("USER");
+  Information ACC_INFO = (Information) session.getAttribute("ACC_INFO");
 %>
 <div>
   <!-- navbar -->
@@ -51,9 +54,9 @@
       </div>
       <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:blue">Người thuê</a>
+          <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Bạn cùng phòng</li>
+          <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa</li>
         </ol>
       </nav>
     </div>
@@ -72,7 +75,7 @@
       <div class="infor-top">
         <img src="./assets/images/avatars/user-avatar.jpg" alt="">
         <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
-        <p>Renter</p>
+        <p>Người Thuê</p>
       </div>
       <div class="card">
         <div class="card-header" id="headingOne">
@@ -106,7 +109,7 @@
         </div>
         <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
           <div class="card-body">
-            <h3><a href="Renter-profile" style="color:rgb(4, 4, 255)">Hồ sơ</a></h3>
+            <h3><a href="HostelRenterProfilePage?<%=account.getAccId()%>" style="color:rgb(4, 4, 255)">Hồ sơ</a></h3>
             <h3><a href="logout">Đăng xuất</a></h3>
           </div>
         </div>
@@ -118,28 +121,43 @@
           <h2>Chỉnh sửa thông tin</h2>
           <hr>
           <div class="form-content">
-            <input id="input-1" type="text" name="new-name" placeholder="Nhập tên mới!">
+            <input id="input-1" type="text" name="new-name" placeholder="Nhập tên mới!" value="<%=ACC_INFO.getFullname()%>">
             <span id="mes-1"></span>
           </div>
           <div class="form-content">
-            <input id="input-2" type="text" name="new-email" placeholder="Nhập Email mới!">
+            <input id="input-2" type="text" name="new-email" placeholder="Nhập Email mới!" value="<%=ACC_INFO.getEmail()%>">
             <span id="mes-2"></span>
 
           </div>
           <div class="form-content">
-            <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !">
+            <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !" value="<%=ACC_INFO.getBirthday()%>">
             <span id="mes-3"></span>
           </div>
           <div class="form-content">
-            <input id="input-4" type="text" name="new-phone" placeholder="Nhập số điện thoại mới!">
+            <input id="input-7" type="text" name="new-sex" placeholder="Giới Tính!" <%if (ACC_INFO.getSex()==1){
+              %>
+                   value="Nữ"
+              <%
+            }
+              else{
+                %>
+              value="Nam"
+                   <%
+            }
+              %>
+            />
+            <span id="mes-7"></span>
+          </div>
+          <div class="form-content">
+            <input id="input-4" type="text" name="new-phone" placeholder="Nhập số điện thoại mới!" value="<%=ACC_INFO.getPhone()%>">
             <span id="mes-4"></span>
           </div>
           <div class="form-content">
-            <input id="input-5" type="text" name="new-address" placeholder="Nhập địa chỉ mới!">
+            <input id="input-5" type="text" name="new-address" placeholder="Nhập địa chỉ mới!" value="<%=ACC_INFO.getAddress()%>">
             <span id="mes-5"></span>
           </div>
           <div class="form-content">
-            <input id="input-6" type="text" name="new-cccd" placeholder="Nhập cccd mới!">
+            <input id="input-6" type="text" name="new-cccd" placeholder="Nhập cccd mới!" value="<%=ACC_INFO.getCccd()%>">
             <span id="mes-6"></span>
           </div>
           <div>

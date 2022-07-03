@@ -2,20 +2,15 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-.dashboard {
-  display: none;
-}
-
-.link {
-  display: none;
-}
 body{
   overflow-x: hidden;
 }
-
+.dropdown{
+  display: none;
+}
 
 .content {
-  width: 100%;
+  width: 80%;
   margin: 0px;
   padding: 0px;
   min-height: 600px;
@@ -24,7 +19,14 @@ body{
     width: 100%;
     margin: 0px;
     padding: 50px 20px;
+    text-align: center;
+    h2{
+      text-align: center;
+      font-size: 30px;
+      font-weight: 550;
+      margin-bottom: 20px;
 
+    }
     #myInput {
       width: 30%;
       height: 35px;
@@ -40,26 +42,28 @@ body{
     }
 
     table {
-      width: 100%;
+      text-align: center;
+      width: 60%;
+      margin: 10px auto;
 
       tr {
         display: grid;
-        grid-template-columns: 1fr 2fr 1fr 2fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
 
         th {
-          line-height: 19px;
-          font-size: 16px;
+          line-height: 22px;
+          font-size: 22px;
         }
       }
 
       tbody {
         tr {
           display: grid;
-          grid-template-columns: 1fr 2fr 1fr 2fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
 
           td {
-            line-height: 19px;
-            font-size: 16px;
+            line-height: 20px;
+            font-size: 18px;
 
             p {
               width: 100%;
@@ -68,9 +72,6 @@ body{
           }
         }
       }
-
-
-
     }
   }
 
@@ -81,6 +82,12 @@ footer {
 }
 
 @media screen and (max-width: 600px) {
+  .dropdown{
+  display: block;
+  }
+  .dashboard{
+    display: none;
+  }
   .navbar {
     height: 60px;
 

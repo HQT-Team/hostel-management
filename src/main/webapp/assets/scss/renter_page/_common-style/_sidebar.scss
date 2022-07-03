@@ -1,18 +1,21 @@
 .dashboard {
   width: 20%;
-  min-height: 900px;
+  min-height: 100vh;
   background-color: #F7F6FB;
   padding: 0px;
 
   .infor-top {
     text-align: center;
-img{
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 10px 0px 10px 0px;
+    }
+
     h3 {
-      font-size: 23px;
+      font-size: 22px;
       color: #000000;
       font-weight: 300;
       font-family: serif;
@@ -21,6 +24,7 @@ img{
     p {
       color: #000000;
       font-size: 18px;
+
     }
 
     margin:20px 0px 20px 0px;
@@ -47,8 +51,9 @@ img{
 
         img {
           height: 22px;
-          width: 24px;
-          margin-bottom: 6px;
+          width: 22px;
+          margin-bottom: 5px;
+          border-radius: 50%;
         }
       }
     }
@@ -61,16 +66,17 @@ img{
           color: rgb(0, 0, 0);
           text-decoration: none;
           margin-left: 20%;
-          font-size: 18px;
-          font-weight: 400;
+          font-size: 20px;
+          font-weight: 450;
+          transition: 0.1s;
         }
 
         a:hover {
           color: rgb(4, 4, 255);
           text-decoration: none;
           margin-left: 20%;
-          font-size: 18px;
-          font-weight: 400;
+          font-size: 20px;
+          font-weight: 500;
         }
       }
     }

@@ -51,7 +51,7 @@
             </div>
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:blue">Người thuê</a>
+                    <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">Thông báo</li>
                 </ol>
@@ -72,7 +72,7 @@
             <div class="infor-top">
                 <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                 <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
-                <p>Renter</p>
+                <p>Người Thuê</p>
             </div>
             <div class="card">
                 <div class="card-header" id="headingOne">
@@ -106,7 +106,7 @@
                 </div>
                 <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
-                        <h3><a href="HostelRenterProfilePage">Hồ sơ</a></h3>
+                        <h3><a href="HostelRenterProfilePage?<%=account.getAccId()%>">Hồ sơ</a></h3>
                         <h3><a href="logout">Đăng xuất</a></h3>
                     </div>
                 </div>

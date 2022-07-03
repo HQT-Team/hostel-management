@@ -33,8 +33,8 @@ body{
           border: 1px solid #c4c4c4;
           border-radius: 6px;
           font-size: 14px;
-          padding-left: 20px;
-          margin: 5px 10px;
+          padding-left: 15px;
+          margin: 5px 0px 15px 0px;
         }
 
         input {
@@ -78,6 +78,13 @@ body{
 
       #form-item-submit:hover {
         background-color: #5846f8;
+        width: 100%;
+        height: 40px;
+        border: none;
+        border-radius: 5px;
+        color: aliceblue;
+        font-size: large;
+        margin-top: 10px;
       }
     }
   }

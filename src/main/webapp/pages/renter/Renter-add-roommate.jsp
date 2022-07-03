@@ -14,6 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Renter</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-day-picker/8.0.0-beta.3/index.js" integrity="sha512-xiApCyCA5ca1At8kqvl5iezIE7Gg3NwkuMCjIf0zkPmJkre1rRPydTVYvRacFJbRhOPaqiZEFZPDODc5m9312Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -49,14 +50,14 @@
                     <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
                     <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
                     <a class="dropdown-item" href="HostelRenterProfilePage?<%=account.getAccId()%>" style="font-size: 15px;">Hồ sơ</a>
-                    <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
+                    <   a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
                 </div>
             </div>
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:blue">Người thuê</a>
+                    <li class="breadcrumb-item"><a href="HostelRenterPage" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Thông tin phòng</li>
+                    <li class="breadcrumb-item active" aria-current="page">Thêm Bạn Mới</li>
                 </ol>
             </nav>
         </div>
@@ -74,7 +75,7 @@
                 <div class="infor-top">
                     <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                     <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
-                    <p>Renter</p>
+                    <p>Người Thuê</p>
                 </div>
                 <div class="card">
                     <div class="card-header" id="headingOne">

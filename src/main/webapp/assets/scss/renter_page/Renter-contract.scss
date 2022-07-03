@@ -9,54 +9,82 @@
 body {
   font-size: 20px;
   overflow-x: hidden;
+
   .content {
 
     text-align: center;
     margin: 50px 0px 0px 0px;
     width: 80%;
-    padding: 50px;
+    padding: 10px;
 
     .contract-content {
-      padding: 20px;
-      box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-      background-color: rgba(216, 214, 214, 0.5);
+      padding: 20px 40px;
+      border: 1px solid #6A5Af9;
       width: 90%;
       margin: auto;
 
-      h2 {
-        font-size: 30px;
-        width: 100%;
-        margin: auto;
+      .contract-head {
+        h4 {
+          text-align: center;
+          font-size: 30px;
+          color: #6A5Af9;
+          font-weight: 550;
+        }
       }
 
-      h3 {
-        font-size: 27px;
-        font-weight: 450;
+      .contract-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
 
-        width: 100%;
-        margin: auto;
+        .owner-infor {
+          text-align: center;
+
+          p {
+            font-size: 23px;
+            font-weight: 550;
+          }
+
+          h5 {
+            font-size: 20px;
+            font-weight: 400;
+          }
+        }
+
+        .renter-infor {
+          text-align: center;
+
+          p {
+            font-size: 23px;
+            font-weight: 550;
+          }
+
+          h5 {
+            font-size: 20px;
+            font-weight: 400;
+          }
+        }
       }
 
-      h4 {
-        font-size: 25px;
-        width: 100%;
-        margin: auto;
+      .contract-result {
+        p {
+          text-align: center;
+          font-size: 23px;
+          font-weight: 550;
+        }
+
+        h5 {
+          font-weight: 400;
+          font-size: 20px;
+        }
       }
 
-      p {
-        text-align: left;
-        font-size: 1em;
-        font-weight: 500;
-        width: 100%;
 
-      }
-
-      h5 {
-        font-weight: 350;
-        font-size: 0.8em;
-        text-align: left;
-      }
     }
+  }
+}
+footer{
+  .copyright-content{
+    font-size: 18px;
   }
 }
 
