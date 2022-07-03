@@ -1,9 +1,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %><%--
   Created by IntelliJ IDEA.
   User: 84337
   Date: 6/18/2022
-  Time: 9:36 AM
+  Time: 12:28 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,7 +15,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contract</title>
+    <title>Renter</title>
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -24,7 +25,7 @@
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/renter_page/Renter-contract.css">
+    <link rel="stylesheet" href="./assets/css/renter_page/Renter-payment.css">
 
 </head>
 
@@ -33,7 +34,6 @@
     Account account = (Account)session.getAttribute("USER");
 %>
 <div>
-    <!-- navbar -->
     <nav class="navbar row">
         <div class="navbar-left">
             <div class="dropdown"  style="padding-left: 15px;">
@@ -58,7 +58,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Hợp Đồng</li>
+                    <li class="breadcrumb-item active" aria-current="page">Thanh Toán</li>
                 </ol>
             </nav>
         </div>
@@ -71,13 +71,12 @@
 
     </nav>
 
-    <!-- content -->
-    <div class="main-body row">
-        <div class="dashboard">
+    <div class="row">
+        <div class="dashboard hidden" id="dashboard">
             <div class="infor-top">
                 <img src="./assets/images/avatars/user-avatar.jpg" alt="">
                 <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
-                <p>Người Thuê</p>
+                <p>Renter</p>
             </div>
             <div class="card">
                 <div class="card-header" id="headingOne">
@@ -90,10 +89,10 @@
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        <h3><a href="HostelRenterPage" >Thông tin phòng</a></h3>
+                        <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
                         <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
-                        <h3><a href="ContractPage" style="color:rgb(4, 4, 255)">Hợp đồng</a></h3>
-                        <h3><a href="renter-invoice">Hóa đơn</a></h3>
+                        <h3><a href="ContractPage">Hợp đồng</a></h3>
+                        <h3><a href="renter-invoice"style="color:rgb(4, 4, 255)">Hóa đơn</a></h3>
                         <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                         <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
                         <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
@@ -117,68 +116,117 @@
                 </div>
             </div>
         </div>
-        <div class="content row">
-            <div class="contract-content">
-               <div class="contract-head"><h4>Hợp Đồng Thuê Phòng</h4></div>
-              <div class="contract-body">
-                  <div class="owner-infor"> <p>Bên cho thuê</p>
-                      <h5><strong>Chủ trọ: </strong>${OWNER_INFO.fullname}</h5><br>
-                      <h5><strong>Ngày sinh: </strong>
-                          <fmt:parseDate pattern="yyyy-MM-dd" value=" ${OWNER_INFO.birthday}" var="birthday" />
-                          <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
-                      </h5><br>
-                      <h5><strong>CCCD: </strong>${OWNER_INFO.cccd}</h5><br>
-                      <h5><strong>SĐT: </strong>${OWNER_INFO.phone}</h5><br>
-                  </div>
-                  <div class="renter-infor">
-                      <p>Bên thuê</p>
-                      <h5><strong>Người Thuê: </strong>${RENTER_INFO.fullname}</h5><br>
-                      <h5><strong>Ngày sinh: </strong>
-                          <fmt:parseDate pattern="yyyy-MM-dd" value=" ${RENTER_INFO.birthday}" var="birthday" />
-                          <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
-                      </h5><br>
-                      <h5><strong>CCCD: </strong>${RENTER_INFO.cccd}</h5><br>
-                      <h5><strong>SĐT: </strong>${RENTER_INFO.phone}</h5><br>
-                  </div>
-              </div>
-                <div class="contract-result">
-                    <p>Sau khi bàn bạc</p>
-                    <h5><strong>Tại địa chỉ: </strong>${HOSTEL.address}, ${HOSTEL.ward.split('-')[1]},
-                        ${HOSTEL.district.split('-')[1]}, ${HOSTEL.city.split('-')[1]} </h5><br>
-                    <h5><strong>Giá: </strong>
-                        <fmt:setLocale value="vi_VN"/>
-                        <fmt:formatNumber value="${CONTRACT.price}" type="currency" currencySymbol="VNĐ"/>
-                    </h5><br>
-                    <h5><strong>Tiền cọc: </strong>
-                        <fmt:setLocale value="vi_VN"/>
-                        <fmt:formatNumber value="${CONTRACT.deposit}" type="currency" currencySymbol="VNĐ"/>
-                    </h5><br>
-                    <h5><strong>Hợp đồng có giá trị từ ngày: </strong>
-                        <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.startDate}" var="startDate" />
-                        <fmt:formatDate value="${startDate}" type="Date" pattern="dd-MM-yyyy"/>
-                        <strong>đến ngày: </strong>
-                        <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.expiration}" var="expiration" />
-                        <fmt:formatDate value="${expiration}" type="Date" pattern="dd-MM-yyyy"/>
-                    </h5>
+
+
+        <div class="content">
+            <h1>Hóa Đơn</h1>
+            <div id="invoice-cover">
+                <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.createdDate}" var="createdDate" />
+                <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.expiredPaymentDate}" var="expiredPaymentDate" />
+
+                <h2>#<fmt:formatDate value="${createdDate}" type="Date" pattern="yyyyMMdd"/>${BILL.billID}</h2>
+                <h3><a>
+                    <c:if test="${BILL.status == 1}">
+                        <p class="payment-success" style="color: green">Đã thanh toán</p>
+                    </c:if>
+                    <c:if test="${BILL.status != 1}">
+                        <p class="payment-waiting" style="color: red">Chưa thanh toán</p>
+                    </c:if>
+                </a></h3>
+                <p></p>
+                <c:set var="consumeBeginMonth" value="${requestScope.CONSUME_START}"/>
+                <c:set var="consumeEndMonth" value="${requestScope.CONSUME_END}"/>
+                <div id="water">
+                    <c:set var="numberElectric" value="${consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric}"/>
+                    <c:set var="numberWater" value="${consumeEndMonth.numberWater - consumeBeginMonth.numberWater}"/>
+
+                    <p><strong>Số nước: </strong>${numberWater}</p>
+                    <p><strong>Cũ: </strong>${consumeBeginMonth.numberWater}</p>
+                    <p><strong>Mới: </strong>${consumeEndMonth.numberWater}</p>
                 </div>
+                <div id="electric">
+                    <p><strong>Số điện: </strong>${numberElectric}</p>
+                    <p><strong>Cũ: </strong>${consumeBeginMonth.numberElectric}</p>
+                    <p><strong>Mới: </strong>${consumeEndMonth.numberElectric}</p>
+                </div>
+                <p><strong>Ngày tạo hóa đơn: </strong><fmt:formatDate value="${createdDate}" type="Date" pattern="dd-MM-yyyy"/></p>
+                <p><strong>Hạn thanh toán: </strong><fmt:formatDate value="${expiredPaymentDate}" type="Date" pattern="dd-MM-yyyy"/></p>
+                <p><strong>Tổng: </strong><fmt:setLocale value="vi_VN"/>
+                    <fmt:formatNumber value="${BILL.totalMoney}" type="currency" currencySymbol="VNĐ"/></p>
+                <div id="action">
+                    <a href="renter-invoice" role="button">Quay Lại</a>
+                    <a href="#" id="payment-button" role="button">Thanh Toán</a>
+                </div>
+            </div>
+            <div id="table">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên</th>
+                        <th>Đơn vị</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:set var="count" value="0" scope="page"/>
+                    <c:forEach var="s" items="${LIST_SERVICES}">
+                        <c:set var="count" value="${count + 1}" scope="page"/>
+                        <tr>
+                            <td>${count}</td>
+                            <td>${s.serviceName}</td>
+                            <td>${s.unit}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${s.serviceName=='Điện'}">
+                                        ${numberElectric}
+                                    </c:when>
+                                    <c:when test="${s.serviceName=='Nước'}">
+                                        ${numberWater}
+                                    </c:when>
+                                    <c:otherwise>1</c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <fmt:setLocale value="vi_VN"/>
+                                <fmt:formatNumber value="${s.servicePrice}" type="currency" currencySymbol="VNĐ"/>
+                            </td>
+                            <td>
+                                <fmt:setLocale value="vi_VN"/>
+                                <c:set var="totalMoneyElectric" value="${s.servicePrice * numberElectric}" scope="page"/>
+                                <c:set var="totalMoneyWater" value="${s.servicePrice * numberWater}" scope="page"/>
+                                <c:choose>
+                                    <c:when test="${s.serviceName=='Điện'}">
+                                        <fmt:formatNumber value="${totalMoneyElectric}" type="currency" currencySymbol="VNĐ"/>
+                                    </c:when>
+                                    <c:when test="${s.serviceName=='Nước'}">
+                                        <fmt:formatNumber value="${totalMoneyWater}" type="currency" currencySymbol="VNĐ"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <fmt:formatNumber value="${s.servicePrice}" type="currency" currencySymbol="VNĐ"/>
+
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
-
-
-<!-- footer -->
-
 <footer>
     <div>
         <div class="row">
             <div class="col-12">
                 <div class="copyright-wrapper d-flex justify-content-center">
-                    <div class="copyright-logo">
-                        <!-- <img src="../../assets/images/logos/logo-white.png" alt="Logo"> -->
-                    </div>
-                    <div class="copyright-content" style="font-size: 18px;">© 2022 HQT Team. All rights
-                        reserved.</div>
+                    <!-- <div class="copyright-logo">
+                        <img src="../../assets/images/logos/logo-white.png" alt="Logo">
+                    </div> -->
+                    <div class="copyright-content">© 2022 HQT Team. All rights reserved.</div>
                 </div>
             </div>
         </div>
@@ -194,9 +242,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        crossorigin="anonymous"></script>
+<script src="./assets/js/renter/Renter-payment.js"></script>
+
 </body>
 
 </html>

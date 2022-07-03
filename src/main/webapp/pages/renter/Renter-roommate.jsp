@@ -34,34 +34,34 @@
   <!-- navbar -->
   <nav class="navbar row">
     <div class="navbar-left">
-      <div class="dropdown">
+      <div class="dropdown"  style="padding-left: 15px;">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+                aria-haspopup="true" aria-expanded="false"style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
           Menu
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
-          <a class="dropdown-item" href="get-roommate-infor" style="color:rgb(4, 4, 255)">Bạn cùng phòng</a>
-          <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
-          <a class="dropdown-item" href="Renter-bill">Hóa đơn</a>
-          <a class="dropdown-item" href="Renter-report">Báo cáo</a>
-          <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
-          <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
-          <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
-          <a class="dropdown-item" href="Get-report">Xem báo cáo</a>
-          <a class="dropdown-item" href="logout">Đăng xuất</a>
+          <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
+          <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
+          <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
+          <a class="dropdown-item" href="renter-invoice"style="font-size: 15px;">Hóa đơn</a>
+          <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
+          <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
+          <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
+          <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
+          <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
+          <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
         </div>
       </div>
       <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:blue">Người thuê</a>
+          <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#ffffff">Người thuê</a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">Bạn cùng phòng</li>
         </ol>
       </nav>
     </div>
     <div class="navbar-center">
-      <a href="" role="button"><img src="./assets/images/logos/logo.png" alt=""></a>
+      <a href="" role="button"><img src="./assets/images/logos/logowhite.png" alt=""></a>
     </div>
     <div class="navbar-right">
       <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>
@@ -74,8 +74,8 @@
     <div class="dashboard">
       <div class="infor-top">
         <img src="./assets/images/avatars/user-avatar.jpg" alt="">
-        <h3><%=account.getUsername()%></h3>
-        <p>Renter</p>
+        <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
+        <p>Người Thuê</p>
       </div>
       <div class="card">
         <div class="card-header" id="headingOne">
@@ -91,7 +91,7 @@
             <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
             <h3><a href="get-roommate-infor" style="color:rgb(4, 4, 255)">Bạn cùng phòng</a></h3>
             <h3><a href="ContractPage">Hợp đồng</a></h3>
-            <h3><a href="Renter-bill">Hóa đơn</a></h3>
+            <h3><a href="renter-invoice">Hóa đơn</a></h3>
             <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
@@ -109,26 +109,32 @@
         </div>
         <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
           <div class="card-body">
-            <h3><a href="HostelRenterProfilePage">Hồ sơ</a></h3>
+            <h3><a href="HostelRenterProfilePage?<%=account.getAccId()%>">Hồ sơ</a></h3>
             <h3><a href="logout">Đăng xuất</a></h3>
           </div>
         </div>
       </div>
     </div>
-    <div class="content row">
-      <div class="table-1">
-        <table border="1">
-          <tr>
-            <th colspan="5">
-              <h2>Roommate</h2>
-            </th>
-          </tr>
+    <%if(listroommateinfor.isEmpty()){
+      session.setAttribute("listroommateinfor", listroommateinfor);
+      %>
+    <style>
+      .table-1{
+        display: none;
+      }
+    </style>
+    <%
+    } %>
+
+
+    <div class="content">
+      <h2 class="title-table">Danh Sách Bạn Cùng Phòng</h2>
+      <div >
+        <table class="table">
           <tr>
             <th>STT</th>
             <th>Họ và tên</th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th colspan="3">Hành Động</th>
           </tr>
           <%
             int x =1;
@@ -137,12 +143,13 @@
             <tr>
               <td><%=x%></td>
               <td><span>${roommateinfor.getInformation().getFullname()}</span></td>
-              <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%=x%>">
-                Xem chi tiết
-              </button></td>
-              <td><a href="DeleteRoommatePage?roommateID=${roommateinfor.roommateID}" role="button" class="btn btn-primary"
-                     style="width:60px; height:30px; color: #ffffff; padding-top: 7px;">Xoá</a></td>
-              <td><a href="Renter-update-roommate" role="button" class="btn btn-primary" style="width:60px; height:30px; color: #ffffff; padding-top: 7px;">Chỉnh Sửa</a></td>
+              <td>
+                <button type="button" class="btnAction" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%=x%>" >Chi tiết</button>
+              </td>
+              <td>
+                <a href="DeleteRoommatePage?roommateID=${roommateinfor.roommateID}" role="button" class="btnAction">Xoá</a>
+              </td>
+              <td><a href="Renter-update-roommate?roommateID=${roommateinfor.roommateID}" role="button" class="btnAction">Chỉnh Sửa</a></td>
             </tr>
 
             <%
@@ -164,23 +171,23 @@
               </h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              <h3>Name: <%=listroommateinfor.get(y-1).getInformation().getFullname()%></h3>
-              <h3>Email: <%=listroommateinfor.get(y-1).getInformation().getEmail()%></h3>
-              <h3>Birthday: <%=listroommateinfor.get(y-1).getInformation().getBirthday()%></h3>
-              <h3>Sex:
-                  <c:if test="<%= listroommateinfor.get(y-1).getInformation().getSex() == 1 %>">
+            <div class="modal-body" style="text-align: center">
+              <h3><strong>Tên: </strong> <%=listroommateinfor.get(y-1).getInformation().getFullname()%></h3>
+              <h3><strong>Email: </strong> <%=listroommateinfor.get(y-1).getInformation().getEmail()%></h3>
+              <h3><strong>Ngày Sinh: </strong>  <%=listroommateinfor.get(y-1).getInformation().getBirthday()%></h3>
+              <h3><strong>Giới Tính: </strong>
+                <c:if test="<%= listroommateinfor.get(y-1).getInformation().getSex() == 1 %>">
                         Nam
                   </c:if>
                   <c:if test="<%= listroommateinfor.get(y-1).getInformation().getSex() == 0 %>">
                         Nữ
                   </c:if>
               </h3>
-              <h3>Phone: <%=listroommateinfor.get(y-1).getInformation().getPhone()%></h3>
-              <h3>Address: <%=listroommateinfor.get(y-1).getInformation().getAddress()%></h3>
+              <h3><strong>Số Điện Thoại: </strong>  <%=listroommateinfor.get(y-1).getInformation().getPhone()%></h3>
+              <h3><strong>Địa Chỉ: </strong>  <%=listroommateinfor.get(y-1).getInformation().getAddress()%></h3>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
             </div>
           </div>
         </div>
@@ -221,6 +228,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+    <script src="./assets/js/renter/Renter-roommate.js"></script>
 </body>
 
 </html>

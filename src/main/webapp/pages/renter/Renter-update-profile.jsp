@@ -1,5 +1,8 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %>
+<%@ page import="com.hqt.happyhostel.dto.Information" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,39 +29,40 @@
 <body>
 <%
   Account account = (Account)session.getAttribute("USER");
+  Information ACC_INFO = (Information) session.getAttribute("ACC_INFO");
 %>
 <div>
   <!-- navbar -->
   <nav class="navbar row">
     <div class="navbar-left">
-      <div class="dropdown">
+      <div class="dropdown"  style="padding-left: 15px;">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+                aria-haspopup="true" aria-expanded="false"style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
           Menu
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="HostelRenterPage">Thông tin phòng</a>
-          <a class="dropdown-item" href="get-roommate-infor">Bạn cùng phòng</a>
-          <a class="dropdown-item" href="ContractPage">Hợp đồng</a>
-          <a class="dropdown-item" href="Renter-bill">Hóa đơn</a>
-          <a class="dropdown-item" href="Renter-report">Báo cáo</a>
-          <a class="dropdown-item" href="RenterNotificationPage">Thông báo</a>
-          <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>">Hồ sơ</a>
-          <a class="dropdown-item" href="Renter-add-roommate">Thêm bạn</a>
-          <a class="dropdown-item" href="Get-report">Xem báo cáo</a>
-          <a class="dropdown-item" href="logout">Đăng xuất</a>
+          <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
+          <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
+          <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
+          <a class="dropdown-item" href="renter-invoice"style="font-size: 15px;">Hóa đơn</a>
+          <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
+          <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
+          <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
+          <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
+          <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
+          <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
         </div>
       </div>
       <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:blue">Người thuê</a>
+          <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Bạn cùng phòng</li>
+          <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa</li>
         </ol>
       </nav>
     </div>
     <div class="navbar-center">
-      <a href="" role="button"><img src="./assets/images/logos/logo.png" alt=""></a>
+      <a href="" role="button"><img src="./assets/images/logos/logowhite.png" alt=""></a>
     </div>
     <div class="navbar-right">
       <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>
@@ -71,8 +75,8 @@
     <div class="dashboard">
       <div class="infor-top">
         <img src="./assets/images/avatars/user-avatar.jpg" alt="">
-        <h3>Trần Hoài Nam</h3>
-        <p>Renter</p>
+        <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
+        <p>Người Thuê</p>
       </div>
       <div class="card">
         <div class="card-header" id="headingOne">
@@ -88,7 +92,7 @@
             <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
             <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
             <h3><a href="ContractPage">Hợp đồng</a></h3>
-            <h3><a href="Renter-bill">Hóa đơn</a></h3>
+            <h3><a href="renter-invoice">Hóa đơn</a></h3>
             <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="Renter-notification">Xem thông báo</a></h3>
             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
@@ -106,7 +110,7 @@
         </div>
         <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
           <div class="card-body">
-            <h3><a href="Renter-profile" style="color:rgb(4, 4, 255)">Hồ sơ</a></h3>
+            <h3><a href="HostelRenterProfilePage?<%=account.getAccId()%>" style="color:rgb(4, 4, 255)">Hồ sơ</a></h3>
             <h3><a href="logout">Đăng xuất</a></h3>
           </div>
         </div>
@@ -118,28 +122,45 @@
           <h2>Chỉnh sửa thông tin</h2>
           <hr>
           <div class="form-content">
-            <input id="input-1" type="text" name="new-name" placeholder="Nhập tên mới!">
+            <input id="input-1" type="text" name="new-name" placeholder="Nhập tên mới!" value="<%=ACC_INFO.getFullname()%>">
             <span id="mes-1"></span>
           </div>
           <div class="form-content">
-            <input id="input-2" type="text" name="new-email" placeholder="Nhập Email mới!">
+            <input id="input-2" type="text" name="new-email" placeholder="Nhập Email mới!" value="<%=ACC_INFO.getEmail()%>">
             <span id="mes-2"></span>
 
           </div>
           <div class="form-content">
-            <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !">
+            <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !"
+                   value="<fmt:parseDate pattern="yyyy-MM-dd" value=" ${ACC_INFO.getBirthday()}" var="getBirthday" /><fmt:formatDate value="${getBirthday}" type="Date" pattern="dd-MM-yyyy"/>
+">
             <span id="mes-3"></span>
           </div>
           <div class="form-content">
-            <input id="input-4" type="text" name="new-phone" placeholder="Nhập số điện thoại mới!">
+            <input id="input-7" type="text" name="new-sex" placeholder="Giới Tính!" <%if (ACC_INFO.getSex()==1){
+              %>
+                   value="Nữ"
+              <%
+            }
+              else{
+                %>
+              value="Nam"
+                   <%
+            }
+              %>
+            />
+            <span id="mes-7"></span>
+          </div>
+          <div class="form-content">
+            <input id="input-4" type="text" name="new-phone" placeholder="Nhập số điện thoại mới!" value="<%=ACC_INFO.getPhone()%>">
             <span id="mes-4"></span>
           </div>
           <div class="form-content">
-            <input id="input-5" type="text" name="new-address" placeholder="Nhập địa chỉ mới!">
+            <input id="input-5" type="text" name="new-address" placeholder="Nhập địa chỉ mới!" value="<%=ACC_INFO.getAddress()%>">
             <span id="mes-5"></span>
           </div>
           <div class="form-content">
-            <input id="input-6" type="text" name="new-cccd" placeholder="Nhập cccd mới!">
+            <input id="input-6" type="text" name="new-cccd" placeholder="Nhập cccd mới!" value="<%=ACC_INFO.getCccd()%>">
             <span id="mes-6"></span>
           </div>
           <div>

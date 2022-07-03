@@ -8,7 +8,7 @@
 }
 
 .content {
-  width: 70%;
+  width: 80%;
 }
 body{
   overflow-x: hidden;
@@ -16,7 +16,7 @@ body{
 .profile-update {
   margin: 80px auto;
   width: 520px;
-  min-height: 470px;
+  height: 615px;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -57,7 +57,16 @@ body{
     height: 50px;
     border-radius: 9px;
     color: #ffffff;
-    background-color: rgb(13, 0, 255);
+    background-color: rgba(13, 0, 255, 0.8);
+    font-size: 20px;
+    margin: 4px auto;
+  }
+  #submit-1:hover {
+    width: 100%;
+    height: 50px;
+    border-radius: 9px;
+    color: #ffffff;
+    background-color: rgba(13, 0, 255, 1.0);
     font-size: 20px;
     margin: 4px auto;
   }

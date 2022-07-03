@@ -2,8 +2,7 @@
 
   width: 100%;
   height: 80px;
-  background: rgb(63, 63, 240);
-  background: linear-gradient(90deg, rgba(63, 63, 240, 1) 0%, rgb(199, 212, 218) 50%, rgb(66, 87, 202) 100%);
+  background-color: #000000;
   border-bottom: 1px solid rgb(128, 125, 125);
   margin: 0px;
 
@@ -14,11 +13,11 @@
       margin-top: 15px;
 
       ol {
-        background-color: #EAEAEA;
+        background-color: #000000;
         width: 280px;
 
         li {
-          color: black;
+          color: rgb(255, 255, 255);
           font-size: 18px;
           font-weight: 500;
         }
@@ -32,24 +31,25 @@
 
     img {
 
-      height: 60px;
-      width: 200px;
+      height: 50px;
+      width: 180px;
     }
   }
 
   .navbar-right {
     width: 30%;
     text-align: right;
+    padding-right: 10px;
 
     a {
       font-size: 20px;
-      color: black;
+      color: rgb(255, 255, 255);
       text-decoration: none;
       font-weight: 500;
+      transition: 0.2s;
 
       img {
-        height: 40px;
-        width: 40px;
+        display: none;
       }
     }
 
@@ -58,10 +58,10 @@
       color: rgb(47, 0, 255);
       text-decoration: none;
       font-weight: 500;
+      transition: 0.2s;
 
       img {
-        height: 40px;
-        width: 40px;
+        display: none;
       }
     }
   }

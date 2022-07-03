@@ -6,6 +6,8 @@ import com.hqt.happyhostel.dto.Payment;
 import com.hqt.happyhostel.utils.DBUtils;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,18 @@ public class BillDAO {
     private static final String INSERT_NEW_BILL_TAIL = "UPDATE Consumes SET status = 1 WHERE room_id = 1\n" +
             "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id) VALUES (?, ?, GETDATE(), 0, ?)\n";
     private static final String UPDATE_BILL_STATUS = "UPDATE [dbo].[Bill] SET [status] = ?, [payment_date] = ? WHERE [bill_id] = ?";
+
+    private static final String GET_BILL_BY_RENTER_ID = "SELECT Bill.bill_id, Bill.total_money, Bill.created_date, Bill.bill_title, \n" +
+            "Bill.expired_payment_date, Bill.payment_date, Bill.status, Bill.payment_id, Bill.room_id\n" +
+            "FROM Accounts INNER JOIN Contracts ON Accounts.account_id=Contracts.renter_id\n" +
+            "INNER JOIN Rooms ON Contracts.room_id=Rooms.room_id\n" +
+            "INNER JOIN Bill ON Contracts.room_id=Bill.room_id\n" +
+            "WHERE Accounts.account_id = ?";
+    private static final String GET_RENTER_BILL_BY_ID=
+            "SELECT bill_id, total_money, created_date, bill_title, \n" +
+                    "expired_payment_date, payment_date, status, payment_id, room_id\n" +
+                    "FROM Bill \n" +
+                    "WHERE bill_id = ?";
 
     public boolean InsertANewBill(int totalMoney, String billTitle, String expiredPaymentDate, int roomID,
                                   int consumeIDStart, int consumeIDEnd, int accountHostelOwner, int accountRenterID,
@@ -578,5 +592,117 @@ public class BillDAO {
     }
 
 
+
+    public List<Bill> getBllListByRenterID(int renterID) throws SQLException{
+        List<Bill> billList = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            cn = DBUtils.makeConnection();
+            ptm = cn.prepareStatement(GET_BILL_BY_RENTER_ID);
+            ptm.setInt(1, renterID);
+            rs = ptm.executeQuery();
+            while (rs!=null && rs.next()){
+                int billID = rs.getInt("bill_id");
+                int totalMoney = rs.getInt("total_money");
+                String createdDate = dateFormat.format(rs.getDate("created_date"));
+                String billTitle = rs.getString("bill_title");
+                String expiredPaymentDate = dateFormat.format(rs.getDate("expired_payment_date"));
+                Date paymentDateTemp = rs.getDate("payment_date");
+                String paymentDate;
+                if (paymentDateTemp == null || paymentDateTemp.equals("")){
+                    paymentDate = "";
+                } else {
+                    paymentDate = dateFormat.format(paymentDateTemp);
+                }
+                int status = rs.getInt("status");
+                int paymentID = rs.getInt("payment_id");
+                int roomID = rs.getInt("room_id");
+                billList.add(Bill.builder()
+                                .billID(billID)
+                                .createdDate(createdDate)
+                                .totalMoney(totalMoney)
+                                .billTitle(billTitle)
+                                .expiredPaymentDate(expiredPaymentDate)
+                                .paymentDate(paymentDate)
+                                .status(status)
+                                .payment(Payment.builder().paymentID(paymentID).build())
+                                .roomID(roomID)
+                                .build());
+            }
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }finally {
+            if(rs!=null){
+                rs.close();
+            }
+            if (ptm!=null){
+                ptm.close();
+            }
+            if (cn!=null){
+                cn.close();
+            }
+        }
+        return billList;
+    }
+    public Bill getRenterBillByID(int billID) throws SQLException{
+        Bill bill = null;
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            cn = DBUtils.makeConnection();
+            ptm = cn.prepareStatement(GET_RENTER_BILL_BY_ID);
+            ptm.setInt(1, billID);
+            rs = ptm.executeQuery();
+            if (rs!=null && rs.next()){
+                int totalMoney = rs.getInt("total_money");
+                String createdDate = dateFormat.format(rs.getDate("created_date"));
+                String billTitle = rs.getString("bill_title");
+                String expiredPaymentDate = dateFormat.format(rs.getDate("expired_payment_date"));
+                Date paymentDateTemp = rs.getDate("payment_date");
+                String paymentDate;
+                if (paymentDateTemp == null || paymentDateTemp.equals("")){
+                    paymentDate = "";
+                } else {
+                    paymentDate = dateFormat.format(paymentDateTemp);
+                }
+                int status = rs.getInt("status");
+                int paymentID = rs.getInt("payment_id");
+                int roomID = rs.getInt("room_id");
+                bill = Bill.builder()
+                        .billID(billID)
+                        .createdDate(createdDate)
+                        .totalMoney(totalMoney)
+                        .billTitle(billTitle)
+                        .expiredPaymentDate(expiredPaymentDate)
+                        .paymentDate(paymentDate)
+                        .status(status)
+                        .payment(Payment.builder().paymentID(paymentID).build())
+                        .roomID(roomID)
+                        .build();
+            }
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }finally {
+            if(rs!=null){
+                rs.close();
+            }
+            if (ptm!=null){
+                ptm.close();
+            }
+            if (cn!=null){
+                cn.close();
+            }
+        }
+        return bill;
+    }
 
 }

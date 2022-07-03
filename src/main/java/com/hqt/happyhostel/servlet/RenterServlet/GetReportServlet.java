@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet.RenterServlet;
+package com.hqt.happyhostel.servlet.RenterServlets;
 
 
 import com.hqt.happyhostel.dao.ReportCategoryDAO;
@@ -37,12 +37,20 @@ public class GetReportServlet extends HttpServlet {
             if (reportCategories.size()>0){
                 req.setAttribute("REPORT_CATE", reportCategories);
                 url = SUCCESS;
+                if (req.getParameter("id")!=null) {
+                    req.setAttribute("id", req.getParameter("id"));
+                    url = "Report-detail";
+                }
             }
 
             reports = reportDAO.getReport();
             if(reports.size()>0){
                 req.setAttribute("REPORT_LIST", reports);
                 url = SUCCESS;
+                if (req.getParameter("id")!=null) {
+                    req.setAttribute("id", req.getParameter("id"));
+                    url = "Report-detail";
+                }
             }
 
         }catch (Exception e){

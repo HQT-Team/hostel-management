@@ -1,7 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.hqt.happyhostel.dto.Account" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="com.hqt.happyhostel.dto.Account" %><%--
+  Created by IntelliJ IDEA.
+  User: 84337
+  Date: 6/18/2022
+  Time: 12:28 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,9 +15,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
   <title>Renter</title>
+  <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,7 +25,8 @@
   <link rel="stylesheet" href="./assets/css/core_style/core.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="./assets/css/renter_page/Renter-profile.css">
+  <link rel="stylesheet" href="./assets/css/renter_page/Renter-view-list-invoice.css">
+
 </head>
 
 <body>
@@ -28,7 +34,6 @@
   Account account = (Account)session.getAttribute("USER");
 %>
 <div>
-  <!-- navbar -->
   <nav class="navbar row">
     <div class="navbar-left">
       <div class="dropdown"  style="padding-left: 15px;">
@@ -53,7 +58,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Hồ sơ</li>
+          <li class="breadcrumb-item active" aria-current="page">Hoá Đơn</li>
         </ol>
       </nav>
     </div>
@@ -66,9 +71,8 @@
 
   </nav>
 
-  <!-- content -->
-  <div class="main-body row">
-    <div class="dashboard">
+  <div class="row">
+    <div class="dashboard hidden" id="dashboard">
       <div class="infor-top">
         <img src="./assets/images/avatars/user-avatar.jpg" alt="">
         <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
@@ -88,7 +92,7 @@
             <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
             <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
             <h3><a href="ContractPage">Hợp đồng</a></h3>
-            <h3><a href="renter-invoice">Hóa đơn</a></h3>
+            <h3><a href="renter-invoice" style="color:rgb(4, 4, 255)">Hóa đơn</a></h3>
             <h3><a href="Renter-report">Gửi báo cáo</a></h3>
             <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
             <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
@@ -106,59 +110,65 @@
         </div>
         <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
           <div class="card-body">
-            <h3><a href="HostelRenterProfilePage?<%=account.getAccId()%>" style="color:rgb(4, 4, 255)">Hồ sơ</a></h3>
+            <h3><a href="HostelRenterProfilePage?<%=account.getAccId()%>">Hồ sơ</a></h3>
             <h3><a href="logout">Đăng xuất</a></h3>
           </div>
         </div>
       </div>
     </div>
-    <div class="content row">
-      <div class="profile">
-        <h2>Hồ Sơ</h2>
-        <h3><strong>Tên: </strong>${ACC_INFO.fullname}</h3>
-        <h3><strong>Email: </strong>${ACC_INFO.email}</h3>
-        <h3><strong>Ngày sinh: </strong>
-          <fmt:parseDate pattern="yyyy-MM-dd" value=" ${ACC_INFO.birthday}" var="birthday" />
-          <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
-        </h3>
-        <h3><strong>Giới tính: </strong>
-          <c:if test="${ACC_INFO.sex == 1}">
-            Nam
-          </c:if>
-          <c:if test="${ACC_INFO.sex == 0}">
-            Nữ
-          </c:if>
-        </h3>
-        <h3><strong>Số điện thoại: </strong>${ACC_INFO.phone}</h3>
-        <h3><strong>Địa chỉ: </strong>${ACC_INFO.address}</h3>
-        <h3><strong>CCCD: </strong>${ACC_INFO.cccd}</h3>
-        <% session.setAttribute("ACC_INFO", request.getAttribute("ACC_INFO")); %>
-        <a href="Renter-update-profile">Chỉnh Sửa</a>
+
+
+    <div class="content">
+      <div class="table-content">
+        <h2>Danh Sách Hoá Đơn</h2>
+        <table class="table table-bordered" >
+          <thead>
+          <tr>
+            <th>Mã Hoá Đơn</th>
+            <th>Ngày Tạo Hoá Đơn</th>
+            <th>Tổng Tiền(VND)</th>
+            <th>Trạng Thái</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <c:forEach var="b" items="${BILL_LIST}" >
+              <fmt:parseDate pattern="yyyy-MM-dd" value="${b.createdDate}" var="createdDate" />
+            <tr>
+              <td style="height: 22px;"><a href="renter-bill-payment?billID=${b.billID}"> #<fmt:formatDate value="${createdDate}" type="Date" pattern="yyyyMMdd"/>${b.billID} </a></td>
+              <td style="height: 22px;"><fmt:formatDate value="${createdDate}" type="Date" pattern="dd-MM-yyyy"/></td>
+              <td style="height: 22px;"><fmt:setLocale value="vi_VN"/>
+                <fmt:formatNumber value="${b.totalMoney}" type="currency" currencySymbol="VNĐ"/></td>
+              <td style="height: 22px;"><a>
+                <c:if test="${b.status == 1}">
+                    <p style="color: green">Đã thanh toán</p>
+                </c:if>
+                <c:if test="${b.status != 1}">
+                  <p style="color: red">Chưa thanh toán</p>
+                </c:if>
+              </a></td>
+            </tr>
+          </c:forEach>
+          </tbody>
+        </table>
       </div>
-    </div>
   </div>
 </div>
-
-
-<!-- footer -->
-
+</div>
 <footer>
   <div>
     <div class="row">
       <div class="col-12">
         <div class="copyright-wrapper d-flex justify-content-center">
-          <div class="copyright-logo">
-            <!-- <img src="../../assets/images/logos/logo-white.png" alt="Logo"> -->
-          </div>
-          <div class="copyright-content" style="font-size: 18px;">© 2022 HQT Team. All rights
-            reserved.</div>
+          <!-- <div class="copyright-logo">
+              <img src="../../assets/images/logos/logo-white.png" alt="Logo">
+          </div> -->
+          <div class="copyright-content">© 2022 HQT Team. All rights reserved.</div>
         </div>
       </div>
     </div>
   </div>
 </footer>
-
-
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -169,9 +179,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        crossorigin="anonymous"></script>
+<script src="./assets/js/renter/Renter-view-list-invoice.js"></script>
+
 </body>
 
 </html>

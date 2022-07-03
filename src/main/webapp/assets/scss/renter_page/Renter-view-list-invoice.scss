@@ -1,0 +1,166 @@
+@import "./_common-style/_navbar";
+@import "./_common-style/_footer";
+@import "./_common-style/_sidebar";
+
+* {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.dropdown {
+  display: none;
+}
+
+
+.content {
+  width: 80%;
+  margin: 0;
+
+  .table-content {
+    width: 100%;
+    padding-top: 80px;
+
+    h2 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 34px;
+    }
+
+    table {
+      border-radius: 5px;
+      width: 80%;
+      margin: 120px auto;
+      text-align: center;
+
+      thead {
+        tr {
+          width: 100%;
+          height: 30px;
+
+          th {
+            font-size: 22px;
+
+          }
+        }
+      }
+
+      tbody {
+        padding: 50px;
+
+        tr {
+          width: 100%;
+
+          td:first-child {
+            color: blue;
+            text-align: center;
+
+            a {
+              color: inherit;
+              background-color: inherit;
+              font-size: 22px;
+              cursor: pointer;
+              height: 100%;
+              text-decoration: none;
+            }
+
+            a:hover {
+              color: inherit;
+              background-color: inherit;
+              font-size: 22px;
+              cursor: pointer;
+              height: 100%;
+              text-decoration: none;
+            }
+          }
+
+          td:last-child {
+            color: blue;
+            text-align: center;
+
+            p {
+              color: inherit;
+              background-color: inherit;
+              font-size: 22px;
+              height: 100%;
+              margin: 0px;
+            }
+
+            p:hover {
+              color: inherit;
+              background-color: inherit;
+              font-size: 22px;
+              height: 100%;
+              margin: 0px;
+            }
+          }
+
+          td {
+
+            font-size: 22px;
+
+          }
+        }
+      }
+    }
+  }
+}
+
+footer {
+  .copyright-content {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 400px) and (max-width: 1100px) {
+  .dropdown {
+    display: block;
+  }
+
+  .dashboard {
+    display: none;
+  }
+
+  .link {
+    display: none;
+  }
+
+
+  .navbar {
+    .navbar-center {
+      img {
+        width: 140px;
+        height: 50px;
+      }
+    }
+
+    .navbar-right {
+      a {
+        font-size: 16px;
+
+        img {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .content {
+    width: 100%;
+
+    .table-content {
+      width: 100%;
+      padding: 80px 10px 0px 10px;
+
+      table {
+        border-radius: 5px;
+        width: 100%;
+      }
+    }
+  }
+
+}
