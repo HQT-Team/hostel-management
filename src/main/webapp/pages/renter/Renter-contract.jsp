@@ -123,14 +123,20 @@
               <div class="contract-body">
                   <div class="owner-infor"> <p>Bên cho thuê</p>
                       <h5><strong>Chủ trọ: </strong>${OWNER_INFO.fullname}</h5><br>
-                      <h5><strong>Ngày sinh: </strong>${OWNER_INFO.birthday}</h5><br>
+                      <h5><strong>Ngày sinh: </strong>
+                          <fmt:parseDate pattern="yyyy-MM-dd" value=" ${OWNER_INFO.birthday}" var="birthday" />
+                          <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
+                      </h5><br>
                       <h5><strong>CCCD: </strong>${OWNER_INFO.cccd}</h5><br>
                       <h5><strong>SĐT: </strong>${OWNER_INFO.phone}</h5><br>
                   </div>
                   <div class="renter-infor">
                       <p>Bên thuê</p>
                       <h5><strong>Người Thuê: </strong>${RENTER_INFO.fullname}</h5><br>
-                      <h5><strong>Ngày sinh: </strong>${RENTER_INFO.birthday}</h5><br>
+                      <h5><strong>Ngày sinh: </strong>
+                          <fmt:parseDate pattern="yyyy-MM-dd" value=" ${RENTER_INFO.birthday}" var="birthday" />
+                          <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
+                      </h5><br>
                       <h5><strong>CCCD: </strong>${RENTER_INFO.cccd}</h5><br>
                       <h5><strong>SĐT: </strong>${RENTER_INFO.phone}</h5><br>
                   </div>

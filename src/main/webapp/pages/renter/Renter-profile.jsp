@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -116,7 +117,10 @@
         <h2>Hồ Sơ</h2>
         <h3><strong>Tên: </strong>${ACC_INFO.fullname}</h3>
         <h3><strong>Email: </strong>${ACC_INFO.email}</h3>
-        <h3><strong>Ngày sinh: </strong>${ACC_INFO.birthday}</h3>
+        <h3><strong>Ngày sinh: </strong>
+          <fmt:parseDate pattern="yyyy-MM-dd" value=" ${ACC_INFO.birthday}" var="birthday" />
+          <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
+        </h3>
         <h3><strong>Giới tính: </strong>
           <c:if test="${ACC_INFO.sex == 1}">
             Nam

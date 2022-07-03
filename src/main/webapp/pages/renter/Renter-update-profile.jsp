@@ -2,6 +2,7 @@
 <%@ page import="com.hqt.happyhostel.dto.Account" %>
 <%@ page import="com.hqt.happyhostel.dto.Information" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -130,7 +131,9 @@
 
           </div>
           <div class="form-content">
-            <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !" value="<%=ACC_INFO.getBirthday()%>">
+            <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !"
+                   value="<fmt:parseDate pattern="yyyy-MM-dd" value=" ${ACC_INFO.getBirthday()}" var="getBirthday" /><fmt:formatDate value="${getBirthday}" type="Date" pattern="dd-MM-yyyy"/>
+">
             <span id="mes-3"></span>
           </div>
           <div class="form-content">

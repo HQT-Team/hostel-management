@@ -119,7 +119,7 @@ submit.addEventListener('click', function () {
         if (!check_date) {
             let parent = input_3.parentElement;
             let span = parent.querySelector("#mes-3");
-            span.innerText = "Vui lòng nhập đúng ngày sinh! (dd-mm-yyyy hoặc dd/mm/yyyy)";
+            span.innerText = "Vui lòng nhập đúng ngày sinh! (dd-mm-yyyy)";
         } else {
             let parent = input_3.parentElement;
             let span = parent.querySelector("#mes-3");

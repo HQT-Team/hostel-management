@@ -21,14 +21,15 @@ function checkEmail(input) {
 }
 
 function checkDate(dateString) {
-    var date_regex = /^(19|20)\d{2}\/|-(0[1-9]|1[0-2])\/|-(0[1-9]|1\d|2\d|3[01])$/;
+    var date_regex = /^(0[1-9]|1\d|2\d|3[01])\-(0[1-9]|1[0-2])\-(19|20)\d{2}$/;
     if (!(date_regex.test(dateString))) {
+        console.log("false 1")
         return false;
     }
-    var parts = dateString.split(/[-,/]/);
-    var year = parseInt(parts[0], 10);
+    var parts = dateString.split(/[-]/);
+    var year = parseInt(parts[2], 10);
     var month = parseInt(parts[1], 10);
-    var day = parseInt(parts[2], 10);
+    var day = parseInt(parts[0], 10);
     const str = year + "-" + month + "-" + day;
     const date1 = new Date()
     const date2 = new Date(str)
@@ -99,7 +100,7 @@ submit.addEventListener('click', function () {
         var value = checkDate(input_3.value)
         if (!value) {
             check = false
-            input_3.parentElement.querySelector("#mes-3").innerText = "Vui Lòng Nhập Đúng Định Dạng Ngày (dd/mm/yyyy)"
+            input_3.parentElement.querySelector("#mes-3").innerText = "Vui Lòng Nhập Đúng Định Dạng Ngày (dd-mm-yyyy)"
         } else {
             input_3.parentElement.querySelector("#mes-3").innerText = ""
         }

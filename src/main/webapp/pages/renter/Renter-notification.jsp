@@ -1,6 +1,7 @@
 <%@ page import="com.hqt.happyhostel.dto.Account" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -131,7 +132,10 @@
                             <th scope="row">${count}</th>
                             <td>${n.title}</td>
                             <td>${n.content}</td>
-                            <td>${n.createDate}</td>
+                            <td>
+                                <fmt:parseDate pattern="yyyy-MM-dd" value="${n.createDate}" var="createDate" />
+                                <fmt:formatDate value="${createDate}" type="Date" pattern="dd-MM-yyyy"/>
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>

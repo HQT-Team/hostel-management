@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -132,7 +133,10 @@
                                     </c:if>
                                 </c:forEach>
                             </td>
-                            <td >${rp.sendDate}</td>
+                            <td >
+                                        <fmt:parseDate pattern="yyyy-MM-dd" value=" ${rp.sendDate}" var="sendDate" />
+                                        <fmt:formatDate value="${sendDate}" type="Date" pattern="dd-MM-yyyy"/>
+                            </td>
                             <td>
                                 <c:if test="${rp.status == 0}">
                                     <p>Đang chờ</p>

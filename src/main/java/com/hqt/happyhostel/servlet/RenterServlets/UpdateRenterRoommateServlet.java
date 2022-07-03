@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 @WebServlet(name = "UpdateRenterRoommateServlet", value = "/UpdateRenterRoommateServlet")
 public class UpdateRenterRoommateServlet extends HttpServlet {
@@ -32,6 +34,8 @@ public class UpdateRenterRoommateServlet extends HttpServlet {
             String roommateName = req.getParameter("new-name").equals("") ? roommateInfo.getInformation().getFullname() : req.getParameter("new-name");
             String roommateEmail = req.getParameter("new-email").equals("") ? roommateInfo.getInformation().getEmail() : req.getParameter("new-email");
             String roommateBirthday = req.getParameter("new-birthday").equals("") ? roommateInfo.getInformation().getBirthday() : req.getParameter("new-birthday");
+            String[] array = roommateBirthday.split("-", 3);
+            String roommateBirthdayformat = array[2]+"-" + array[1]+"-" + array[0];
             int roommateGender = Integer.parseInt(req.getParameter("new-gender"));
             String roommatePhone = req.getParameter("new-phone").equals("") ? roommateInfo.getInformation().getPhone() : req.getParameter("new-phone");
             String roommateAddress = req.getParameter("new-address").equals("") ? roommateInfo.getInformation().getAddress() : req.getParameter("new-address");
@@ -40,13 +44,13 @@ public class UpdateRenterRoommateServlet extends HttpServlet {
             Information information = Information.builder()
                     .fullname(roommateName)
                     .email(roommateEmail)
-                    .birthday(roommateBirthday)
+                    .birthday(roommateBirthdayformat)
                     .sex(roommateGender)
                     .phone(roommatePhone)
                     .address(roommateAddress).cccd(roommateCCCD).build();
             roommateInfo = roommateInfo.builder()
                     .information(information)
-                   .build();
+                    .build();
             HostelDAO dao = new HostelDAO();
             boolean checkUpdateProfile = new InformationDAO().updateRoommateInfoByID(roommateInfo, roommateID);
             if (checkUpdateProfile) {

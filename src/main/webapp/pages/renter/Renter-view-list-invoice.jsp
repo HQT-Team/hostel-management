@@ -135,11 +135,11 @@
           <c:forEach var="b" items="${BILL_LIST}" >
               <fmt:parseDate pattern="yyyy-MM-dd" value="${b.createdDate}" var="createdDate" />
             <tr>
-              <td><a href="renter-bill-payment?billID=${b.billID}"> #<fmt:formatDate value="${createdDate}" type="Date" pattern="yyyyMMdd"/>${b.billID} </a></td>
-              <td><fmt:formatDate value="${createdDate}" type="Date" pattern="dd-MM-yyyy"/></td>
-              <td><fmt:setLocale value="vi_VN"/>
+              <td style="height: 22px;"><a href="renter-bill-payment?billID=${b.billID}"> #<fmt:formatDate value="${createdDate}" type="Date" pattern="yyyyMMdd"/>${b.billID} </a></td>
+              <td style="height: 22px;"><fmt:formatDate value="${createdDate}" type="Date" pattern="dd-MM-yyyy"/></td>
+              <td style="height: 22px;"><fmt:setLocale value="vi_VN"/>
                 <fmt:formatNumber value="${b.totalMoney}" type="currency" currencySymbol="VNĐ"/></td>
-              <td><a>
+              <td style="height: 22px;"><a>
                 <c:if test="${b.status == 1}">
                     <p style="color: green">Đã thanh toán</p>
                 </c:if>

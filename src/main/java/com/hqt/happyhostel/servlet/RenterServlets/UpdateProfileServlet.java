@@ -39,10 +39,12 @@ public class UpdateProfileServlet extends HttpServlet {
             String profileName = req.getParameter("new-name").equals("") ? accountInfor.getInformation().getFullname() : req.getParameter("new-name");
             String profileEmail = req.getParameter("new-email").equals("") ? accountInfor.getInformation().getEmail() : req.getParameter("new-email");
             String profileBirthday = req.getParameter("new-birthday").equals("") ? accountInfor.getInformation().getBirthday() : req.getParameter("new-birthday");
+            String[] array = profileBirthday.split("-", 3);
+            String profileBirthdayformat = array[2]+"-" + array[1]+"-" + array[0];
             String profilePhone = req.getParameter("new-phone").equals("") ? accountInfor.getInformation().getPhone() : req.getParameter("new-phone");
             String profileAddress = req.getParameter("new-address").equals("") ? accountInfor.getInformation().getAddress() : req.getParameter("new-address");
             String profileCCCD = req.getParameter("new-cccd").equals("") ? accountInfor.getInformation().getCccd() : req.getParameter("new-cccd");
-            accountInfos = Information.builder().fullname(profileName).email(profileEmail).birthday(profileBirthday).phone(profilePhone).address(profileAddress).cccd(profileCCCD).build();
+            accountInfos = Information.builder().fullname(profileName).email(profileEmail).birthday(profileBirthdayformat).phone(profilePhone).address(profileAddress).cccd(profileCCCD).build();
             HostelDAO dao = new HostelDAO();
             boolean checkUpdateProfile = new InformationDAO().updateProfileByAccId(accountInfos, accId);
             if (checkUpdateProfile) {

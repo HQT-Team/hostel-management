@@ -89,10 +89,10 @@
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        <h3><a href="HostelRenterPage" style="color:rgb(4, 4, 255)">Thông tin phòng</a></h3>
+                        <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
                         <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
                         <h3><a href="ContractPage">Hợp đồng</a></h3>
-                        <h3><a href="renter-invoice">Hóa đơn</a></h3>
+                        <h3><a href="renter-invoice"style="color:rgb(4, 4, 255)">Hóa đơn</a></h3>
                         <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                         <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
                         <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
@@ -127,10 +127,10 @@
                 <h2>#<fmt:formatDate value="${createdDate}" type="Date" pattern="yyyyMMdd"/>${BILL.billID}</h2>
                 <h3><a>
                     <c:if test="${BILL.status == 1}">
-                        <p style="color: green">Đã thanh toán</p>
+                        <p class="payment-success" style="color: green">Đã thanh toán</p>
                     </c:if>
                     <c:if test="${BILL.status != 1}">
-                        <p style="color: red">Chưa thanh toán</p>
+                        <p class="payment-waiting" style="color: red">Chưa thanh toán</p>
                     </c:if>
                 </a></h3>
                 <p></p>
@@ -140,22 +140,22 @@
                     <c:set var="numberElectric" value="${consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric}"/>
                     <c:set var="numberWater" value="${consumeEndMonth.numberWater - consumeBeginMonth.numberWater}"/>
 
-                    <p>Số nước: ${numberWater}</p>
-                    <p>Cũ: ${consumeBeginMonth.numberWater}</p>
-                    <p>Mới: ${consumeEndMonth.numberWater}</p>
+                    <p><strong>Số nước: </strong>${numberWater}</p>
+                    <p><strong>Cũ: </strong>${consumeBeginMonth.numberWater}</p>
+                    <p><strong>Mới: </strong>${consumeEndMonth.numberWater}</p>
                 </div>
                 <div id="electric">
-                    <p>Số điện: ${numberElectric}</p>
-                    <p>Cũ: ${consumeBeginMonth.numberElectric}</p>
-                    <p>Mới: ${consumeEndMonth.numberElectric}</p>
+                    <p><strong>Số điện: </strong>${numberElectric}</p>
+                    <p><strong>Cũ: </strong>${consumeBeginMonth.numberElectric}</p>
+                    <p><strong>Mới: </strong>${consumeEndMonth.numberElectric}</p>
                 </div>
-                <p>Ngày tạo hóa đơn: <fmt:formatDate value="${createdDate}" type="Date" pattern="dd-MM-yyyy"/></p>
-                <p>Hạn thanh toán: <fmt:formatDate value="${expiredPaymentDate}" type="Date" pattern="dd-MM-yyyy"/></p>
-                <p>Tổng: <fmt:setLocale value="vi_VN"/>
+                <p><strong>Ngày tạo hóa đơn: </strong><fmt:formatDate value="${createdDate}" type="Date" pattern="dd-MM-yyyy"/></p>
+                <p><strong>Hạn thanh toán: </strong><fmt:formatDate value="${expiredPaymentDate}" type="Date" pattern="dd-MM-yyyy"/></p>
+                <p><strong>Tổng: </strong><fmt:setLocale value="vi_VN"/>
                     <fmt:formatNumber value="${BILL.totalMoney}" type="currency" currencySymbol="VNĐ"/></p>
                 <div id="action">
                     <a href="renter-invoice" role="button">Quay Lại</a>
-                    <a href="#" role="button">Thanh Toán</a>
+                    <a href="#" id="payment-button" role="button">Thanh Toán</a>
                 </div>
             </div>
             <div id="table">
@@ -242,6 +242,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+<script src="./assets/js/renter/Renter-payment.js"></script>
 
 </body>
 

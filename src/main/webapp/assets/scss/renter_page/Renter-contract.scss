@@ -13,15 +13,16 @@ body {
   .content {
 
     text-align: center;
-    margin: 50px 0px 0px 0px;
     width: 80%;
     padding: 10px;
 
     .contract-content {
       padding: 20px 40px;
-      border: 1px solid #6A5Af9;
-      width: 90%;
-      margin: auto;
+      border: 1px solid black;
+      width: 80%;
+      margin: 60px auto;
+      border-radius: 8px;
+      height: fit-content;
 
       .contract-head {
         h4 {

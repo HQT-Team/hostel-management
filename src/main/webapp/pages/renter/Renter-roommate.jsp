@@ -116,6 +116,7 @@
       </div>
     </div>
     <%if(listroommateinfor.isEmpty()){
+      session.setAttribute("listroommateinfor", listroommateinfor);
       %>
     <style>
       .table-1{
