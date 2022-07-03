@@ -1,3 +1,5 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %><%--
   Created by IntelliJ IDEA.
   User: 84337
@@ -119,24 +121,40 @@
         <div class="content">
             <h1>Hóa Đơn</h1>
             <div id="invoice-cover">
-                <h2>#2022060600</h2>
-                <h3>Chưa thanh toán</h3>
+                <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.createdDate}" var="createdDate" />
+                <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.expiredPaymentDate}" var="expiredPaymentDate" />
+
+                <h2>#<fmt:formatDate value="${createdDate}" type="Date" pattern="yyyyMMdd"/>${BILL.billID}</h2>
+                <h3><a>
+                    <c:if test="${BILL.status == 1}">
+                        <p style="color: green">Đã thanh toán</p>
+                    </c:if>
+                    <c:if test="${BILL.status != 1}">
+                        <p style="color: red">Chưa thanh toán</p>
+                    </c:if>
+                </a></h3>
                 <p></p>
+                <c:set var="consumeBeginMonth" value="${requestScope.CONSUME_START}"/>
+                <c:set var="consumeEndMonth" value="${requestScope.CONSUME_END}"/>
                 <div id="water">
-                    <p>Số nước: 5</p>
-                    <p>Cũ: 195</p>
-                    <p>Mới: 200</p>
+                    <c:set var="numberElectric" value="${consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric}"/>
+                    <c:set var="numberWater" value="${consumeEndMonth.numberWater - consumeBeginMonth.numberWater}"/>
+
+                    <p>Số nước: ${numberWater}</p>
+                    <p>Cũ: ${consumeBeginMonth.numberWater}</p>
+                    <p>Mới: ${consumeEndMonth.numberWater}</p>
                 </div>
                 <div id="electric">
-                    <p>Số điện: 100</p>
-                    <p>Cũ: 100</p>
-                    <p>Mới: 200</p>
+                    <p>Số điện: ${numberElectric}</p>
+                    <p>Cũ: ${consumeBeginMonth.numberElectric}</p>
+                    <p>Mới: ${consumeEndMonth.numberElectric}</p>
                 </div>
-                <p>Ngày tạo hóa đơn: 2022-06-06</p>
-                <p>Hạn thanh toán: 2022-06-13</p>
-                <p>Tổng: 2,000,000</p>
+                <p>Ngày tạo hóa đơn: <fmt:formatDate value="${createdDate}" type="Date" pattern="dd-MM-yyyy"/></p>
+                <p>Hạn thanh toán: <fmt:formatDate value="${expiredPaymentDate}" type="Date" pattern="dd-MM-yyyy"/></p>
+                <p>Tổng: <fmt:setLocale value="vi_VN"/>
+                    <fmt:formatNumber value="${BILL.totalMoney}" type="currency" currencySymbol="VNĐ"/></p>
                 <div id="action">
-                    <a href="#" role="button">Quay Lại</a>
+                    <a href="renter-invoice" role="button">Quay Lại</a>
                     <a href="#" role="button">Thanh Toán</a>
                 </div>
             </div>
@@ -153,22 +171,47 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Máy lạnh</td>
-                        <td>Kw</td>
-                        <td>5</td>
-                        <td>3,000</td>
-                        <td>15,000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Máy lạnh</td>
-                        <td>Kw</td>
-                        <td>5</td>
-                        <td>3,000</td>
-                        <td>15,000</td>
-                    </tr>
+                    <c:set var="count" value="0" scope="page"/>
+                    <c:forEach var="s" items="${LIST_SERVICES}">
+                        <c:set var="count" value="${count + 1}" scope="page"/>
+                        <tr>
+                            <td>${count}</td>
+                            <td>${s.serviceName}</td>
+                            <td>${s.unit}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${s.serviceName=='Điện'}">
+                                        ${numberElectric}
+                                    </c:when>
+                                    <c:when test="${s.serviceName=='Nước'}">
+                                        ${numberWater}
+                                    </c:when>
+                                    <c:otherwise>1</c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <fmt:setLocale value="vi_VN"/>
+                                <fmt:formatNumber value="${s.servicePrice}" type="currency" currencySymbol="VNĐ"/>
+                            </td>
+                            <td>
+                                <fmt:setLocale value="vi_VN"/>
+                                <c:set var="totalMoneyElectric" value="${s.servicePrice * numberElectric}" scope="page"/>
+                                <c:set var="totalMoneyWater" value="${s.servicePrice * numberWater}" scope="page"/>
+                                <c:choose>
+                                    <c:when test="${s.serviceName=='Điện'}">
+                                        <fmt:formatNumber value="${totalMoneyElectric}" type="currency" currencySymbol="VNĐ"/>
+                                    </c:when>
+                                    <c:when test="${s.serviceName=='Nước'}">
+                                        <fmt:formatNumber value="${totalMoneyWater}" type="currency" currencySymbol="VNĐ"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <fmt:formatNumber value="${s.servicePrice}" type="currency" currencySymbol="VNĐ"/>
+
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
