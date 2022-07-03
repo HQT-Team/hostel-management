@@ -118,7 +118,7 @@
 
         <div class="content">
             <div class="div-controll-form" id="div-controll-form">
-                <form action="renter-roommate-update" method="post" class="form" id="form">
+                <form action="renter-roommate-update" method="post" class="form" id="form_123">
                     <h1>Cập Nhật Thông Tin</h1>
                     <h3 style="color: green">${SUCCESS}</h3>
                     <h3 style="color: red">${ERROR}</h3>
@@ -161,7 +161,7 @@
                         <span id="mes-7"></span>
                     </div>
                     <input type="hidden" value="${param.roommateID}" name="roommateID">
-                    <input id="form-item-submit" type="submit" value="Lưu">
+                    <input id="form-item-submit" type="button" value="Lưu">
                 </form>
             </div>
         </div>
@@ -191,7 +191,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-<script src="./assets/js/renter/Renter-add-roommate.js"></script>
+<script src="./assets/js/renter/Renter-update-roommate.js"></script>
 
 </body>
 

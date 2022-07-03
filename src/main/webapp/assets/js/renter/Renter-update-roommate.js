@@ -1,4 +1,4 @@
-var form = document.getElementById("form")
+var form = document.getElementById("form_123")
 var form_item = document.getElementById("form-item")
 var input_1 = document.getElementById("form-item-input-1")
 var input_2 = document.getElementById("form-item-input-2")
@@ -7,8 +7,6 @@ var input_4 = document.getElementById("form-item-input-4")
 var input_5 = document.getElementById("form-item-input-5")
 var input_6 = document.getElementById("form-item-input-6")
 var input_7 = document.getElementById("form-item-input-7")
-var input_8 = document.getElementById("form-item-input-8")
-var input_9 = document.getElementById("form-item-input-9")
 var submit = document.getElementById("form-item-submit")
 
 function showMessageError(input, x) {
@@ -34,7 +32,6 @@ function isValidDate(dateString) {
     // First check for the pattern
     var date_regex = /^(0[1-9]|1\d|2\d|3[01])\/|-(0[1-9]|1[0-2])\/|-(19|20)\d{2}$/;
     if (!(date_regex.test(dateString.value))) {
-        console.log(abc)
         return false;
     }
     // Parse the date parts to integers
@@ -93,7 +90,9 @@ function checkEmpty(list) {
         if (x == 4) {
             x = 5;
         }
+        if(input.value != undefined){
         input.value = input.value.trim();
+        }
         if (!input.value) {
             check = showMessageError(input, x);
         }
@@ -109,10 +108,14 @@ function checkEmpty(list) {
 
 submit.addEventListener('click', function () {
     let check = true;
-    check = checkEmpty([input_1, input_2, input_3, input_5, input_6, input_7, input_8, input_9])
-    if (document.getElementById("mes-3").value == undefined) {
-        console.log(document.getElementById("mes-3"));
-        var check_date = isValidDate(input_3)
+
+    //check empty!
+    check = checkEmpty([input_1, input_2, input_3, input_5, input_6, input_7])
+    console.log("check sau check empty!"+check)
+    //check date
+    if (input_3.innerText != undefined || input_3.innerText != "") {
+        console.log(input_3.innerText)
+        var check_date = isValidDate(input_3);
         if (!check_date) {
             let parent = input_3.parentElement;
             let span = parent.querySelector("#mes-3");
@@ -123,6 +126,12 @@ submit.addEventListener('click', function () {
             span.innerText = "";
         }
     }
+    if (check_date == false) {
+        check = check_date;
+    }
+    console.log("check sau check date!"+check)
+    //check cccd
+    let checkcccd = checkNumberCCCD(input_7);
     if (!checkNumberCCCD(input_7)) {
         let parent = input_7.parentElement;
         let span = parent.querySelector("#mes-7");
@@ -132,9 +141,13 @@ submit.addEventListener('click', function () {
         let span = parent.querySelector("#mes-7");
         span.innerText = "";
     }
-
-
-    if (!checkNumber(input_5)) {
+    if(checkcccd==false){
+        check = checkcccd;
+    }
+    console.log("check sau check cccd!"+check)
+//check phone
+    let checkNumber1  = checkNumber(input_5);
+    if (!checkNumber1) {
         let parent = input_5.parentElement;
         let span = parent.querySelector("#mes-5");
         span.innerText = "Vui lòng nhập số điện thoại của bạn!";
@@ -144,6 +157,13 @@ submit.addEventListener('click', function () {
         let span = parent.querySelector("#mes-5");
         span.innerText = "";
     }
+if(checkNumber1 == false){
+    check = checkNumber1;
+}
+    console.log("check sau check number!"+check)
+
+
+    //check mail
     var check_email = validateEmail(input_2)
     if (!check_email) {
         let parent = input_2.parentElement;
@@ -154,15 +174,13 @@ submit.addEventListener('click', function () {
         let span = parent.querySelector("#mes-2");
         span.innerText = "";
     }
-    if (!check_email) {
+    if (check_email==false) {
         check = check_email;
     }
-    if (!check_date) {
-        check = check_date;
-    }
+    console.log("check sau check email! " + check_email);
     console.log(check);
     if (check) {
-        document.getElementById("form").submit();
+        form.submit();
     }
 })
 
