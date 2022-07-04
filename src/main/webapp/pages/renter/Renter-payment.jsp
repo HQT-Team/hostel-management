@@ -153,9 +153,13 @@
                 <p><strong>Hạn thanh toán: </strong><fmt:formatDate value="${expiredPaymentDate}" type="Date" pattern="dd-MM-yyyy"/></p>
                 <p><strong>Tổng: </strong><fmt:setLocale value="vi_VN"/>
                     <fmt:formatNumber value="${BILL.totalMoney}" type="currency" currencySymbol="VNĐ"/></p>
+                <form id="action" action="vnp-payment" method="post">
+                    <input type="hidden" name="vnp_OrderId" value="${BILL.billID}">
+                    <button type="submit" id="payment-button">Thanh Toán</button>
+                </form>
                 <div id="action">
                     <a href="renter-invoice" role="button">Quay Lại</a>
-                    <a href="#" id="payment-button" role="button">Thanh Toán</a>
+<%--                    <a href="#"  role="button"></a>--%>
                 </div>
             </div>
             <div id="table">

@@ -21,8 +21,8 @@ import java.util.Map;
 
 @WebServlet(name = "VNPayIPNServlet", value = "/VNPayIPNServlet")
 public class VNPayIPNServlet extends HttpServlet {
-    private final String SUCCESS = "create-contract";
-    private final String FAIL = "create-room-account-page";
+    private final String SUCCESS = "renter-bill-payment";
+    private final String FAIL = "Renter-payment";
     private final String ERROR = "error-page";
 
     @Override
@@ -86,16 +86,17 @@ public class VNPayIPNServlet extends HttpServlet {
                         - Neu trang thai don hang (da cap nhat roi) => khong cap nhat vao DB, tra lai cho VNPAY RspCode=02
                      */
 
-                    Bill bill = billDAO.getBillById(billId);
+                    Bill bill = billDAO.getRenterBillByID(billId);
                     boolean checkOrderId = bill != null; // vnp_TxnRef đơn hàng có tồn tại trong database merchant
-                    boolean checkAmount = bill.getTotalMoney() == amount; // vnp_Amount is valid  (so sánh số tiền VNPAY request và sô tiền của giao dịch trong database merchant)
+                    boolean checkAmount = (bill.getTotalMoney() * 100) == amount; // vnp_Amount is valid  (so sánh số tiền VNPAY request và sô tiền của giao dịch trong database merchant)
                     boolean checkOrderStatus = bill.getStatus() == 0; // PaymnentStatus = 0 (pending)
                     if (checkOrderId) {
                         if (checkAmount) {
                             if (checkOrderStatus) {
                                 if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
                                     //Xu ly thanh toan thanh cong
-                                    billDAO.updateBillStatus(bill.getBillID(), 1, formatter.format(payDate));
+                                    billDAO.updateBillStatus(bill.getBillID(), 1, formatter.format(payDate), 1);
+                                    request.setAttribute("billID", billId);
                                     handlerStatus = HandlerStatus.builder().status(true).content("GD Thanh cong").build();
                                     url = SUCCESS;
                                 } else {

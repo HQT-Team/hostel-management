@@ -25,7 +25,8 @@ public class BillDAO {
     // After insert new bill, you need to set all old consume to 1, and insert 1 new consume start with status = 0
     private static final String INSERT_NEW_BILL_TAIL = "UPDATE Consumes SET status = 1 WHERE room_id = 1\n" +
             "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id) VALUES (?, ?, GETDATE(), 0, ?)\n";
-    private static final String UPDATE_BILL_STATUS = "UPDATE [dbo].[Bill] SET [status] = ?, [payment_date] = ? WHERE [bill_id] = ?";
+    private static final String UPDATE_BILL_STATUS = "UPDATE [dbo].[Bill] SET [status] = ?, [payment_date] = ?, [payment_id]= ? WHERE [bill_id] = ?";
+
 
     private static final String GET_BILL_BY_RENTER_ID = "SELECT Bill.bill_id, Bill.total_money, Bill.created_date, Bill.bill_title, \n" +
             "Bill.expired_payment_date, Bill.payment_date, Bill.status, Bill.payment_id, Bill.room_id\n" +
@@ -482,26 +483,28 @@ public class BillDAO {
         return bill;
     }
 
-    public boolean updateBillStatus(int billId, int status, String payDate) {
+    public boolean updateBillStatus(int billId, int status, String payDate, int payId) {
         Connection cn = null;
         PreparedStatement pst = null;
         boolean result = false;
         try {
-            cn.setAutoCommit(false);
             cn = DBUtils.makeConnection();
             if (cn != null) {
+                cn.setAutoCommit(false);
                 String sql = UPDATE_BILL_STATUS;
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, status);
                 pst.setString(2, payDate);
-                pst.setInt(3, billId);
+                pst.setInt(3, payId);
+                pst.setInt(4, billId);
+
 
                 if (pst.executeUpdate() > 0) {
                     result = true;
                     cn.commit();
                 } else {
-                    cn.rollback();
+                        cn.rollback();
                 }
                 cn.setAutoCommit(true);
             }

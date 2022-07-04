@@ -26,7 +26,7 @@ public class GetRenterBillPaymentServlet extends HttpServlet {
             int accID = account.getAccId();
 
             BillDAO billDAO = new BillDAO();
-            int billID = Integer.parseInt(req.getParameter("billID"));
+            int billID = ( req.getAttribute("billID") != null) ? (int) req.getAttribute("billID") : Integer.parseInt(req.getParameter("billID")) ;
             BillDetail billDetail = new BillDAO().getBillDetail(billID);
 
             Bill bill = billDAO.getRenterBillByID(billID);
@@ -39,6 +39,8 @@ public class GetRenterBillPaymentServlet extends HttpServlet {
                 Consume consumeEnd = new ConsumeDAO().getConsumeByID(consumeIDEnd);
                 req.setAttribute("CONSUME_START", consumeStart);
                 req.setAttribute("CONSUME_END", consumeEnd);
+                HandlerStatus handlerStatus = (HandlerStatus) req.getAttribute("RESPONSE_MSG");
+                req.setAttribute("RESPONSE_MSG", handlerStatus);
                 url = SUCCESS;
             }
             //Get service
