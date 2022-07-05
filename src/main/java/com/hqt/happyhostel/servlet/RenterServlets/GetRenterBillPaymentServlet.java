@@ -30,6 +30,7 @@ public class GetRenterBillPaymentServlet extends HttpServlet {
             BillDetail billDetail = new BillDAO().getBillDetail(billID);
 
             Bill bill = billDAO.getRenterBillByID(billID);
+            req.setAttribute("RESPONSE_MSG", req.getAttribute("RESPONSE_MSG"));
             if (bill != null){
                 req.setAttribute("BILL", bill);
                 //get number electric and water

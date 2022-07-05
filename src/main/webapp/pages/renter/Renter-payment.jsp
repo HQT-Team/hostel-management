@@ -16,10 +16,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Renter</title>
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
@@ -31,27 +31,30 @@
 
 <body>
 <%
-    Account account = (Account)session.getAttribute("USER");
+    Account account = (Account) session.getAttribute("USER");
 %>
 <div>
     <nav class="navbar row">
         <div class="navbar-left">
-            <div class="dropdown"  style="padding-left: 15px;">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
+            <div class="dropdown" style="padding-left: 15px;">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"
+                        style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
                     Menu
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
                     <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
                     <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
-                    <a class="dropdown-item" href="renter-invoice"style="font-size: 15px;">Hóa đơn</a>
-                    <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
-                    <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
-                    <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
-                    <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
-                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
-                    <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
+                    <a class="dropdown-item" href="renter-invoice" style="font-size: 15px;">Hóa đơn</a>
+                    <a class="dropdown-item" href="Renter-report" style="font-size: 15px;">Báo cáo</a>
+                    <a class="dropdown-item" href="RenterNotificationPage" style="font-size: 15px;">Thông báo</a>
+                    <a class="dropdown-item" href="Renter-add-roommate" style="font-size: 15px;">Thêm bạn</a>
+                    <a class="dropdown-item" href="Get-report" style="font-size: 15px;">Xem báo cáo</a>
+                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"
+                       style="font-size: 15px;">Hồ sơ</a>
+                    <a class="dropdown-item" href="logout" style="font-size: 15px;">Đăng xuất</a>
                 </div>
             </div>
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
@@ -75,7 +78,8 @@
         <div class="dashboard hidden" id="dashboard">
             <div class="infor-top">
                 <img src="./assets/images/avatars/user-avatar.jpg" alt="">
-                <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
+                <h3><%= account.getAccountInfo().getInformation().getFullname() %>
+                </h3>
                 <p>Renter</p>
             </div>
             <div class="card">
@@ -92,7 +96,7 @@
                         <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
                         <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
                         <h3><a href="ContractPage">Hợp đồng</a></h3>
-                        <h3><a href="renter-invoice"style="color:rgb(4, 4, 255)">Hóa đơn</a></h3>
+                        <h3><a href="renter-invoice" style="color:rgb(4, 4, 255)">Hóa đơn</a></h3>
                         <h3><a href="Renter-report">Gửi báo cáo</a></h3>
                         <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
                         <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
@@ -120,24 +124,29 @@
 
         <div class="content">
             <h1>Hóa Đơn</h1>
+            <input id="key" type="hidden" value="<%=request.getAttribute("RESPONSE_MSG")%>"/>
+            <div id="notification">
+                <p id="notification-p">Thanh toán thành công</p>
+            </div>
             <div id="invoice-cover">
-                <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.createdDate}" var="createdDate" />
-                <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.expiredPaymentDate}" var="expiredPaymentDate" />
+                <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.createdDate}" var="createdDate"/>
+                <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.expiredPaymentDate}" var="expiredPaymentDate"/>
 
                 <h2>#<fmt:formatDate value="${createdDate}" type="Date" pattern="yyyyMMdd"/>${BILL.billID}</h2>
                 <h3><a>
                     <c:if test="${BILL.status == 1}">
-                        <p class="payment-success" style="color: green">Đã thanh toán</p>
+                        <p class="payment-status" style="color: green">Đã thanh toán</p>
                     </c:if>
                     <c:if test="${BILL.status != 1}">
-                        <p class="payment-waiting" style="color: red">Chưa thanh toán</p>
+                        <p class="payment-status" style="color: red">Chưa thanh toán</p>
                     </c:if>
                 </a></h3>
                 <p></p>
                 <c:set var="consumeBeginMonth" value="${requestScope.CONSUME_START}"/>
                 <c:set var="consumeEndMonth" value="${requestScope.CONSUME_END}"/>
                 <div id="water">
-                    <c:set var="numberElectric" value="${consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric}"/>
+                    <c:set var="numberElectric"
+                           value="${consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric}"/>
                     <c:set var="numberWater" value="${consumeEndMonth.numberWater - consumeBeginMonth.numberWater}"/>
 
                     <p><strong>Số nước: </strong>${numberWater}</p>
@@ -149,17 +158,21 @@
                     <p><strong>Cũ: </strong>${consumeBeginMonth.numberElectric}</p>
                     <p><strong>Mới: </strong>${consumeEndMonth.numberElectric}</p>
                 </div>
-                <p><strong>Ngày tạo hóa đơn: </strong><fmt:formatDate value="${createdDate}" type="Date" pattern="dd-MM-yyyy"/></p>
-                <p><strong>Hạn thanh toán: </strong><fmt:formatDate value="${expiredPaymentDate}" type="Date" pattern="dd-MM-yyyy"/></p>
+                <p><strong>Ngày tạo hóa đơn: </strong><fmt:formatDate value="${createdDate}" type="Date"
+                                                                      pattern="dd-MM-yyyy"/></p>
+                <p><strong>Hạn thanh toán: </strong><fmt:formatDate value="${expiredPaymentDate}" type="Date"
+                                                                    pattern="dd-MM-yyyy"/></p>
                 <p><strong>Tổng: </strong><fmt:setLocale value="vi_VN"/>
                     <fmt:formatNumber value="${BILL.totalMoney}" type="currency" currencySymbol="VNĐ"/></p>
-                <form id="action" action="vnp-payment" method="post">
-                    <input type="hidden" name="vnp_OrderId" value="${BILL.billID}">
-                    <button type="submit" id="payment-button">Thanh Toán</button>
-                </form>
-                <div id="action">
-                    <a href="renter-invoice" role="button">Quay Lại</a>
-<%--                    <a href="#"  role="button"></a>--%>
+
+                <div id="action1">
+                    <form id="action0" action="renter-invoice">
+                        <button type="submit">Quay Lại</button>
+                    </form>
+                    <form id="action" action="vnp-payment" method="post">
+                        <input type="hidden" name="vnp_OrderId" value="${BILL.billID}">
+                        <button type="submit" id="payment-button">Thanh Toán</button>
+                    </form>
                 </div>
             </div>
             <div id="table">
@@ -199,17 +212,21 @@
                             </td>
                             <td>
                                 <fmt:setLocale value="vi_VN"/>
-                                <c:set var="totalMoneyElectric" value="${s.servicePrice * numberElectric}" scope="page"/>
+                                <c:set var="totalMoneyElectric" value="${s.servicePrice * numberElectric}"
+                                       scope="page"/>
                                 <c:set var="totalMoneyWater" value="${s.servicePrice * numberWater}" scope="page"/>
                                 <c:choose>
                                     <c:when test="${s.serviceName=='Điện'}">
-                                        <fmt:formatNumber value="${totalMoneyElectric}" type="currency" currencySymbol="VNĐ"/>
+                                        <fmt:formatNumber value="${totalMoneyElectric}" type="currency"
+                                                          currencySymbol="VNĐ"/>
                                     </c:when>
                                     <c:when test="${s.serviceName=='Nước'}">
-                                        <fmt:formatNumber value="${totalMoneyWater}" type="currency" currencySymbol="VNĐ"/>
+                                        <fmt:formatNumber value="${totalMoneyWater}" type="currency"
+                                                          currencySymbol="VNĐ"/>
                                     </c:when>
                                     <c:otherwise>
-                                        <fmt:formatNumber value="${s.servicePrice}" type="currency" currencySymbol="VNĐ"/>
+                                        <fmt:formatNumber value="${s.servicePrice}" type="currency"
+                                                          currencySymbol="VNĐ"/>
 
                                     </c:otherwise>
                                 </c:choose>
@@ -247,6 +264,7 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <script src="./assets/js/renter/Renter-payment.js"></script>
+
 
 </body>
 

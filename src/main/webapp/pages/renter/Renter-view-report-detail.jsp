@@ -145,7 +145,7 @@
                                <p><strong>Ngày Trả Lời: </strong>${rp.completeDate}</p>
                            </c:when>
                            <c:when test="${rp.completeDate==null}">
-                               <p><strong>Ngày Trả Lời: </strong> Chưa Phản Hồi</p>
+                               <p><strong style="color: black">Ngày Trả Lời: </strong> Chưa Phản Hồi</p>
                            </c:when>
                        </c:choose>
                     </c:if>
