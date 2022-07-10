@@ -118,11 +118,14 @@
                 <h2>Danh Sách Báo Cáo</h2>
                 <input type="text" placeholder="Tìm kiếm..." id="myInput">
                 <table class="table table-dark table-striped">
+                    <thead>
                     <tr class="header">
                         <th >Loại Đơn</th>
                         <th >Ngày Gửi</th>
                         <th >Tình Trạng</th>
                         <th>Hành Động</th>
+                    </tr>
+                    </thead>
                     <tbody id="myTable">
                     <c:forEach var="rp" items="${REPORT_LIST}">
                         <tr>

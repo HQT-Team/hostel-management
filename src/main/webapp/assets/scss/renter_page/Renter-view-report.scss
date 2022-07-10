@@ -46,27 +46,38 @@ body{
       width: 60%;
       margin: 10px auto;
 
-      tr {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+      thead {
+       tr{
+         height: fit-content;
+         padding: 0;
+         display: grid;
+         grid-template-columns: 1fr 1fr 1fr 1fr;
 
-        th {
-          line-height: 22px;
-          font-size: 22px;
-        }
+         th {
+           padding:10px 0px;
+           margin: 0;
+           line-height: 22px;
+           font-size: 22px;
+         }
+       }
       }
 
       tbody {
         tr {
+          height: fit-content;
+          padding: 0;
           display: grid;
           grid-template-columns: 1fr 1fr 1fr 1fr;
 
           td {
-            line-height: 20px;
+            padding:8px 0px;
+            margin: 0;
+            line-height: 18px;
             font-size: 18px;
-
             p {
+              padding: 0;
               width: 100%;
+              margin: 0;
               word-wrap: break-word;
             }
           }

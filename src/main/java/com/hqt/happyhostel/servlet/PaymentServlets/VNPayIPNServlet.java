@@ -125,7 +125,5 @@ public class VNPayIPNServlet extends HttpServlet {
             if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
             else request.getRequestDispatcher(url).forward(request, response);
         }
-
-
     }
 }
