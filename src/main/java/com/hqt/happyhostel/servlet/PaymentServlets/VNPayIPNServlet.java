@@ -22,13 +22,13 @@ import java.util.Map;
 @WebServlet(name = "VNPayIPNServlet", value = "/VNPayIPNServlet")
 public class VNPayIPNServlet extends HttpServlet {
     private final String SUCCESS = "renter-bill-payment";
-    private final String FAIL = "Renter-payment";
+    private final String FAIL = "renter-bill-payment";
     private final String ERROR = "error-page";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int billId = -1;
-        int amount = -1;
+        long amount = -1;
         String url = ERROR;
 //        String orderInfo = null;
 //        String responseCode = null;
@@ -62,7 +62,7 @@ public class VNPayIPNServlet extends HttpServlet {
                 }
                 String signValue = ConfigUtils.hashAllFields(fields);
                 billId = Integer.parseInt(request.getParameter("vnp_TxnRef"));
-                amount = Integer.parseInt(request.getParameter("vnp_Amount"));
+                amount = Long.parseLong(request.getParameter("vnp_Amount"));
 //                orderInfo = request.getParameter("vnp_OrderInfo");
 //                responseCode = request.getParameter("vnp_ResponseCode");
 //                transactionNo = request.getParameter("vnp_TransactionNo");
@@ -88,15 +88,15 @@ public class VNPayIPNServlet extends HttpServlet {
 
                     Bill bill = billDAO.getRenterBillByID(billId);
                     boolean checkOrderId = bill != null; // vnp_TxnRef đơn hàng có tồn tại trong database merchant
-                    boolean checkAmount = (bill.getTotalMoney() * 100) == amount; // vnp_Amount is valid  (so sánh số tiền VNPAY request và sô tiền của giao dịch trong database merchant)
+                    boolean checkAmount = ((long)bill.getTotalMoney() * 100) == amount; // vnp_Amount is valid  (so sánh số tiền VNPAY request và sô tiền của giao dịch trong database merchant)
                     boolean checkOrderStatus = bill.getStatus() == 0; // PaymnentStatus = 0 (pending)
+                    request.setAttribute("billID", billId);
                     if (checkOrderId) {
                         if (checkAmount) {
                             if (checkOrderStatus) {
                                 if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
                                     //Xu ly thanh toan thanh cong
                                     billDAO.updateBillStatus(bill.getBillID(), 1, formatter.format(payDate), 1);
-                                    request.setAttribute("billID", billId);
                                     handlerStatus = HandlerStatus.builder().status(true).content("GD Thanh cong").build();
                                     url = SUCCESS;
                                 } else {
@@ -120,7 +120,8 @@ public class VNPayIPNServlet extends HttpServlet {
                 request.setAttribute("RESPONSE_MSG", handlerStatus);
             }
         } catch (Exception e) {
-            log("Error at CreateRenterAccountServlet: " + e);
+//            log("Error at CreateRenterAccountServlet: " + e);
+            e.printStackTrace();
         } finally {
             if (ERROR.equalsIgnoreCase(url)) response.sendRedirect(url);
             else request.getRequestDispatcher(url).forward(request, response);
