@@ -34,11 +34,13 @@ public class BillDAO {
             "INNER JOIN Rooms ON Contracts.room_id=Rooms.room_id\n" +
             "INNER JOIN Bill ON Contracts.room_id=Bill.room_id\n" +
             "WHERE Accounts.account_id = ?";
-    private static final String GET_RENTER_BILL_BY_ID=
+    private static final String GET_RENTER_BILL_BY_ID =
             "SELECT bill_id, total_money, created_date, bill_title, \n" +
                     "expired_payment_date, payment_date, status, payment_id, room_id\n" +
                     "FROM Bill \n" +
                     "WHERE bill_id = ?";
+    private static final String Get_List_Bill_By_Quarter = "SELECT bill_id, total_money, created_date, bill_title,expired_payment_date, payment_date, status, payment_id, room_id FROM [dbo].[Bill] WHERE created_date BETWEEN  ? AND ?";
+    private static final String Get_List_Bill_By_Year = "SELECT bill_id, total_money, created_date, bill_title,expired_payment_date, payment_date, status, payment_id, room_id FROM [dbo].[Bill] WHERE created_date BETWEEN  ? AND ?";
 
     public boolean InsertANewBill(int totalMoney, String billTitle, String expiredPaymentDate, int roomID,
                                   int consumeIDStart, int consumeIDEnd, int accountHostelOwner, int accountRenterID,
@@ -504,7 +506,7 @@ public class BillDAO {
                     result = true;
                     cn.commit();
                 } else {
-                        cn.rollback();
+                    cn.rollback();
                 }
                 cn.setAutoCommit(true);
             }
@@ -548,7 +550,7 @@ public class BillDAO {
 
                 rs = pst.executeQuery();
                 if (rs != null) {
-                    while(rs.next()) {
+                    while (rs.next()) {
                         int billID = rs.getInt("bill_id");
                         int totalMoney = rs.getInt("total_money");
                         String createdDate = rs.getString("created_date");
@@ -595,8 +597,7 @@ public class BillDAO {
     }
 
 
-
-    public List<Bill> getBllListByRenterID(int renterID) throws SQLException{
+    public List<Bill> getBllListByRenterID(int renterID) throws SQLException {
         List<Bill> billList = new ArrayList<>();
         Connection cn = null;
         PreparedStatement ptm = null;
@@ -607,7 +608,7 @@ public class BillDAO {
             ptm = cn.prepareStatement(GET_BILL_BY_RENTER_ID);
             ptm.setInt(1, renterID);
             rs = ptm.executeQuery();
-            while (rs!=null && rs.next()){
+            while (rs != null && rs.next()) {
                 int billID = rs.getInt("bill_id");
                 int totalMoney = rs.getInt("total_money");
                 String createdDate = dateFormat.format(rs.getDate("created_date"));
@@ -615,7 +616,7 @@ public class BillDAO {
                 String expiredPaymentDate = dateFormat.format(rs.getDate("expired_payment_date"));
                 Date paymentDateTemp = rs.getDate("payment_date");
                 String paymentDate;
-                if (paymentDateTemp == null || paymentDateTemp.equals("")){
+                if (paymentDateTemp == null || paymentDateTemp.equals("")) {
                     paymentDate = "";
                 } else {
                     paymentDate = dateFormat.format(paymentDateTemp);
@@ -624,35 +625,35 @@ public class BillDAO {
                 int paymentID = rs.getInt("payment_id");
                 int roomID = rs.getInt("room_id");
                 billList.add(Bill.builder()
-                                .billID(billID)
-                                .createdDate(createdDate)
-                                .totalMoney(totalMoney)
-                                .billTitle(billTitle)
-                                .expiredPaymentDate(expiredPaymentDate)
-                                .paymentDate(paymentDate)
-                                .status(status)
-                                .payment(Payment.builder().paymentID(paymentID).build())
-                                .roomID(roomID)
-                                .build());
+                        .billID(billID)
+                        .createdDate(createdDate)
+                        .totalMoney(totalMoney)
+                        .billTitle(billTitle)
+                        .expiredPaymentDate(expiredPaymentDate)
+                        .paymentDate(paymentDate)
+                        .status(status)
+                        .payment(Payment.builder().paymentID(paymentID).build())
+                        .roomID(roomID)
+                        .build());
             }
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if(rs!=null){
+        } finally {
+            if (rs != null) {
                 rs.close();
             }
-            if (ptm!=null){
+            if (ptm != null) {
                 ptm.close();
             }
-            if (cn!=null){
+            if (cn != null) {
                 cn.close();
             }
         }
         return billList;
     }
-    public Bill getRenterBillByID(int billID) throws SQLException{
+
+    public Bill getRenterBillByID(int billID) throws SQLException {
         Bill bill = null;
         Connection cn = null;
         PreparedStatement ptm = null;
@@ -663,14 +664,14 @@ public class BillDAO {
             ptm = cn.prepareStatement(GET_RENTER_BILL_BY_ID);
             ptm.setInt(1, billID);
             rs = ptm.executeQuery();
-            if (rs!=null && rs.next()){
+            if (rs != null && rs.next()) {
                 int totalMoney = rs.getInt("total_money");
                 String createdDate = dateFormat.format(rs.getDate("created_date"));
                 String billTitle = rs.getString("bill_title");
                 String expiredPaymentDate = dateFormat.format(rs.getDate("expired_payment_date"));
                 Date paymentDateTemp = rs.getDate("payment_date");
                 String paymentDate;
-                if (paymentDateTemp == null || paymentDateTemp.equals("")){
+                if (paymentDateTemp == null || paymentDateTemp.equals("")) {
                     paymentDate = "";
                 } else {
                     paymentDate = dateFormat.format(paymentDateTemp);
@@ -691,21 +692,137 @@ public class BillDAO {
                         .build();
             }
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if(rs!=null){
+        } finally {
+            if (rs != null) {
                 rs.close();
             }
-            if (ptm!=null){
+            if (ptm != null) {
                 ptm.close();
             }
-            if (cn!=null){
+            if (cn != null) {
                 cn.close();
             }
         }
         return bill;
     }
 
+    public ArrayList<Bill> GetListBillAccordingQuarter(String startDate, String endDate) throws Exception {
+        Bill bill = null;
+        ArrayList<Bill> listBill = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //select * from [dbo].[Bill] where created_date BETWEEN  '2022-06-22' AND '2022-10-22'
+        try {
+            cn = DBUtils.makeConnection();
+            ptm = cn.prepareStatement(Get_List_Bill_By_Quarter);
+            ptm.setString(1, startDate);
+            ptm.setString(2, endDate);
+            rs = ptm.executeQuery();
+            while (rs != null && rs.next()) {
+                int billID = rs.getInt("bill_id");
+                int totalMoney = rs.getInt("total_money");
+                String createdDate = dateFormat.format(rs.getDate("created_date"));
+                String billTitle = rs.getString("bill_title");
+                String expiredPaymentDate = dateFormat.format(rs.getDate("expired_payment_date"));
+                Date paymentDateTemp = rs.getDate("payment_date");
+                String paymentDate;
+                if (paymentDateTemp == null || paymentDateTemp.equals("")) {
+                    paymentDate = "";
+                } else {
+                    paymentDate = dateFormat.format(paymentDateTemp);
+                }
+                int status = rs.getInt("status");
+                int paymentID = rs.getInt("payment_id");
+                int roomID = rs.getInt("room_id");
+                bill = Bill.builder()
+                        .billID(billID)
+                        .createdDate(createdDate)
+                        .totalMoney(totalMoney)
+                        .billTitle(billTitle)
+                        .expiredPaymentDate(expiredPaymentDate)
+                        .paymentDate(paymentDate)
+                        .status(status)
+                        .payment(Payment.builder().paymentID(paymentID).build())
+                        .roomID(roomID)
+                        .build();
+                listBill.add(bill);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return listBill;
+    }
+
+    public ArrayList<Bill> GetListBillAccordingYear(String startYear) throws Exception {
+        Bill bill = null;
+        ArrayList<Bill> listBill = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String endYear = startYear + "12-31";
+        try {
+            cn = DBUtils.makeConnection();
+            ptm = cn.prepareStatement(Get_List_Bill_By_Year);
+            ptm.setString(1, startYear);
+            ptm.setString(2, endYear);
+            rs = ptm.executeQuery();
+            while (rs != null && rs.next()) {
+                int billID = rs.getInt("bill_id");
+                int totalMoney = rs.getInt("total_money");
+                String createdDate = dateFormat.format(rs.getDate("created_date"));
+                String billTitle = rs.getString("bill_title");
+                String expiredPaymentDate = dateFormat.format(rs.getDate("expired_payment_date"));
+                Date paymentDateTemp = rs.getDate("payment_date");
+                String paymentDate;
+                if (paymentDateTemp == null || paymentDateTemp.equals("")) {
+                    paymentDate = "";
+                } else {
+                    paymentDate = dateFormat.format(paymentDateTemp);
+                }
+                int status = rs.getInt("status");
+                int paymentID = rs.getInt("payment_id");
+                int roomID = rs.getInt("room_id");
+                bill = Bill.builder()
+                        .billID(billID)
+                        .createdDate(createdDate)
+                        .totalMoney(totalMoney)
+                        .billTitle(billTitle)
+                        .expiredPaymentDate(expiredPaymentDate)
+                        .paymentDate(paymentDate)
+                        .status(status)
+                        .payment(Payment.builder().paymentID(paymentID).build())
+                        .roomID(roomID)
+                        .build();
+                listBill.add(bill);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return listBill;
+    }
 }

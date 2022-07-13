@@ -50,7 +50,7 @@
                 </div>
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
+                        <li class="breadcrumb-item"><a href="HostelRenterPage" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">Báo Cáo</li>
                     </ol>
@@ -115,7 +115,7 @@
                 <div class="report">
                     <form action="Add-report" method="post" id="form-submit">
                         <h2>Viết Báo Cáo</h2>
-
+                        <h3 class="notification-success">${SUCCESS}</h3>
                         <div>
                             <select name="cateID" id="select">
                                 <option value="">Loại Đơn</option>
@@ -132,9 +132,9 @@
                             <label class="form-label">Nội dung</label>
                             <span id="mes-2"></span>
                         </div>
-                    <h3 class="notification-success">${SUCCESS}</h3>
+
                         <div>
-                            <input value="Submit" type="button" id="Submit">
+                            <input value="Gửi" type="button" id="Submit">
                         </div>
                     </form>
                 </div>

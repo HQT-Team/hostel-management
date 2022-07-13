@@ -61,7 +61,7 @@
             </div>
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
+                    <li class="breadcrumb-item"><a href="HostelRenterPage" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa</li>
                 </ol>
@@ -162,7 +162,6 @@
                         <select name="new-gender" id="form-item-input-4">
                             <option value="0">Nữ</option>
                             <option value="1">Nam</option>
-                            <option value="2">Khác</option>
                         </select>
                     </div>
                     <div class="form-item">

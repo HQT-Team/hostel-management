@@ -37,7 +37,7 @@
     <div class="navbar-left">
       <div class="dropdown"  style="padding-left: 15px;">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false"style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
+                aria-haspopup="true" aria-expanded="false" style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
           Menu
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -55,7 +55,7 @@
       </div>
       <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
+          <li class="breadcrumb-item"><a href="HostelRenterPage" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa</li>
         </ol>
