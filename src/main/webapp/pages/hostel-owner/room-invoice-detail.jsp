@@ -230,6 +230,7 @@
                                 <c:choose>
                                     <c:when test="${requestScope.billRoom.status eq 0}">
                                         <input type="hidden" name="billID" value="${requestScope.billRoom.billID}">
+                                        <input type="hidden" name="navigateTo" value="roomInvoiceList?roomId=${sessionScope.room.roomId}">
                                         <button type="submit" class="bill__action-btn btn btn-outline-primary">
                                             Xác nhận đã thanh toán
                                         </button>

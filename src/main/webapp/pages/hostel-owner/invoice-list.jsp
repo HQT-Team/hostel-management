@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -7,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
 
     <!-- Title -->
     <title>Hóa đơn</title>
@@ -26,7 +29,7 @@
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 
     <!-- Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
 </head>
 
 <body class="over-flow-hidden">
@@ -40,14 +43,14 @@
 </div>
 
 <!-- Navbar -->
-<%@include file="./components/navbar.jsp"%>
+<%@include file="./components/navbar.jsp" %>
 
 <!-- Body -->
 <div class="container">
     <div class="row position-relative">
         <!-- Side bar -->
         <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
-            <%@include file="./components/sidebar.jsp"%>
+            <%@include file="./components/sidebar.jsp" %>
         </div>
 
         <!-- Content -->
@@ -79,23 +82,29 @@
                             </tr>
                             <tr>
                                 <td><i class="fa-solid fa-sliders"></i> Lọc</td>
+                                <c:set var="hostelNameListNotPayment"
+                                       value="${sessionScope.INVOICE_NOT_PAYMENT_LIST_HOSTEL_NAME}"/>
+                                <c:set var="roomNameListNotPayment"
+                                       value="${sessionScope.INVOICE_NOT_PAYMENT_LIST_ROOM_NUMBER}"/>
                                 <form action="" method="post">
                                     <td>
                                         <select name="" id="filter__hostel-select-1"
                                                 style="min-width: 100px; max-width: 200px;">
                                             <option value="">Tất cả</option>
-                                            <option value="">Nova Land</option>
-                                            <option value="">Nova Sky</option>
+                                            <c:forEach var="hostelName"
+                                                       items="${sessionScope.INVOICE_NOT_PAYMENT_LIST_DROP_DOWN_HOSTEL_NAME}">
+                                                <option>${hostelName}</option>
+                                            </c:forEach>
                                         </select>
                                     </td>
                                     <td>
                                         <select name="" id="filter__room-select-1"
                                                 style="min-width: 100px; max-width: 200px;">
                                             <option value="">Tất cả</option>
-                                            <option value="">1</option>
-                                            <option value="">2</option>
-                                            <option value="">3</option>
-                                            <option value="">4</option>
+                                            <c:forEach var="roomName"
+                                                       items="${sessionScope.INVOICE_NOT_PAYMENT_LIST_DROP_DOWN_ROOM_NUMBER}">
+                                                <option value="${roomName}">${roomName}</option>
+                                            </c:forEach>
                                         </select>
                                     </td>
                                 </form>
@@ -114,18 +123,30 @@
                             <th class="text-center">Ngày tạo</th>
                             </thead>
                             <tbody class="content__tbody">
-                            <tr>
-                                <td class="text-center">
-                                    <a href="./invoice-detail.html">#IV123</a>
-                                </td>
-                                <td class="text-center">
-                                    <a href="./invoice-detail.html">02/2022</a>
-                                </td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">Nova Land</td>
-                                <td class="text-center">2.500.000 VNĐ</td>
-                                <td class="text-center">21/01/2022</td>
-                            </tr>
+                            <c:set var="hostelName" value="${sessionScope.INVOICE_NOT_PAYMENT_LIST_HOSTEL_NAME}"/>
+                            <c:set var="hostelID" value="${sessionScope.INVOICE_NOT_PAYMENT_LIST_HOSTEL_ID}"/>
+                            <c:set var="roomNumber" value="${sessionScope.INVOICE_NOT_PAYMENT_LIST_ROOM_NUMBER}"/>
+                            <c:forEach var="bill" items="${sessionScope.INVOICE_NOT_PAYMENT_LIST}" varStatus="loop">
+                                <tr>
+                                    <td class="text-center">
+                                        <a href="getRoomInvoiceDetail?billID=${bill.billID}&hostelID=${hostelID.get(loop.index)}&roomID=${bill.roomID}">#B${bill.billID}</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="getRoomInvoiceDetail?billID=${bill.billID}&hostelID=${hostelID.get(loop.index)}&roomID=${bill.roomID}">${bill.billTitle}</a>
+                                    </td>
+                                    <td class="text-center">${roomNumber[loop.index]}</td>
+                                    <td class="text-center">${hostelName[loop.index]}</td>
+
+                                    <td><fmt:formatNumber value="${bill.totalMoney}"
+                                                          type="currency" currencySymbol="VNĐ"/></td>
+
+                                    <fmt:parseDate pattern="yyyy-MM-dd" value="${bill.createdDate}"
+                                                   var="createdDate"/>
+                                    <td>
+                                        <fmt:formatDate pattern="dd/MM/yyyy" value="${createdDate}"/>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -143,23 +164,29 @@
                             </tr>
                             <tr>
                                 <td><i class="fa-solid fa-sliders"></i> Lọc</td>
+                                <c:set var="hostelNameListNotPayment"
+                                       value="${sessionScope.INVOICE_PAYMENT_LIST_HOSTEL_NAME}"/>
+                                <c:set var="roomNameListNotPayment"
+                                       value="${sessionScope.INVOICE_PAYMENT_LIST_ROOM_NUMBER}"/>
                                 <form action="" method="post">
                                     <td>
                                         <select name="" id="filter__hostel-select-2"
                                                 style="min-width: 100px; max-width: 200px;">
-                                            <option value="">Tất cả</option>
-                                            <option value="">Fake Land</option>
-                                            <option value="">Fake Sky</option>
+                                            <option value="0">Tất cả</option>
+                                            <c:forEach var="hostelName"
+                                                       items="${sessionScope.INVOICE_PAYMENT_LIST_DROP_DOWN_HOSTEL_NAME}">
+                                                <option value="${hostelName}">${hostelName}</option>
+                                            </c:forEach>
                                         </select>
                                     </td>
                                     <td>
                                         <select name="" id="filter__room-select-2"
                                                 style="min-width: 100px; max-width: 200px;">
                                             <option value="">Tất cả</option>
-                                            <option value="">7</option>
-                                            <option value="">8</option>
-                                            <option value="">9</option>
-                                            <option value="">10</option>
+                                            <c:forEach var="roomName"
+                                                       items="${sessionScope.INVOICE_PAYMENT_LIST_DROP_DOWN_ROOM_NUMBER}">
+                                                <option value="${roomName}">${roomName}</option>
+                                            </c:forEach>
                                         </select>
                                     </td>
                                 </form>
@@ -178,18 +205,30 @@
                             <th class="text-center">Ngày tạo</th>
                             </thead>
                             <tbody class="content__tbody">
-                            <tr>
-                                <td class="text-center">
-                                    <a href="./invoice-detail.html">#IV124</a>
-                                </td>
-                                <td class="text-center">
-                                    <a href="./invoice-detail.html">03/2022</a>
-                                </td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">Nova Land</td>
-                                <td class="text-center">2.900.000 VNĐ</td>
-                                <td class="text-center">21/01/2022</td>
-                            </tr>
+                            <c:set var="hostelName" value="${sessionScope.INVOICE_PAYMENT_LIST_HOSTEL_NAME}"/>
+                            <c:set var="roomNumber" value="${sessionScope.INVOICE_PAYMENT_LIST_ROOM_NUMBER}"/>
+                            <c:set var="hostelID" value="${sessionScope.INVOICE_PAYMENT_LIST_HOSTEL_ID}"/>
+                            <c:forEach var="bill" items="${sessionScope.INVOICE_PAYMENT_LIST}" varStatus="loop">
+                                <tr>
+                                    <td class="text-center">
+                                        <a href="getRoomInvoiceDetail?billID=${bill.billID}&hostelID=${hostelID.get(loop.index)}&roomID=${bill.roomID}">#B${bill.billID}</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="getRoomInvoiceDetail?billID=${bill.billID}&hostelID=${hostelID.get(loop.index)}&roomID=${bill.roomID}">${bill.billTitle}</a>
+                                    </td>
+                                    <td class="text-center">${roomNumber[loop.index]}</td>
+                                    <td class="text-center">${hostelName[loop.index]}</td>
+
+                                    <td><fmt:formatNumber value="${bill.totalMoney}"
+                                                          type="currency" currencySymbol="VNĐ"/></td>
+
+                                    <fmt:parseDate pattern="yyyy-MM-dd" value="${bill.createdDate}"
+                                                   var="createdDate"/>
+                                    <td>
+                                        <fmt:formatDate pattern="dd/MM/yyyy" value="${createdDate}"/>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -200,7 +239,7 @@
 </div>
 
 <!-- Footer -->
-<%@include file="./components/footer.jsp"%>
+<%@include file="./components/footer.jsp" %>
 
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

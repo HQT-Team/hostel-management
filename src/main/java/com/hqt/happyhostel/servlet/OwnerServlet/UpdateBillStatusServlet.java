@@ -29,7 +29,11 @@ public class UpdateBillStatusServlet extends HttpServlet {
             boolean isUpdated = new PaymentDAO().updateBillStatus(billID, 1);
 
             if (isUpdated) {
-                url = "roomDetail";
+                if (request.getParameter("navigateTo") != null) {
+                    url = request.getParameter("navigateTo");
+                } else {
+                    url = "roomDetail";
+                }
                 request.setAttribute("roomID", roomId);
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(true)
