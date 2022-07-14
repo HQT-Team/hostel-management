@@ -17,7 +17,9 @@ public class ReportDAO {
 
     private static final String UPDATE_REPORT_TO_FINISHED =
             "UPDATE Reports SET status = 2, complete_date = GETDATE() WHERE id_report = ?";
-
+    private static final String GET_REPORT_BY_HOSTEL = "select A.id_report, A.send_date, A.content, A.status, A.reply, A.reply_date, A.complete_date, A.reply_account_id, A.send_account_id, A.cate_id \n" +
+            "from [dbo].[Reports] A join [dbo].[Accounts] B on A.send_account_id = B.account_id join [dbo].[Rooms] C on B.room_id = C.room_id join [dbo].[Hostels] D on C.hostel_id = D.hostel_id\n" +
+            "where D.name = ?";
     public boolean updateReportToFinished(int reportId) throws SQLException {
         boolean check = false;
         Connection cn = null;
@@ -155,6 +157,58 @@ public class ReportDAO {
                                     .sendAccountID(sendAccountID)
                                     .cateID(cateID)
                                     .build());
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (rs!=null){
+                rs.close();
+            }
+            if (st!=null){
+                st.close();
+            }
+            if (cn!=null){
+                cn.close();
+            }
+        }
+        return reports;
+    }
+
+
+    public ArrayList<Report> getReportByhostel(String hostelName) throws SQLException {
+        ArrayList<Report> reports = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn!=null){
+                st = cn.prepareStatement(GET_REPORT_BY_HOSTEL);
+                st.setString(1, hostelName);
+                rs = st.executeQuery();
+                while (rs!=null && rs.next()){
+                    int reportID = rs.getInt("id_report");
+                    String sendDate = rs.getString("send_date");
+                    String content = rs.getString("content");
+                    int status = rs.getInt("status");
+                    String reply = rs.getString("reply");
+                    String completeDate = rs.getString("complete_date");
+                    int replyAccountID = rs.getInt("reply_account_id");
+                    int sendAccountID = rs.getInt("send_account_id");
+                    int cateID = rs.getInt("cate_id");
+                    reports.add(Report.builder()
+                            .reportID(reportID)
+                            .sendDate(sendDate)
+                            .content(content)
+                            .status(status)
+                            .reply(reply)
+                            .completeDate(completeDate)
+                            .replyAccountID(replyAccountID)
+                            .sendAccountID(sendAccountID)
+                            .cateID(cateID)
+                            .build());
                 }
             }
 

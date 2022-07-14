@@ -36,6 +36,12 @@
             <div class="group-option__label">Hóa đơn</div>
         </a>
     </div>
+    <div class="group-option ${sessionScope.CURRENT_PAGE eq "statistic" ? "active" : ""}">
+        <a href="statisticServlet" class="group-option__link">
+            <i class="group-option__icon fa-solid fa-chart-simple"></i>
+            <div class="group-option__label">Thống kê</div>
+        </a>
+    </div>
     <div class="group-option ${sessionScope.CURRENT_PAGE eq "account" ? "active" : ""}">
         <a href="profile" class="group-option__link">
             <i class="group-option__icon fa-solid fa-user"></i>

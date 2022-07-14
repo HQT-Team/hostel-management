@@ -39,7 +39,8 @@ public class HostelDAO {
                     "INNER JOIN Contracts ON Rooms.room_id = Contracts.room_id\n" +
                     "INNER JOIN Accounts ON Contracts.renter_id = Accounts.account_id\n" +
                     "Where account_id = ?";
-
+    private static final String GET_LIST_HOSTEL = "SELECT hostel_id, owner_account_id, [name], [address], ward, district, city \n" +
+            "FROM [dbo].[Hostels] ";
     private static final String GET_HOSTEL_BY_ROOM_ID =
             "SELECT Hostels.hostel_id AS 'hostel_id', Hostels.owner_account_id, Hostels.name, Hostels.address, Hostels.ward, Hostels.district, Hostels.city\n\n" +
                     "FROM Hostels, Rooms\n" +
@@ -367,4 +368,43 @@ public class HostelDAO {
         return hostel;
     }
 
+
+    public ArrayList<Hostel> getListHostel() throws SQLException {
+        Connection cn = null;
+        Statement pst = null;
+        ResultSet rs = null;
+        Hostel hostel = null;
+        ArrayList<Hostel> listHostel = new ArrayList<>();
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.createStatement();
+                rs = pst.executeQuery(GET_LIST_HOSTEL);
+                while (rs != null && rs.next()) {
+                    int hostelId = rs.getInt("hostel_id");
+                    int hostelOwnerAccountID = rs.getInt("owner_account_id");
+                    String name = rs.getString("name");
+                    String address = rs.getString("address");
+                    String ward = rs.getString("ward");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    hostel = new Hostel(hostelId, hostelOwnerAccountID, name, address, ward, district, city);
+                    listHostel.add(hostel);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return listHostel;
+    }
 }
