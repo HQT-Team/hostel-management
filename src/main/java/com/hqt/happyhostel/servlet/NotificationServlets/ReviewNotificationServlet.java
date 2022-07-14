@@ -36,6 +36,7 @@ public class ReviewNotificationServlet extends HttpServlet {
                 if(notiId > 0) {
                     Notification notification = new NotificationDAO().getNotificationById(notiId);
                     handlerStatus = HandlerStatus.builder().status(true).content("Gửi thông báo thành công").build();
+                    request.setAttribute("HOSTEL_ID",  request.getAttribute("HOSTEL_ID"));
                     request.setAttribute("NOTIFICATION", notification);
                     url = SUCCESS;
                 }else {

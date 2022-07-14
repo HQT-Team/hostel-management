@@ -104,6 +104,24 @@
 
 <!-- Preload -->
 <script src="./assets/js/handle-preloader.js" type="text/javascript"></script>
+<script type="text/javascript">
+  var websocket = new WebSocket("ws://localhost:8080/HappyHostel/push-noti-websocket");
+  websocket.onclose = function(message) {processClose(message);};
+
+  function processClose(message) {
+    console.log("Close")
+  }
+  function sendMessage(message) {
+    if (typeof websocket != 'undefined' && websocket.readyState == WebSocket.OPEN) {
+      websocket.send(message);
+    }
+  }
+
+  <c:if test="${requestScope.RESPONSE_MSG.status == true}">
+  setTimeout(()=>{sendMessage(${requestScope.HOSTEL_ID}+"-Chủ trọ đã gửi một thông báo mới. Vui lòng kiểm tra!")},1000)
+
+  </c:if>
+</script>
 </body>
 
 </html>

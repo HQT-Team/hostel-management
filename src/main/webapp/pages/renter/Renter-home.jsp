@@ -41,7 +41,7 @@
                     <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
                     <a class="dropdown-item" href="renter-invoice"style="font-size: 15px;">Hóa đơn</a>
                     <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
-                    <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
+                    <a class="dropdown-item" id = "test" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
                     <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
                     <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
                     <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
@@ -171,6 +171,12 @@
         </div>
     </div>
 
+    <div style="display: none; " id="pop-up-noti">
+        Ban nhan duoc thong bao moi tu chu tro
+    </div>
+
+    <textarea id="textAreaMessage" rows="10" cols="50"></textarea>
+
     <footer>
         <div>
             <div class="row">
@@ -196,6 +202,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var websocket = new WebSocket("ws://localhost:8080/HappyHostel/push-noti-websocket");
+        websocket.onmessage = function(message) {processMessage(message);};
+        function processMessage(message) {
+            console.log(message);
+            textAreaMessage.value += message.data + " \n";
+        }
+    </script>
 </div>
 </body>
 

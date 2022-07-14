@@ -45,7 +45,9 @@ public class AddNotificationServlet extends HttpServlet {
 
                         if (notiId > 0){
                             request.setAttribute("NOTIFICATION_ID", notiId);
+                            request.setAttribute("HOSTEL_ID", hostelId);
                             url = SUCCESS;
+
                         }else {
                             handlerStatus = HandlerStatus.builder().status(false).content("Gửi thông báo không thành công").build();
                         }
