@@ -80,6 +80,68 @@ public class RoomDAO {
         return rooms;
     }
 
+    public List<Room> getListRoomsByHostelOwnerId(int hostelOwnerID) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Room> rooms = new ArrayList<>();
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+
+                // Insert new room include Nha ve sinh, cua so, cua ra vao, may lanh theo thứ tự
+                String sql = "SELECT room_id, Hostels.hostel_id as 'hostel_id', room_number, room_status\n" +
+                        "FROM Hostels, Rooms\n" +
+                        "WHERE Hostels.owner_account_id = ?\n" +
+                        "AND Hostels.hostel_id = Rooms.hostel_id\n";
+
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, hostelOwnerID);
+
+                rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int roomID = rs.getInt("room_id");
+                        int hosteLId = rs.getInt("hostel_id");
+                        int roomNumber = rs.getInt("room_number");
+                        int roomStatus = rs.getInt("room_status");
+                        rooms.add(Room.builder()
+                                .roomId(roomID)
+                                .hostelId(hosteLId)
+                                .roomNumber(roomNumber)
+                                .roomStatus(roomStatus)
+                                .build());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return rooms;
+    }
+
     public int getNumberRoomSpecificHostel(int hostelID) {
         Connection cn = null;
         PreparedStatement pst = null;

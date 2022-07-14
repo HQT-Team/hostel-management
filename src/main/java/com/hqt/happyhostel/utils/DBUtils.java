@@ -14,7 +14,7 @@ public class DBUtils {
 //        String instanceName="KHOAHD7621\\KHOAHD";
 //        String pwd="0792596763";
         String instanceName="DESKTOP-0D7MP1Q\\TANLOC";
-        String pwd="Tanloc162";
+        String pwd="12345";
 //        String instanceName="TTPHATS\\TTPHATS";
 //        String pwd="12345";
         String port = "1433";

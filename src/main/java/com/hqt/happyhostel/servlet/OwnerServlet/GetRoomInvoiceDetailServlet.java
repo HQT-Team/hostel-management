@@ -16,11 +16,18 @@ public class GetRoomInvoiceDetailServlet extends HttpServlet {
         String url = "RoomInvoiceDetail";
         try {
             HttpSession session = request.getSession();
-            int hostelID = ((Hostel) session.getAttribute("hostel")).getHostelID();
+            int hostelID = (request.getParameter("hostelID") != null ) ? Integer.parseInt(request.getParameter("hostelID")) : ((Hostel) session.getAttribute("hostel")).getHostelID();
             int accID = ((Account) session.getAttribute("USER")).getAccId();
             int roomId = (request.getParameter("roomID") != null) ? Integer.parseInt(request.getParameter("roomID")) : (int) session.getAttribute("current_room_id");
 
             int billDetailID = Integer.parseInt(request.getParameter("billID"));
+
+            Room room = new RoomDAO().getRoomInformationByRoomId(roomId, hostelID, accID);
+            session.setAttribute("room", room);
+            session.setAttribute("current_room_id", room.getRoomId());
+
+            Hostel hostel = new HostelDAO().getHostelById(hostelID);
+            session.setAttribute("hostel", hostel);
 
             Bill bill = new BillDAO().getBillByID(billDetailID);
             request.setAttribute("billRoom", bill);

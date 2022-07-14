@@ -13,7 +13,7 @@
         </a>
     </div>
     <div class="group-option ${sessionScope.CURRENT_PAGE eq "room" ? "active" : ""}">
-        <a href="" class="group-option__link">
+        <a href="getRoomList" class="group-option__link">
             <i class="group-option__icon fa-solid fa-door-open"></i>
             <div class="group-option__label">Phòng trọ</div>
         </a>
@@ -31,7 +31,7 @@
         </a>
     </div>
     <div class="group-option ${sessionScope.CURRENT_PAGE eq "invoice" ? "active" : ""}">
-        <a href="" class="group-option__link">
+        <a href="getInvoiceList" class="group-option__link">
             <i class="group-option__icon fa-solid fa-file-invoice-dollar"></i>
             <div class="group-option__label">Hóa đơn</div>
         </a>

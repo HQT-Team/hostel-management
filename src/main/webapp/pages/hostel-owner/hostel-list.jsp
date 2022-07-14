@@ -26,7 +26,6 @@
 
     <!-- Simple Datatable CSS -->
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-
 </head>
 
 <body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
