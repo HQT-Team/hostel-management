@@ -3,8 +3,8 @@
     <div class="consume-header">Số điện/nước tiêu thụ</div>
     <div class="consume-update-date">Ngày cập nhật gần nhất:
         <span class="date d-lg-block">
-            <fmt:parseDate pattern="yyyy-MM-dd" value="${requestScope.consumeNumber.updateDate}" var="updateDateStr" />
-            <fmt:formatDate pattern = "dd/MM/yyyy" value="${updateDateStr}" />
+            <fmt:parseDate pattern="yyyy-MM-dd" value="${requestScope.consumeNumber.updateDate}" var="updateDateStr"/>
+            <fmt:formatDate pattern="dd/MM/yyyy" value="${updateDateStr}"/>
         </span>
     </div>
     <div class="consume-group">
@@ -59,7 +59,8 @@
                                                    class="form-label">Điện</label>
                                         </div>
                                         <div class="col-5">
-                                            <input type="number" value="${requestScope.consumeNumber.numberElectric}" disabled
+                                            <input type="number" value="${requestScope.consumeNumber.numberElectric}"
+                                                   disabled
                                                    class="form-control m-0"
                                                    id="form-update-consume__electric-old">
                                         </div>
@@ -82,7 +83,8 @@
                                                    class="form-label">Nước</label>
                                         </div>
                                         <div class="col-5">
-                                            <input type="number" value="${requestScope.consumeNumber.numberWater}" disabled
+                                            <input type="number" value="${requestScope.consumeNumber.numberWater}"
+                                                   disabled
                                                    class="form-control m-0"
                                                    id="form-update-consume__water-old">
                                         </div>
@@ -103,6 +105,14 @@
                                         data-bs-dismiss="modal">Hủy bỏ
                                 </button>
                                 <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
+                                <c:choose>
+                                    <c:when test="">
+
+                                    </c:when>
+                                    <c:otherwise>
+
+                                    </c:otherwise>
+                                </c:choose>
                                 <button type="submit" class="btn btn-danger">
                                     Cập nhật
                                 </button>
@@ -153,14 +163,18 @@
                             <c:forEach var="consumeList" items="${requestScope.consumeList}">
                                 <div class="row">
                                     <div class="col-3">
-                                        <input type="text" value="${consumeList.numberElectric}" class="form-control" disabled>
+                                        <input type="text" value="${consumeList.numberElectric}" class="form-control"
+                                               disabled>
                                     </div>
                                     <div class="col-3">
-                                        <input type="text" value="${consumeList.numberWater}" class="form-control" disabled>
+                                        <input type="text" value="${consumeList.numberWater}" class="form-control"
+                                               disabled>
                                     </div>
                                     <div class="col-6">
-                                        <fmt:parseDate pattern="yyyy-MM-dd" value="${consumeList.updateDate}" var="updateDateFormat" />
-                                        <fmt:formatDate pattern = "dd/MM/yyyy" value="${updateDateFormat}" var="updateDate" />
+                                        <fmt:parseDate pattern="yyyy-MM-dd" value="${consumeList.updateDate}"
+                                                       var="updateDateFormat"/>
+                                        <fmt:formatDate pattern="dd/MM/yyyy" value="${updateDateFormat}"
+                                                        var="updateDate"/>
                                         <input type="text" value="${updateDate}" class="form-control" disabled>
                                     </div>
                                 </div>

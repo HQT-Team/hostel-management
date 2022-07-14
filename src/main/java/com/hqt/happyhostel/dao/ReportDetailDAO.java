@@ -20,7 +20,6 @@ public class ReportDetailDAO {
                     "\t\t\t   WHERE R.reply_account_id = ? AND R.status like ? AND P.hostel_id like ? AND P.room_id like ? AND R.cate_id like ?\n" +
                     "\t\t\t   ORDER BY R.send_date DESC";
 
-
     private static final String GET_REPORT_DETAIL_BY_ID =
             "SELECT id_report, send_date, content, R.status, reply_date, reply, complete_date, \n" +
                     "reply_account_id, send_account_id, cate_id, A.room_id, P.hostel_id\n" +

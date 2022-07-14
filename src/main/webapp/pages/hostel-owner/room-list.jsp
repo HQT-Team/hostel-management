@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
 
     <!-- Title -->
     <title>Danh sách phòng</title>
@@ -37,14 +37,14 @@
 </div>
 
 <!-- Navbar -->
-<%@include file="./components/navbar.jsp"%>
+<%@include file="./components/navbar.jsp" %>
 
 <!-- Body -->
 <div class="container">
     <div class="row position-relative">
         <!-- Side bar -->
         <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
-            <%@include file="./components/sidebar.jsp"%>
+            <%@include file="./components/sidebar.jsp" %>
         </div>
 
         <!-- Content -->
@@ -60,9 +60,10 @@
                         <td><i class="fa-solid fa-sliders"></i> Lọc</td>
                         <td>
                             <select name="" id="">
-                                <option value="">Tất cả</option>
-                                <option value="">Nova Land</option>
-                                <option value="">Nova Sky</option>
+                                <option value="0">Tất cả</option>
+                                <c:forEach var="hostelName" items="${sessionScope.HOSTEL_DROP_DOWN_NAME}">
+                                    <option value="${hostelName}">${hostelName}</option>
+                                </c:forEach>
                             </select>
                         </td>
                     </tr>
@@ -80,27 +81,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><a href="../list-hostels/hostel-detail.html"
-                                   class="content__tbody-hostel-link">Nova Land</a></td>
-                            <td><a href="../room-detail/room-detail.html" class="content__tbody-room-link">1</a>
-                            </td>
-                            <td class="content__tbody-status no">Đã cho thuê</td>
-                        </tr>
-                        <tr>
-                            <td><a href="../list-hostels/hostel-detail.html"
-                                   class="content__tbody-hostel-link">Nova Land</a></td>
-                            <td><a href="../room-detail/room-detail.html" class="content__tbody-room-link">2</a>
-                            </td>
-                            <td class="content__tbody-status yes">Sẵn sàng cho thuê</td>
-                        </tr>
-                        <tr>
-                            <td><a href="../list-hostels/hostel-detail.html"
-                                   class="content__tbody-hostel-link">Nova Land</a></td>
-                            <td><a href="../room-detail/room-detail.html" class="content__tbody-room-link">3</a>
-                            </td>
-                            <td class="content__tbody-status no">Đã cho thuê</td>
-                        </tr>
+                        <c:set var="hosteListName" value="${sessionScope.HOSTEL_LIST_NAME}"/>
+                        <c:forEach var="roomList" items="${sessionScope.ROOM_LIST}" varStatus="loop">
+                            <tr>
+                                <td><a href="detailHostel?hostelID=${roomList.hostelId}"
+                                       class="content__tbody-hostel-link">${hosteListName.get(loop.index)}</a></td>
+                                <td><a href="roomDetail?roomID=${roomList.roomId}&hostelID=${roomList.hostelId}" class="content__tbody-room-link">${roomList.roomNumber}</a>
+                                </td>
+                                <c:if test="${roomList.roomStatus eq 1}">
+                                    <td class="content__tbody-status yes">Sẵn sàng cho thuê</td>
+                                </c:if>
+                                <c:if test="${roomList.roomStatus eq 0}">
+                                    <td class="content__tbody-status no">Đã cho thuê</td>
+                                </c:if>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -110,7 +105,7 @@
 </div>
 
 <!-- Footer -->
-<%@include file="./components/footer.jsp"%>
+<%@include file="./components/footer.jsp" %>
 
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
