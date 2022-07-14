@@ -111,7 +111,7 @@
                         </tbody>
                     </table>
                     <div class="content__action">
-                        <a href="./room-detail.html" class="content__action-link">
+                        <a href="roomDetail?roomID=${sessionScope.room.roomId}" class="content__action-link">
                             <i class="fa-solid fa-circle-arrow-left"></i> Quay lại
                         </a>
                     </div>
