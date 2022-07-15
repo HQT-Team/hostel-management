@@ -181,7 +181,7 @@
                                 <option value="${services.serviceID}">${services.serviceName}</option>
                             </c:forEach>
                         </select>
-                        <span class="form-message"></span>
+                        <span class="form-message" style="margin-bottom: 12px;"></span>
                     </div>
                     <div class="row">
                         <div class="col-8">
@@ -189,7 +189,7 @@
                                 <label for="service-price" class="form-label">Giá</label>
                                 <input type="number" name="service-price" id="service-price" class="form-control"
                                        placeholder="Nhập giá. VD: 1000">
-                                <div class="form-message"></div>
+                                <div class="form-message" style="margin-bottom: 12px;"></div>
                             </div>
                         </div>
                         <div class="col-4">

@@ -1,10 +1,8 @@
 package com.hqt.happyhostel.servlet;
 
 import com.hqt.happyhostel.dao.HostelDAO;
-import com.hqt.happyhostel.dto.Account;
-import com.hqt.happyhostel.dto.HandlerStatus;
-import com.hqt.happyhostel.dto.HostelService;
-import com.hqt.happyhostel.dto.Hostel;
+import com.hqt.happyhostel.dao.ServicesDAO;
+import com.hqt.happyhostel.dto.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "AddHostelServlet", value = "/AddHostelServlet")
 public class AddHostelServlet extends HttpServlet {
@@ -32,11 +31,9 @@ public class AddHostelServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = ERROR;
 
-        LocalDate dateObj = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String validDate = dateObj.format(formatter);
         List<HostelService> hostelServiceList = new ArrayList<>();
         Account acc;
+        Map<String, Services> servicesList = new ServicesDAO().getAll();
 
         try {
             req.setCharacterEncoding("UTF-8");
@@ -53,27 +50,47 @@ public class AddHostelServlet extends HttpServlet {
 
             //electric
             int electricityPrice = Integer.parseInt(req.getParameter("hostel-electric"));
-            hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(electricityPrice).build());
+            hostelServiceList.add(HostelService.builder()
+                    .serviceID(servicesList.get("Điện").getServiceID())
+                    .servicePrice(electricityPrice).build());
 
             //water
             int waterPrice = Integer.parseInt(req.getParameter("hostel-water"));
-            hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(waterPrice).build());
+            hostelServiceList.add(HostelService.builder()
+                    .serviceID(servicesList.get("Nước").getServiceID())
+                    .servicePrice(waterPrice).build());
 
             //wifi
             int internetPrice = Integer.parseInt(req.getParameter("hostel-wifi"));
-            hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(internetPrice).build());
+            if (internetPrice > 0) {
+                hostelServiceList.add(HostelService.builder()
+                        .serviceID(servicesList.get("Wifi").getServiceID())
+                        .servicePrice(internetPrice).build());
+            }
 
             //Management
             int managementPrice = Integer.parseInt(req.getParameter("hostel-manage"));
-            hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(managementPrice).build());
+            if (managementPrice > 0) {
+                hostelServiceList.add(HostelService.builder()
+                        .serviceID(servicesList.get("Phí quản lí").getServiceID())
+                        .servicePrice(managementPrice).build());
+            }
 
             //Vehicle
             int vehiclePrice = Integer.parseInt(req.getParameter("hostel-vehicle"));
-            hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(vehiclePrice).build());
+            if (managementPrice > 0) {
+                hostelServiceList.add(HostelService.builder()
+                        .serviceID(servicesList.get("Phí giữ xe").getServiceID())
+                        .servicePrice(vehiclePrice).build());
+            }
 
             //cleaning
             int cleaningPrice = Integer.parseInt(req.getParameter("hostel-cleaning"));
-            hostelServiceList.add(HostelService.builder().validDate(validDate).servicePrice(cleaningPrice).build());
+            if (managementPrice > 0) {
+                hostelServiceList.add(HostelService.builder()
+                        .serviceID(servicesList.get("Phí vệ sinh").getServiceID())
+                        .servicePrice(cleaningPrice).build());
+            }
 
             Hostel hostel = Hostel.builder()
                     .hostelOwnerAccountID(accountId)

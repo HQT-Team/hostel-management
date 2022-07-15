@@ -65,7 +65,6 @@
                         <div class="form-header">
                             <div class="form-title main-title">Thêm phòng mới</div>
                         </div>
-                        <div class="spacer"></div>
                         <!-- Warning -->
                         <div class="form-warning">
                             <p><span>*</span> Để tạo cùng lúc nhiều phòng, hãy thay đổi số lượng
@@ -74,6 +73,7 @@
                             <p><span>*</span> Khi tạo nhiều phòng cùng lúc, tên phòng sẽ được tạo ngẫu nhiên,
                                 bạn có thể đổi tên phòng sau này!</p>
                         </div>
+                        <div class="spacer"></div>
                         <!-- Input -->
                         <div class="form-group">
                             <div class="form-wrapper">
