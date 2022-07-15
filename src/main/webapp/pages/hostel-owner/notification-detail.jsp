@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -49,7 +50,7 @@
     <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
       <!-- History link bar -->
       <div class="content-history">
-        <a href="./notifications.html" class="history-link">Danh sách thông báo</a>
+        <a href="owner-get-notification-list" class="history-link">Danh sách thông báo</a>
         <i class="fa-solid fa-chevron-right"></i>
         <div class="current">Thông báo #TB123</div>
       </div>
@@ -68,7 +69,12 @@
                 </p>
               </div>
               <div class="col-12 col-sm-6">
-                <p class="notification__item">Ngày tạo: <span>${requestScope.NOTIFICATION.createDate}</span></p>
+                <p class="notification__item">Ngày tạo:
+                  <fmt:parseDate var="ParseDate" value="${requestScope.NOTIFICATION.createDate}" pattern="yyyy-MM-dd" />
+                  <span>
+                    <fmt:formatDate pattern = "dd/MM/yyyy" value="${ParseDate}" />
+                  </span>
+                </p>
               </div>
             </div>
             <div class="notification__item">Nội dung:</div>
@@ -77,7 +83,7 @@
             </p>
             <div class="notification__spacer"></div>
             <div class="notification__action">
-              <a href="./notifications.html" class="notification__action-link">
+              <a href="owner-get-notification-list" class="notification__action-link">
                 <i class="fa-solid fa-circle-arrow-left"></i> Quay lại
               </a>
             </div>

@@ -1,5 +1,6 @@
 package com.hqt.happyhostel.servlet.NotificationServlets;
 
+import com.google.gson.Gson;
 import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dao.NotificationDAO;
 import com.hqt.happyhostel.dto.Account;
@@ -22,7 +23,6 @@ public class GetNotificationListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = ERROR;
-        HandlerStatus handlerStatus = null;
         try {
             HttpSession session = request.getSession(false);
             if(session != null){
@@ -31,17 +31,11 @@ public class GetNotificationListServlet extends HttpServlet {
                     url = FAIL;
                     int ownerId = owner.getAccId();
                     List<Notification> notificationList = new NotificationDAO().getNotificationByOwnerId(ownerId);
-                    if (notificationList != null && !notificationList.isEmpty()) {
-                        List<Hostel> hostelList = new HostelDAO().getHostelByOwnerId(ownerId);
-                        request.setAttribute("NOTIFICATION_LIST", notificationList);
-                        session.setAttribute("HOSTEL_LIST", hostelList);
-                        url = SUCCESS;
-                    }
-                    else {
-                        handlerStatus = HandlerStatus.builder().status(false).content("Hiện tại chưa có thông báo nào").build();
-                    }
+                    List<Hostel> hostelList = new HostelDAO().getHostelByOwnerId(ownerId);
+                    request.setAttribute("NOTIFICATION_LIST", notificationList);
+                    session.setAttribute("HOSTEL_LIST", hostelList);
+                    url = SUCCESS;
                     session.setAttribute("CURRENT_PAGE", "notification");
-                    request.setAttribute("RESPONE_MSG", handlerStatus);
                 }
             }
         }catch (Exception e){
@@ -54,6 +48,24 @@ public class GetNotificationListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setCharacterEncoding("UTF-8");
+        try {
+            HttpSession session = request.getSession();
+            String hostelIdStr = request.getParameter("hostelID");
+            Account owner = (Account) session.getAttribute("USER");
+            int ownerId = owner.getAccId();
+            List<Notification> notificationList;
+            if (hostelIdStr.equals("")) {
+                notificationList = new NotificationDAO().getNotificationByOwnerId(ownerId);
+            } else {
+                int hostelId = Integer.parseInt(hostelIdStr);
+                notificationList = new NotificationDAO().getNotificationByOwnerIdAndHostelId(ownerId, hostelId);
+            }
+            Gson gson = new Gson();
+            String json = gson.toJson(notificationList);
+            response.getWriter().println(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

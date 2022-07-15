@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -78,21 +79,21 @@
                             </tr>
                             <tr>
                                 <td><i class="fa-solid fa-sliders"></i> Lọc</td>
-                                <form action="" method="post">
+                                <form action="owner-get-notification-list" method="POST" id="filter-form">
                                     <td>
-                                        <select name="" id="filter__hostel-select-1"
-                                                style="min-width: 100px; max-width: 200px;">
+                                        <select name="hostelId" id="filter__hostel-select">
                                             <option value="">Tất cả</option>
-                                            <option value="">Nova Land</option>
-                                            <option value="">Nova Sky</option>
+                                            <c:forEach var="hostel" items="${sessionScope.HOSTEL_LIST}">
+                                                <option value="${hostel.hostelID}">${hostel.hostelName}</option>
+                                            </c:forEach>
                                         </select>
                                     </td>
                                 </form>
                             </tr>
                         </table>
                     </div>
-                    <!-- Infor box -->
-                    <div class="content__body">
+                    <!-- Notification list container -->
+                    <div id="list-notifications-container" class="content__body mb-5">
                         <table id="notification-table" class="content__table table table-bordered table-striped">
                             <thead class="content__thead">
                             <th class="text-center">Mã</th>
@@ -106,11 +107,20 @@
                                     <td class="text-center">
                                         <a href="owner-review-notification?notification_id=${notification.notification_id}">#NF${notification.notification_id}</a>
                                     </td>
-                                    <td class="text-center">
+                                    <td>
                                         <a href="owner-review-notification?notification_id=${notification.notification_id}">${notification.title}</a>
                                     </td>
-                                    <td class="text-center">${notification.createDate}</td>
-                                    <td class="text-center">${notification.hostel_id}</td>
+                                    <td class="text-center">
+                                        <fmt:parseDate var="ParseDate" value="${notification.createDate}" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate pattern = "dd/MM/yyyy" value="${ParseDate}" />
+                                    </td>
+                                    <td class="text-center">
+                                        <c:forEach var="hostel" items="${sessionScope.HOSTEL_LIST}">
+                                            <c:if test="${hostel.hostelID eq notification.hostel_id}">
+                                                ${hostel.hostelName}
+                                            </c:if>
+                                        </c:forEach>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -182,15 +192,20 @@
 <script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <!-- Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<!-- Axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- Load data async -->
+<script src="./assets/js/load-notification-async.js"></script>
 <script>
     $(document).ready(function () {
-
         // Select 2
-        $(`#filter__hostel-select-1`).select2();
+        $(`#filter__hostel-select`).select2();
         $('#noti-hostel-id').select2();
 
         // Initial datatable
-        $(`#notification-table`).DataTable();
+        $(`#notification-table`).DataTable({
+            "order": [],
+        });
 
         const tabs = document.querySelectorAll(".tabs-item");
         const contents = document.querySelectorAll(".content__item");
@@ -208,7 +223,7 @@
         const tabActive = document.querySelector(".tabs-item.active");
         const line = document.querySelector(".tabs .line");
 
-        let i = 0, lengthTabs = tabs.length;
+        let i = 0;
 
         line.style.left = tabActive.offsetLeft + "px";
         line.style.width = tabActive.offsetWidth + "px";
@@ -217,7 +232,6 @@
             const content = contents[index];
 
             tab.onclick = function () {
-
                 i = index;
 
                 document.querySelector(".tabs-item.active").classList.remove("active");
@@ -231,6 +245,36 @@
             };
         });
 
+        $('#filter__hostel-select').on('change', () => {
+            $('#filter-form').submit();
+        })
+
+        // Filter
+        $('#filter-form').submit(function(e) {
+            e.preventDefault();
+
+            axios.interceptors.request.use(function (config) {
+                $('#list-notifications-container').html("Loading...");
+                console.log(config)
+                return config;
+            });
+
+            axios({
+                method: 'post',
+                url: 'http://localhost:8080/HappyHostel/owner-get-notification-list',
+                params: {
+                    'hostelID': $('#filter__hostel-select').find(':selected').val(),
+                }
+            })
+            .then(function (response) {
+                console.log(response);
+                loadNotificationAsync(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+        });
     });
 </script>
 <!-- Preload -->
