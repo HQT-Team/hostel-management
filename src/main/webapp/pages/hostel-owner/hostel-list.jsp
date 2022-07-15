@@ -79,7 +79,7 @@
                                             <th>STT</th>
                                             <th>Tên</th>
                                             <th>Địa chỉ</th>
-                                            <th>Số phòng</th>
+                                            <th>Tổng số phòng</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -94,7 +94,9 @@
                                             <td>${hostels.address}, ${hostels.ward.split('-')[1]},
                                                     ${hostels.district.split('-')[1]}, ${hostels.city.split('-')[1]}
                                             </td>
-                                            <td>...</td>
+                                            <td>
+                                                ${requestScope.LIST_TOTAL_ROOM.get(hostels.hostelID)}
+                                            </td>
                                             <td class="hostel-table__body-link">
                                                 <div class="hostel-table__body-wrapper">
                                                     <a href="detailHostel?hostelID=${hostels.hostelID}"
