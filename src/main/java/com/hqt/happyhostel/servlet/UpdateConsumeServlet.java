@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "UpdateConsumeServlet", value = "/UpdateConsumeServlet")
 public class UpdateConsumeServlet extends HttpServlet {
@@ -27,16 +28,28 @@ public class UpdateConsumeServlet extends HttpServlet {
                     .numberElectric(numberElectric)
                     .status(0)
                     .roomID(roomID).build();
-            boolean isSuccess = new ConsumeDAO().updateConsumeNumber(consume);
-            if (isSuccess) {
+
+            List<Consume> consumeThisMonth = new ConsumeDAO().getConsumeThisMonth(roomID);
+            int consumeNumberElectric = consumeThisMonth.get(consumeThisMonth.size() - 1).getNumberElectric();
+            int consumeNumberWater = consumeThisMonth.get(consumeThisMonth.size() - 1).getNumberWater();
+
+            if (numberElectric < consumeNumberElectric || numberWater < consumeNumberWater) {
                 url = "roomDetail";
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
-                        .status(true)
-                        .content("Cập nhật số tiêu thụ thành công!").build());
-            } else {
-                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(false)
-                        .content("Đã có lỗi xảy ra! Cập nhật số tiêu thụ thất bại!").build());
+                        .content("Cập nhật số tiêu thụ thất bại! Số điện/nước cập nhật phải lớn hơn số điện nước đầu tháng!").build());
+            } else {
+                boolean isSuccess = new ConsumeDAO().updateConsumeNumber(consume);
+                if (isSuccess) {
+                    url = "roomDetail";
+                    request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                            .status(true)
+                            .content("Cập nhật số tiêu thụ thành công!").build());
+                } else {
+                    request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                            .status(false)
+                            .content("Đã có lỗi xảy ra! Cập nhật số tiêu thụ thất bại!").build());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

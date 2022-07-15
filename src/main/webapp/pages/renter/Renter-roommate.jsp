@@ -54,7 +54,7 @@
       </div>
       <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#" style="text-decoration: none; color:#ffffff">Người thuê</a>
+          <li class="breadcrumb-item"><a href="HostelRenterPage" style="text-decoration: none; color:#ffffff">Người thuê</a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">Bạn cùng phòng</li>
         </ol>

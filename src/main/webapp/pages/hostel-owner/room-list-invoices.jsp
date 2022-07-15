@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
 
     <!-- Title -->
     <title>Danh sách hóa đơn phòng trọ</title>
@@ -38,7 +38,7 @@
 
 <!-- Navbar -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="./components/navbar.jsp"%>
+<%@include file="./components/navbar.jsp" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="vi_VN"/>
 <!-- Body -->
@@ -46,7 +46,7 @@
     <div class="row position-relative">
         <!-- Side bar -->
         <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
-            <%@include file="./components/sidebar.jsp"%>
+            <%@include file="./components/sidebar.jsp" %>
         </div>
 
         <!-- Content -->
@@ -55,9 +55,11 @@
             <div class="content-history">
                 <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
                 <i class="fa-solid fa-chevron-right"></i>
-                <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}" class="history-link">${sessionScope.hostel.hostelName}</a>
+                <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}"
+                   class="history-link">${sessionScope.hostel.hostelName}</a>
                 <i class="fa-solid fa-chevron-right"></i>
-                <a href="GetRoomDetailServlet?roomID=${sessionScope.room.roomId}" class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
+                <a href="GetRoomDetailServlet?roomID=${sessionScope.room.roomId}"
+                   class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
                 <i class="fa-solid fa-chevron-right"></i>
                 <div class="current">Danh sách hóa đơn</div>
             </div>
@@ -81,33 +83,35 @@
                                 <td class="mb-d-none">
                                     <a href="getRoomInvoiceDetail?billID=${invoice.billID}" class="content__tbody-link">#B${invoice.billID}</a>
                                 </td>
-                                <td><a href="getRoomInvoiceDetail?billID=${invoice.billID}" class="content__tbody-link">${invoice.billTitle}</a>
+                                <td><a href="getRoomInvoiceDetail?billID=${invoice.billID}"
+                                       class="content__tbody-link">${invoice.billTitle}</a>
                                 </td>
                                 <td>
-<%--                                        ${invoice.createdDate.split(" ")[0]}--%>
-                                            <fmt:parseDate pattern="yyyy-MM-dd" value="${invoice.createdDate.split(' ')[0]}"
-                                                           var="createdDate"/>
-                                            <fmt:formatDate pattern="dd/MM/yyyy" value="${createdDate}"/>
+                                        <%--                                        ${invoice.createdDate.split(" ")[0]}--%>
+                                    <fmt:parseDate pattern="yyyy-MM-dd" value="${invoice.createdDate.split(' ')[0]}"
+                                                   var="createdDate"/>
+                                    <fmt:formatDate pattern="dd/MM/yyyy" value="${createdDate}"/>
                                 </td>
                                 <td>
-                                    <fmt:formatNumber value="${invoice.totalMoney}" type="currency" currencySymbol="VNĐ"/>
+                                    <fmt:formatNumber value="${invoice.totalMoney}" type="currency"
+                                                      currencySymbol="VNĐ"/>
                                 </td>
                                 <td>
-                                            <c:choose>
-                                                <c:when test="${invoice.status eq 1}">
-                                                    <span class="content__tbody-status yes">Đã thanh toán</span>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <span class="content__tbody-status no">Chưa thanh toán</span>
-                                                </c:otherwise>
-                                            </c:choose>
+                                    <c:choose>
+                                        <c:when test="${invoice.status eq 1}">
+                                            <span class="content__tbody-status yes">Đã thanh toán</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="content__tbody-status no">Chưa thanh toán</span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                     <div class="content__action">
-                        <a href="./room-detail.html" class="content__action-link">
+                        <a href="roomDetail?roomID=${sessionScope.room.roomId}" class="content__action-link">
                             <i class="fa-solid fa-circle-arrow-left"></i> Quay lại
                         </a>
                     </div>
@@ -118,7 +122,28 @@
 </div>
 
 <!-- Footer -->
-<%@include file="./components/footer.jsp"%>
+<%@include file="./components/footer.jsp" %>
+<script src="./assets/js/toast-alert.js"></script>
+<script>
+    <c:choose>
+    <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+    toast({
+        title: 'Thành công',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'success',
+        duration: 5000
+    });
+    </c:when>
+    <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+    toast({
+        title: 'Lỗi',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'error',
+        duration: 5000
+    });
+    </c:when>
+    </c:choose>
+</script>
 
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

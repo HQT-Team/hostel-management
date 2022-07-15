@@ -142,7 +142,6 @@
                         <select name="gender" id="form-item-input-4">
                             <option value="1">Nam</option>
                             <option value="0">Nữ</option>
-                            <option value="0">Khác</option>
                         </select>
                     </div>
                     <div class="form-item">

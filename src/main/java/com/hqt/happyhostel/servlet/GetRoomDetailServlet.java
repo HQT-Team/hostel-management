@@ -25,8 +25,10 @@ public class GetRoomDetailServlet extends HttpServlet {
 
         try {
             HttpSession session = request.getSession();
-            int hostelID = ((Hostel) session.getAttribute("hostel")).getHostelID();
+
             int accID = ((Account) session.getAttribute("USER")).getAccId();
+
+            int hostelID = (request.getParameter("hostelID") != null ) ? Integer.parseInt(request.getParameter("hostelID")) : ((Hostel) session.getAttribute("hostel")).getHostelID();
 
             int roomId = (request.getParameter("roomID") != null ) ? Integer.parseInt(request.getParameter("roomID")) : (int) session.getAttribute("current_room_id");
 
@@ -38,6 +40,9 @@ public class GetRoomDetailServlet extends HttpServlet {
             Room room = roomDAO.getRoomInformationByRoomId(roomId, hostelID, accID);
             session.setAttribute("room", room);
             session.setAttribute("current_room_id", room.getRoomId());
+
+            Hostel hostel = new HostelDAO().getHostelById(hostelID);
+            session.setAttribute("hostel", hostel);
 
             Contract contract = new ContractDAO().getContract(roomId);
             request.setAttribute("contractRoom", contract);
@@ -53,6 +58,9 @@ public class GetRoomDetailServlet extends HttpServlet {
 
             Bill bill = new BillDAO().getLastBill(roomId);
             request.setAttribute("billRoom", bill);
+
+            List<Consume> consumeThisMonth = new ConsumeDAO().getConsumeThisMonth(roomId);
+            request.setAttribute("consumeListThisMonth", consumeThisMonth);
 
             if (contract != null) {
                 Account renterAccount = accountDAO.getAccountById(contract.getRenterId());
@@ -78,6 +86,9 @@ public class GetRoomDetailServlet extends HttpServlet {
 
                 Consume consumeStart = new ConsumeDAO().getConsumeByID(consumeIDStart);
                 Consume consumeEnd = new ConsumeDAO().getConsumeByID(consumeIDEnd);
+
+                int numberConsumeElectric = consumeEnd.getNumberElectric() - consumeStart.getNumberElectric();
+                int numberConsumeWater = consumeEnd.getNumberWater() - consumeStart.getNumberWater();
 
                 request.setAttribute("consumeStart", consumeStart);
                 request.setAttribute("consumeEnd", consumeEnd);
@@ -115,8 +126,10 @@ public class GetRoomDetailServlet extends HttpServlet {
 
         try {
             HttpSession session = request.getSession();
-            int hostelID = ((Hostel) session.getAttribute("hostel")).getHostelID();
+            int hostelID = (request.getParameter("hostelID") != null ) ? Integer.parseInt(request.getParameter("hostelID")) : ((Hostel) session.getAttribute("hostel")).getHostelID();
+
             int accID = ((Account) session.getAttribute("USER")).getAccId();
+
             int roomId = ((Room) session.getAttribute("room")).getRoomId();
 
             RoomDAO roomDAO = new RoomDAO();
@@ -126,6 +139,9 @@ public class GetRoomDetailServlet extends HttpServlet {
 
             Room room = roomDAO.getRoomInformationByRoomId(roomId, hostelID, accID);
             session.setAttribute("room", room);
+
+            Hostel hostel = new HostelDAO().getHostelById(hostelID);
+            session.setAttribute("hostel", hostel);
 
             Contract contract = new ContractDAO().getContract(roomId);
             request.setAttribute("contractRoom", contract);
@@ -144,6 +160,9 @@ public class GetRoomDetailServlet extends HttpServlet {
 
             List<Payment> payments = new PaymentDAO().getPaymentList();
             request.setAttribute("paymentList", payments);
+
+            List<Consume> consumeThisMonth = new ConsumeDAO().getConsumeThisMonth(roomId);
+            request.setAttribute("consumeListThisMonth", consumeThisMonth);
 
             if (contract != null) {
                 Account renterAccount = accountDAO.getAccountById(contract.getRenterId());

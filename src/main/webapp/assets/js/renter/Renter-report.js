@@ -36,7 +36,7 @@ function checkEmpty(listinput) {
     listinput.forEach(input => {
         input.value = input.value.trim();
         if (!input.value) {
-            check = showMessageError(input, x, "Khong duoc de trong!")
+            check = showMessageError(input, x, "Không được để trống!")
         } else {
             showMessageSuccess(input, x);
         }
