@@ -56,7 +56,6 @@ public class GetRoomDetailServlet extends HttpServlet {
 
             if (contract != null) {
                 Account renterAccount = accountDAO.getAccountById(contract.getRenterId());
-
                 request.setAttribute("renterAccount", renterAccount);
 
                 List<RoommateInfo> listRoommatesInfo = new RoommateInfoDAO().getListRoommatesOfAnAccount(contract.getRenterId());

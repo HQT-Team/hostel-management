@@ -127,7 +127,7 @@
                                                 </button>
                                                 <form action="end-rental-contract" method="POST">
                                                     <input type="hidden" name="room-id" value="${sessionScope.room.roomId}" />
-                                                    <input type="hidden" name="renter-account-id" value="${requestScope.renterAccountId}" />
+                                                    <input type="hidden" name="renter-account-id" value="${requestScope.renterAccount.accId}" />
                                                     <button type="submit" class="btn btn-danger">Đồng ý</button>
                                                 </form>
                                             </div>
@@ -162,22 +162,22 @@
 <script src="./assets/js/toast-alert.js"></script>
 <script>
     <c:choose>
-    <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
-    toast({
-        title: 'Thành công',
-        message: '${requestScope.RESPONSE_MSG.content}',
-        type: 'success',
-        duration: 5000
-    });
-    </c:when>
-    <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
-    toast({
-        title: 'Lỗi',
-        message: '${requestScope.RESPONSE_MSG.content}',
-        type: 'error',
-        duration: 5000
-    });
-    </c:when>
+        <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+            toast({
+                title: 'Thành công',
+                message: '${requestScope.RESPONSE_MSG.content}',
+                type: 'success',
+                duration: 5000
+            });
+        </c:when>
+        <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+            toast({
+                title: 'Lỗi',
+                message: '${requestScope.RESPONSE_MSG.content}',
+                type: 'error',
+                duration: 5000
+            });
+        </c:when>
     </c:choose>
 </script>
 

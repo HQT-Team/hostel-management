@@ -206,8 +206,7 @@ public class HostelDAO {
 
                 int c = 0;
                 ptm = cn.prepareStatement(INSERT_HOSTEL_SERVICE);
-                for (HostelService ser: hostelServices
-                ) {
+                for (HostelService ser : hostelServices) {
                     c++;
                     ptm.setInt(c, hostel.getHostelID());
                     c++;
