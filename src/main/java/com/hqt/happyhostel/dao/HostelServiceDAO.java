@@ -13,31 +13,52 @@ import java.util.List;
 public class HostelServiceDAO {
 
     private static final String GET_CURRENT_LIST_SERVICES_OF_A_HOSTEL =
-            "DECLARE @service_id INT\n" +
-            "DECLARE @hostel_id INT\n" +
-            "DECLARE @NewestServicesTable TABLE (service_id int ,hostel_id int , service_price decimal(18, 3) , valid_date datetime)\n" +
-            "DECLARE cursorServices CURSOR FOR\n" +
-            "SELECT service_id, hostel_id  FROM (SELECT DISTINCT service_id, hostel_id FROM HostelService WHERE hostel_id = ?) AS TB\n" +
-            "Open cursorServices\n" +
-            "FETCH NEXT FROM cursorServices \n" +
-            "      INTO @service_id, @hostel_id\n" +
-            "WHILE @@FETCH_STATUS = 0\n" +
-            "BEGIN\n" +
-            "DECLARE @validDate datetime\n" +
-            "Set @validDate = (SELECT MAX(valid_date) FROM HostelService WHERE hostel_id = @hostel_id AND service_id = @service_id)\n" +
-            "DECLARE @price decimal(18, 0)\n" +
-            "SET @price = (SELECT service_price FROM HostelService WHERE valid_date = @validDate AND hostel_id = @hostel_id AND service_id = @service_id)\n" +
-            "INSERT @NewestServicesTable SELECT @service_id, @hostel_id, @price, @validDate\n" +
-            "    FETCH NEXT FROM cursorServices\n" +
-            "          INTO @service_id, @hostel_id\n" +
-            "END\n" +
-            "CLOSE cursorServices\n" +
-            "DEALLOCATE cursorServices\n" +
-            "SELECT service_id, hostel_id, service_price, valid_date FROM @NewestServicesTable";
+            "SELECT hostel_service_id, hostel_id, service_id, service_price, valid_date, status \n" +
+            "FROM HostelService WHERE status = 1 AND hostel_id = ?";
 
     private static final String INSERT_LIST_SERVICES_INTO_HOSTEL =
-            "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, ?, ?, GETDATE())";
+            "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date, status)\n" +
+                    "VALUES (?, ?, ?, GETDATE(), 1)";
+
+    private static final String UPDATE_STATUS_HOSTEL_SERVICES =
+            "UPDATE HostelService SET status = ?\n" +
+            "WHERE hostel_service_id = ?";
+
+    public boolean updateStatusOfListHostelServices(int status, List<HostelService> hostelServiceList) throws SQLException {
+        Connection conn = null;
+        PreparedStatement psm = null;
+
+        boolean check = false;
+        try {
+            conn = DBUtils.makeConnection();
+            if (conn != null) {
+                conn.setAutoCommit(false);
+
+                boolean checkUpdate;
+                for (HostelService item : hostelServiceList) {
+                    psm = conn.prepareStatement(UPDATE_STATUS_HOSTEL_SERVICES);
+                    psm.setInt(1, status);
+                    psm.setInt(2, item.getHostelServiceId());
+                    checkUpdate = psm.executeUpdate() > 0;
+
+                    if (!checkUpdate) {
+                        conn.rollback();
+                        conn.setAutoCommit(true);
+                        return false;
+                    }
+                }
+                conn.commit();
+                conn.setAutoCommit(true);
+                check = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (psm != null) psm.close();
+            if (conn != null) conn.close();
+        }
+        return check;
+    }
 
     public boolean insertListServicesIntoHostel(List<HostelService> hostelServiceList, int hostelId) throws SQLException {
         Connection conn = null;
@@ -90,10 +111,12 @@ public class HostelServiceDAO {
                 rs = psm.executeQuery();
                 while (rs != null && rs.next()) {
                     list.add(HostelService.builder()
+                            .hostelServiceId(rs.getInt("hostel_service_id"))
                             .hostelID(rs.getInt("hostel_id"))
                             .serviceID(rs.getInt("service_id"))
                             .servicePrice(rs.getInt("service_price"))
-                            .validDate(rs.getString("valid_date")).build());
+                            .validDate(rs.getString("valid_date"))
+                            .status(rs.getInt("status")).build());
                 }
             }
         } catch (Exception e) {
@@ -111,4 +134,5 @@ public class HostelServiceDAO {
         }
         return list;
     }
+
 }

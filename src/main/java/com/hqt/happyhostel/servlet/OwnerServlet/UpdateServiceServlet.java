@@ -21,25 +21,36 @@ public class UpdateServiceServlet extends HttpServlet {
             int hostelId = Integer.parseInt(request.getParameter("hostel-id"));
             String[] servicesIdStr = request.getParameterValues("update-service-id");
             String[] servicesPriceStr = request.getParameterValues("update-service-price");
+            HostelServiceDAO hostelServiceDAO = new HostelServiceDAO();
 
-            List<HostelService> hostelServiceList = new ArrayList<>();
-            for (int i = 0; i < servicesIdStr.length; i ++) {
-                hostelServiceList.add(HostelService.builder()
-                        .serviceID(Integer.parseInt(servicesIdStr[i]))
-                        .servicePrice(Integer.parseInt(servicesPriceStr[i])).build());
-            }
-
-            boolean checkUpdate = new HostelServiceDAO().insertListServicesIntoHostel(hostelServiceList, hostelId);
-            if (checkUpdate) {
-                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
-                        .status(true)
-                        .content("Cập nhật dịch vụ thành công!").build());
-            } else {
+            // Remove current hostel services
+            List<HostelService> currentHostelServiceList = hostelServiceDAO.getCurrentListServicesOfAHostel(hostelId);
+            boolean checkUpdate = hostelServiceDAO.updateStatusOfListHostelServices(0, currentHostelServiceList);
+            if (!checkUpdate) {
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(false)
-                        .content("Cập nhật dịch vụ thất bại!").build());
+                        .content("Đã có lỗi xảy ra! Vui lòng thử lại sau!").build());
+                url += hostelId;
+            } else {
+                List<HostelService> hostelServiceList = new ArrayList<>();
+                for (int i = 0; i < servicesIdStr.length; i ++) {
+                    hostelServiceList.add(HostelService.builder()
+                            .serviceID(Integer.parseInt(servicesIdStr[i]))
+                            .servicePrice(Integer.parseInt(servicesPriceStr[i])).build());
+                }
+
+                checkUpdate = hostelServiceDAO.insertListServicesIntoHostel(hostelServiceList, hostelId);
+                if (checkUpdate) {
+                    request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                            .status(true)
+                            .content("Cập nhật dịch vụ thành công!").build());
+                } else {
+                    request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                            .status(false)
+                            .content("Cập nhật dịch vụ thất bại!").build());
+                }
+                url += hostelId;
             }
-            url += hostelId;
         } catch (Exception e) {
             log("Error at UpdateServiceServlet: " + e.toString());
         } finally {

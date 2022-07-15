@@ -94,6 +94,9 @@
                                 <c:if test="${roomList.roomStatus eq 0}">
                                     <td class="content__tbody-status no">Đã cho thuê</td>
                                 </c:if>
+                                <c:if test="${roomList.roomStatus eq -1}">
+                                    <td class="content__tbody-status" style="color: orange;">Đang tiến hành làm hợp đồng</td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                         </tbody>

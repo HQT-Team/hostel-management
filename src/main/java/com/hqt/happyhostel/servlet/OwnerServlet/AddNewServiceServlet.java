@@ -24,22 +24,30 @@ public class AddNewServiceServlet extends HttpServlet {
             HostelServiceDAO hostelServiceDAO = new HostelServiceDAO();
 
             List<HostelService> list = hostelServiceDAO.getCurrentListServicesOfAHostel(hostelId);
-            list.add(HostelService.builder()
-                    .serviceID(serviceId)
-                    .hostelID(hostelId)
-                    .servicePrice(servicePrice).build());
-
-            boolean checkInsert = hostelServiceDAO.insertListServicesIntoHostel(list, hostelId);
-            if (checkInsert) {
-                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
-                        .status(true)
-                        .content("Thêm dịch vụ mới thành công!").build());
-            } else {
+            boolean checkUpdate = hostelServiceDAO.updateStatusOfListHostelServices(0, list);
+            if (!checkUpdate) {
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(false)
-                        .content("Thêm dịch vụ mới thất bại!").build());
+                        .content("Đã có lỗi xảy ra! Vui lòng thử lại sau!").build());
+                url += hostelId;
+            } else {
+                list.add(HostelService.builder()
+                        .serviceID(serviceId)
+                        .hostelID(hostelId)
+                        .servicePrice(servicePrice).build());
+
+                boolean checkInsert = hostelServiceDAO.insertListServicesIntoHostel(list, hostelId);
+                if (checkInsert) {
+                    request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                            .status(true)
+                            .content("Thêm dịch vụ mới thành công!").build());
+                } else {
+                    request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                            .status(false)
+                            .content("Thêm dịch vụ mới thất bại!").build());
+                }
+                url += hostelId;
             }
-            url += hostelId;
         } catch (Exception e) {
             log("Error at UpdateServiceServlet: " + e.toString());
         } finally {

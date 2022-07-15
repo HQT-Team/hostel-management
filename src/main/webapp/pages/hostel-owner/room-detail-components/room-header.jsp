@@ -141,19 +141,20 @@
                 consumeEndMonth.numberWater - consumeBeginMonth.numberWater ne 0}">
                 <form action="calculateTotalCost" method="get">
                     <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
-                    <button class="action-calculate-btn">Tính tiền phòng
+                    <button class="action-calculate-btn">
+                        Tính tiền phòng
                     </button>
                 </form>
             </c:when>
             <c:when test="${requestScope.renterAccount.status eq 1}">
                 <button class="action-calculate-btn" data-bs-toggle="modal"
-                        data-bs-target="#calculateRoomPriceModel">Tính tiền phòng
+                        data-bs-target="#calculateRoomPriceModel" style="margin-right: 0;">Tính tiền phòng
                 </button>
             </c:when>
-            <c:when test="${sessionScope.room.roomStatus eq 0 && requestScope.renterAccount.status eq 0}">
+            <c:when test="${sessionScope.room.roomStatus eq -1}">
                 <!-- Start view QR Code button -->
                 <form action="get-invite-code" method="post">
-                    <button type="submit" class="action-create-account-link">Xem mã tham gia</button>
+                    <button type="submit" class="action-create-account-link" style="margin-right: 0;">Xem mã tham gia</button>
                 </form>
                 <!-- End view QR Code button -->
             </c:when>

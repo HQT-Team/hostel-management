@@ -208,7 +208,7 @@ public class RoomDAO {
                         "VALUES (?, ?, ?, ?, ?, ?)\n" +
                         "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
                         "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
-                        "VALUES (0, 0, GETDATE(), 1, @roomID)" +
+                        "VALUES (0, 0, GETDATE(), 0, @roomID)" +
                         "DECLARE @restQuantity int = ?\n" +
                         "WHILE ( @restQuantity > 0 )\n" +
                         "BEGIN\n" +
@@ -306,7 +306,7 @@ public class RoomDAO {
                         "VALUES (?, @room_number, ?, ?, ?, ?)\n" +
                         "DECLARE @roomID int = SCOPE_IDENTITY()\n" +
                         "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id)\n" +
-                        "VALUES (0, 0, GETDATE(), 1, @roomID)" +
+                        "VALUES (0, 0, GETDATE(), 0, @roomID)" +
                         "DECLARE @restQuantity int = ?\n" +
                         "WHILE ( @restQuantity > 0 )\n" +
                         "BEGIN\n" +

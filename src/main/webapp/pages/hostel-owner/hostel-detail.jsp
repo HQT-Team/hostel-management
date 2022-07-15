@@ -116,6 +116,9 @@
                                                     <c:when test="${room.roomStatus eq 1}">
                                                         <span class="text-success">Sẵn sàng cho thuê</span>
                                                     </c:when>
+                                                    <c:when test="${room.roomStatus eq -1}">
+                                                        <span class="text-warning">Đang làm hợp đồng</span>
+                                                    </c:when>
                                                 </c:choose>
                                             </td>
                                             <td>
