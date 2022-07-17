@@ -26,6 +26,11 @@
   --min-body-height: calc(100vh - (var(--navbar-height) + var(--footer-height)));
 }
 
+/* Smooth scroll behavior */
+:root {
+  scroll-behavior: smooth;
+}
+
 // Reset css
 * {
   margin: 0;
