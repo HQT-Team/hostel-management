@@ -255,7 +255,6 @@
 
             axios.interceptors.request.use(function (config) {
                 $('#list-notifications-container').html("Loading...");
-                console.log(config)
                 return config;
             });
 

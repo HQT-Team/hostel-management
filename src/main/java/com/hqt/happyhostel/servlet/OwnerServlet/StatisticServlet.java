@@ -18,10 +18,11 @@ import javax.servlet.annotation.WebServlet;
 
 @WebServlet(name = "StatisticServlet", value = "/StatisticServlet")
 public class StatisticServlet extends HttpServlet {
-    @Override
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String URL = "statistic";
+        String URL = "statistic-page";
+        HttpSession session = request.getSession();
         BillDAO billDAO = new BillDAO();
         HostelDAO hostelDAO = new HostelDAO();
         ContractDAO contractDAO = new ContractDAO();
@@ -180,6 +181,7 @@ public class StatisticServlet extends HttpServlet {
             request.setAttribute("hostelName", null);
             request.setAttribute("year", null);
             request.setAttribute("quater", null);
+            session.setAttribute("CURRENT_PAGE", "statistic");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

@@ -66,6 +66,10 @@
   }
 }
 
+#filter__hostel-select ~ .select2-container {
+  width: 150px !important;
+}
+
 .content__item {
   display: none;
 
