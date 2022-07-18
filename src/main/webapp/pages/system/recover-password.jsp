@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -23,7 +24,16 @@
   <link rel="stylesheet" href="./assets/css/system_style/recover-password_style/style.css">
 </head>
 
-<body class="bg-light">
+<body class="bg-light ${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+  <div id="preloader">
+    <div class="dots">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</c:if>
 
 <!-- Navbar -->
 <div class="main-nav bg-white">
@@ -31,7 +41,7 @@
     <div class="row">
       <div class="col-3">
         <div class="main-nav__logo">
-          <a href="" class="main-nav__logo-link">
+          <a href="HomePage" class="main-nav__logo-link">
             <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
           </a>
         </div>
@@ -50,7 +60,7 @@
   <div class="row">
     <!-- Turn back -->
     <div class="col-12">
-      <a href="./login.html" class="turn-back__link">
+      <a href="loginPage" class="turn-back__link">
         <i class="turn-back__link-icon fa-solid fa-caret-left"></i>
         Quay lại trang đăng nhập
       </a>
@@ -60,7 +70,7 @@
     <div class="col-12">
       <div class="row">
         <div class="col-xs-11 col-sm-10 col-md-7 col-lg-6 col-xl-5 col-xxl-4 m-auto">
-          <form id="recover-psw-form" class="custom-form recover-psw-form">
+          <form action="recover-password" method="POST" id="recover-psw-form" class="custom-form recover-psw-form">
             <div class="form-header">
               <h3 class="form-title">Đặt lại mật khẩu</h3>
               <div class="form-subtitle">
@@ -75,14 +85,9 @@
               <span class="form-message"></span>
             </div>
             <div class="form-error-message">
-              Email bạn vừa nhập không ứng với tài khoản nào trong hệ thống! Vui lòng kiểm tra lại!
+              ${requestScope.RESPONSE_MSG.content}
             </div>
-            <!-- <button class="form-submit">Gửi Hướng Dẫn</button> -->
-            <!-- Remove this a tag and using button tag above when you implement -->
-            <a href="./recover-password-result.html" onMouseOver="this.style.color='#fff'"
-               onMouseOut="this.style.color='#fff'" class="form-submit d-block w-100 text-center">
-              Gửi Hướng Dẫn
-            </a>
+            <button type="submit" class="form-submit">Gửi Hướng Dẫn</button>
           </form>
         </div>
       </div>
@@ -103,12 +108,36 @@
   </div>
 </footer>
 
+<!-- Toast element -->
+<div id="toast">&nbsp</div>
+
 <!-- Script Bootstrap -->
 <script src="./assets/js/bootstrap/bootstrap.bundle.min.js"></script>
 
 <!-- Link your script here -->
 <script src="./assets/js/valid-form.js"></script>
+<script src="./assets/js/toast-alert.js"></script>
 <script>
+
+  <c:choose>
+    <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+      toast({
+        title: 'Thành công',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'success',
+        duration: 5000
+      });
+    </c:when>
+    <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+      toast({
+        title: 'Lỗi',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'error',
+        duration: 5000
+      });
+    </c:when>
+  </c:choose>
+
   Validator({
     form: "#recover-psw-form",
     formGroupSelector: ".form-group",
@@ -119,6 +148,11 @@
     ],
   });
 </script>
+
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+  <!-- Loader -->
+  <script src="./assets/js/loading-handler.js"></script>
+</c:if>
 </body>
 
 </html>

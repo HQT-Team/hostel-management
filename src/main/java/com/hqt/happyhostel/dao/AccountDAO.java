@@ -5,9 +5,12 @@ import com.hqt.happyhostel.dto.AccountInfo;
 import com.hqt.happyhostel.dto.Information;
 import com.hqt.happyhostel.dto.RoommateInfo;
 import com.hqt.happyhostel.utils.DBUtils;
+import com.hqt.happyhostel.utils.RandomStringGenerator;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AccountDAO {
@@ -784,4 +787,111 @@ public class AccountDAO {
         return expiredTime;
     }
 
+    private static final String GET_ACCOUNT_BY_EMAIL =
+            "SELECT B.account_id, B.username, B.password, B.token, B.create_date, B.expired_date, B.status, B.role,\n" +
+            "B.room_id, B.otp, B.expired_time_otp, B.request_recover_password_code, B.expired_time_recover_password\n" +
+            "FROM AccountInformations A JOIN Accounts B ON A.account_id = B.account_id \n" +
+            "WHERE A.email = ? AND (B.status = -1 OR B.status = 1 OR B.status = 0)";
+
+    public Account getAccountByEmail(String email) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Account acc = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_ACCOUNT_BY_EMAIL);
+                pst.setString(1, email);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    acc = Account.builder()
+                            .accId(rs.getInt("account_id"))
+                            .username(rs.getString("username"))
+                            .password("**********")
+                            .token(rs.getString("token"))
+                            .createDate(rs.getString("create_date"))
+                            .expiredDate(rs.getString("expired_date"))
+                            .status(rs.getInt("status"))
+                            .role(rs.getInt("role"))
+                            .roomId(rs.getInt("room_id"))
+                            .otp(rs.getString("otp"))
+                            .expiredTimeOTP(rs.getString("expired_time_otp"))
+                            .requestRecoverPasswordCode(rs.getString("request_recover_password_code"))
+                            .expiredTimeRecoverPassword(rs.getString("expired_time_recover_password"))
+                            .build();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return acc;
+    }
+
+    private static final String ADD_KEY_AND_EXPIRATION_TIME_FOR_PASSWORD_RECOVERY_REQUEST =
+            "UPDATE Accounts SET request_recover_password_code = ?, expired_time_recover_password = ?\n" +
+            "WHERE account_id = ?";
+
+    public boolean addKeyAndExpirationTimeForPasswordRecoveryRequest(String requestRecoverPasswordCode, String expiredTime, int accountId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        boolean result = false;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                cn.setAutoCommit(false);
+
+                pst = cn.prepareStatement(ADD_KEY_AND_EXPIRATION_TIME_FOR_PASSWORD_RECOVERY_REQUEST);
+                pst.setString(1, requestRecoverPasswordCode);
+                pst.setString(2, expiredTime);
+                pst.setInt(3, accountId);
+                result = pst.executeUpdate() > 0;
+
+                if (!result) {
+                    cn.rollback();
+                }
+                cn.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
 }

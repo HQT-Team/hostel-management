@@ -143,8 +143,9 @@
                     Hãy thư giãn và cố gắng thử nhớ lại mật khẩu của bạn!
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary forgot-password-modal-btn" data-bs-dismiss="modal">Cảm
-                        ơn</button>
+                    <a href="recover-password" class="btn btn-primary forgot-password-modal-btn">
+                        Cảm ơn
+                    </a>
                 </div>
             </div>
         </div>
