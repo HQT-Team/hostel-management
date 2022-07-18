@@ -35,7 +35,7 @@
     <h2>Something went wrong!</h2>
     <p>YOU CAN NOT ACCESS THIS PAGE
     </p>
-    <a href="">Go Back</a>
+    <a href="HomePage">Go Back</a>
   </div>
 </div>
 </body>

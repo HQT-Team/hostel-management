@@ -26,7 +26,7 @@ public class RecoverPasswordServlet extends HttpServlet {
             Account account = (Account) session.getAttribute("USER");
 
             if (account == null) {
-                response.sendRedirect("recover-password-page");
+                request.getRequestDispatcher("recover-password-page").forward(request, response);
             } else {
                 request.getRequestDispatcher("dashboard").forward(request, response);
             }

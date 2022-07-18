@@ -894,4 +894,56 @@ public class AccountDAO {
         }
         return result;
     }
+
+    private static final String CHECK_ACCOUNT_REQUEST_RECOVER_PASSWORD =
+            "SELECT account_id, username, password, token, create_date, expired_date, status, role,\n" +
+            "room_id, otp, expired_time_otp, request_recover_password_code, expired_time_recover_password FROM Accounts \n" +
+            "WHERE account_id = ? AND request_recover_password_code = ? AND GETDATE() <= expired_time_recover_password";
+
+    public boolean checkAccountRequestRecoverPassword(int accountId, String recoverCode) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean result = false;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+
+                pst = cn.prepareStatement(CHECK_ACCOUNT_REQUEST_RECOVER_PASSWORD);
+                pst.setInt(1, accountId);
+                pst.setString(2, recoverCode);
+                rs = pst.executeQuery();
+
+                if (rs != null && rs.next()) {
+                    result = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
 }

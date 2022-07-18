@@ -46,6 +46,12 @@
   border-radius: 6px;
   box-shadow: var(--box-shadow-border-model);
 
+  .form-header {
+    .form-header {
+      font-size: 3.4rem;
+    }
+  }
+
   .form-subtitle {
     color: #716868;
     margin-bottom: 24px;
@@ -62,6 +68,8 @@
     background-color: #7b3aed;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     margin-bottom: 10px;
+    margin-top: 32px;
+    padding: 16px;
     transition: background-color 0.2s ease;
 
     &:hover {

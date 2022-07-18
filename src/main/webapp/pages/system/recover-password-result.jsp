@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -31,7 +32,7 @@
     <div class="row">
       <div class="col-3">
         <div class="main-nav__logo">
-          <a href="" class="main-nav__logo-link">
+          <a href="HomePage" class="main-nav__logo-link">
             <img class="main-nav__logo-img" src="./assets/images/logos/logo.png" alt="Logo">
           </a>
         </div>
@@ -64,10 +65,10 @@
             <a href="https://mail.google.com/" target="_blank" class="recover-psw-result__btn">
               Mở ứng dụng email
             </a>
-            <a class="recover-psw-result__link-return" href="">
+            <a class="recover-psw-result__link-return" href="loginPage">
               Bỏ qua, tôi sẽ xác nhận sau</a>
             <p>Chưa nhận được email? Kiểm tra hộp thư spam hoặc
-              <a class="recover-psw-result__link-retry" href="">
+              <a class="recover-psw-result__link-retry" href="recover-password">
                 thử lại với email khác
               </a>
             </p>
@@ -91,8 +92,33 @@
   </div>
 </footer>
 
+<!-- Toast element -->
+<div id="toast">&nbsp</div>
+
 <!-- Script Bootstrap -->
 <script src="./assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+<!-- Link your script here -->
+<script src="./assets/js/toast-alert.js"></script>
+<script>
+  <c:choose>
+    <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+      toast({
+        title: 'Thành công',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'success',
+        duration: 5000
+      });
+    </c:when>
+    <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+      toast({
+        title: 'Lỗi',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'error',
+        duration: 5000
+      });
+    </c:when>
+  </c:choose>
+</script>
 </body>
 
 </html>
