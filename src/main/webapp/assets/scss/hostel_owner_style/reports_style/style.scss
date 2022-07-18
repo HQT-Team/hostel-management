@@ -138,10 +138,12 @@
 #filter__hostel-select-2 ~ .select2-container,
 #filter__hostel-select-3 ~ .select2-container {
   width: 150px !important;
+  font-weight: 400;
 }
 
 #filter__room-select-1 ~ .select2-container,
 #filter__room-select-2 ~ .select2-container,
 #filter__room-select-3 ~ .select2-container {
   width: 110px !important;
+  font-weight: 400;
 }

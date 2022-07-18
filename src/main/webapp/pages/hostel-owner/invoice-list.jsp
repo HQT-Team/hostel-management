@@ -82,29 +82,18 @@
                             </tr>
                             <tr>
                                 <td><i class="fa-solid fa-sliders"></i> Lọc</td>
-                                <c:set var="hostelNameListNotPayment"
-                                       value="${sessionScope.INVOICE_NOT_PAYMENT_LIST_HOSTEL_NAME}"/>
-                                <c:set var="roomNameListNotPayment"
-                                       value="${sessionScope.INVOICE_NOT_PAYMENT_LIST_ROOM_NUMBER}"/>
-                                <form action="" method="post">
+                                <form id="form-no-payment-bill">
                                     <td>
-                                        <select name="" id="filter__hostel-select-1"
-                                                style="min-width: 100px; max-width: 200px;">
+                                        <select name="hostelId" id="filter__hostel-select-1">
                                             <option value="">Tất cả</option>
-                                            <c:forEach var="hostelName"
-                                                       items="${sessionScope.INVOICE_NOT_PAYMENT_LIST_DROP_DOWN_HOSTEL_NAME}">
-                                                <option>${hostelName}</option>
+                                            <c:forEach var="hostel" items="${requestScope.LIST_HOSTELS}">
+                                                <option value="${hostel.hostelID}">${hostel.hostelName}</option>
                                             </c:forEach>
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="" id="filter__room-select-1"
-                                                style="min-width: 100px; max-width: 200px;">
+                                        <select name="roomId" id="filter__room-select-1" disabled>
                                             <option value="">Tất cả</option>
-                                            <c:forEach var="roomName"
-                                                       items="${sessionScope.INVOICE_NOT_PAYMENT_LIST_DROP_DOWN_ROOM_NUMBER}">
-                                                <option value="${roomName}">${roomName}</option>
-                                            </c:forEach>
                                         </select>
                                     </td>
                                 </form>
@@ -112,15 +101,17 @@
                         </table>
                     </div>
                     <!-- Infor box -->
-                    <div class="content__body">
+                    <div id="content__body-1" class="content__body">
                         <table id="invoice-table-1" class="content__table table table-bordered table-striped">
                             <thead class="content__thead">
-                            <th class="text-center">Mã</th>
-                            <th class="text-center">Tên</th>
-                            <th class="text-center">Phòng số</th>
-                            <th class="text-center">Khu trọ</th>
-                            <th class="text-center">Tổng tiền</th>
-                            <th class="text-center">Ngày tạo</th>
+                                <tr>
+                                    <th class="text-center">Mã</th>
+                                    <th class="text-center">Tên</th>
+                                    <th class="text-center">Phòng số</th>
+                                    <th class="text-center">Khu trọ</th>
+                                    <th class="text-center">Tổng tiền</th>
+                                    <th class="text-center">Ngày tạo</th>
+                                </tr>
                             </thead>
                             <tbody class="content__tbody">
                             <c:set var="hostelName" value="${sessionScope.INVOICE_NOT_PAYMENT_LIST_HOSTEL_NAME}"/>
@@ -137,12 +128,12 @@
                                     <td class="text-center">${roomNumber[loop.index]}</td>
                                     <td class="text-center">${hostelName[loop.index]}</td>
 
-                                    <td><fmt:formatNumber value="${bill.totalMoney}"
-                                                          type="currency" currencySymbol="VNĐ"/></td>
+                                    <td class="text-center">
+                                        <fmt:formatNumber value="${bill.totalMoney}" type="currency" currencySymbol="VNĐ"/>
+                                    </td>
 
-                                    <fmt:parseDate pattern="yyyy-MM-dd" value="${bill.createdDate}"
-                                                   var="createdDate"/>
-                                    <td>
+                                    <fmt:parseDate pattern="yyyy-MM-dd" value="${bill.createdDate}" var="createdDate"/>
+                                    <td class="text-center">
                                         <fmt:formatDate pattern="dd/MM/yyyy" value="${createdDate}"/>
                                     </td>
                                 </tr>
@@ -164,29 +155,18 @@
                             </tr>
                             <tr>
                                 <td><i class="fa-solid fa-sliders"></i> Lọc</td>
-                                <c:set var="hostelNameListNotPayment"
-                                       value="${sessionScope.INVOICE_PAYMENT_LIST_HOSTEL_NAME}"/>
-                                <c:set var="roomNameListNotPayment"
-                                       value="${sessionScope.INVOICE_PAYMENT_LIST_ROOM_NUMBER}"/>
-                                <form action="" method="post">
+                                <form id="form-payment-bill">
                                     <td>
-                                        <select name="" id="filter__hostel-select-2"
-                                                style="min-width: 100px; max-width: 200px;">
-                                            <option value="0">Tất cả</option>
-                                            <c:forEach var="hostelName"
-                                                       items="${sessionScope.INVOICE_PAYMENT_LIST_DROP_DOWN_HOSTEL_NAME}">
-                                                <option value="${hostelName}">${hostelName}</option>
+                                        <select name="hostelId" id="filter__hostel-select-2">
+                                            <option value="">Tất cả</option>
+                                            <c:forEach var="hostel" items="${requestScope.LIST_HOSTELS}">
+                                                <option value="${hostel.hostelID}">${hostel.hostelName}</option>
                                             </c:forEach>
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="" id="filter__room-select-2"
-                                                style="min-width: 100px; max-width: 200px;">
+                                        <select name="roomId" id="filter__room-select-2" disabled>
                                             <option value="">Tất cả</option>
-                                            <c:forEach var="roomName"
-                                                       items="${sessionScope.INVOICE_PAYMENT_LIST_DROP_DOWN_ROOM_NUMBER}">
-                                                <option value="${roomName}">${roomName}</option>
-                                            </c:forEach>
                                         </select>
                                     </td>
                                 </form>
@@ -194,15 +174,17 @@
                         </table>
                     </div>
                     <!-- Infor box -->
-                    <div class="content__body">
+                    <div id="content__body-2" class="content__body">
                         <table id="invoice-table-2" class="content__table table table-bordered table-striped">
                             <thead class="content__thead">
-                            <th class="text-center">Mã</th>
-                            <th class="text-center">Tên</th>
-                            <th class="text-center">Phòng số</th>
-                            <th class="text-center">Khu trọ</th>
-                            <th class="text-center">Tổng tiền</th>
-                            <th class="text-center">Ngày tạo</th>
+                                <tr>
+                                    <th class="text-center">Mã</th>
+                                    <th class="text-center">Tên</th>
+                                    <th class="text-center">Phòng số</th>
+                                    <th class="text-center">Khu trọ</th>
+                                    <th class="text-center">Tổng tiền</th>
+                                    <th class="text-center">Ngày tạo</th>
+                                </tr>
                             </thead>
                             <tbody class="content__tbody">
                             <c:set var="hostelName" value="${sessionScope.INVOICE_PAYMENT_LIST_HOSTEL_NAME}"/>
@@ -219,12 +201,12 @@
                                     <td class="text-center">${roomNumber[loop.index]}</td>
                                     <td class="text-center">${hostelName[loop.index]}</td>
 
-                                    <td><fmt:formatNumber value="${bill.totalMoney}"
-                                                          type="currency" currencySymbol="VNĐ"/></td>
+                                    <td class="text-center">
+                                        <fmt:formatNumber value="${bill.totalMoney}" type="currency" currencySymbol="VNĐ"/>
+                                    </td>
 
-                                    <fmt:parseDate pattern="yyyy-MM-dd" value="${bill.createdDate}"
-                                                   var="createdDate"/>
-                                    <td>
+                                    <fmt:parseDate pattern="yyyy-MM-dd" value="${bill.createdDate}" var="createdDate"/>
+                                    <td class="text-center">
                                         <fmt:formatDate pattern="dd/MM/yyyy" value="${createdDate}"/>
                                     </td>
                                 </tr>
@@ -253,6 +235,10 @@
 <script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <!-- Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<!-- Axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- Load data async -->
+<script src="./assets/js/load-bill-async.js"></script>
 <script>
     $(document).ready(function () {
 
@@ -262,7 +248,7 @@
         const tabActive = document.querySelector(".tabs-item.active");
         const line = document.querySelector(".tabs .line");
 
-        let i = 0, lengthTabs = tabs.length;
+        let i = 0;
 
         line.style.left = tabActive.offsetLeft + "px";
         line.style.width = tabActive.offsetWidth + "px";
@@ -287,11 +273,11 @@
 
         for (let i = 1; i <= 2; i++) {
             // Select 2
-            $(`#filter__hostel-select-${i}`).select2();
-            $(`#filter__room-select-${i}`).select2();
+            $('#filter__hostel-select-' + i).select2();
+            $('#filter__room-select-' + i).select2();
 
             // Initial datatable
-            $(`#invoice-table-${i}`).DataTable();
+            $('#invoice-table-' + i).DataTable();
         }
 
         for (let i = 0; i < 2; i++) {
@@ -304,6 +290,68 @@
             contents[index].classList.add("active");
         })();
 
+        // Filter for not payment bill
+        $('#filter__hostel-select-1').on('change', () => {
+            $('#form-no-payment-bill').submit();
+        });
+
+        $('#filter__room-select-1').on('change', () => {
+            $('#form-no-payment-bill').submit();
+        });
+
+        // Filter
+        $('#form-no-payment-bill').submit(function(e) {
+            e.preventDefault();
+
+            axios({
+                method: 'post',
+                url: 'http://localhost:8080/HappyHostel/getInvoiceList',
+                params: {
+                    'hostelId': $('#filter__hostel-select-1').find(':selected').val(),
+                    'roomId': $('#filter__room-select-1').find(':selected').val(),
+                    'type': 0
+                }
+            })
+            .then(function (response) {
+                loadBillAsync(response.data[0], response.data[1], response.data[2], 1);
+                loadListRoomsAsync(response.data[3], response.data[4], 1);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        });
+
+        // Filter for payment bill
+        $('#filter__hostel-select-2').on('change', () => {
+            $('#form-payment-bill').submit();
+        });
+
+        $('#filter__room-select-2').on('change', () => {
+            $('#form-payment-bill').submit();
+        });
+
+        // Filter
+        $('#form-payment-bill').submit(function(e) {
+            e.preventDefault();
+
+            axios({
+                method: 'post',
+                url: 'http://localhost:8080/HappyHostel/getInvoiceList',
+                params: {
+                    'hostelId': $('#filter__hostel-select-2').find(':selected').val(),
+                    'roomId': $('#filter__room-select-2').find(':selected').val(),
+                    'type': 1
+                }
+            })
+                .then(function (response) {
+                    console.log(response);
+                    loadBillAsync(response.data[0], response.data[1], response.data[2], 2);
+                    loadListRoomsAsync(response.data[3], response.data[4], 2);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        });
     });
 </script>
 <!-- Preload -->
