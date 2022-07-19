@@ -128,7 +128,7 @@ public class StatisticServlet extends HttpServlet {
             }
 
             List<Report> listReport;
-            listReport = reportDAO.getReport();
+            listReport = reportDAO.getReports();
             var rate = 0;
             int rep = 0;
             int notyet = 0;
