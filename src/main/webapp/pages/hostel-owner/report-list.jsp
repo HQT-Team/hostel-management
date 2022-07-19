@@ -27,7 +27,11 @@
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 
     <!-- Select2 CSS -->
+
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- CSS Push Nnotification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 </head>
 
 <body class="${requestScope.STATE eq null ? "over-flow-hidden" : ""}">
@@ -335,6 +339,10 @@
 <!-- Footer -->
 <%@include file="./components/footer.jsp"%>
 
+<!-- Push notification element -->
+<div id="push-noti"></div>
+
+
 <script src="./assets/js/receiveWebsocket.js"></script>
 <script type="text/javascript">
     receiveWebsocket('#textAreaMessage');
@@ -353,6 +361,10 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <!-- Axios -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/receiveWebsocket.js"></script>
 <script>
     $(document).ready(function () {
 
@@ -406,6 +418,16 @@
         line.style.width = tabActive.offsetWidth + "px";
 
     });
+</script>
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function(){
+        receiveWebsocket.disconnectWebSocket();
+    };
 </script>
 
 <c:if test="${requestScope.STATE eq null}">

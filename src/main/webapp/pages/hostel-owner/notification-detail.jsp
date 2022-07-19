@@ -22,6 +22,9 @@
   <!-- Link your CSS here -->
   <link rel="stylesheet" href="./assets/css/hostel_owner_style/notification-detail_style/style.css">
 
+  <!-- CSS Push Nnotification -->
+  <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+
 </head>
 
 <body class="over-flow-hidden">
@@ -91,6 +94,9 @@
 <!-- Footer -->
 <%@include file="./components/footer.jsp"%>
 
+<!-- Push notification element -->
+<div id="push-noti"></div>
+
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -99,22 +105,33 @@
 <script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <!-- Navbar -->
 <script src="./assets/js/handle-main-navbar.js"></script>
-<!-- Link your script here -->
-
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/sendWebsocket.js"></script>
+<script src="./assets/js/receiveWebsocket.js"></script>
 
 <!-- Preload -->
 <script src="./assets/js/handle-preloader.js" type="text/javascript"></script>
-<script src="./assets/js/sendWebsocket.js"></script>
 <script type="text/javascript">
+  // Send
   <c:if test="${requestScope.RESPONSE_MSG.status == true}">
-  const params = new Object();
-  params.sender = "hostel_owner";
-  params.receiver = "hostel";
-  params.hostel_receiver_id = "${requestScope.HOSTEL_ID}";
-  params.account_receiver_id = null;
-  params.messages = "Chủ trọ đã gửi một thông báo mới. Vui lòng kiểm tra!";
-  sendToWebSocket(params);
+    const params = new Object();
+    params.sender = "hostel_owner";
+    params.receiver = "hostel";
+    params.hostel_receiver_id = "${requestScope.HOSTEL_ID}";
+    params.account_receiver_id = null;
+    params.messages = "Chủ trọ đã gửi một thông báo mới. Vui lòng kiểm tra!";
+    sendToWebSocket(params);
   </c:if>
+
+  // Receive
+  receiveWebsocket(alertPushNoti);
+
+  // Close when leave
+  window.onbeforeunload = function(){
+    receiveWebsocket.disconnectWebSocket();
+  };
 </script>
 </body>
 

@@ -27,6 +27,9 @@
 
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- CSS Push Notification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 </head>
 
 <body class="over-flow-hidden">
@@ -202,6 +205,9 @@
 <!-- Footer -->
 <%@include file="./components/footer.jsp"%>
 
+<!-- Push notification element -->
+<div id="push-noti"></div>
+
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -214,6 +220,12 @@
 <script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <!-- Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/receiveWebsocket.js"></script>
+
+
 <script>
     $(document).ready(function () {
 
@@ -266,6 +278,15 @@
         })();
 
     });
+</script>
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function(){
+        receiveWebsocket.disconnectWebSocket();
+    };
 </script>
 <!-- Preload -->
 <script src="./assets/js/handle-preloader.js" type="text/javascript"></script>

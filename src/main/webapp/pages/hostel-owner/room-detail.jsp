@@ -23,6 +23,10 @@
     <!-- Link your CSS here -->
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/room_detail_style/style.css">
 
+    <!-- CSS Push Nnotification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+
+
 </head>
 
 <body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
@@ -146,6 +150,9 @@
 <!-- Footer -->
 <%@include file="components/footer.jsp" %>
 
+<!-- Push notification element -->
+<div id="push-noti"></div>
+
 <!-- Toast element -->
 <div id="toast">&nbsp;</div>
 
@@ -160,6 +167,11 @@
 <script src="./assets/js/valid-form.js"></script>
 <script src="./assets/js/owner/room-detail/validate-input.js"></script>
 <script src="./assets/js/toast-alert.js"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/receiveWebsocket.js"></script>
+
 <script>
     <c:choose>
     <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
@@ -179,6 +191,16 @@
     });
     </c:when>
     </c:choose>
+</script>
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function(){
+        receiveWebsocket.disconnectWebSocket();
+    };
 </script>
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">

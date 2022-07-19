@@ -20,8 +20,6 @@ public class PushNotiWebSocket {
     @OnOpen
     public void handleOpen(Session session) {
         users.add(session);
-        System.out.println(session);
-        System.out.println(users.size());
     }
 
     @OnMessage
@@ -87,7 +85,6 @@ public class PushNotiWebSocket {
     @OnClose
     public void handleClose(Session session) {
         users.remove(session);
-        System.out.println(users.size());
     }
 
     @OnError

@@ -29,15 +29,18 @@ public class ReviewNotificationServlet extends HttpServlet {
         HandlerStatus handlerStatus = null;
         try {
             HttpSession session = request.getSession(false);
+            String action = request.getParameter("action");
             if(session != null){
 
                 int notiId =(request.getAttribute("NOTIFICATION_ID") != null) ?
                         (int) request.getAttribute("NOTIFICATION_ID") : Integer.parseInt(request.getParameter("notification_id"));
                 if(notiId > 0) {
                     Notification notification = new NotificationDAO().getNotificationById(notiId);
-                    handlerStatus = HandlerStatus.builder().status(true).content("Gửi thông báo thành công").build();
                     request.setAttribute("HOSTEL_ID",  request.getAttribute("HOSTEL_ID"));
                     request.setAttribute("NOTIFICATION", notification);
+                    if(!"view".equals(action)){
+                        handlerStatus = HandlerStatus.builder().status(true).content("Gửi thông báo thành công").build();
+                    }
                     url = SUCCESS;
                 }else {
                     handlerStatus = HandlerStatus.builder().status(false).content("Có lỗi xảy ra. Vui lòng thử lại").build();
