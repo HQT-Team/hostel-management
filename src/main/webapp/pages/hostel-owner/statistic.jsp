@@ -30,9 +30,22 @@
 
   <!-- Simple Datatable CSS -->
   <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+  <!-- CSS Push Notification -->
+  <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+
 </head>
 
-<body>
+<body class="over-flow-hidden">
+<!-- Loader -->
+<div id="preloader">
+  <div class="dots">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+
 <input type="hidden" name="render-number" value="" id="render-number"/>
 <div class="app">
 
@@ -150,25 +163,15 @@
       </div>
     </div>
   </div>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <div class="copyright-wrapper d-flex justify-content-center">
-            <div class="copyright-content">
-              © 2022 HQT Team. All rights reserved.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
 </div>
 
-<!-- Script Bootstrap !important -->
+<!-- Footer -->
+<%@include file="./components/footer.jsp" %>
 
+<!-- Push notification element -->
+<div id="push-noti"></div>
+
+<!-- Script Bootstrap !important -->
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -179,11 +182,15 @@
         src="./assets/js/jquery-3.5.1.min.js"
         type="text/javascript"
 ></script>
-<!-- Link your script here -->
+<!-- Navbar -->
 <script src="./assets/js/handle-main-navbar.js"></script>
 <!-- Chart JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
 <script src="./assets/js/owner/statistic/statistic.js"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/receiveWebsocket.js"></script>
 <script>
   if (${requestScope.hostelName eq null ? false : true}) {
     document.getElementById("${requestScope.hostelName}").setAttribute("selected", "selected");
@@ -263,5 +270,18 @@
     newLineChartWithYear(listCreate, listCancel);
   }
 </script>
+
+<script type="text/javascript">
+  // Receive
+  receiveWebsocket(alertPushNoti);
+
+  // Close when leave
+  window.onbeforeunload = function(){
+    receiveWebsocket.disconnectWebSocket();
+  };
+</script>
+
+<!-- Preload -->
+<script src="./assets/js/handle-preloader.js" type="text/javascript"></script>
 </body>
 </html>
