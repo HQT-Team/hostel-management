@@ -189,7 +189,13 @@
     document.getElementById("${requestScope.hostelName}").setAttribute("selected", "selected");
   }
   if (${requestScope.year eq null ? false : true}) {
+    document.getElementById("select-year").disabled = false;
+    document.getElementById("quater").disabled = false;
     document.getElementById("${requestScope.year}").setAttribute("selected", "selected");
+  }
+  if (parseInt(${requestScope.sizeListHostel}) == 0) {
+    document.getElementById("select-year").disabled = true;
+    document.getElementById("quater").disabled = true;
   }
   if (${requestScope.quater eq null ? false : true}) {
     document.getElementById("${requestScope.quater}").setAttribute("selected", "selected");
