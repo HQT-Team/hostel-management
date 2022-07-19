@@ -25,6 +25,9 @@
     <!-- Simple Datatable CSS -->
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 
+    <!-- CSS Push Nnotification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+
 </head>
 
 <body class="over-flow-hidden">
@@ -148,12 +151,13 @@
                 </div>
             </div>
         </div>
-
         <!-- Footer -->
         <%@include file="components/footer.jsp"%>
 
-    </div>
+        <!-- Push notification element -->
+        <div id="push-noti"></div>
 
+    </div>
     <!-- Script Bootstrap !important -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -166,6 +170,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
     <script src="./assets/js/owner/dashboard/revenue-chart.js"></script>
 
+    <!-- Push notification -->
+    <script src="./assets/js/push-notification-alert.js"></script>
+    <!-- Web socket -->
+    <script src="./assets/js/receiveWebsocket.js"></script>
+    <script type="text/javascript">
+        // Receive
+        receiveWebsocket(alertPushNoti);
+
+        // Close when leave
+        window.onbeforeunload = function(){
+            receiveWebsocket.disconnectWebSocket();
+        };
+    </script>
     <!-- Loader -->
     <script src="./assets/js/loading-handler.js"></script>
 </body>

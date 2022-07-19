@@ -22,6 +22,10 @@
     <!-- Link your CSS here -->
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/room-invite-code-style/style.css">
 
+    <!-- CSS Push Nnotification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+
+
 </head>
 
 <body class="over-flow-hidden">
@@ -130,6 +134,9 @@
 <!-- Footer -->
 <%@include file="./components/footer.jsp"%>
 
+<!-- Push notification element -->
+<div id="push-noti"></div>
+
 <!-- Script Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -142,6 +149,10 @@
 <script src="./assets/js/handle-main-navbar.js"></script>
 <script src="./assets/js/owner/room-invite-code/handle-copy.js"></script>
 <script src="./assets/js/owner/room-invite-code/handle-countdown.js"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/receiveWebsocket.js"></script>
 <script>
     // Handle encode and render QR image
     const imgBase64Code ='${requestScope.ROOM_INVITE.QRCode}';
@@ -154,6 +165,16 @@
     handleCountDown({
         targetDate: "${requestScope.ROOM_INVITE.expiredTimeCode}"
     });
+</script>
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function(){
+        receiveWebsocket.disconnectWebSocket();
+    };
 </script>
 
 <!-- Loader -->

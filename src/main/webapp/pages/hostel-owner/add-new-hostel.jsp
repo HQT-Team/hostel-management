@@ -7,20 +7,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
 
     <!-- Title -->
     <title>Thêm khu trọ</title>
 
     <!-- Link Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
     <!-- Link your CSS here -->
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/add-new-hostel-style/style.css">
+
+    <!-- CSS Push Nnotification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
 </head>
 
@@ -195,8 +198,11 @@
     <!-- Footer -->
     <%@include file="components/footer.jsp"%>
 
-    <!-- Script Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+<!-- Push notification element -->
+<div id="push-noti"></div>
+
+<!-- Script Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <!-- Jquery -->
@@ -207,6 +213,10 @@
     <script src="./assets/js/handle-main-navbar.js"></script>
     <script src="./assets/js/handle-address.js"></script>
     <script src="./assets/js/valid-form.js"></script>
+    <!-- Push notification -->
+    <script src="./assets/js/push-notification-alert.js"></script>
+    <!-- Web socket -->
+    <script src="./assets/js/receiveWebsocket.js"></script>
     <script>
         let maxNumber = 1000000;
         let minNumber = 0;
@@ -295,6 +305,16 @@
         </script>
     </c:when>
 </c:choose>
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function () {
+        receiveWebsocket.disconnectWebSocket();
+    };
+</script>
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">
     <!-- Loader -->

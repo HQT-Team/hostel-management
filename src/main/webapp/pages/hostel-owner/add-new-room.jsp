@@ -22,6 +22,9 @@
     <!-- Link your CSS here -->
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/add-new-room-style/style.css">
 
+    <!-- CSS Push Nnotification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+
 </head>
 
 <body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
@@ -214,6 +217,10 @@
 <!-- Link your script here -->
 <script src="./assets/js/handle-main-navbar.js"></script>
 <script src="./assets/js/valid-form.js"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/receiveWebsocket.js"></script>
 <script>
 
     Validator({
@@ -317,6 +324,16 @@
         </script>
     </c:when>
 </c:choose>
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function () {
+        receiveWebsocket.disconnectWebSocket();
+    };
+</script>
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">
     <!-- Loader -->

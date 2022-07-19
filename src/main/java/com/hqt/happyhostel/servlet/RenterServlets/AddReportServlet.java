@@ -38,6 +38,7 @@ public class AddReportServlet extends HttpServlet {
         String sendDate = dateObj.format(formatter);
         Account acc = new Account();
 
+        HandlerStatus handlerStatus = null;
 
         try {
             req.setCharacterEncoding("UTF-8");
@@ -58,9 +59,13 @@ public class AddReportServlet extends HttpServlet {
                     .cateID(cateID)
                     .build();
             //Add report
-            boolean checkInsert = new ReportDAO().addReport(report);
-            if (checkInsert){
+            int reportId = new ReportDAO().addReport(report);
+            if (reportId > 0){
                 req.setAttribute("SUCCESS", "Bạn đã gửi đi báo cáo thành công");
+                handlerStatus = HandlerStatus.builder().status(true).content("Bạn đã gửi đi báo cáo thành công").build();
+                req.setAttribute("HOSTEL_OWNER_ID", ownerID);
+                req.setAttribute("REPORT_ID", reportId);
+                req.setAttribute("RESPONSE_MSG", handlerStatus);
                 url = SUCCESS;
             }
         } catch (Exception e) {
