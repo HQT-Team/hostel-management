@@ -11,8 +11,10 @@ import lombok.*;
 @Setter
 @ToString
 public class HostelService {
+    private int hostelServiceId;
     private int hostelID;
     private int serviceID;
     private int servicePrice;
     private String validDate;
+    private int status;
 }

@@ -83,7 +83,7 @@
                             </tr>
                             <tr>
                                 <td><i class="fa-solid fa-sliders"></i> Lọc</td>
-                                <form action="owner-get-notification-list" method="POST" id="filter-form">
+                                <form id="filter-form">
                                     <td>
                                         <select name="hostelId" id="filter__hostel-select">
                                             <option value="">Tất cả</option>
@@ -261,17 +261,16 @@
             };
         });
 
+        // Filter
         $('#filter__hostel-select').on('change', () => {
             $('#filter-form').submit();
         })
 
-        // Filter
         $('#filter-form').submit(function(e) {
             e.preventDefault();
 
             axios.interceptors.request.use(function (config) {
                 $('#list-notifications-container').html("Loading...");
-                console.log(config)
                 return config;
             });
 
@@ -289,7 +288,6 @@
             .catch(function (error) {
                 console.log(error);
             });
-
         });
     });
 </script>

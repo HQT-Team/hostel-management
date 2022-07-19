@@ -18,15 +18,17 @@ import javax.servlet.annotation.WebServlet;
 
 @WebServlet(name = "StatisticServlet", value = "/StatisticServlet")
 public class StatisticServlet extends HttpServlet {
-    @Override
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String URL = "statistic";
+        String URL = "statistic-page";
+        HttpSession session = request.getSession();
         BillDAO billDAO = new BillDAO();
         HostelDAO hostelDAO = new HostelDAO();
         ContractDAO contractDAO = new ContractDAO();
         ReportDAO reportDAO = new ReportDAO();
         RoomDAO roomDAO = new RoomDAO();
+       Account account = (Account) session.getAttribute("USER");
         int totalMoney = 0;
         int expenseMoney = 0;
         int revenueMoney = 0;
@@ -34,8 +36,8 @@ public class StatisticServlet extends HttpServlet {
         ArrayList<String> listYear = new ArrayList<String>();
         try {
 
-            ArrayList<Hostel> listHostel = hostelDAO.getListHostel();
-            ArrayList<Bill> listBillByHostel = billDAO.GetListBillByHostel("Nova Land");
+            List<Hostel> listHostel = hostelDAO.getHostelByOwnerId(account.getAccId());
+            ArrayList<Bill> listBillByHostel = billDAO.GetListBillByHostel(listHostel.get(0).getHostelName());
             boolean check;
             for (int i = 0; i < listBillByHostel.size(); i++) {
                 String tmpYear = listBillByHostel.get(i).getCreatedDate().substring(0, 4);
@@ -53,7 +55,7 @@ public class StatisticServlet extends HttpServlet {
                     }
                 }
             }
-            ArrayList<Bill> listBillByFixValue = billDAO.GetListBillByHostelYearQuater("Nova Land", "2022", "quater_2");
+            ArrayList<Bill> listBillByFixValue = billDAO.GetListBillByHostelYearQuater(listHostel.get(0).getHostelName(), listYear.get(0), "quater_1");
 
             //lấy tất cả các năm mà khu trọ đã hoạt động
 
@@ -80,7 +82,7 @@ public class StatisticServlet extends HttpServlet {
 
 
             ArrayList<Contract> listContractByFixValue;
-            listContractByFixValue = contractDAO.GetListContractByHostelYearQuater("Nova Land", "2022", "quater_1");
+            listContractByFixValue = contractDAO.GetListContractByHostelYearQuater(listHostel.get(0).getHostelName(), listYear.get(0), "quater_1");
             int contractCancelRate1 = 0;
             int contractCancelRate2 = 0;
             int contractCancelRate3 = 0;
@@ -180,6 +182,7 @@ public class StatisticServlet extends HttpServlet {
             request.setAttribute("hostelName", null);
             request.setAttribute("year", null);
             request.setAttribute("quater", null);
+            session.setAttribute("CURRENT_PAGE", "statistic");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -189,10 +192,10 @@ public class StatisticServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String URL = "statistic";
+        String URL = "statistic-page";
         String hostelName = request.getParameter("select-hostel");
-        String year = request.getParameter("select-year");
-        String quater = request.getParameter("select-quater");
+        String year = request.getParameter("select-year") != null ? request.getParameter("select-year"): "2022";
+        String quater = request.getParameter("select-quater") != null ? request.getParameter("select-quater"): "quater_1";
         BillDAO billDAO = new BillDAO();
         HostelDAO hostelDAO = new HostelDAO();
         ContractDAO contractDAO = new ContractDAO();
@@ -230,6 +233,8 @@ public class StatisticServlet extends HttpServlet {
 
             ArrayList<Hostel> listHostel = hostelDAO.getListHostel();
             ArrayList<Bill> listBillByHostel = billDAO.GetListBillByHostel(hostelName);
+            if (listBillByHostel.size()==0)
+                year=null;
             boolean check;
             for (int i = 0; i < listBillByHostel.size(); i++) {
                 String tmpYear = listBillByHostel.get(i).getCreatedDate().substring(0, 4);
@@ -563,6 +568,7 @@ public class StatisticServlet extends HttpServlet {
             }
 
             request.setAttribute("listHostel", listHostel);
+            request.setAttribute("sizeListHostel", listBillByHostel.size());
             request.setAttribute("rate", rate);
             request.setAttribute("totalMoneyMonth1", totalMoneyMonth1);
             request.setAttribute("totalMoneyMonth2", totalMoneyMonth2);

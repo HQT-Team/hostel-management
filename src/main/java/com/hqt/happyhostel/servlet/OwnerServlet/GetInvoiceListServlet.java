@@ -1,21 +1,18 @@
 package com.hqt.happyhostel.servlet.OwnerServlet;
 
+import com.google.gson.Gson;
 import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dao.InvoiceDAO;
+import com.hqt.happyhostel.dao.ReportDetailDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
-import com.hqt.happyhostel.dto.Account;
-import com.hqt.happyhostel.dto.Bill;
-import com.hqt.happyhostel.dto.Hostel;
+import com.hqt.happyhostel.dto.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @WebServlet(name = "GetInvoiceListServlet", value = "/GetInvoiceListServlet")
 public class GetInvoiceListServlet extends HttpServlet {
@@ -23,7 +20,6 @@ public class GetInvoiceListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "InvoiceList";
         Account acc = null;
-
         try {
             HttpSession session = request.getSession();
             acc = (Account) session.getAttribute("USER");
@@ -33,48 +29,35 @@ public class GetInvoiceListServlet extends HttpServlet {
             List<String> roomNumberPayment = new ArrayList<>();
             List<String> hostelNamePayment = new ArrayList<>();
             List<Integer> hostelIDPayment = new ArrayList<>();
-            Set<String> roomNumberDropDownListPayment = new HashSet<>();
-            Set<String> hostelNameDropDownListPayment = new HashSet<>();
             for (Bill bill: invoicePayment) {
                 int roomID = bill.getRoomID();
                 int roomNumber = new RoomDAO().getRoomById(roomID).getRoomNumber();
                 roomNumberPayment.add(String.valueOf(roomNumber));
                 hostelNamePayment.add(new HostelDAO().getHostelByRoomId(roomID).getHostelName());
                 hostelIDPayment.add(new HostelDAO().getHostelByRoomId(roomID).getHostelID());
-
-                roomNumberDropDownListPayment.add(String.valueOf(roomNumber));
-                hostelNameDropDownListPayment.add(new HostelDAO().getHostelByRoomId(roomID).getHostelName());
             }
             session.setAttribute("INVOICE_PAYMENT_LIST", invoicePayment);
             session.setAttribute("INVOICE_PAYMENT_LIST_ROOM_NUMBER", roomNumberPayment);
             session.setAttribute("INVOICE_PAYMENT_LIST_HOSTEL_NAME", hostelNamePayment);
             session.setAttribute("INVOICE_PAYMENT_LIST_HOSTEL_ID", hostelIDPayment);
-            session.setAttribute("INVOICE_PAYMENT_LIST_DROP_DOWN_ROOM_NUMBER", roomNumberDropDownListPayment);
-            session.setAttribute("INVOICE_PAYMENT_LIST_DROP_DOWN_HOSTEL_NAME", hostelNameDropDownListPayment);
 
 
             List<Bill> invoiceNotPayment = invoiceDAO.getInvoiceListByOwnerAccountID(accountId, 0);
             List<String> roomNumberNotPayment = new ArrayList<>();
             List<String> hostelNameNotPayment = new ArrayList<>();
             List<Integer> hostelIDNotPayment = new ArrayList<>();
-            Set<String> roomNumberDropDownListNotPayment = new HashSet<>();
-            Set<String> hostelNameDropDownListNotPayment = new HashSet<>();
             for (Bill bill: invoiceNotPayment) {
                 int roomID = bill.getRoomID();
                 int roomNumber = new RoomDAO().getRoomById(roomID).getRoomNumber();
                 roomNumberNotPayment.add(String.valueOf(roomNumber));
                 hostelNameNotPayment.add(new HostelDAO().getHostelByRoomId(roomID).getHostelName());
                 hostelIDNotPayment.add(new HostelDAO().getHostelByRoomId(roomID).getHostelID());
-
-                roomNumberDropDownListNotPayment.add(String.valueOf(roomNumber));
-                hostelNameDropDownListNotPayment.add(new HostelDAO().getHostelByRoomId(roomID).getHostelName());
             }
             session.setAttribute("INVOICE_NOT_PAYMENT_LIST", invoiceNotPayment);
             session.setAttribute("INVOICE_NOT_PAYMENT_LIST_HOSTEL_NAME", hostelNameNotPayment);
             session.setAttribute("INVOICE_NOT_PAYMENT_LIST_HOSTEL_ID", hostelIDNotPayment);
             session.setAttribute("INVOICE_NOT_PAYMENT_LIST_ROOM_NUMBER", roomNumberNotPayment);
-            session.setAttribute("INVOICE_NOT_PAYMENT_LIST_DROP_DOWN_ROOM_NUMBER", roomNumberDropDownListNotPayment);
-            session.setAttribute("INVOICE_NOT_PAYMENT_LIST_DROP_DOWN_HOSTEL_NAME", hostelNameDropDownListNotPayment);
+            request.setAttribute("LIST_HOSTELS", new HostelDAO().getHostelByOwnerId(accountId));
 
             session.setAttribute("CURRENT_PAGE", "invoice");
         } catch (SQLException e) {
@@ -86,6 +69,121 @@ public class GetInvoiceListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Gson gson = new Gson();
+        Account acc;
+        RoomDAO roomDAO = new RoomDAO();
+        HostelDAO hostelDAO = new HostelDAO();
+        try {
+            acc = (Account) session.getAttribute("USER");
+            int accountId = acc.getAccId();
 
+            String hostelId = request.getParameter("hostelId");
+            String roomId = request.getParameter("roomId");
+            int type = Integer.parseInt(request.getParameter("type"));
+
+            List<Object> list = new ArrayList<>();
+            Map<Integer, Room> RoomsOfBills = new HashMap<>();
+            Map<Integer, Hostel> HostelOfBills = new HashMap<>();
+            if (type == 0) {
+                List<Bill> invoices = new InvoiceDAO().getInvoiceListByOwnerAccountID(accountId, 0);
+                if (hostelId.equals("")) {
+                    for (Bill bill: invoices) {
+                        Room room = roomDAO.getRoomById(bill.getRoomID());
+                        Hostel hostel = hostelDAO.getHostelByRoomId(room.getRoomId());
+                        RoomsOfBills.put(bill.getBillID(), room);
+                        HostelOfBills.put(bill.getBillID(), hostel);
+                    }
+                    list.add(invoices);
+                    list.add(RoomsOfBills);
+                    list.add(HostelOfBills);
+                    list.add(-1);
+                    list.add(-1);
+                    response.getWriter().println(gson.toJson(list));
+                } else {
+                    List<Bill> invoicesById = new ArrayList<>();
+                    List<Room> roomList = new RoomDAO().getListRoomsByHostelId(Integer.parseInt(hostelId));
+                    if (roomId == null || roomId.equals("")) {
+                        for (Bill bill : invoices) {
+                            int hostelIdOfBill = hostelDAO.getHostelByRoomId(bill.getRoomID()).getHostelID();
+                            if (hostelIdOfBill == Integer.parseInt(hostelId)) {
+                                invoicesById.add(bill);
+                                Room room = roomDAO.getRoomById(bill.getRoomID());
+                                Hostel hostel = hostelDAO.getHostelByRoomId(room.getRoomId());
+                                RoomsOfBills.put(bill.getBillID(), room);
+                                HostelOfBills.put(bill.getBillID(), hostel);
+                            }
+                        }
+                    } else {
+                        for (Bill bill : invoices) {
+                            int hostelIdOfBill = hostelDAO.getHostelByRoomId(bill.getRoomID()).getHostelID();
+                            if (hostelIdOfBill == Integer.parseInt(hostelId) && bill.getRoomID() == Integer.parseInt(roomId)) {
+                                invoicesById.add(bill);
+                                Room room = roomDAO.getRoomById(bill.getRoomID());
+                                Hostel hostel = hostelDAO.getHostelByRoomId(room.getRoomId());
+                                RoomsOfBills.put(bill.getBillID(), room);
+                                HostelOfBills.put(bill.getBillID(), hostel);
+                            }
+                        }
+                    }
+                    list.add(invoicesById);
+                    list.add(RoomsOfBills);
+                    list.add(HostelOfBills);
+                    list.add(roomList);
+                    list.add(roomId);
+                    response.getWriter().println(gson.toJson(list));
+                }
+            } else if (type == 1) {
+                List<Bill> invoices = new InvoiceDAO().getInvoiceListByOwnerAccountID(accountId, 1);
+                if (hostelId.equals("")) {
+                    for (Bill bill: invoices) {
+                        Room room = roomDAO.getRoomById(bill.getRoomID());
+                        Hostel hostel = hostelDAO.getHostelByRoomId(room.getRoomId());
+                        RoomsOfBills.put(bill.getBillID(), room);
+                        HostelOfBills.put(bill.getBillID(), hostel);
+                    }
+                    list.add(invoices);
+                    list.add(RoomsOfBills);
+                    list.add(HostelOfBills);
+                    list.add(-1);
+                    list.add(-1);
+                    response.getWriter().println(gson.toJson(list));
+                } else {
+                    List<Bill> invoicesById = new ArrayList<>();
+                    List<Room> roomList = new RoomDAO().getListRoomsByHostelId(Integer.parseInt(hostelId));
+                    if (roomId == null || roomId.equals("")) {
+                        for (Bill bill : invoices) {
+                            int hostelIdOfBill = hostelDAO.getHostelByRoomId(bill.getRoomID()).getHostelID();
+                            if (hostelIdOfBill == Integer.parseInt(hostelId)) {
+                                invoicesById.add(bill);
+                                Room room = roomDAO.getRoomById(bill.getRoomID());
+                                Hostel hostel = hostelDAO.getHostelByRoomId(room.getRoomId());
+                                RoomsOfBills.put(bill.getBillID(), room);
+                                HostelOfBills.put(bill.getBillID(), hostel);
+                            }
+                        }
+                    } else {
+                        for (Bill bill : invoices) {
+                            int hostelIdOfBill = hostelDAO.getHostelByRoomId(bill.getRoomID()).getHostelID();
+                            if (hostelIdOfBill == Integer.parseInt(hostelId) && bill.getRoomID() == Integer.parseInt(roomId)) {
+                                invoicesById.add(bill);
+                                Room room = roomDAO.getRoomById(bill.getRoomID());
+                                Hostel hostel = hostelDAO.getHostelByRoomId(room.getRoomId());
+                                RoomsOfBills.put(bill.getBillID(), room);
+                                HostelOfBills.put(bill.getBillID(), hostel);
+                            }
+                        }
+                    }
+                    list.add(invoicesById);
+                    list.add(RoomsOfBills);
+                    list.add(HostelOfBills);
+                    list.add(roomList);
+                    list.add(roomId);
+                    response.getWriter().println(gson.toJson(list));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

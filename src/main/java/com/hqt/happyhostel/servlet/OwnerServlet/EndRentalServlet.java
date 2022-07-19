@@ -29,7 +29,7 @@ public class EndRentalServlet extends HttpServlet {
             RoomDAO roomDAO = new RoomDAO();
             ContractDAO contractDAO = new ContractDAO();
 
-            boolean updateResult = accountDAO.updateAccountStatus(renterAccountId, 0);
+            boolean updateResult = accountDAO.updateAccountStatus(renterAccountId, 2);
 
             boolean updateRoomStatusResult = roomDAO.updateRoomStatus(roomId, 1);
 

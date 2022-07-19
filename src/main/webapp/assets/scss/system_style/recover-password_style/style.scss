@@ -1,0 +1,94 @@
+// recover-psw navbar
+.main-nav {
+  height: var(--navbar-height);
+  box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
+
+  // Logo
+  .main-nav__logo {
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+  }
+
+  .main-nav__logo-img {
+    width: 132px;
+  }
+
+  // Title
+  .main-nav__title {
+    text-align: end;
+    height: var(--navbar-height);
+    line-height: var(--navbar-height);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+}
+
+// Content CSS
+.recover-psw-content {
+  min-height: var(--min-body-height);
+}
+
+// Turn back
+.turn-back__link {
+  font-size: 1.6rem;
+
+  &:hover {
+    color: var(--primary-color);
+  }
+}
+
+.recover-psw-form {
+  background-color: var(--white-color);
+  padding: 32px 32px;
+  margin-top: 32px;
+  border-radius: 6px;
+  box-shadow: var(--box-shadow-border-model);
+
+  .form-header {
+    .form-header {
+      font-size: 3.4rem;
+    }
+  }
+
+  .form-subtitle {
+    color: #716868;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+
+  .form-label {
+    color: #716868;
+  }
+
+  // Submit btn
+  .form-submit {
+    width: 100%;
+    background-color: #7b3aed;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin-bottom: 10px;
+    margin-top: 32px;
+    padding: 16px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #6232b6;
+    }
+  }
+}
+
+// Footer
+footer {
+  background-color: var(--footer-background-color);
+}
+
+.copyright-wrapper {
+  $copyright-height: 80px;
+  height: $copyright-height;
+
+  .copyright-content {
+    line-height: $copyright-height;
+    color: #a9b3bb;
+  }
+}

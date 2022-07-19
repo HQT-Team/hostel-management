@@ -1,0 +1,123 @@
+// recover-psw navbar
+.main-nav {
+  height: var(--navbar-height);
+  box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
+
+  // Logo
+  .main-nav__logo {
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+  }
+
+  .main-nav__logo-img {
+    width: 132px;
+  }
+
+  // Title
+  .main-nav__title {
+    text-align: end;
+    height: var(--navbar-height);
+    line-height: var(--navbar-height);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+}
+
+// Content CSS
+.recover-psw-result__content {
+  min-height: var(--min-body-height);
+}
+
+.recover-psw-result__wrapper {
+  background-color: var(--white-color);
+  padding: 32px 32px;
+  margin-top: 32px;
+  border-radius: 6px;
+  box-shadow: var(--box-shadow-border-model);
+  text-align: center;
+
+  .recover-psw-result__icon-wrapper {
+    background-color: #f7f5ff;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+
+    .recover-psw-result__icon {
+      font-size: 3.6rem;
+      color: #7b3aed;
+    }
+  }
+
+  .recover-psw-result__subtitle {
+    color: #716868;
+    margin-bottom: 24px;
+    text-align: left;
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .recover-psw-result__btn {
+    width: 100%;
+    padding: 16px;
+    margin-top: 32px;
+    display: block;
+    border-radius: 6px;
+    background-color: #7b3aed;
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 500;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin-bottom: 16px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #6232b6;
+    }
+  }
+
+  .recover-psw-result__link-return {
+    color: #7d858e;
+    font-weight: 500;
+    font-size: 1.7rem;
+    margin-bottom: 50px;
+    display: block;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #a3b0bf;
+    }
+  }
+
+  p {
+    font-size: 1.7rem;
+    color: #7d858e;
+
+    .recover-psw-result__link-retry {
+      color: #7b3aed;
+
+      &:hover {
+        color: #6232b6;
+      }
+    }
+  }
+}
+
+// Footer
+footer {
+  background-color: var(--footer-background-color);
+}
+
+.copyright-wrapper {
+  $copyright-height: 80px;
+  height: $copyright-height;
+
+  .copyright-content {
+    line-height: $copyright-height;
+    color: #a9b3bb;
+  }
+}

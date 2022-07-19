@@ -85,47 +85,58 @@ public class UpdateServiceServlet extends HttpServlet {
             int hostelId = Integer.parseInt(request.getParameter("hostel-id"));
             String[] servicesIdStr = request.getParameterValues("update-service-id");
             String[] servicesPriceStr = request.getParameterValues("update-service-price");
+            HostelServiceDAO hostelServiceDAO = new HostelServiceDAO();
 
-            List<HostelService> hostelServiceList = new ArrayList<>();
-            for (int i = 0; i < servicesIdStr.length; i ++) {
-                hostelServiceList.add(HostelService.builder()
-                        .serviceID(Integer.parseInt(servicesIdStr[i]))
-                        .servicePrice(Integer.parseInt(servicesPriceStr[i])).build());
-            }
-
-            boolean checkUpdate = new HostelServiceDAO().insertListServicesIntoHostel(hostelServiceList, hostelId);
-            if (checkUpdate) {
-
-                /*------------------Gui Mail------------------*/
-                ArrayList<String> accMailList = new ArrayList<>();
-                String mail = null;
-                ArrayList<Integer> renterList = new HostelDAO().getListRenterIdByHostelId(hostelId);
-                for (int id : renterList) {
-                    mail = new AccountDAO().getAccountInformationById(id).getInformation().getEmail();
-                    if (mail != null) {
-                        accMailList.add(mail);
-                    }
-                }
-
-                if (accMailList != null && accMailList.size() > 0) {
-                    if (MailUtils.sendBCCEmail(accMailList, mailObject, mailBody)) {
-                        handlerStatus = HandlerStatus.builder().status(true).content("Mail đã được gửi thành công. Vui lòng kiểm tra Email của bạn.").build();
-                    } else {
-                        handlerStatus = HandlerStatus.builder().status(false).content("Không thể gửi Mail. Vui lòng kiểm tra lại các thông tin.").build();
-                    }
-                    request.setAttribute("RESPONSE_MSG", handlerStatus);
-                }
-                /*------------------Gui Mail------------------*/
-
-                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
-                        .status(true)
-                        .content("Cập nhật dịch vụ thành công!").build());
-            } else {
+            // Remove current hostel services
+            List<HostelService> currentHostelServiceList = hostelServiceDAO.getCurrentListServicesOfAHostel(hostelId);
+            boolean checkUpdate = hostelServiceDAO.updateStatusOfListHostelServices(0, currentHostelServiceList);
+            if (!checkUpdate) {
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(false)
-                        .content("Cập nhật dịch vụ thất bại!").build());
+                        .content("Đã có lỗi xảy ra! Vui lòng thử lại sau!").build());
+                url += hostelId;
+            } else {
+                List<HostelService> hostelServiceList = new ArrayList<>();
+                for (int i = 0; i < servicesIdStr.length; i ++) {
+                    hostelServiceList.add(HostelService.builder()
+                            .serviceID(Integer.parseInt(servicesIdStr[i]))
+                            .servicePrice(Integer.parseInt(servicesPriceStr[i])).build());
+                }
+
+                checkUpdate = hostelServiceDAO.insertListServicesIntoHostel(hostelServiceList, hostelId);
+                if (checkUpdate) {
+
+                    /*------------------Gui Mail------------------*/
+                    ArrayList<String> accMailList = new ArrayList<>();
+                    String mail = null;
+                    ArrayList<Integer> renterList = new HostelDAO().getListRenterIdByHostelId(hostelId);
+                    for (int id : renterList) {
+                        mail = new AccountDAO().getAccountInformationById(id).getInformation().getEmail();
+                        if (mail != null) {
+                            accMailList.add(mail);
+                        }
+                    }
+
+                    if (accMailList != null && accMailList.size() > 0) {
+                        if (MailUtils.sendBCCEmail(accMailList, mailObject, mailBody)) {
+                            handlerStatus = HandlerStatus.builder().status(true).content("Mail đã được gửi thành công. Vui lòng kiểm tra Email của bạn.").build();
+                        } else {
+                            handlerStatus = HandlerStatus.builder().status(false).content("Không thể gửi Mail. Vui lòng kiểm tra lại các thông tin.").build();
+                        }
+                        request.setAttribute("RESPONSE_MSG", handlerStatus);
+                    }
+                    /*------------------Gui Mail------------------*/
+
+                    request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                            .status(true)
+                            .content("Cập nhật dịch vụ thành công!").build());
+                } else {
+                    request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                            .status(false)
+                            .content("Cập nhật dịch vụ thất bại!").build());
+                }
+                url += hostelId;
             }
-            url += hostelId;
         } catch (Exception e) {
             log("Error at UpdateServiceServlet: " + e.toString());
         } finally {

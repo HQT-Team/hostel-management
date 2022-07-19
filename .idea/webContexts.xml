@@ -8,6 +8,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/admin/show-list-account-watting.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/hostel-owner/add-new-room.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/hostel-owner" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/hostel-owner/hostel-detail.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/hostel-owner" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/hostel-owner/invoice-list.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/hostel-owner" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/hostel-owner/report-list.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/hostel-owner" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/renter/Renter-contract.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/renter" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/pages/renter/Renter-payment.jsp" value="file://$PROJECT_DIR$/src/main/webapp/pages/renter" />

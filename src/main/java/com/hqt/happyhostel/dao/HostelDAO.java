@@ -13,18 +13,8 @@ public class HostelDAO {
     private static final String INSERT_HOSTEl =
             "INSERT INTO [dbo].[Hostels](owner_account_id, name, address, ward, district, city) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String INSERT_HOSTEL_SERVICE =
-            "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Điện'), ?, ?)\n" +
-                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Nước'), ?, ?)\n" +
-                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Wifi'), ?, ?)\n" +
-                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí quản lý'), ?, ?)\n" +
-                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí giữ xe'), ?, ?)\n" +
-                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí vệ sinh'), ?, ?)";;
+            "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date, status)\n" +
+            "VALUES (?, ?, ?, GETDATE(), 1)";
     private static final String UPDATE_HOSTEL =
             "UPDATE Hostels SET name = ?, address = ?, ward = ?, district = ?, city = ? WHERE hostel_id = ?";
     private static final String GET_HOSTEL_BY_ID =
@@ -249,31 +239,31 @@ public class HostelDAO {
                 ptm.setString(5, hostel.getDistrict());
                 ptm.setString(6, hostel.getCity());
                 check = ptm.executeUpdate() > 0;
+                if (!check) {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                    return -1;
+                }
 
                 rs = ptm.getGeneratedKeys();
 
                 if (rs.next()) {
                     id = rs.getInt(1);
-                    hostel.setHostelID(id);
                 }
 
-                int c = 0;
-                ptm = cn.prepareStatement(INSERT_HOSTEL_SERVICE);
                 for (HostelService ser : hostelServices) {
-                    c++;
-                    ptm.setInt(c, hostel.getHostelID());
-                    c++;
-                    ptm.setDouble(c, ser.getServicePrice());
-                    c++;
-                    ptm.setString(c, ser.getValidDate());
+                    ptm = cn.prepareStatement(INSERT_HOSTEL_SERVICE);
+                    ptm.setInt(1, id);
+                    ptm.setInt(2, ser.getServiceID());
+                    ptm.setInt(3, ser.getServicePrice());
+                    check = ptm.executeUpdate() > 0;
+                    if (!check) {
+                        cn.rollback();
+                        cn.setAutoCommit(true);
+                        return -1;
+                    }
                 }
-                check = ptm.executeUpdate() > 0;
-
-                if (!check) {
-                    cn.rollback();
-                } else {
-                    cn.commit();
-                }
+                cn.commit();
                 cn.setAutoCommit(true);
             }
         } catch (Exception e) {
