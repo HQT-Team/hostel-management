@@ -1,0 +1,119 @@
+/* Push notification alert */
+.push-noti + .push-noti {
+  margin-top: 20px;
+}
+
+#push-noti {
+  position: fixed !important;
+  bottom: 20px;
+  left: 20px;
+  z-index: 9999999;
+}
+
+.push-noti {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 0 14px;
+  min-width: 300px;
+  max-width: 350px;
+  border-left: 4px solid #2186eb;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+  rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: all linear 0.3s;
+  position: relative;
+  /* animation: slideInRight ease 0.3s, fadeOut linear 2s 5s forwards; */
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-100% + 32px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+.push-noti__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+}
+
+.push-noti__icon {
+  font-size: 40px;
+  padding-right: 14px;
+  color: #2186eb;
+}
+
+.push-noti__body {
+  flex-grow: 1;
+}
+
+.push-noti__title {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 15px 0px 10px 0px;
+}
+
+.push-noti__msg,
+.push-noti__time {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.5;
+  margin: 0;
+  padding-right: 12px;
+}
+
+.push-noti__msg span {
+  font-weight: 600;
+}
+
+.push-noti__time {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1968cf;
+  margin-top: 4px;
+  margin-bottom: 14px;
+}
+
+.push-noti__close {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.4);
+  padding: 3px 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.push-noti__close:hover {
+  background-color: rgb(189, 189, 189);
+}
+
+.push-noti__dot {
+  width: 10px;
+  height: 10px;
+  background-color: #1968cf;
+  border-radius: 50%;
+  position: absolute;
+  right: 14px;
+  top: 50%;
+}
