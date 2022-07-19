@@ -9,10 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
+
+import javax.websocket.*;
 
 
 public class AuthenticationFilter implements Filter {
+    static Set<Session> users = Collections.synchronizedSet(new HashSet<>());
     public void init(FilterConfig config) throws ServletException {
     }
 

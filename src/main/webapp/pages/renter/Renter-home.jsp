@@ -21,6 +21,8 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/renter_page/Renter-home-page.css">
 
+    <!-- CSS Push Notification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 </head>
 
 <body>
@@ -41,7 +43,7 @@
                     <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
                     <a class="dropdown-item" href="renter-invoice"style="font-size: 15px;">Hóa đơn</a>
                     <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
-                    <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
+                    <a class="dropdown-item" id = "test" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
                     <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
                     <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
                     <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
@@ -186,6 +188,9 @@
         </div>
     </footer>
 
+    <!-- Push notification element -->
+    <div id="push-noti"></div>
+
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -196,6 +201,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+    <!-- Push notification -->
+    <script src="./assets/js/push-notification-alert.js"></script>
+    <!-- Web socket -->
+    <script src="./assets/js/receiveWebsocket.js"></script>
+
+    <script type="text/javascript">
+        // Receive
+        receiveWebsocket(alertPushNoti);
+
+        // Close when leave
+        window.onbeforeunload = function(){
+            receiveWebsocket.disconnectWebSocket();
+        };
+    </script>
+
 </div>
 </body>
 

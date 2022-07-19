@@ -22,6 +22,8 @@
     <!-- Link your own CSS here -->
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/update-hostel-style/style.css">
 
+    <!-- CSS Push Notification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 </head>
 
 <body>
@@ -127,6 +129,9 @@
         <!-- Footer -->
         <%@include file="components/footer.jsp"%>
 
+        <!-- Push notification element -->
+        <div id="push-noti"></div>
+
     </div>
 
     <!-- Script Bootstrap !important -->
@@ -141,6 +146,11 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <%--    <script src="./assets/js/owner/update-hostel/handle-address.js"></script>--%>
     <script src="./assets/js/valid-form.js"></script>
+    <!-- Push notification -->
+    <script src="./assets/js/push-notification-alert.js"></script>
+    <!-- Web socket -->
+    <script src="./assets/js/receiveWebsocket.js"></script>
+
     <script>
         let maxNumber = 1000000;
         let minNumber = 0;
@@ -157,6 +167,16 @@
                 Validator.isRequired('#hostel-ward', 'Vui lòng chọn phường/xã')
             ]
         });
+    </script>
+
+    <script type="text/javascript">
+        // Receive
+        receiveWebsocket(alertPushNoti);
+
+        // Close when leave
+        window.onbeforeunload = function(){
+            receiveWebsocket.disconnectWebSocket();
+        };
     </script>
 
 </body>

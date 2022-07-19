@@ -33,7 +33,7 @@ public class RoleRedirectFilter implements Filter {
         HttpSession session = httpRequest.getSession(false);
 
         Account acc = null;
-        if ((c != null || session.getAttribute("USER") != null) && ("".equals(resource) || "success".equals(resource))) {
+        if ((c != null || session.getAttribute("USER") != null) && ("".equals(resource) || "success".equals(resource) || "login".equals(resource) || "loginPage".equals(resource))) {
             for (Cookie cookie : c) {
                 if (cookie.getName().equals("selector")) {
                     token = cookie.getValue();
@@ -43,9 +43,9 @@ public class RoleRedirectFilter implements Filter {
             acc = (token != null) ? new AccountDAO().getAccountByToken(token) : (Account) session.getAttribute("USER");
             if(acc != null) {
                 int role = acc.getRole();
-                if (role == 0) url = "AdminPage";
-                if (role == 1) url = "HostelOwnerPage";
-                if (role == 2) url = "HostelRenterPage";
+                if (role == 0) url = "dashboard";
+                if (role == 1) url = "dashboard";
+                if (role == 2) url = "dashboard";
                 httpResponse.sendRedirect(url);
             }
             else chain.doFilter(request, response);
