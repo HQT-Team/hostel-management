@@ -170,9 +170,41 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+<script src="./assets/js/sendWebsocket.js"></script>
+<script type="text/javascript">
+    <c:if test="${requestScope.RESPONSE_MSG.status == true}">
+        const params = new Object();
+        params.sender = "hostel_renter";
+        params.receiver = "hostel_owner";
+        params.hostel_receiver_id = null;
+        params.account_receiver_id = "${requestScope.HOSTEL_OWNER_ID}";
+        params.messages = "Người thuê vừa gửi 1 báo cáo mới. Vui lòng kiểm tra!";
+        sendToWebSocket(params);
+    </c:if>
+</script>
+<!-- Axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const handleSendReportMail = () => {
+
+        axios({
+            method:"POST",
+            url:'http://localhost:8080/HappyHostel/send-report-mail',
+            params: {
+                account_id: '${requestScope.HOSTEL_OWNER_ID}',
+                report_id : '${requestScope.REPORT_ID}'
+            }
+        })
+            .then(function (response) {
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    <c:if test="${requestScope.RESPONSE_MSG.status eq true}">
+    handleSendReportMail();
+    </c:if>
+</script>
 </body>
-
-
-
-
 </html>

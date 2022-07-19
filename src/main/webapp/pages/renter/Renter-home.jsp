@@ -171,12 +171,6 @@
         </div>
     </div>
 
-    <div style="display: none; " id="pop-up-noti">
-        Ban nhan duoc thong bao moi tu chu tro
-    </div>
-
-    <textarea id="textAreaMessage" rows="10" cols="50"></textarea>
-
     <footer>
         <div>
             <div class="row">
@@ -190,6 +184,9 @@
                 </div>
             </div>
         </div>
+
+        <textarea id="textAreaMessage" rows="10" cols="50"></textarea>
+
     </footer>
 
 
@@ -202,13 +199,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+    <script src="./assets/js/receiveWebsocket.js"></script>
     <script type="text/javascript">
-        var websocket = new WebSocket("ws://localhost:8080/HappyHostel/push-noti-websocket");
-        websocket.onmessage = function(message) {processMessage(message);};
-        function processMessage(message) {
-            console.log(message);
-            textAreaMessage.value += message.data + " \n";
-        }
+        receiveWebsocket('#textAreaMessage');
     </script>
 </div>
 </body>

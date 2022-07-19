@@ -163,9 +163,9 @@ public class VNPayIPNServlet extends HttpServlet {
                                     if (ownerEmail != null) {
                                         if (MailUtils.sendOTPMail(ownerEmail, mailObject, mailBody)) {
                                             handlerStatus = HandlerStatus.builder().status(true).content("GD Thanh cong").build();
-                                            url = SUCCESS;
                                         }
                                     }
+                                    url = SUCCESS;
 
                                 } else {
                                     //Xu ly thanh toan khong thanh cong

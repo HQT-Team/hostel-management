@@ -147,6 +147,7 @@
     }
 
     const handleSendOtp = () => {
+
             axios.get('http://localhost:8080/HappyHostel/send-otp', {
                 params: {
                     account_id: '${requestScope.ACCOUNT_ID}'

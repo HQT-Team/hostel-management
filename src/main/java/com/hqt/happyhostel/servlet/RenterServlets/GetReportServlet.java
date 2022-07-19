@@ -43,7 +43,7 @@ public class GetReportServlet extends HttpServlet {
                 }
             }
 
-            reports = reportDAO.getReport();
+            reports = reportDAO.getReports();
             if(reports.size()>0){
                 req.setAttribute("REPORT_LIST", reports);
                 url = SUCCESS;
