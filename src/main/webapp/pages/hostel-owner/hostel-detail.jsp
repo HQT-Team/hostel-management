@@ -330,6 +330,7 @@
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
+<script src="./assets/js/sendWebsocket.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>
 <script>
     $(document).ready(function () {
@@ -392,6 +393,17 @@
 </script>
 
 <script type="text/javascript">
+    // Send
+    <c:if test="${requestScope.RESPONSE_MSG.status == true &&  'Cập nhật dịch vụ thành công!' eq requestScope.RESPONSE_MSG.content }">
+    const params = new Object();
+    params.sender = "hostel_owner";
+    params.receiver = "hostel";
+    params.hostel_receiver_id = "${requestScope.HOSTEL_ID}";
+    params.account_receiver_id = null;
+    params.messages = "Chủ trọ đã gửi một thông báo mới. Vui lòng kiểm tra!";
+    sendToWebSocket(params);
+    </c:if>
+
     // Receive
     receiveWebsocket(alertPushNoti);
 
