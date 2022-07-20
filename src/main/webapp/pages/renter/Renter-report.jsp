@@ -117,7 +117,7 @@
                 <div class="report">
                     <form action="Add-report" method="post" id="form-submit">
                         <h2>Viết Báo Cáo</h2>
-                        <h3 class="notification-success">${SUCCESS}</h3>
+                        <h3 class="notification-success">${SUCCESS}${requestScope.Fail}</h3>
                         <div>
                             <select name="cateID" id="select">
                                 <option value="">Loại Đơn</option>

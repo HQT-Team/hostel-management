@@ -26,7 +26,7 @@ public class AddReportServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        //req.getRequestDispatcher("Renter-report-page").forward(req, resp);
     }
 
     @Override
@@ -69,6 +69,7 @@ public class AddReportServlet extends HttpServlet {
                 url = SUCCESS;
             }
         } catch (Exception e) {
+            req.setAttribute("Fail", "Gửi báo cáo thất bại!");
             log("Error at AddReportServlet: " + e.toString());
         } finally {
             req.getRequestDispatcher(url).forward(req, resp);

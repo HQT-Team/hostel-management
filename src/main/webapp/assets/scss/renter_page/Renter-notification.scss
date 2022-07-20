@@ -10,6 +10,7 @@ body{
 }
   .content {
     width: 80%;
+
   }
 
   .notification {
@@ -21,6 +22,8 @@ body{
       width: 100%;
       margin: auto;
       tr{
+        display: grid;
+          grid-template-columns:1fr 2fr 8fr 2fr ;
         th{
           text-align: center;
         }
