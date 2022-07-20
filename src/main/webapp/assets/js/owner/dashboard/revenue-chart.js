@@ -1,19 +1,14 @@
 let revenueChart = document.getElementById("revenueChart").getContext("2d");
-
+// var date = new Date();
+// var month = date.getMonth();
+// var months = [month - 6, month - 5, month - 4, month -3 , month -2 , month -1];
 let revenueStatisticChart = new Chart(revenueChart, {
   type: "bar", // Bar, horizontalBar, pie, line, doughnut, radar, polarArea
   data: {
-    labels: [
-      "Tháng 9",
-      "Tháng 10",
-      "Tháng 11",
-      "Tháng 12",
-      "Tháng 1",
-      "Tháng 2",
-    ],
+    labels: [...listMonth],
     datasets: [
       {
-        data: [85000000, 92330000, 81230000, 112240000, 96500000, 88250000],
+        data: [...listMoney],
         backgroundColor: [
           "#eaf5ff",
           "#eaf5ff",
