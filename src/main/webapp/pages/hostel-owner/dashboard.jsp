@@ -1,4 +1,6 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -75,22 +77,24 @@
                         <div class="row">
                             <div class="col-12 col-md-5 summary-top">
                                 <div class="summary-header">
-                                    <div class="summary-title">Tóm tắt</div>
-                                    <div class="summary-date">${requestScope.startDay}/${requestScope.timeNow} - ${requestScope.endDay}/${requestScope.timeNow}</div>
+                                    <div class="summary-title">Tóm tắt - Khu trọ: ${requestScope.Hostel != null ? requestScope.Hostel.hostelName : "Trống"}</div>
+                                    <div class="summary-date">${requestScope.StartDay} - ${requestScope.EndDay}</div>
                                 </div>
                                 <div class="summary-income">
-                                    <div class="summary-income_title">Doanh thu tháng này</div>
-                                    <div class="summary-income_money">${requestScope.listMoneyOfOneAndTwoMonthAgo[0]} VNĐ</div>
+                                    <div class="summary-income_title">Doanh thu tháng trước</div>
+                                    <div class="summary-income_money">
+                                        <fmt:formatNumber value="${requestScope.ListMoneyEachMonth.get(0)}" type="currency" currencySymbol="VNĐ"/>
+                                    </div>
                                     <div class="summary-income_compared">
                                             <span class="summary-income_compared-percent">
                                                 <i class="fa-solid fa-arrow-trend-up"></i>
-                                                ${requestScope.comparePercentOfTwoMonthAgo}%
+                                                ${requestScope.ComparePercentOfTwoMonthAgo}%
                                             </span>
                                         so với
                                         <span class="summary-income_compared-prev-price">
-                                                ${requestScope.listMoneyOfOneAndTwoMonthAgo[1]} VNĐ</span> của tháng trước
+                                            <fmt:formatNumber value="${requestScope.listMoneyEachMonth[1]}" type="currency" currencySymbol="VNĐ"/>
+                                            </span> của tháng trước
                                         <br/>
-                                        <span>Bạn đang sở hữu: <strong>${requestScope.numberHostel}</strong> khu trọ</span>
                                     </div>
                                 </div>
                             </div>
@@ -109,7 +113,9 @@
                                         <i class="summary-total-icon success fa-solid fa-hand-holding-dollar"></i>
                                     </div>
                                     <div class="summary-total-content">
-                                        <div class="summary-total-price">${requestScope.averageMoneyOfHotel} VNĐ</div>
+                                        <div class="summary-total-price">
+                                            <fmt:formatNumber value="${requestScope.AverageMoneyOfHotel}" type="currency" currencySymbol="VNĐ"/>
+                                        </div>
                                         <div class="summary-total-title">Doanh thu trung bình</div>
                                     </div>
                                 </div>
@@ -120,8 +126,8 @@
                                         <i class="summary-total-icon error fa-solid fa-screwdriver-wrench"></i>
                                     </div>
                                     <div class="summary-total-content">
-                                        <div class="summary-total-price">${requestScope.averageReport} lần mỗi tháng</div>
-                                        <div class="summary-total-title">Số lần báo cáo hư hỏng trung bình</div>
+                                        <div class="summary-total-price">${requestScope.AverageReport} lần mỗi tháng</div>
+                                        <div class="summary-total-title">Số lần báo cáo trung bình</div>
                                     </div>
                                 </div>
                             </div>
@@ -137,15 +143,15 @@
                             <div class="report-summary-list">
                                 <div class="report-summary-item new">
                                     <div class="report-summary-status">Mới</div>
-                                    <div class="report-summary-count">${requestScope.newReport}</div>
+                                    <div class="report-summary-count">${requestScope.NumberNewReport}</div>
                                 </div>
                                 <div class="report-summary-item process">
                                     <div class="report-summary-status">Đang xử lí</div>
-                                    <div class="report-summary-count">${requestScope.waittingReport}</div>
+                                    <div class="report-summary-count">${requestScope.NumberProcessReport}</div>
                                 </div>
                                 <div class="report-summary-item finished">
                                     <div class="report-summary-status">Xong</div>
-                                    <div class="report-summary-count">${requestScope.doneReport}</div>
+                                    <div class="report-summary-count">${requestScope.NumberDoneReport}</div>
                                 </div>
                             </div>
                             <div class="report-summary-result-percent">
@@ -163,21 +169,16 @@
 
 </div>
 <script>
-    console.log(${requestScope.listMoneyOfOneAndTwoMonthAgo[0]})
-    let listMonth = [${requestScope.listSixMonthAgo[5]},
-        ${requestScope.listSixMonthAgo[4]},
-        ${requestScope.listSixMonthAgo[3]},
-        ${requestScope.listSixMonthAgo[2]},
-        ${requestScope.listSixMonthAgo[1]},
-        ${requestScope.listSixMonthAgo[0]}]
-    console.log(listMonth);
-    let listMoney = [${requestScope.listMoneyEachMonth[5]},
-        ${requestScope.listMoneyEachMonth[4]},
-        ${requestScope.listMoneyEachMonth[3]},
-        ${requestScope.listMoneyEachMonth[2]},
-        ${requestScope.listMoneyEachMonth[1]},
-        ${requestScope.listMoneyEachMonth[0]}]
-    console.log(listMoney);
+    let list = ${requestScope.ListMonthAndYear};
+    const newList = list.map(item => item.join('/')).reverse();
+    let listMonth = [
+        ...newList
+    ];
+    let tmp = ${requestScope.ListMoneyEachMonth};
+    tmp.reverse();
+    let listMoney = [
+        ...tmp
+    ];
 </script>
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
