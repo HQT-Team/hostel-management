@@ -18,7 +18,7 @@ import java.util.List;
 
 @WebServlet(name = "UpdateServiceServlet", value = "/UpdateServiceServlet")
 public class UpdateServiceServlet extends HttpServlet {
-    private final String SUCCESS = "add-system-noti";
+    private final String SUCCESS = "add-update-service-noti";
     private final String FAIL = "detailHostel?hostelID=";
     private final String ERROR = "error-page";
 

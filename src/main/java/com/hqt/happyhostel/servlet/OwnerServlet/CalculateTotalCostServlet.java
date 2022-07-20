@@ -2,6 +2,7 @@ package com.hqt.happyhostel.servlet.OwnerServlet;
 
 import com.hqt.happyhostel.dao.*;
 import com.hqt.happyhostel.dto.*;
+import com.hqt.happyhostel.utils.MailUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -96,6 +97,7 @@ public class CalculateTotalCostServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "CalculateTotalCostRoomPage";
+        HandlerStatus handlerStatus = null;
         try {
             HttpSession session = request.getSession();
             int hostelID = ((Hostel) session.getAttribute("hostel")).getHostelID();
@@ -139,7 +141,13 @@ public class CalculateTotalCostServlet extends HttpServlet {
 
             if (isInserted) {
                 url = "roomDetail";
+                String renterMail = renterAccount.getAccountInfo().getInformation().getEmail();
+                new MailUtils().sendMailNewBill(renterMail, billTitle);
+                handlerStatus = HandlerStatus.builder().status(true).content("Tạo hóa đơn thành công").build();
+                request.setAttribute("CREATE_BILL_MSG", handlerStatus);
                 request.setAttribute("roomID", roomId);
+                request.setAttribute("RENTER_ID", accountRenterId);
+
 //                request.setAttribute("IS_SUCCESS", HandlerStatus.builder().status(true));
             } else {
                 url = "list-hostels";

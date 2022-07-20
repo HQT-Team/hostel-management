@@ -211,6 +211,7 @@
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
+<script src="./assets/js/sendWebsocket.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>
 
 <script>
@@ -235,6 +236,17 @@
 </script>
 
 <script type="text/javascript">
+    // Send
+    <c:if test="${requestScope.CREATE_BILL_MSG.status == true}">
+    const params = new Object();
+    params.sender = "hostel_owner";
+    params.receiver = "hostel_renter";
+    params.hostel_receiver_id = null;
+    params.account_receiver_id = "${requestScope.RENTER_ID}";
+    params.messages = "Chủ trọ đã gửi một hóa đơn mới. Vui lòng kiểm tra!";
+    sendToWebSocket(params);
+    </c:if>
+
     // Receive
     receiveWebsocket(alertPushNoti);
 

@@ -37,7 +37,7 @@ public class PushNotiWebSocket {
             //người gửi là owner
             case "hostel_owner":
                 switch (receiver) {
-                    //người nhận là owner
+                    //người nhận là hostel
                     case "hostel":
                         ArrayList<Integer> renterList = new HostelDAO().getListRenterIdByHostelId(Integer.parseInt(hostelReceiverId));
                         for (Session session : users) {
@@ -50,6 +50,10 @@ public class PushNotiWebSocket {
 
 
                     case "hostel_renter":
+                        for (Session session : users) {
+                            Account account = (Account) session.getUserProperties().get("user");
+                            if (account.getAccId() == Integer.parseInt(accountReceiverId)) session.getBasicRemote().sendText(message);
+                        }
                         break;
                 }
                 break;

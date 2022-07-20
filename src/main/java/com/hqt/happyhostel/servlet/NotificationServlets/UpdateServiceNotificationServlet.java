@@ -14,8 +14,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "AddSystemNotificationServlet", value = "/AddSystemNotificationServlet")
-public class AddSystemNotificationServlet extends HttpServlet {
+@WebServlet(name = "UpdateServiceNotificationServlet", value = "/UpdateServiceNotificationServlet")
+public class UpdateServiceNotificationServlet extends HttpServlet {
 
     private final String SUCCESS = "detailHostel?hostelID=";
     private final String FAIL = "detailHostel?hostelID=";
