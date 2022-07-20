@@ -59,12 +59,7 @@ public class RecoverPasswordServlet extends HttpServlet {
                     String domain = "http://localhost:8080/HappyHostel/recover-password-reset?data=";
                     String recoverPasswordUrl = "accountId=" + account.getAccId() + "&recoverCode=" + requestRecoverPasswordCode;
                     String encodeString = EncodeBase64Utils.encodeStringBase64(recoverPasswordUrl);
-
-                    String mailObject = "Hướng dẫn khôi phục mật khẩu";
-                    String mailBody = "Sau đây là url để bạn khôi phục lại mật khẩu: " +
-                            "<a href='" + domain + encodeString + "' target='_blank'>Link here</a>";
-
-                    if (MailUtils.sendOTPMail(userEmail, mailObject, mailBody)) {
+                    if (new MailUtils().sendRecoverMail(userEmail, domain+encodeString)) {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                         Calendar startTime = Calendar.getInstance();
                         long timeInSecs = startTime.getTimeInMillis();
