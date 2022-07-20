@@ -9,10 +9,9 @@ import java.util.Date;
 import java.util.Properties;
 
 public class MailUtils {
-    //    public static void main(String[] args) throws MessagingException, UnsupportedEncodingException {
     private static final String MAIL_SERVER = "smtp";
 
-    public static boolean sendOTPMail(String toEmail, String subject, String body) {
+    public boolean sendMail(String toEmail, String subject, String body) {
         boolean result = false;
         Transport transport = null;
         try {
@@ -70,7 +69,7 @@ public class MailUtils {
         return result;
     }
 
-    public static boolean sendBCCEmail(ArrayList<String> bcc, String subject, String body) {
+    public boolean sendBCCEmail(ArrayList<String> bcc, String subject, String body) {
         boolean result = false;
         Transport transport = null;
 
@@ -147,8 +146,288 @@ public class MailUtils {
             }
         }
         return result;
+    }
 
-        //---------------------------------------------------------------------------------------------------
 
+    //-----------------------------------------------------------MAIL-TEMPLATE-----------------------------------------------------------//
+    public boolean SendMailConfirmPayment(String receiveMail, int roomNum, String billTitle){
+        String mailBody =
+                "<head>\n" +
+                        "\t<meta charset=\"UTF-8\">\n" +
+                        "\t<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n" +
+                        "\t<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
+                        "\t<link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap\" rel=\"stylesheet\">\n" +
+                        "</head>\n" +
+                        "\n" +
+                        "<body>\n" +
+                        "\t<div class=\"mail\" style=\"max-width: 600px;\n" +
+                        "                                width: 100%;\n" +
+                        "                                margin: 0 auto;\n" +
+                        "                                background-color: #fff;\n" +
+                        "                                font-family: 'Roboto', sans-serif;\n" +
+                        "                                text-align: center;\n" +
+                        "                                padding-bottom: 24px;\n" +
+                        "                                box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;\">\n" +
+                        "\t\t<div class=\"header\" style=\"background-color: #1fdf7f;\n" +
+                        "                                    align-items: center;\n" +
+                        "                                    font-size: 20px;\n" +
+                        "                                    font-weight: bold;\n" +
+                        "                                    color: #fff;\n" +
+                        "                                    padding: 24px 0;\">\n" +
+                        "\t\t\tHQT Hostel Management\n" +
+                        "\t\t</div>\n" +
+                        "\t\t<div class=\"content\">\n" +
+                        "\t\t\t<div class=\"content__title\" style=\"font-size: 20px;\n" +
+                        "                                                padding: 22px 0;\n" +
+                        "                                                font-weight: 500;\">\n" +
+                        "\t\t\t\tNgười thuê phòng " + roomNum + "vừa thanh toán hóa đơn "+ billTitle +".\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t\t<div class=\"content__sub-title\" style=\"color: #1fdf7f;\n" +
+                        "                                                    font-size: 20px;\n" +
+                        "                                                    font-weight: 500;\n" +
+                        "                                                    text-shadow: 1px 1px rgba(100, 94, 94, 0.4);\">\n" +
+                        "\t\t\t\tVui lòng kiểm tra lại thông tin. </br> Xin cảm ơn.\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t</div>\n" +
+                        "\t</div>\n" +
+                        "</body>";
+        String mailObject = "Thông báo người thuê vừa thanh toán hóa đơn";
+        return sendMail(receiveMail, mailObject, mailBody);
+    }
+
+    public boolean SendMailConfirmActiveOwnerAccount(String receiveMail, String domain){
+        String mailObject = "Tài khoản đã được xác thực";
+        String mailBody =
+                "<head>\n" +
+                        "\t<meta charset=\"UTF-8\">\n" +
+                        "\t<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n" +
+                        "\t<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
+                        "\t<link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap\" rel=\"stylesheet\">\n" +
+                        "</head>\n" +
+                        "\n" +
+                        "<body>\n" +
+                        "\t<div class=\"mail\" style=\"max-width: 600px;\n" +
+                        "                                width: 100%;\n" +
+                        "                                margin: 0 auto;\n" +
+                        "                                background-color: #fff;\n" +
+                        "                                font-family: 'Roboto', sans-serif;\n" +
+                        "                                text-align: center;\n" +
+                        "                                padding-bottom: 24px;\n" +
+                        "                                box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;\">\n" +
+                        "\t\t<div class=\"header\" style=\"background-color: #1fdf7f;\n" +
+                        "                                    align-items: center;\n" +
+                        "                                    font-size: 20px;\n" +
+                        "                                    font-weight: bold;\n" +
+                        "                                    color: #fff;\n" +
+                        "                                    padding: 24px 0;\">\n" +
+                        "\t\t\tHQT Hostel Management\n" +
+                        "\t\t</div>\n" +
+                        "\t\t<div class=\"content\">\n" +
+                        "\t\t\t<div class=\"content__title\" style=\"font-size: 20px;\n" +
+                        "                                                padding: 22px 0;\n" +
+                        "                                                font-weight: 500;\">\n" +
+                        "\t\t\t\tTài khoản của bạn đã được xác nhận.\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t\t<div class=\"content__sub-title\" style=\"color: #1fdf7f;\n" +
+                        "                                                    font-size: 20px;\n" +
+                        "                                                    font-weight: 500;\n" +
+                        "                                                    text-shadow: 1px 1px rgba(100, 94, 94, 0.4);\">\n" +
+                        "\t\t\t\tTừ giờ bạn đã có thể sử dụng dịch vụ của chúng tôi </br> Xin cảm ơn.\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t\t<div id=\"hqt-content__otp\" class=\"content__otp\" style=\"width: 360px;\n" +
+                        "                                                                    font-size: 28px;\n" +
+                        "                                                                    font-weight: 700;\n" +
+                        "                                                                    color: #fff;\n" +
+                        "                                                                    background: #1dcc70;\n" +
+                        "                                                                    border-radius: 16px;\n" +
+                        "                                                                    margin: 24px auto;\n" +
+                        "                                                                    padding: 18px 12px;\n" +
+                        "                                                                    position: relative;\">\n" +
+                        "\t\t\t\t<span id=\"hqt-content__otp-code\"><a style=\"text-decoration: none;\" href=\""+domain+"\">Click vào để vào trang đăng nhập</a></span>\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t</div>\n" +
+                        "\t</div>\n" +
+                        "</body>";
+        return sendMail(receiveMail, mailObject, mailBody);
+    }
+    public boolean SendMailNotice(ArrayList<String> accMailList, String domain){
+        String mailObject = "Bạn vừa nhận được thông báo mới từ chủ trọ.";
+        String mailBody =
+                "<head>\n" +
+                        "\t<meta charset=\"UTF-8\">\n" +
+                        "\t<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n" +
+                        "\t<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
+                        "\t<link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap\" rel=\"stylesheet\">\n" +
+                        "</head>\n" +
+                        "\n" +
+                        "<body>\n" +
+                        "\t<div class=\"mail\" style=\"max-width: 600px;\n" +
+                        "                                width: 100%;\n" +
+                        "                                margin: 0 auto;\n" +
+                        "                                background-color: #fff;\n" +
+                        "                                font-family: 'Roboto', sans-serif;\n" +
+                        "                                text-align: center;\n" +
+                        "                                padding-bottom: 24px;\n" +
+                        "                                box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;\">\n" +
+                        "\t\t<div class=\"header\" style=\"background-color: #1fdf7f;\n" +
+                        "                                    align-items: center;\n" +
+                        "                                    font-size: 20px;\n" +
+                        "                                    font-weight: bold;\n" +
+                        "                                    color: #fff;\n" +
+                        "                                    padding: 24px 0;\">\n" +
+                        "\t\t\tHQT Hostel Management\n" +
+                        "\t\t</div>\n" +
+                        "\t\t<div class=\"content\">\n" +
+                        "\t\t\t<div class=\"content__title\" style=\"font-size: 20px;\n" +
+                        "                                                padding: 22px 0;\n" +
+                        "                                                font-weight: 500;\">\n" +
+                        "\t\t\t\tChủ trọ vừa gửi 1 thông báo mới\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t\t<div class=\"content__sub-title\" style=\"color: #1fdf7f;\n" +
+                        "                                                    font-size: 20px;\n" +
+                        "                                                    font-weight: 500;\n" +
+                        "                                                    text-shadow: 1px 1px rgba(100, 94, 94, 0.4);\">\n" +
+                        "\t\t\t\tVui lòng kiểm tra lại thông tin. </br> Xin cảm ơn.\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t\t<div id=\"hqt-content__otp\" class=\"content__otp\" style=\"width: 360px;\n" +
+                        "                                                                    font-size: 28px;\n" +
+                        "                                                                    font-weight: 700;\n" +
+                        "                                                                    color: #fff;\n" +
+                        "                                                                    background: #1dcc70;\n" +
+                        "                                                                    border-radius: 16px;\n" +
+                        "                                                                    margin: 24px auto;\n" +
+                        "                                                                    padding: 18px 12px;\n" +
+                        "                                                                    position: relative;\">\n" +
+                        "\t\t\t\t<span id=\"hqt-content__otp-code\"><a style=\"text-decoration: none;\" href=\""+domain+"\">Click vào để xem</a></span>\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t</div>\n" +
+                        "\t</div>\n" +
+                        "</body>";
+
+        return sendBCCEmail(accMailList, mailObject, mailBody);
+    }
+
+    public boolean SendMailReport(String receiveMail, String domain){
+        String otp = RandomStringGenerator.randomOTP(5);
+        String mailObject = "Bạn vừa nhận được báo cáo mới.";
+        String mailBody =
+                "<head>\n" +
+                        "\t<meta charset=\"UTF-8\">\n" +
+                        "\t<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n" +
+                        "\t<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
+                        "\t<link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap\" rel=\"stylesheet\">\n" +
+                        "</head>\n" +
+                        "\n" +
+                        "<body>\n" +
+                        "\t<div class=\"mail\" style=\"max-width: 600px;\n" +
+                        "                                width: 100%;\n" +
+                        "                                margin: 0 auto;\n" +
+                        "                                background-color: #fff;\n" +
+                        "                                font-family: 'Roboto', sans-serif;\n" +
+                        "                                text-align: center;\n" +
+                        "                                padding-bottom: 24px;\n" +
+                        "                                box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;\">\n" +
+                        "\t\t<div class=\"header\" style=\"background-color: #1fdf7f;\n" +
+                        "                                    align-items: center;\n" +
+                        "                                    font-size: 20px;\n" +
+                        "                                    font-weight: bold;\n" +
+                        "                                    color: #fff;\n" +
+                        "                                    padding: 24px 0;\">\n" +
+                        "\t\t\tHQT Hostel Management\n" +
+                        "\t\t</div>\n" +
+                        "\t\t<div class=\"content\">\n" +
+                        "\t\t\t<div class=\"content__title\" style=\"font-size: 20px;\n" +
+                        "                                                padding: 22px 0;\n" +
+                        "                                                font-weight: 500;\">\n" +
+                        "\t\t\t\tNgười thuê vừa gửi 1 báo cáo mới\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t\t<div class=\"content__sub-title\" style=\"color: #1fdf7f;\n" +
+                        "                                                    font-size: 20px;\n" +
+                        "                                                    font-weight: 500;\n" +
+                        "                                                    text-shadow: 1px 1px rgba(100, 94, 94, 0.4);\">\n" +
+                        "\t\t\t\tVui lòng kiểm tra lại thông tin. </br> Xin cảm ơn.\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t\t<div id=\"hqt-content__otp\" class=\"content__otp\" style=\"width: 360px;\n" +
+                        "                                                                    font-size: 28px;\n" +
+                        "                                                                    font-weight: 700;\n" +
+                        "                                                                    color: #fff;\n" +
+                        "                                                                    background: #1dcc70;\n" +
+                        "                                                                    border-radius: 16px;\n" +
+                        "                                                                    margin: 24px auto;\n" +
+                        "                                                                    padding: 18px 12px;\n" +
+                        "                                                                    position: relative;\">\n" +
+                        "\t\t\t\t<span id=\"hqt-content__otp-code\"><a style=\"text-decoration: none;\" href=\""+domain+"\">Click vào để xem</a></span>\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t</div>\n" +
+                        "\t</div>\n" +
+                        "</body>";
+        return sendMail(receiveMail, mailObject, mailBody);
+    }
+
+    public boolean sendOTPMail(String receiveMail, String otp){
+        String mailObject = "Mã xác nhận tài khoản";
+        String mailBody =
+                "<head>\n" +
+                        "    <meta charset=\"UTF-8\">\n" +
+                        "    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n" +
+                        "    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
+                        "    <link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap\" rel=\"stylesheet\">\n" +
+                        "</head>\n" +
+                        "<body>\n" +
+                        "    <div class=\"mail\" style=\"max-width: 600px;\n" +
+                        "                                width: 100%;\n" +
+                        "                                margin: 0 auto;\n" +
+                        "                                background-color: #fff;\n" +
+                        "                                font-family: 'Roboto', sans-serif;\n" +
+                        "                                text-align: center;\n" +
+                        "                                padding-bottom: 24px;\n" +
+                        "                                box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;\">\n" +
+                        "        <div class=\"header\" style=\"background-color: #0067ff;\n" +
+                        "                                    align-items: center;\n" +
+                        "                                    font-size: 20px;\n" +
+                        "                                    font-weight: bold;\n" +
+                        "                                    color: #fff;\n" +
+                        "                                    padding: 24px 0;\">\n" +
+                        "            HQT Hostel Management\n" +
+                        "        </div>\n" +
+                        "        <div class=\"content\">\n" +
+                        "            <div class=\"content__title\" style=\"font-size: 20px;\n" +
+                        "                                                padding: 22px 0;\n" +
+                        "                                                font-weight: 500;\">\n" +
+                        "                Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!\n" +
+                        "            </div>\n" +
+                        "            <div class=\"content__sub-title\" style=\"color: #1fdf7f;\n" +
+                        "                                                    font-size: 20px;\n" +
+                        "                                                    font-weight: 500;\n" +
+                        "                                                    text-shadow: 1px 1px rgba(100, 94, 94, 0.4);\">\n" +
+                        "                Đây là mã OTP của bạn\n" +
+                        "            </div>\n" +
+                        "            <div id=\"hqt-content__otp\" class=\"content__otp\" style=\"width: 360px;\n" +
+                        "                                                                    font-size: 28px;\n" +
+                        "                                                                    font-weight: 700;\n" +
+                        "                                                                    color: #fff;\n" +
+                        "                                                                    background: #1dcc70;\n" +
+                        "                                                                    border-radius: 16px;\n" +
+                        "                                                                    margin: 24px auto;\n" +
+                        "                                                                    padding: 18px 12px;\n" +
+                        "                                                                    position: relative;\">\n" +
+                        "                <span id=\"hqt-content__otp-code\">" + otp + "</span>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"content__warning\" style=\"color: #ff0000;\n" +
+                        "                                                 font-weight: 500;\">\n" +
+                        "                Mã OTP này có hiệu lực trong 2 phút! <br />\n" +
+                        "                Vui lòng không cung cấp OTP cho bất kì ai!\n" +
+                        "            </div>\n" +
+                        "        </div>\n" +
+                        "    </div>\n" +
+                        "</body>";
+        return sendMail(receiveMail, mailObject, mailBody);
+    }
+
+    public boolean sendRecoverMail(String receiveMail, String domain, String encodeString){
+        String mailObject = "Hướng dẫn khôi phục mật khẩu";
+        String mailBody = "Sau đây là url để bạn khôi phục lại mật khẩu: " +
+                "<a href='" + domain + encodeString + "' target='_blank'>Link here</a>";
+        return sendMail(receiveMail, mailObject, mailBody);
     }
 }

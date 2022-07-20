@@ -60,10 +60,7 @@ public class RecoverPasswordServlet extends HttpServlet {
                     String recoverPasswordUrl = "accountId=" + account.getAccId() + "&recoverCode=" + requestRecoverPasswordCode;
                     String encodeString = EncodeBase64Utils.encodeStringBase64(recoverPasswordUrl);
 
-                    String mailObject = "Hướng dẫn khôi phục mật khẩu";
-                    String mailBody = returnBodyEmail(domain + encodeString);
-
-                    if (MailUtils.sendOTPMail(userEmail, mailObject, mailBody)) {
+                    if (new MailUtils().sendRecoverMail(userEmail, domain, encodeString)) {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                         Calendar startTime = Calendar.getInstance();
                         long timeInSecs = startTime.getTimeInMillis();

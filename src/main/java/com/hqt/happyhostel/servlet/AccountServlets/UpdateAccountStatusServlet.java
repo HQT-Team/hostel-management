@@ -1,7 +1,10 @@
 package com.hqt.happyhostel.servlet.AccountServlets;
 
 import com.hqt.happyhostel.dao.AccountDAO;
+import com.hqt.happyhostel.dto.Account;
+import com.hqt.happyhostel.dto.AccountInfo;
 import com.hqt.happyhostel.dto.HandlerStatus;
+import com.hqt.happyhostel.utils.MailUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -24,8 +27,11 @@ public class UpdateAccountStatusServlet extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("owner_id"));
             int status = Integer.parseInt(request.getParameter("status"));
+            AccountInfo accountInf = accountDAO.getAccountInformationById(id);
             boolean check = status == 0 ? accountDAO.updateAccountStatus(id, 1) : accountDAO.updateAccountStatus(id, 0);
             if (check) {
+                String domain = "http://localhost:8080/HappyHostel/loginPage";
+                new MailUtils().SendMailConfirmActiveOwnerAccount((accountInf.getInformation().getEmail()), domain);
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(true)
                         .content("Cập nhật trạng thái tài khoản thành công.").build());
