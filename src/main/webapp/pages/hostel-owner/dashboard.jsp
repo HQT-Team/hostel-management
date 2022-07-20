@@ -55,6 +55,14 @@
 
             <!-- Content -->
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 pb-5 content-group">
+                <!-- Warning -->
+                <div class="content-warning mt-5">
+                    <div class="blink"></div>
+                    <span>Hệ thống nhận thấy bạn chưa có khu trọ nào cả! <a href="add-hostel">
+                                Click vào đây để tạo khu trọ mới nhen!</a>
+                        </span>
+                </div>
+
                 <!-- Welcome -->
                 <div class="content-welcome mt-5">
                     <img src="./assets/images/avatars/user-avatar.jpg" alt="User avatar" class="welcome-image">
@@ -77,7 +85,7 @@
                         <div class="row">
                             <div class="col-12 col-md-5 summary-top">
                                 <div class="summary-header">
-                                    <div class="summary-title">Tóm tắt - Khu trọ: ${requestScope.Hostel != null ? requestScope.Hostel.hostelName : "Trống"}</div>
+                                    <div class="summary-title">Tóm tắt - ${requestScope.Hostel != null ? requestScope.Hostel.hostelName : "Trống"}</div>
                                     <div class="summary-date">${requestScope.StartDay} - ${requestScope.EndDay}</div>
                                 </div>
                                 <div class="summary-income">
@@ -92,8 +100,8 @@
                                             </span>
                                         so với
                                         <span class="summary-income_compared-prev-price">
-                                            <fmt:formatNumber value="${requestScope.listMoneyEachMonth[1]}" type="currency" currencySymbol="VNĐ"/>
-                                            </span> của tháng trước
+                                            <fmt:formatNumber value="${requestScope.ListMoneyEachMonth.get(1)}" type="currency" currencySymbol="VNĐ"/>
+                                            </span> của tháng trước đó
                                         <br/>
                                     </div>
                                 </div>
@@ -157,6 +165,17 @@
                             <div class="report-summary-result-percent">
                                 Tỷ lệ tiếp nhận báo cáo: <span class="high">99%</span>
                             </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 mt-md-0 col-12 col-md-5 col-xl-6 col-xxl-7">
+                        <div class="content-body">
+                            <div class="overview-title">Toàn diện</div>
+                            <div class="overview-items">Tổng số khu trọ: <span>2</span></div>
+                            <div class="overview-items">Tổng số phòng trọ: <span>2</span></div>
+                            <div class="overview-items">Tổng số phòng đã được thuê: <span>2</span></div>
+                            <div class="overview-items">Tổng số phòng chưa được thuê: <span>2</span></div>
+                            <div class="overview-items">Tổng số phòng đang được làm hợp đồng: <span>2</span></div>
+                            <div class="overview-items">Số thông báo đã gửi: <span>2</span></div>
                         </div>
                     </div>
                 </div>
