@@ -197,6 +197,8 @@ public class StatisticServlet extends HttpServlet {
         String year = request.getParameter("select-year") != null ? request.getParameter("select-year"): "2022";
         String quater = request.getParameter("select-quater") != null ? request.getParameter("select-quater"): "quater_1";
         BillDAO billDAO = new BillDAO();
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("USER");
         HostelDAO hostelDAO = new HostelDAO();
         ContractDAO contractDAO = new ContractDAO();
         ReportDAO reportDAO = new ReportDAO();
@@ -231,7 +233,7 @@ public class StatisticServlet extends HttpServlet {
         ArrayList<String> listYear = new ArrayList<String>();
         try {
 
-            ArrayList<Hostel> listHostel = hostelDAO.getListHostel();
+            ArrayList<Hostel> listHostel = (ArrayList<Hostel>) hostelDAO.getHostelByOwnerId(account.getAccId());
             ArrayList<Bill> listBillByHostel = billDAO.GetListBillByHostel(hostelName);
             if (listBillByHostel.size()==0)
                 year=null;

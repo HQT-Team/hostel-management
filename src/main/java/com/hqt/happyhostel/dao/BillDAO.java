@@ -837,7 +837,7 @@ public class BillDAO {
 
 
     public ArrayList<Bill> GetListBillByHostelYearQuater(String hostelName,  String year, String quatertmp) throws Exception {
-
+year = year == null ? "2022" : year;
         String startDate;
         String endDate;
         int quater = 0;
@@ -984,6 +984,7 @@ public class BillDAO {
     }
 
     public ArrayList<Bill> GetListBillByHostelAndYear(String hostel, String Year) throws Exception {
+        Year = Year == null ? "2022" : Year;
         Bill bill = null;
         ArrayList<Bill> listBill = new ArrayList<>();
         Connection cn = null;
@@ -998,6 +999,135 @@ public class BillDAO {
             ptm.setString(1, hostel);
             ptm.setString(2, startYear);
             ptm.setString(3, endYear);
+            rs = ptm.executeQuery();
+            while (rs != null && rs.next()) {
+                int billID = rs.getInt("bill_id");
+                int totalMoney = rs.getInt("total_money");
+                String createdDate = dateFormat.format(rs.getDate("created_date"));
+                String billTitle = rs.getString("bill_title");
+                String expiredPaymentDate = dateFormat.format(rs.getDate("expired_payment_date"));
+                Date paymentDateTemp = rs.getDate("payment_date");
+                String paymentDate;
+                if (paymentDateTemp == null || paymentDateTemp.equals("")) {
+                    paymentDate = "";
+                } else {
+                    paymentDate = dateFormat.format(paymentDateTemp);
+                }
+                int status = rs.getInt("status");
+                int paymentID = rs.getInt("payment_id");
+                int roomID = rs.getInt("room_id");
+                bill = Bill.builder()
+                        .billID(billID)
+                        .createdDate(createdDate)
+                        .totalMoney(totalMoney)
+                        .billTitle(billTitle)
+                        .expiredPaymentDate(expiredPaymentDate)
+                        .paymentDate(paymentDate)
+                        .status(status)
+                        .payment(Payment.builder().paymentID(paymentID).build())
+                        .roomID(roomID)
+                        .build();
+                listBill.add(bill);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return listBill;
+    }
+
+    public ArrayList<Bill> GetListBillByHostelIdMonthYear(int hostelId, int year , int month) throws Exception {
+        Bill bill = null;
+        String strYear = String.valueOf(year);
+        year = Integer.parseInt(strYear.substring(2,4));
+        ArrayList<Bill> listBill = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            cn = DBUtils.makeConnection();
+            String sql = "select A.bill_id, A.bill_title, A.created_date, A.expired_payment_date , A.payment_date,A.payment_id, A.room_id, A.status, A.total_money\n" +
+                    "from [dbo].[Bill] A join [dbo].[Rooms] R on A.room_id = R.room_id join [dbo].[Hostels] H on R.hostel_id = H.hostel_id\n" +
+                    "where H.hostel_id = ? and SUBSTRING( CONVERT(varchar(30), A.created_date, 1), 2, 1) = ? and SUBSTRING( CONVERT(varchar(30), A.created_date, 1), 7, 2) = ?\n" +
+                    "Order By SUBSTRING( CONVERT(varchar(30), A.created_date, 1), 2, 1) DESC";
+            ptm = cn.prepareStatement(sql);
+            ptm.setInt(1, hostelId);
+            ptm.setInt(2, month);
+            ptm.setInt(3, year);
+
+            rs = ptm.executeQuery();
+            while (rs != null && rs.next()) {
+                int billID = rs.getInt("bill_id");
+                int totalMoney = rs.getInt("total_money");
+                String createdDate = dateFormat.format(rs.getDate("created_date"));
+                String billTitle = rs.getString("bill_title");
+                String expiredPaymentDate = dateFormat.format(rs.getDate("expired_payment_date"));
+                Date paymentDateTemp = rs.getDate("payment_date");
+                String paymentDate;
+                if (paymentDateTemp == null || paymentDateTemp.equals("")) {
+                    paymentDate = "";
+                } else {
+                    paymentDate = dateFormat.format(paymentDateTemp);
+                }
+                int status = rs.getInt("status");
+                int paymentID = rs.getInt("payment_id");
+                int roomID = rs.getInt("room_id");
+                bill = Bill.builder()
+                        .billID(billID)
+                        .createdDate(createdDate)
+                        .totalMoney(totalMoney)
+                        .billTitle(billTitle)
+                        .expiredPaymentDate(expiredPaymentDate)
+                        .paymentDate(paymentDate)
+                        .status(status)
+                        .payment(Payment.builder().paymentID(paymentID).build())
+                        .roomID(roomID)
+                        .build();
+                listBill.add(bill);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return listBill;
+    }
+
+    public ArrayList<Bill> GetBillByHostelId(int hostelID) throws Exception {
+        Bill bill = null;
+        ArrayList<Bill> listBill = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            cn = DBUtils.makeConnection();
+            String sql = "select A.bill_id, A.bill_title, A.created_date, A.expired_payment_date , A.payment_date,A.payment_id, A.room_id, A.status, A.total_money\n" +
+                    "from [dbo].[Bill] A join [dbo].[Rooms] R on A.room_id = R.room_id join [dbo].[Hostels] H on R.hostel_id = H.hostel_id\n" +
+                    "where H.hostel_id = ?";
+            ptm = cn.prepareStatement(sql);
+            ptm.setInt(1, hostelID);
+
             rs = ptm.executeQuery();
             while (rs != null && rs.next()) {
                 int billID = rs.getInt("bill_id");

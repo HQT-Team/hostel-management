@@ -150,7 +150,7 @@
                     </div>
                 </div>
                 <div class="contract-result">
-                    <p>Sau khi bàn bạc</p>
+                    <p>Thông tin phòng</p>
                     <h5><strong>Tại địa chỉ: </strong>${HOSTEL.address}, ${HOSTEL.ward.split('-')[1]},
                         ${HOSTEL.district.split('-')[1]}, ${HOSTEL.city.split('-')[1]} </h5><br>
                     <h5><strong>Giá: </strong>

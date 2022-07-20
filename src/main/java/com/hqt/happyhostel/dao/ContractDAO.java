@@ -243,6 +243,7 @@ public class ContractDAO {
     }
 
     public ArrayList<Contract> GetListContractByHostelYear(String hostelName, String year) {
+        year = year == null ? "2022" : year;
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -316,6 +317,7 @@ public class ContractDAO {
     }
 
     public ArrayList<Contract> GetListContractByHostelYearQuater(String hostelName, String year, String quatertmp) {
+        year = year == null ? "2022" : year;
         Connection cn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;

@@ -294,5 +294,56 @@ public class ReportDAO {
         }
         return report;
     }
-
+    public ArrayList<Report> getListReportByHostelId(int hostelId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Report> listReport = new ArrayList<>();
+        try {
+            conn = DBUtils.makeConnection();
+            if (conn != null) {
+                String sql = "select A.id_report, A.send_date, A.content, A.status, A.reply, A.reply_date, A.complete_date, A.reply_account_id, A.send_account_id, A.cate_id\n" +
+                        "from [dbo].[Reports] A join [dbo].[Accounts] B on A.send_account_id = B.account_id join [dbo].[Rooms] C on B.room_id = C.room_id join [dbo].[Hostels] D on C.hostel_id = D.hostel_id\n" +
+                        "where D.hostel_id = ?";
+                pst = conn.prepareStatement(sql);
+                pst.setInt(1, hostelId);
+                rs = pst.executeQuery();
+                while (rs.next()) {
+                    int reportID = rs.getInt("id_report");
+                    String sendDate = rs.getString("send_date");
+                    String content = rs.getString("content");
+                    int status = rs.getInt("status");
+                    String reply = rs.getString("reply");
+                    String completeDate = rs.getString("complete_date");
+                    int replyAccountID = rs.getInt("reply_account_id");
+                    int sendAccountID = rs.getInt("send_account_id");
+                    int cateID = rs.getInt("cate_id");
+                    listReport.add(Report.builder()
+                            .reportID(reportID)
+                            .sendDate(sendDate)
+                            .content(content)
+                            .status(status)
+                            .reply(reply)
+                            .completeDate(completeDate)
+                            .replyAccountID(replyAccountID)
+                            .sendAccountID(sendAccountID)
+                            .cateID(cateID)
+                            .build());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listReport;
+    }
 }
