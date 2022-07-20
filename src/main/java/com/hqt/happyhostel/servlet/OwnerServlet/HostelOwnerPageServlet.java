@@ -29,8 +29,11 @@ public class HostelOwnerPageServlet extends HttpServlet {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.MONTH, -1);
             Date result = cal.getTime();
+            int startDay = cal.getActualMinimum(Calendar.DATE);
+            int endDay = cal.getActualMaximum(Calendar.DATE);
             DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
             DateFormat formatter1 = new SimpleDateFormat("dd/MM/yyyy");
+
             String str = result.toString();
             int[] listMoneyEachMonth = {0, 0, 0, 0, 0, 0};
             int[] listSixMonthAgo = GetListMonthOfSixMonthAgoByHostelId();
@@ -73,6 +76,8 @@ public class HostelOwnerPageServlet extends HttpServlet {
             request.setAttribute("doneReport", listReportByReportStatus[2]);
             request.setAttribute("timeNow", formatter1.format(formatter.parse(str)).substring(3, 10));
             request.setAttribute("averageReport", averageDamageReport);
+            request.setAttribute("startDay", startDay);
+            request.setAttribute("endDay", endDay);
             request.setAttribute("listMoneyOfOneAndTwoMonthAgo", listMoneyOfOneAndTwoMonthAgo);
             request.setAttribute("averageMoneyOfHotel", averageMoneyOfHotel);
             request.setAttribute("comparePercentOfTwoMonthAgo", comparePercentOfTwoMonthAgo);
@@ -99,7 +104,9 @@ public class HostelOwnerPageServlet extends HttpServlet {
             year6 = year6 - 1;
         List<Bill> listBillInMonth = billDAO.GetListBillByHostelIdMonthYear(hostelID, year6, month6);
         for (Bill item : listBillInMonth) {
-            moneyInMonth6 += item.getTotalMoney();
+            if (item.getStatus() == 1) {
+                moneyInMonth6 += item.getTotalMoney();
+            }
         }
 
         cal.add(Calendar.MONTH, -1);
@@ -108,7 +115,9 @@ public class HostelOwnerPageServlet extends HttpServlet {
         if (result.getMonth() == 0) year5 = year5 - 1;
         listBillInMonth = billDAO.GetListBillByHostelIdMonthYear(hostelID, year5, month5);
         for (Bill item : listBillInMonth) {
-            moneyInMonth5 += item.getTotalMoney();
+            if (item.getStatus() == 1) {
+                moneyInMonth5 += item.getTotalMoney();
+            }
         }
 
         cal.add(Calendar.MONTH, -1);
@@ -117,7 +126,9 @@ public class HostelOwnerPageServlet extends HttpServlet {
         if (result.getMonth() == 0) year4 = year4 - 1;
         listBillInMonth = billDAO.GetListBillByHostelIdMonthYear(hostelID, year4, month4);
         for (Bill item : listBillInMonth) {
-            moneyInMonth4 += item.getTotalMoney();
+            if (item.getStatus() == 1) {
+                moneyInMonth4 += item.getTotalMoney();
+            }
         }
 
         cal.add(Calendar.MONTH, -1);
@@ -126,7 +137,9 @@ public class HostelOwnerPageServlet extends HttpServlet {
         if (result.getMonth() == 0) year3 = year3 - 1;
         listBillInMonth = billDAO.GetListBillByHostelIdMonthYear(hostelID, year3, month3);
         for (Bill item : listBillInMonth) {
-            moneyInMonth3 += item.getTotalMoney();
+            if (item.getStatus() == 1) {
+                moneyInMonth3 += item.getTotalMoney();
+            }
         }
 
         cal.add(Calendar.MONTH, -1);
@@ -135,7 +148,9 @@ public class HostelOwnerPageServlet extends HttpServlet {
         if (result.getMonth() == 0) year2 = year2 - 1;
         listBillInMonth = billDAO.GetListBillByHostelIdMonthYear(hostelID, year2, month2);
         for (Bill item : listBillInMonth) {
-            moneyInMonth2 += item.getTotalMoney();
+            if (item.getStatus() == 1) {
+                moneyInMonth2 += item.getTotalMoney();
+            }
         }
 
         cal.add(Calendar.MONTH, -1);
@@ -144,7 +159,9 @@ public class HostelOwnerPageServlet extends HttpServlet {
         if (result.getMonth() == 0) year1 = year1 - 1;
         listBillInMonth = billDAO.GetListBillByHostelIdMonthYear(hostelID, year1, month1);
         for (Bill item : listBillInMonth) {
-            moneyInMonth1 += item.getTotalMoney();
+            if (item.getStatus() == 1) {
+                moneyInMonth1 += item.getTotalMoney();
+            }
         }
         int[] listMoneyInSixMonth = {moneyInMonth6, moneyInMonth5, moneyInMonth4, moneyInMonth3, moneyInMonth2, moneyInMonth1};
         return listMoneyInSixMonth;
@@ -201,11 +218,15 @@ public class HostelOwnerPageServlet extends HttpServlet {
         }
         List<Bill> listBillOneMonthAgo = billDAO.GetListBillByHostelIdMonthYear(hostelID, year1, oneMonthAgo);
         for (Bill item : listBillOneMonthAgo) {
-            moneyOneMonthAgo += item.getTotalMoney();
+            if (item.getStatus() == 1){
+                moneyOneMonthAgo += item.getTotalMoney();
+            }
         }
         List<Bill> listBillTwoMonthAgo = billDAO.GetListBillByHostelIdMonthYear(hostelID, year2, twoMonthAgo);
         for (Bill item : listBillTwoMonthAgo) {
-            moneyTwoMonthAgo += item.getTotalMoney();
+            if (item.getStatus() == 1) {
+                moneyTwoMonthAgo += item.getTotalMoney();
+            }
         }
         int[] listMoney = {moneyOneMonthAgo, moneyTwoMonthAgo};
         return listMoney;
@@ -217,7 +238,9 @@ public class HostelOwnerPageServlet extends HttpServlet {
         int totalMoney = 0;
         List<Bill> listBillByHostelID = billDAO.GetBillByHostelId(hostelID);
         for (Bill item : listBillByHostelID) {
-            totalMoney += item.getTotalMoney();
+            if (item.getStatus() == 1) {
+                totalMoney += item.getTotalMoney();
+            }
         }
         return totalMoney;
     }
@@ -226,24 +249,22 @@ public class HostelOwnerPageServlet extends HttpServlet {
     protected int GetTotalMonthByHostelId(int hostelID) throws Exception {
         BillDAO billDAO = new BillDAO();
         List<Bill> listBillByHostelID = billDAO.GetBillByHostelId(hostelID);
-        Calendar cal = Calendar.getInstance();
-        Date result;
-        result = cal.getTime();
         List<String> listMonth = new ArrayList<>();
 
         boolean check;
         for (int i = 0; i < listBillByHostelID.size(); i++) {
-            if (listMonth.size() == 0){
-                listMonth.add(listBillByHostelID.get(i).getCreatedDate());
+            if (listBillByHostelID.get(i).getStatus() == 1){
+                if (listMonth.size() == 0){
+                    listMonth.add(listBillByHostelID.get(i).getCreatedDate().substring(5, 7));
+                }
+                check = true;
+                for (int j = 0; j < listMonth.size(); j++) {
+                    if (listMonth.get(j).equals(listBillByHostelID.get(i).getCreatedDate().substring(5, 7)))
+                        check = false;
+                }
+                if (check)
+                    listMonth.add(listBillByHostelID.get(i).getCreatedDate().substring(5, 7));
             }
-            check = true;
-            for (int j = 0; j < listMonth.size(); j++) {
-                if (listMonth.get(j).equals(listBillByHostelID.get(i).getCreatedDate()))
-                    check = false;
-
-            }
-            if (check)
-                listMonth.add(listBillByHostelID.get(i).getCreatedDate());
         }
         return listMonth.size();
     }

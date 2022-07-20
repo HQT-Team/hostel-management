@@ -76,7 +76,7 @@
                             <div class="col-12 col-md-5 summary-top">
                                 <div class="summary-header">
                                     <div class="summary-title">Tóm tắt</div>
-                                    <div class="summary-date">01/${requestScope.timeNow} - 31/${requestScope.timeNow}</div>
+                                    <div class="summary-date">${requestScope.startDay}/${requestScope.timeNow} - ${requestScope.endDay}/${requestScope.timeNow}</div>
                                 </div>
                                 <div class="summary-income">
                                     <div class="summary-income_title">Doanh thu tháng này</div>
@@ -171,12 +171,12 @@
         ${requestScope.listSixMonthAgo[1]},
         ${requestScope.listSixMonthAgo[0]}]
     console.log(listMonth);
-    let listMoney = [${requestScope.listMoneyEachMonth[0]},
-        ${requestScope.listMoneyEachMonth[1]},
-        ${requestScope.listMoneyEachMonth[2]},
-        ${requestScope.listMoneyEachMonth[3]},
+    let listMoney = [${requestScope.listMoneyEachMonth[5]},
         ${requestScope.listMoneyEachMonth[4]},
-        ${requestScope.listMoneyEachMonth[5]}]
+        ${requestScope.listMoneyEachMonth[3]},
+        ${requestScope.listMoneyEachMonth[2]},
+        ${requestScope.listMoneyEachMonth[1]},
+        ${requestScope.listMoneyEachMonth[0]}]
     console.log(listMoney);
 </script>
 <!-- Script Bootstrap !important -->
