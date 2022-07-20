@@ -127,7 +127,8 @@ public class AddNotificationServlet extends HttpServlet {
                             }
 
                             if (accMailList != null && accMailList.size() > 0) {
-                                if (MailUtils.sendBCCEmail(accMailList, mailObject, mailBody)) {
+                                String domain = "http://localhost:8080/HappyHostel/RenterNotificationPage";
+                                if (new MailUtils().SendMailNotice(accMailList, domain)) {
                                     handlerStatus = HandlerStatus.builder().status(true).content("Mail đã được gửi thành công. Vui lòng kiểm tra Email của bạn.").build();
                                 } else {
                                     handlerStatus = HandlerStatus.builder().status(false).content("Không thể gửi Mail. Vui lòng kiểm tra lại các thông tin.").build();

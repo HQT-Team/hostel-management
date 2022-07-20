@@ -4,6 +4,7 @@ import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dao.ReportCategoryDAO;
 import com.hqt.happyhostel.dao.ReportDAO;
 import com.hqt.happyhostel.dto.*;
+import com.hqt.happyhostel.utils.MailUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +22,7 @@ import java.util.List;
 public class AddReportServlet extends HttpServlet {
     public static final String ERROR = "Renter-report-page";
     public static final String SUCCESS = "Renter-report-page";
-//    public static final String SUCCESS = "Renter-view-report";
+
 
 
     @Override
