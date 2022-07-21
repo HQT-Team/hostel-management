@@ -8,6 +8,7 @@ import com.hqt.happyhostel.dao.HostelOwnerDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
 import com.hqt.happyhostel.dao.RoomInviteDAO;
 import com.hqt.happyhostel.dto.Account;
+import com.hqt.happyhostel.dto.HandlerStatus;
 import com.hqt.happyhostel.dto.Room;
 import com.hqt.happyhostel.utils.EncodeBase64Utils;
 import com.hqt.happyhostel.utils.RandomStringGenerator;
@@ -25,7 +26,8 @@ import java.util.Calendar;
 @WebServlet(name = "CreateInviteCodeServlet", value = "/CreateInviteCodeServlet")
 public class CreateInviteCodeServlet extends HttpServlet {
     private final String SUCCESS = "invite-code-page";
-    private final String FAIL = "create-room-account-page";
+    private final String FAIL1 = "create-room-account-page";
+    private final String FAIL2 = "roomDetail?roomID=";
     private final String ERROR = "error-page";
 
 
@@ -41,6 +43,7 @@ public class CreateInviteCodeServlet extends HttpServlet {
         Account owner;
         Room roomInvite = null;
         StringBuilder inviteUrl = new StringBuilder("http://localhost:8080/HappyHostel/invite-code?invite-code=");
+        HandlerStatus handlerStatus = null;
         try {
 
             roomId = request.getParameter("room_id");
@@ -49,7 +52,7 @@ public class CreateInviteCodeServlet extends HttpServlet {
 
             HttpSession session = request.getSession(false);
             if (session != null) {
-                url = FAIL;
+                url = FAIL1;
                 owner = (Account) session.getAttribute("USER");
                 RoomInviteDAO roomInviteDAO = new RoomInviteDAO();
 
@@ -60,32 +63,40 @@ public class CreateInviteCodeServlet extends HttpServlet {
 
                     // Check xem roomID có thuộc ownerID không
                     if (new HostelOwnerDAO().checkOwnerRoom(ownerId, roomID)) {
+                        //Check room status
+                        int roomStatus = new RoomDAO().getRoomById(roomID).getRoomStatus();
+                        if( roomStatus != 0){
+                            // Create invite link
+                            inviteCode = RandomStringGenerator.randomInviteCode(5, roomId);
+                            inviteUrl = inviteUrl.append(inviteCode);
 
-                        // Create invite link
-                        inviteCode = RandomStringGenerator.randomInviteCode(5, roomId);
-                        inviteUrl = inviteUrl.append(inviteCode);
+                            // Create QR Code
+                            QRCodeWriter barcodeWriter = new QRCodeWriter();
+                            BitMatrix bitMatrix = barcodeWriter.encode(inviteUrl.toString(), BarcodeFormat.QR_CODE, 200, 200);
+                            BufferedImage qrImg = MatrixToImageWriter.toBufferedImage(bitMatrix);
+                            String QRBase64 = EncodeBase64Utils.imageToBase64(qrImg);
 
-                        // Create QR Code
-                        QRCodeWriter barcodeWriter = new QRCodeWriter();
-                        BitMatrix bitMatrix = barcodeWriter.encode(inviteUrl.toString(), BarcodeFormat.QR_CODE, 200, 200);
-                        BufferedImage qrImg = MatrixToImageWriter.toBufferedImage(bitMatrix);
-                        String QRBase64 = EncodeBase64Utils.imageToBase64(qrImg);
+                            // Create endTime
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                            Calendar startTime = Calendar.getInstance();
+                            long timeInSecs = startTime.getTimeInMillis();
+                            Timestamp endTime = new Timestamp(timeInSecs + (30 * 60 * 1000));
 
-                        // Create endTime
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                        Calendar startTime = Calendar.getInstance();
-                        long timeInSecs = startTime.getTimeInMillis();
-                        Timestamp endTime = new Timestamp(timeInSecs + (30 * 60 * 1000));
-
-                        // Set invite code into database
-                        if (roomInviteDAO.updateRoomInviteCode(roomID, inviteCode, QRBase64, sdf.format(endTime))) {
-                            new RoomDAO().updateRoomStatus(roomID, 0);
-                            roomInvite = roomInviteDAO.getRoomInviteById(roomID);
-                            url = SUCCESS;
+                            // Set invite code into database
+                            if (roomInviteDAO.updateRoomInviteCode(roomID, inviteCode, QRBase64, sdf.format(endTime))) {
+                                new RoomDAO().updateRoomStatus(roomID, 0);
+                                roomInvite = roomInviteDAO.getRoomInviteById(roomID);
+                                handlerStatus = HandlerStatus.builder().status(true).content("Tạo mã mời mới thành công.").build();
+                                url = SUCCESS;
+                            }
+                        }else {
+                            handlerStatus = HandlerStatus.builder().status(false).content("Phòng đã có người thuê. Không thể tạo mã mời mới.").build();
+                            url = FAIL2+roomId;
                         }
                     }
                     request.setAttribute("ROOM_INVITE", roomInvite);
                     request.setAttribute("URL_INVITE", inviteUrl);
+                    request.setAttribute("RESPONSE_MSG", handlerStatus);
                 }
             }
         } catch (Exception e) {

@@ -48,6 +48,8 @@ public class CreateRenterAccountServlet extends HttpServlet {
                     if (new HostelOwnerDAO().checkOwnerRoom(ownerId, roomID)) {
                         url = FAIL;
                         Room room = new RoomDAO().getRoomById(roomID);
+
+                        //Check room status
                         if (room.getRoomStatus() == 1) {
                             String username = req.getParameter("room-username");
                             String email = req.getParameter("room-email");
@@ -118,7 +120,10 @@ public class CreateRenterAccountServlet extends HttpServlet {
                                 req.setAttribute("startDate", startDate);
                                 req.setAttribute("endDate", endDate);
                             }
-                        } else url = SUCCESS;
+                        } else {
+                            handlerStatus = HandlerStatus.builder().status(false).content("Tài khoản cho phòng này đã tồn tại trong hệ thống!").build();
+                            url = FAIL;
+                        }
                     }
                 }
                 req.setAttribute("RESPONSE_MSG", handlerStatus);
