@@ -84,7 +84,7 @@ public class CreateInviteCodeServlet extends HttpServlet {
 
                             // Set invite code into database
                             if (roomInviteDAO.updateRoomInviteCode(roomID, inviteCode, QRBase64, sdf.format(endTime))) {
-                                new RoomDAO().updateRoomStatus(roomID, 0);
+                                new RoomDAO().updateRoomStatus(roomID, -1);
                                 roomInvite = roomInviteDAO.getRoomInviteById(roomID);
                                 handlerStatus = HandlerStatus.builder().status(true).content("Tạo mã mời mới thành công.").build();
                                 url = SUCCESS;

@@ -126,7 +126,7 @@ public class CreateRenterAccountServlet extends HttpServlet {
                         }
                     }
                 }
-                req.setAttribute("RESPONSE_MSG", handlerStatus);
+                req.setAttribute("RESPONSES_MSG", handlerStatus);
             }
         } catch (Exception e) {
             log("Error at CreateRenterAccountServlet: " + e);
