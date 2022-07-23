@@ -20,27 +20,27 @@
     </context-param>
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.AuthenticationFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filters.AuthenticationFilter</filter-class>
     </filter>
     <filter>
         <filter-name>RoleRedirectFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.RoleRedirectFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filters.RoleRedirectFilter</filter-class>
     </filter>
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.AuthorizationFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filters.AuthorizationFilter</filter-class>
     </filter>
     <filter>
         <filter-name>RenterRegisterFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.RenterRegisterFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filters.RenterRegisterFilter</filter-class>
     </filter>
     <filter>
         <filter-name>DispatcherFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.DispatcherFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filters.DispatcherFilter</filter-class>
     </filter>
     <filter>
         <filter-name>CharsetFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.CharsetFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filters.CharsetFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
