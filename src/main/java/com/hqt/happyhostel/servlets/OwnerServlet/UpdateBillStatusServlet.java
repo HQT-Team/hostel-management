@@ -28,8 +28,8 @@ public class UpdateBillStatusServlet extends HttpServlet {
             boolean isUpdated = new PaymentDAO().updateBillStatus(billID, 1);
 
             if (isUpdated) {
-                if (request.getParameter("navigateTo") != null) {
-                    url = request.getParameter("navigateTo");
+                if (session.getAttribute("CURRENT_PAGE").equals("invoice")) {
+                    url = "getInvoiceList";
                 } else {
                     url = "roomDetail";
                 }

@@ -107,6 +107,7 @@ public class GetRoomDetailServlet extends HttpServlet {
 
             List<Infrastructures> infrastructures = infrastructureDAO.getRoomInfrastructures(roomId);
             request.setAttribute("infrastructures", infrastructures);
+            session.setAttribute("CURRENT_PAGE", "room");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -204,6 +205,7 @@ public class GetRoomDetailServlet extends HttpServlet {
 
             List<Infrastructures> infrastructures = infrastructureDAO.getRoomInfrastructures(roomId);
             request.setAttribute("infrastructures", infrastructures);
+            session.setAttribute("CURRENT_PAGE", "room");
             request.setAttribute("CREATE_BILL_MSG", request.getAttribute("CREATE_BILL_MSG"));
             request.setAttribute("RENTER_ID", request.getAttribute("RENTER_ID"));
 

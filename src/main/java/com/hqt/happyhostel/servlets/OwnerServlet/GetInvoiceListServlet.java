@@ -181,6 +181,7 @@ public class GetInvoiceListServlet extends HttpServlet {
                     response.getWriter().println(gson.toJson(list));
                 }
             }
+            session.setAttribute("CURRENT_PAGE", "invoice");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -48,7 +48,7 @@ public class HostelDetailServlet extends HttpServlet {
                 request.setAttribute("serviceInfo", serviceList);
                 request.setAttribute("services", servicesNotInHostel);
             }
-
+            session.setAttribute("CURRENT_PAGE", "hostel");
         } catch (Exception e) {
             log("Error at HostelDetailServlet: " + e.toString());
         } finally {
