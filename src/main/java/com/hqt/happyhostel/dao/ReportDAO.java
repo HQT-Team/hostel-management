@@ -11,19 +11,64 @@ public class ReportDAO {
     private static final String INSERT_REPORT =
             "INSERT INTO [dbo].[Reports](send_date, [content], status, reply_account_id, send_account_id, cate_id) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String GET_REPORTS = "SELECT * FROM Reports";
-
     private static final String UPDATE_REPORT_TO_PROCESS =
             "UPDATE Reports SET status = 1, reply_date = GETDATE(), reply = ? WHERE id_report = ?";
-
     private static final String UPDATE_REPORT_TO_FINISHED =
             "UPDATE Reports SET status = 2, complete_date = GETDATE() WHERE id_report = ?";
     private static final String GET_REPORT_BY_HOSTEL = "select A.id_report, A.send_date, A.content, A.status, A.reply, A.reply_date, A.complete_date, A.reply_account_id, A.send_account_id, A.cate_id \n" +
             "from [dbo].[Reports] A join [dbo].[Accounts] B on A.send_account_id = B.account_id join [dbo].[Rooms] C on B.room_id = C.room_id join [dbo].[Hostels] D on C.hostel_id = D.hostel_id\n" +
             "where D.name = ?";
-    private static final String GET_REPRORT =
+    private static final String GET_REPORT =
             "SELECT [id_report], [send_date], [content], [status], [reply], [reply_date], [complete_date], [reply_account_id], [send_account_id], [cate_id]\n" +
                     "FROM [dbo].[Reports]\n" +
                     "WHERE [id_report] = ?";
+    private static final String GET_REPORTS_BY_HOSTEL_OWNER_ID =
+            "SELECT id_report, send_date, content, status, reply, reply_date, \n" +
+                    "complete_date, reply_account_id, send_account_id, cate_id\n" +
+                    "FROM Reports WHERE reply_account_id = ?";
+
+    public List<Report> getReportsByHostelOwnerId(int ownerId) throws SQLException {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        List<Report> reports = new ArrayList<>();
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_REPORTS_BY_HOSTEL_OWNER_ID);
+                pst.setInt(1, ownerId);
+                rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    reports.add(Report.builder()
+                            .reportID(rs.getInt("id_report"))
+                            .sendDate(rs.getString("send_date"))
+                            .content(rs.getString("content"))
+                            .status(rs.getInt("status"))
+                            .reply(rs.getString("reply"))
+                            .replyDate(rs.getString("reply_date"))
+                            .completeDate(rs.getString("complete_date"))
+                            .replyAccountID(rs.getInt("reply_account_id"))
+                            .sendAccountID(rs.getInt("send_account_id"))
+                            .cateID(rs.getInt("cate_id"))
+                            .build());
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return reports;
+    }
 
     public boolean updateReportToFinished(int reportId) throws SQLException {
         boolean check = false;
@@ -129,7 +174,7 @@ public class ReportDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
             if (ptm != null) {
@@ -149,62 +194,10 @@ public class ReportDAO {
         ResultSet rs = null;
         try {
             cn = DBUtils.makeConnection();
-            if (cn!=null){
+            if (cn != null) {
                 st = cn.createStatement();
                 rs = st.executeQuery(GET_REPORTS);
-                while (rs!=null && rs.next()){
-                    int reportID = rs.getInt("id_report");
-                    String sendDate = rs.getString("send_date");
-                    String content = rs.getString("content");
-                    int status = rs.getInt("status");
-                    String reply = rs.getString("reply");
-                    String completeDate = rs.getString("complete_date");
-                    int replyAccountID = rs.getInt("reply_account_id");
-                    int sendAccountID = rs.getInt("send_account_id");
-                    int cateID = rs.getInt("cate_id");
-                    reports.add(Report.builder()
-                                    .reportID(reportID)
-                                    .sendDate(sendDate)
-                                    .content(content)
-                                    .status(status)
-                                    .reply(reply)
-                                    .completeDate(completeDate)
-                                    .replyAccountID(replyAccountID)
-                                    .sendAccountID(sendAccountID)
-                                    .cateID(cateID)
-                                    .build());
-                }
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            if (rs!=null){
-                rs.close();
-            }
-            if (st!=null){
-                st.close();
-            }
-            if (cn!=null){
-                cn.close();
-            }
-        }
-        return reports;
-    }
-
-
-    public ArrayList<Report> getReportByhostel(String hostelName) throws SQLException {
-        ArrayList<Report> reports = new ArrayList<>();
-        Connection cn = null;
-        PreparedStatement st = null;
-        ResultSet rs = null;
-        try {
-            cn = DBUtils.makeConnection();
-            if (cn!=null){
-                st = cn.prepareStatement(GET_REPORT_BY_HOSTEL);
-                st.setString(1, hostelName);
-                rs = st.executeQuery();
-                while (rs!=null && rs.next()){
+                while (rs != null && rs.next()) {
                     int reportID = rs.getInt("id_report");
                     String sendDate = rs.getString("send_date");
                     String content = rs.getString("content");
@@ -228,16 +221,68 @@ public class ReportDAO {
                 }
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (rs!=null){
+        } finally {
+            if (rs != null) {
                 rs.close();
             }
-            if (st!=null){
+            if (st != null) {
                 st.close();
             }
-            if (cn!=null){
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return reports;
+    }
+
+
+    public ArrayList<Report> getReportByhostel(String hostelName) throws SQLException {
+        ArrayList<Report> reports = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                st = cn.prepareStatement(GET_REPORT_BY_HOSTEL);
+                st.setString(1, hostelName);
+                rs = st.executeQuery();
+                while (rs != null && rs.next()) {
+                    int reportID = rs.getInt("id_report");
+                    String sendDate = rs.getString("send_date");
+                    String content = rs.getString("content");
+                    int status = rs.getInt("status");
+                    String reply = rs.getString("reply");
+                    String completeDate = rs.getString("complete_date");
+                    int replyAccountID = rs.getInt("reply_account_id");
+                    int sendAccountID = rs.getInt("send_account_id");
+                    int cateID = rs.getInt("cate_id");
+                    reports.add(Report.builder()
+                            .reportID(reportID)
+                            .sendDate(sendDate)
+                            .content(content)
+                            .status(status)
+                            .reply(reply)
+                            .completeDate(completeDate)
+                            .replyAccountID(replyAccountID)
+                            .sendAccountID(sendAccountID)
+                            .cateID(cateID)
+                            .build());
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+            if (cn != null) {
                 cn.close();
             }
         }
@@ -247,15 +292,15 @@ public class ReportDAO {
     public Report getReportById(int reportId) throws SQLException {
         Report report = new Report();
         Connection cn = null;
-        PreparedStatement pst= null;
+        PreparedStatement pst = null;
         ResultSet rs = null;
         try {
             cn = DBUtils.makeConnection();
-            if (cn!=null){
-                pst = cn.prepareStatement(GET_REPRORT);
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_REPORT);
                 pst.setInt(1, reportId);
                 rs = pst.executeQuery();
-                if (rs!=null && rs.next()){
+                if (rs != null && rs.next()) {
                     int reportID = rs.getInt("id_report");
                     String sendDate = rs.getString("send_date");
                     String content = rs.getString("content");
@@ -266,34 +311,35 @@ public class ReportDAO {
                     int sendAccountID = rs.getInt("send_account_id");
                     int cateID = rs.getInt("cate_id");
                     report = Report.builder()
-                                    .reportID(reportID)
-                                    .sendDate(sendDate)
-                                    .content(content)
-                                    .status(status)
-                                    .reply(reply)
-                                    .completeDate(completeDate)
-                                    .replyAccountID(replyAccountID)
-                                    .sendAccountID(sendAccountID)
-                                    .cateID(cateID)
-                                    .build();
+                            .reportID(reportID)
+                            .sendDate(sendDate)
+                            .content(content)
+                            .status(status)
+                            .reply(reply)
+                            .completeDate(completeDate)
+                            .replyAccountID(replyAccountID)
+                            .sendAccountID(sendAccountID)
+                            .cateID(cateID)
+                            .build();
                 }
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (rs!=null){
+        } finally {
+            if (rs != null) {
                 rs.close();
             }
-            if (pst!=null){
+            if (pst != null) {
                 pst.close();
             }
-            if (cn!=null){
+            if (cn != null) {
                 cn.close();
             }
         }
         return report;
     }
+
     public ArrayList<Report> getListReportByHostelId(int hostelId) throws SQLException {
         Connection conn = null;
         PreparedStatement pst = null;
@@ -314,6 +360,7 @@ public class ReportDAO {
                     String content = rs.getString("content");
                     int status = rs.getInt("status");
                     String reply = rs.getString("reply");
+                    String replyDate = rs.getString("reply_date");
                     String completeDate = rs.getString("complete_date");
                     int replyAccountID = rs.getInt("reply_account_id");
                     int sendAccountID = rs.getInt("send_account_id");
@@ -324,6 +371,7 @@ public class ReportDAO {
                             .content(content)
                             .status(status)
                             .reply(reply)
+                            .replyDate(replyDate)
                             .completeDate(completeDate)
                             .replyAccountID(replyAccountID)
                             .sendAccountID(sendAccountID)

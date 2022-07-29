@@ -8,9 +8,11 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @WebServlet(name = "HostelOwnerPageServlet", value = "/HostelOwnerPageServlet")
 public class HostelOwnerPageServlet extends HttpServlet {
@@ -39,8 +41,9 @@ public class HostelOwnerPageServlet extends HttpServlet {
 
             int[] listReportByReportStatus = {0, 0, 0};
             int averageReport = 0,
-                averageMoneyOfHotel = 0;
+                    averageMoneyOfHotel = 0;
             double comparePercentOfTwoMonthAgo = 0;
+            double rateReplyReport = 0;
             HostelDAO hostelDAO = new HostelDAO();
             List<Hostel> listHostel = hostelDAO.getHostelByOwnerId(account.getAccId());
 
@@ -62,6 +65,9 @@ public class HostelOwnerPageServlet extends HttpServlet {
                     averageMoneyOfHotel = totalMoneyOfHostel / totalMonthOfHostel;
                 }
 
+                List<Report> reportList = new ReportDAO().getListReportByHostelId(hostelId);
+                rateReplyReport = calculateReportReceptionRateFor1DayPeriod(reportList);
+
                 // Calculate percentage increase revenue
                 if (listMoneyEachMonth.get(0) != 0 && listMoneyEachMonth.get(1) != 0) {
                     double calculate = (listMoneyEachMonth.get(0) - listMoneyEachMonth.get(1))/((double)listMoneyEachMonth.get(1));
@@ -74,7 +80,7 @@ public class HostelOwnerPageServlet extends HttpServlet {
 
                 request.setAttribute("Hostel", new HostelDAO().getHostelById(hostelId));
             } else {
-                request.setAttribute("WARNING_MESSAGE", true);
+                session.setAttribute("NO_HAVE_HOSTEL", true);
             }
 
             request.setAttribute("StartDay", startDay);
@@ -90,13 +96,83 @@ public class HostelOwnerPageServlet extends HttpServlet {
             request.setAttribute("NumberNewReport", listReportByReportStatus[0]);
             request.setAttribute("NumberProcessReport", listReportByReportStatus[1]);
             request.setAttribute("NumberDoneReport", listReportByReportStatus[2]);
+            request.setAttribute("RATE_REPLY_REPORT", rateReplyReport);
 
             request.setAttribute("NumberHostel", listHostel.size());
+
+            List<Room> roomList = new RoomDAO().getListRoomsByHostelOwnerId(account.getAccId());
+            List<Room> rentedRooms = new ArrayList<>();
+            List<Room> readyRooms = new ArrayList<>();
+            List<Room> processRooms = new ArrayList<>();
+
+            for (Room room : roomList) {
+                if (room.getRoomStatus() == 1) {
+                    readyRooms.add(room);
+                } else if (room.getRoomStatus() == -1) {
+                    processRooms.add(room);
+                } else if (room.getRoomStatus() == 0) {
+                    rentedRooms.add(room);
+                }
+            }
+
+            request.setAttribute("NumberRoom", roomList.size());
+            request.setAttribute("NumberRentedRoom", rentedRooms.size());
+            request.setAttribute("NumberReadyRoom", readyRooms.size());
+            request.setAttribute("NumberProcessRoom", processRooms.size());
+            request.setAttribute("NumberNotification", new NotificationDAO().getNotificationByOwnerId(account.getAccId()).size());
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             request.getRequestDispatcher(URL).forward(request, response);
         }
+    }
+
+    private double calculateReportReceptionRateFor1DayPeriod(List<Report> reportList) {
+        double rate = 0;
+        double totalRepliedReports = 0;
+        double totalRepliedReportBefore1Day = 0;
+
+        if (reportList.size() == 0) {
+            return 100.0;
+        }
+
+        List<Report> repliedReportsList = new ArrayList<>();
+        for (Report report : reportList) {
+            if (report.getStatus() > 0) {
+                repliedReportsList.add(report);
+            }
+        }
+
+        if (repliedReportsList.size() <= 0) {
+            return 0.0;
+        }
+
+        totalRepliedReports = repliedReportsList.size();
+
+        try {
+            SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.sss");
+            for (Report report : repliedReportsList) {
+                Date replyDate = formatDate.parse(report.getReplyDate());
+                Date sendDate = formatDate.parse(report.getSendDate());
+                long diff = replyDate.getTime() - sendDate.getTime();
+                TimeUnit time = TimeUnit.DAYS;
+                long diffrence = time.convert(diff, TimeUnit.MILLISECONDS);
+                if (diffrence <= 1) {
+                    totalRepliedReportBefore1Day++;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (totalRepliedReportBefore1Day == 0) {
+            return 0.0;
+        } else if (totalRepliedReportBefore1Day == totalRepliedReports) {
+            return 100.0;
+        } else {
+            rate = ((totalRepliedReports - totalRepliedReportBefore1Day) / totalRepliedReports) * 100;
+        }
+        return rate;
     }
 
     //Input hostel ID return list money of each month of 6 month recent

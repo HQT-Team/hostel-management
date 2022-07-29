@@ -55,13 +55,15 @@
 
             <!-- Content -->
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 pb-5 content-group">
-                <!-- Warning -->
-                <div class="content-warning mt-5">
-                    <div class="blink"></div>
-                    <span>Hệ thống nhận thấy bạn chưa có khu trọ nào cả! <a href="add-hostel">
+                <c:if test="${sessionScope.NO_HAVE_HOSTEL ne null && sessionScope.NO_HAVE_HOSTEL eq true}" >
+                    <!-- Warning -->
+                    <div class="content-warning mt-5">
+                        <div class="blink"></div>
+                        <span>Hệ thống nhận thấy bạn chưa có khu trọ nào cả! <a href="add-hostel">
                                 Click vào đây để tạo khu trọ mới nhen!</a>
                         </span>
-                </div>
+                    </div>
+                </c:if>
 
                 <!-- Welcome -->
                 <div class="content-welcome mt-5">
@@ -163,19 +165,32 @@
                                 </div>
                             </div>
                             <div class="report-summary-result-percent">
-                                Tỷ lệ tiếp nhận báo cáo: <span class="high">99%</span>
+                                Tỷ lệ tiếp nhận báo cáo trong 1 ngày kể từ thời điểm nhận báo cáo:
+                                <c:choose>
+                                    <c:when test="${requestScope.RATE_REPLY_REPORT > 70.0}">
+                                        <span class="high">${requestScope.RATE_REPLY_REPORT}%</span>
+                                    </c:when>
+                                    <c:when test="${requestScope.RATE_REPLY_REPORT > 40.0}">
+                                        <span class="medium">${requestScope.RATE_REPLY_REPORT}%</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="low">${requestScope.RATE_REPLY_REPORT}%</span>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
                     <div class="mt-4 mt-md-0 col-12 col-md-5 col-xl-6 col-xxl-7">
                         <div class="content-body">
-                            <div class="overview-title">Toàn diện</div>
-                            <div class="overview-items">Tổng số khu trọ: <span>2</span></div>
-                            <div class="overview-items">Tổng số phòng trọ: <span>2</span></div>
-                            <div class="overview-items">Tổng số phòng đã được thuê: <span>2</span></div>
-                            <div class="overview-items">Tổng số phòng chưa được thuê: <span>2</span></div>
-                            <div class="overview-items">Tổng số phòng đang được làm hợp đồng: <span>2</span></div>
-                            <div class="overview-items">Số thông báo đã gửi: <span>2</span></div>
+                            <div class="overview-title">Tổng quan toàn diện</div>
+                            <div class="overview-items">Tổng số khu trọ:
+                                <span>${requestScope.NumberHostel eq null ? "0" : requestScope.NumberHostel}</span>
+                            </div>
+                            <div class="overview-items">Tổng số phòng trọ: <span>${requestScope.NumberRoom}</span></div>
+                            <div class="overview-items">Tổng số phòng đã được thuê: <span>${requestScope.NumberRentedRoom}</span></div>
+                            <div class="overview-items">Tổng số phòng chưa được thuê: <span>${requestScope.NumberReadyRoom}</span></div>
+                            <div class="overview-items">Tổng số phòng đang được làm hợp đồng: <span>${requestScope.NumberProcessRoom}</span></div>
+                            <div class="overview-items">Số thông báo đã gửi: <span>${requestScope.NumberNotification}</span></div>
                         </div>
                     </div>
                 </div>
