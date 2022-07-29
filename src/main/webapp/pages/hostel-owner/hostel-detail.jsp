@@ -55,7 +55,7 @@
         </div>
 
         <!-- Content -->
-        <c:set var="hostelInformation" value="${requestScope.hostel}"/>
+        <c:set var="hostelInformation" value="${sessionScope.hostel}"/>
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
             <!-- History link -->
             <div class="content-history">

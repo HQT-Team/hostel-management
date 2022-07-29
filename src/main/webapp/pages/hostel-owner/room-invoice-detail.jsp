@@ -177,7 +177,8 @@
                                         </c:choose>
 
                                         <td>
-                                            <fmt:formatNumber value="${service.servicePrice}" type="currency" currencySymbol="VNĐ"/>
+                                            <fmt:formatNumber value="${service.servicePrice}" type="currency"
+                                                              currencySymbol="VNĐ"/>
                                         </td>
 
                                         <c:set var="totalCost"
@@ -192,7 +193,8 @@
                                     <td>phòng</td>
                                     <td>1</td>
                                     <td>
-                                        <fmt:formatNumber value="${requestScope.contractRoom.price}" type="currency" currencySymbol="VNĐ"/>
+                                        <fmt:formatNumber value="${requestScope.contractRoom.price}" type="currency"
+                                                          currencySymbol="VNĐ"/>
                                     </td>
                                     <c:set var="totalCost"
                                            value="${totalCost + requestScope.contractRoom.price}"/>
@@ -203,7 +205,8 @@
                                 <td colspan="5" class="text-end total">Tổng
                                     tiền:
                                 </td>
-                                <td><fmt:formatNumber value="${requestScope.billRoom.totalMoney}" type="currency" currencySymbol="VNĐ"/></td>
+                                <td><fmt:formatNumber value="${requestScope.billRoom.totalMoney}" type="currency"
+                                                      currencySymbol="VNĐ"/></td>
                                 </tbody>
                             </table>
                         </div>
@@ -221,16 +224,28 @@
                         </div>
                         <div class="bill__spacer"></div>
                         <div class="bill__action">
-                            <a href="roomInvoiceList?roomId=${sessionScope.room.roomId}" class="bill__action-link">
-                                <i class="fa-solid fa-circle-arrow-left"></i> Quay lại
-                            </a>
+                            <c:choose>
+                                <c:when test="${sessionScope.CURRENT_PAGE eq 'invoice'}">
+                                    <a href="getInvoiceList" class="bill__action-link">
+                                        <i class="fa-solid fa-circle-arrow-left"></i> Quay lại
+                                    </a>
+                                </c:when>
+                                <c:when test="${sessionScope.CURRENT_PAGE eq 'room'}">
+                                    <a href="roomInvoiceList?roomId=${sessionScope.room.roomId}"
+                                       class="bill__action-link">
+                                        <i class="fa-solid fa-circle-arrow-left"></i> Quay lại
+                                    </a>
+                                </c:when>
+                            </c:choose>
+
                             <form action="updateBilLStatus" method="post" class="bill__form d-flex justify-content-end">
                                 <input type="hidden" name="roomID" value=""/>
                                 <!-- Change type="submit" of button tag below when implement -->
                                 <c:choose>
                                     <c:when test="${requestScope.billRoom.status eq 0}">
                                         <input type="hidden" name="billID" value="${requestScope.billRoom.billID}">
-                                        <input type="hidden" name="navigateTo" value="roomInvoiceList?roomId=${sessionScope.room.roomId}">
+                                        <input type="hidden" name="navigateTo"
+                                               value="roomInvoiceList?roomId=${sessionScope.room.roomId}">
                                         <button type="submit" class="bill__action-btn btn btn-outline-primary">
                                             Xác nhận đã thanh toán
                                         </button>

@@ -18,6 +18,8 @@ public class InvoiceDAO {
                     "FROM Bill, Rooms, Hostels\n" +
                     "WHERE Bill.room_id = Rooms.room_id\n" +
                     "AND Hostels.owner_account_id = ?\n" +
+                    "AND Bill.room_id = Rooms.room_id\n" +
+                    "AND Rooms.hostel_id = Hostels.hostel_id\n" +
                     "AND Bill.status = ?\n" +
                     "ORDER BY created_date DESC";
 

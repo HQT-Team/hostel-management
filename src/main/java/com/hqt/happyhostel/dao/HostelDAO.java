@@ -24,7 +24,7 @@ public class HostelDAO {
                     "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
                     "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí giữ xe'), ?, ?)\n" +
                     "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí vệ sinh'), ?, ?)";;
+                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí vệ sinh'), ?, ?)";
     private static final String UPDATE_HOSTEL =
             "UPDATE Hostels SET name = ?, address = ?, ward = ?, district = ?, city = ? WHERE hostel_id = ?";
     private static final String GET_HOSTEL_BY_ID =
@@ -46,7 +46,6 @@ public class HostelDAO {
                     "WHERE Rooms.room_id = ?";
 
 
-
     public Hostel getHostelById(int hostelId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -60,8 +59,8 @@ public class HostelDAO {
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     int hostelOwnerAccountID = rs.getInt("owner_account_id");
-                    String name =  rs.getString("name");
-                    String address =  rs.getString("address");
+                    String name = rs.getString("name");
+                    String address = rs.getString("address");
                     String ward = rs.getString("ward");
                     String district = rs.getString("district");
                     String city = rs.getString("city");
@@ -91,6 +90,7 @@ public class HostelDAO {
         }
         return hostel;
     }
+
     public Hostel getHostelByRoomId(int roomId) throws SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
@@ -105,8 +105,8 @@ public class HostelDAO {
                 if (rs != null && rs.next()) {
                     int hostelOwnerAccountID = rs.getInt("owner_account_id");
                     int hostelId = rs.getInt("hostel_id");
-                    String name =  rs.getString("name");
-                    String address =  rs.getString("address");
+                    String name = rs.getString("name");
+                    String address = rs.getString("address");
                     String ward = rs.getString("ward");
                     String district = rs.getString("district");
                     String city = rs.getString("city");
@@ -258,7 +258,7 @@ public class HostelDAO {
 
                 int c = 0;
                 ptm = cn.prepareStatement(INSERT_HOSTEL_SERVICE);
-                for (HostelService ser: hostelServices
+                for (HostelService ser : hostelServices
                 ) {
                     c++;
                     ptm.setInt(c, hostel.getHostelID());

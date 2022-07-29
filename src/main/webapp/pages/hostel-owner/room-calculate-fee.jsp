@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
@@ -26,7 +25,6 @@
 
     <!-- Link your CSS here -->
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/room-calculate-fee_style/style.css">
-
 </head>
 
 <body>
@@ -155,7 +153,8 @@
                                                 </c:otherwise>
                                             </c:choose>
 
-                                            <td><fmt:formatNumber value="${service.servicePrice}" type="currency" currencySymbol="VNĐ"/></td>
+                                            <td><fmt:formatNumber value="${service.servicePrice}" type="currency"
+                                                                  currencySymbol="VNĐ"/></td>
 
                                             <c:set var="totalCost"
                                                    value="${totalCost + service.servicePrice * quantity}"/>
@@ -177,7 +176,8 @@
                                     <td colspan="5" class="text-end total">Tổng
                                         tiền:
                                     </td>
-                                    <td><fmt:formatNumber value="${totalCost}" type="currency" currencySymbol="VNĐ"/></td>
+                                    <td><fmt:formatNumber value="${totalCost}" type="currency"
+                                                          currencySymbol="VNĐ"/></td>
                                     </tbody>
                                 </table>
                             </div>
