@@ -2,6 +2,10 @@
 @import "../_common-style/sidebar";
 @import "../_common-style/footer";
 
+:root {
+  --box-shadow-statistic: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -37,16 +41,15 @@ body {
         padding: 10px 0;
         text-align: center;
         font-size: 18px;
-        background-color: #D9D9D9;
         border-radius: 8px;
 
         select {
-          border: none;
-          background-color: #D9D9D9;
           transition-delay: 0.5s;
-          outline: none;
-          width: 90%;
+          width: 100%;
+          height: 40px;
+          border-radius: 6px;
           text-align: center;
+          box-shadow: var(--box-shadow-statistic);
         }
       }
 
@@ -54,17 +57,15 @@ body {
         padding: 10px 0;
         text-align: center;
         font-size: 18px;
-        background-color: #D9D9D9;
         border-radius: 8px;
 
         select {
-          border: none;
-          background-color: #D9D9D9;
           transition-delay: 0.5s;
-          outline: none;
-          width: 90%;
+          width: 100%;
+          height: 40px;
+          border-radius: 6px;
           text-align: center;
-
+          box-shadow: var(--box-shadow-statistic);
         }
       }
 
@@ -72,16 +73,15 @@ body {
         padding: 10px 0;
         text-align: center;
         font-size: 18px;
-        background-color: #D9D9D9;
         border-radius: 8px;
 
         select {
-          border: none;
-          background-color: #D9D9D9;
           transition-delay: 0.5s;
-          outline: none;
-          width: 90%;
+          width: 100%;
+          height: 40px;
+          border-radius: 6px;
           text-align: center;
+          box-shadow: var(--box-shadow-statistic);
         }
       }
 
@@ -89,20 +89,21 @@ body {
 
     .money {
       width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap-column: 20px;
       margin: 30px 0;
+      display: flex;
+      justify-content: space-between;
 
       .income {
+        width: 30%;
+
         div {
           margin: auto;
-          width: 80%;
           padding: 20px;
-          background-color: #8F00FF;
           color: #FFFFFF;
           border-radius: 8px;
           text-align: center;
+          background: linear-gradient(45deg,#49914E 0%,#B2D553 100%);
+          box-shadow: var(--box-shadow-statistic);
 
           h3 {
             font-size: 23px;
@@ -119,14 +120,16 @@ body {
       }
 
       .expense {
+        width: 30%;
+
         div {
           margin: auto;
-          width: 80%;
           padding: 20px;
-          background-color: #0038FF;
+          background: linear-gradient(45deg,#d63939 0%,#FF857B 100%);
           color: #FFFFFF;
           border-radius: 8px;
           text-align: center;
+          box-shadow: var(--box-shadow-statistic);
 
           h3 {
             font-size: 23px;
@@ -144,14 +147,16 @@ body {
       }
 
       .revenue {
+        width: 30%;
+
         div {
           margin: auto;
-          width: 80%;
           padding: 20px;
-          background-color: #FF00A8;
+          background: linear-gradient(45deg,#216ED8 0%,#FA7799 100%);
           color: #FFFFFF;
           border-radius: 8px;
           text-align: center;
+          box-shadow: var(--box-shadow-statistic);
 
           h3 {
             font-size: 23px;
@@ -174,11 +179,17 @@ body {
       width: 100%;
 
       #chartwithquater {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+        display: flex;
+        justify-content: space-between;
         width: 100%;
-        column-gap: 20px;
         height: fit-content;
+
+        div {
+          width: calc(50% - 10px);
+          padding: 10px;
+          border-radius: 6px;
+          box-shadow: var(--box-shadow-statistic);
+        }
 
         #myBarChart {
           height: 100%;
@@ -222,12 +233,13 @@ body {
         width: 100%;
         padding: 23px 0;
         text-align: center;
-        background-color: #D9D9D9;
+        background: linear-gradient(45deg,#3797A1 0%,#BC805A 100%);
         height: fit-content;
         border-radius: 8px;
+        box-shadow: var(--box-shadow-statistic);
 
         h3 {
-          color: red;
+          color: #fff;
           font-size: 24px;
           font-weight: 600;
         }
@@ -243,7 +255,6 @@ body {
         }
 
         .content-table thead tr {
-          background-color: #009879;
           color: #FFFFFF;
           text-align: center;
           font-weight: bold;
@@ -255,12 +266,8 @@ body {
           font-weight: 400;
         }
 
-        .content-table tbody tr:nth-of-type(even) {
-          background-color: #f3f3f3;
-        }
-
-        .content-table tbody tr:last-of-type {
-          border-bottom: 2px solid #009879;
+        .content-table tbody tr {
+          color: #FFFFFF;
         }
       }
 
@@ -269,18 +276,19 @@ body {
         padding: 20px 0;
         height: fit-content;
         text-align: center;
-        background-color: #D9D9D9;
+        background: linear-gradient(45deg,#0D95AD 0%,#FFD2C1 100%);
         border-radius: 8px;
+        box-shadow: var(--box-shadow-statistic);
 
         h3 {
-          color: red;
+          color: #fff;
           font-size: 24px;
           margin-bottom: 20px;
           font-weight: 600;
         }
 
         p {
-
+          color: #212529;
           font-size: 20px;
         }
       }

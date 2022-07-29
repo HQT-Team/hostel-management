@@ -153,9 +153,9 @@
               </div>
               <div class="room-infor">
                 <h3>Phòng Trọ</h3>
-                <p><strong>Đang cho thuê:</strong> ${requestScope.numberEmpty}</p>
-                <p><strong>Phòng Trống:</strong> ${requestScope.numberRenting}</p>
-                <p><strong>Đang làm hợp đồng:</strong> ${requestScope.numberContract}</p>
+                <p>Đang cho thuê: ${requestScope.numberEmpty}</p>
+                <p>Phòng Trống: ${requestScope.numberRenting}</p>
+                <p>Đang làm hợp đồng: ${requestScope.numberContract}</p>
               </div>
             </div>
           </div>

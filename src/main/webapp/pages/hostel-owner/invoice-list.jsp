@@ -104,7 +104,7 @@
                         </table>
                     </div>
                     <!-- Infor box -->
-                    <div id="content__body-1" class="content__body">
+                    <div id="content__body-1" class="content__body mb-5">
                         <table id="invoice-table-1" class="content__table table table-bordered table-striped">
                             <thead class="content__thead">
                                 <tr>
@@ -177,7 +177,7 @@
                         </table>
                     </div>
                     <!-- Infor box -->
-                    <div id="content__body-2" class="content__body">
+                    <div id="content__body-2" class="content__body mb-5">
                         <table id="invoice-table-2" class="content__table table table-bordered table-striped">
                             <thead class="content__thead">
                                 <tr>

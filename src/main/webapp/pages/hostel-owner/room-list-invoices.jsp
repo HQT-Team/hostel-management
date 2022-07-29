@@ -61,14 +61,14 @@
                 <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}"
                    class="history-link">${sessionScope.hostel.hostelName}</a>
                 <i class="fa-solid fa-chevron-right"></i>
-                <a href="GetRoomDetailServlet?roomID=${sessionScope.room.roomId}"
+                <a href="roomDetail?roomID=${sessionScope.room.roomId}"
                    class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
                 <i class="fa-solid fa-chevron-right"></i>
                 <div class="current">Danh sách hóa đơn</div>
             </div>
             <!-- Infor box -->
             <div class="col-xxl-9 m-auto">
-                <div class="content__body">
+                <div class="content__body mb-5">
                     <h1 class="content__title">Danh sách hóa đơn</h1>
                     <table id="invoices-table" class="content__table table table-bordered table-striped">
                         <thead class="content__thead">

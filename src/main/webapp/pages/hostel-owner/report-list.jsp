@@ -105,7 +105,7 @@
                         </table>
                     </div>
                     <!-- Infor box -->
-                    <div class="content__body" id="content__body-1">
+                    <div class="content__body mb-5" id="content__body-1">
                         <table id="report-table-1" class="content__table table table-bordered table-striped">
                             <thead class="content__thead">
                                 <tr>
@@ -174,7 +174,7 @@
                         </table>
                     </div>
                     <!-- Infor box -->
-                    <div class="content__body" id="content__body-2">
+                    <div class="content__body mb-5" id="content__body-2">
                         <table id="report-table-2" class="content__table table table-bordered table-striped">
                             <thead class="content__thead">
                             <th class="text-center">Mã</th>
@@ -241,7 +241,7 @@
                         </table>
                     </div>
                     <!-- Infor box -->
-                    <div class="content__body" id="content__body-3">
+                    <div class="content__body mb-5" id="content__body-3">
                         <table id="report-table-3" class="content__table table table-bordered table-striped">
                             <thead class="content__thead">
                             <th class="text-center">Mã</th>
