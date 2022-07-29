@@ -79,7 +79,7 @@ public class GetInvoiceListServlet extends HttpServlet {
 
             String hostelId = request.getParameter("hostelId");
             String roomId = request.getParameter("roomId");
-            int type = Integer.parseInt(request.getParameter("type"));
+            int type = request.getParameter("type") == null ? 0 : Integer.parseInt(request.getParameter("type"));
 
             List<Object> list = new ArrayList<>();
             Map<Integer, Room> RoomsOfBills = new HashMap<>();

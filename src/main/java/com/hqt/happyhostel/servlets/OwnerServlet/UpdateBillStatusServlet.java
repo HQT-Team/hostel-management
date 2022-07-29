@@ -43,7 +43,6 @@ public class UpdateBillStatusServlet extends HttpServlet {
                         .status(false)
                         .content("Đã có lỗi xảy ra. Cập nhật trạng thái hóa đơn thất bại!").build());
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
