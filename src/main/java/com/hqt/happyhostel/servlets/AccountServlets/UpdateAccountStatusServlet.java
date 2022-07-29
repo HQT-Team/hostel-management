@@ -14,7 +14,7 @@ import java.io.IOException;
 public class UpdateAccountStatusServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.sendRedirect("error-page");
     }
 
     @Override
@@ -27,10 +27,23 @@ public class UpdateAccountStatusServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("owner_id"));
             int status = Integer.parseInt(request.getParameter("status"));
             AccountInfo accountInf = accountDAO.getAccountInformationById(id);
-            boolean check = status == 0 ? accountDAO.updateAccountStatus(id, 1) : accountDAO.updateAccountStatus(id, 0);
+            String domain = "http://localhost:8080/HappyHostel/loginPage";
+            boolean check = false;
+            switch (status) {
+                case 0:
+                    check = accountDAO.updateAccountStatus(id, 1);
+                    new MailUtils().SendMailConfirmActiveOwnerAccount((accountInf.getInformation().getEmail()), domain);
+                    break;
+                case 1:
+                    check = accountDAO.updateAccountStatus(id, -1);
+                    new MailUtils().SendMailBlockOwnerAccount(accountInf.getInformation().getEmail());
+                    break;
+                case -1:
+                    check = accountDAO.updateAccountStatus(id, 1);
+                    new MailUtils().SendMailUnblockOwnerAccount(accountInf.getInformation().getEmail(), domain);
+                    break;
+            }
             if (check) {
-                String domain = "http://localhost:8080/HappyHostel/loginPage";
-                new MailUtils().SendMailConfirmActiveOwnerAccount((accountInf.getInformation().getEmail()), domain);
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(true)
                         .content("Cập nhật trạng thái tài khoản thành công.").build());

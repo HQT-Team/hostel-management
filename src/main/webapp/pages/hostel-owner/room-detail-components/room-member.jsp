@@ -258,7 +258,7 @@
                                                             </div>
                                                             <div class="col-6">
                                                                 <div class="member-detail-modal-content">
-                                                                        ${roommateList.information.sex eq 1 ? "Name" : "Nữ"}
+                                                                        ${roommateList.information.sex eq 1 ? "Nam" : "Nữ"}
                                                                 </div>
                                                             </div>
                                                         </div>

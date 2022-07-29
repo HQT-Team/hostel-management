@@ -307,7 +307,7 @@ public class MailUtils {
         return sendMail(receiveMail, mailObject, mailBody);
     }
 
-    public boolean SendMailBlockOwnerAccount(String receiveMail, String domain){
+    public boolean SendMailBlockOwnerAccount(String receiveMail){
         String mailObject = "Tài khoản của bạn đã bị khóa";
         String mailBody =
                 "<head>\n" +
