@@ -5,7 +5,9 @@
 .dropdown {
   display: none;
 }
-
+.main-body{
+  margin: 0;
+}
 body {
   font-size: 20px;
   overflow-x: hidden;
@@ -15,7 +17,7 @@ body {
     text-align: left;
     width: 80%;
     padding: 10px;
-
+    min-height: calc(100vh - 80px);
     .contract-content {
       padding: 20px 40px;
       border: 1px solid black;
@@ -29,7 +31,7 @@ body {
           margin-bottom: 20px;
           text-align: center;
           font-size: 30px;
-          color: #6A5Af9;
+          color: blue;
           font-weight: 550;
         }
       }
@@ -80,9 +82,9 @@ body {
           font-size: 25px;
           font-weight: 600;
         }
-      strong{
-        font-weight: 500;
-      }
+        strong{
+          font-weight: 500;
+        }
         h5 {
           font-weight: 400;
           font-size: 20px;
@@ -140,7 +142,7 @@ footer{
 
       a {
 
-        font-size: 13px;
+        font-size: 16px;
       }
     }
   }

@@ -5,6 +5,9 @@
 body {
   font-size: 20px;
 }
+.main-body{
+  margin: 0;
+}
 body{
   overflow-x: hidden;
 }
@@ -16,10 +19,9 @@ body{
   width: 80%;
 
   .profile {
-    width: 500px;
-    text-align: center;
-    margin: 100px auto;
-    padding:15px 15px 20px 15px;
+    width: 50%;
+    margin: 80px auto;
+    padding:15px 25px 20px 25px;
     color: #000000;
     height: fit-content;
     border-radius: 8px;
@@ -27,6 +29,7 @@ body{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 
     h2 {
+      text-align: center;
       margin-bottom: 5px;
       font-size: 1.8em;
       width: 100%;
@@ -36,20 +39,24 @@ body{
     }
 
     h3 {
-      text-align: center;
+      text-align: left;
       margin: 5px;
       display: block;
       font-size: 24px;
       width: 100%;
       font-weight: 400;
       line-height: 40px;
+      span{
+        font-weight: 550;
+      }
     }
     a{
       text-decoration: none;
       font-size: 22px;
       border-radius: 8px;
-      background-color: #6A5Af9;
+      background-color: blue;
       color: #FFFFFF;
+      text-align: center;
       padding: 10px;
       line-height: 22px;
       margin-top: 15px;
@@ -172,7 +179,7 @@ body{
       padding: 0px;
 
       a {
-        font-size: 15px;
+        font-size: 16px;
 
         img {
           display: none;

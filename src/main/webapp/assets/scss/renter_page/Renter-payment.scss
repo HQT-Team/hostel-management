@@ -7,7 +7,9 @@
   padding: 0;
   border: none;
 }
-
+.main-body{
+  margin: 0;
+}
 body {
   overflow-x: hidden;
 }
@@ -17,11 +19,10 @@ body {
 }
 
 .content {
-  min-height: 100vh;
   margin: 0;
   padding: 0;
   width: 80%;
-
+  min-height: calc(100vh - 80px);
   #notification {
     text-align: right;
     width: 90%;
@@ -225,6 +226,7 @@ footer {
         img {
           display: none;
         }
+        font-size: 16px;
       }
 
       padding-right: 5px;

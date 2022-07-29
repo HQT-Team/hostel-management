@@ -116,14 +116,20 @@
     </div>
     <div class="content row">
       <div class="profile">
-        <h2>Hồ Sơ</h2>
-        <h3><strong>Tên: </strong>${ACC_INFO.fullname}</h3>
-        <h3><strong>Email: </strong>${ACC_INFO.email}</h3>
-        <h3><strong>Ngày sinh: </strong>
-          <fmt:parseDate pattern="yyyy-MM-dd" value=" ${ACC_INFO.birthday}" var="birthday" />
-          <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
-        </h3>
-        <h3><strong>Giới tính: </strong>
+        <h2>Thông Tin Cá Nhân</h2>
+        <h3><span>Tên: </span>${ACC_INFO.fullname}</h3>
+        <h3><span>Email: </span>${ACC_INFO.email}</h3>
+
+        <c:choose>
+          <c:when test="${ACC_INFO.birthday eq null}">
+            <h3><span>Ngày sinh: </span>Không có thông tin!</h3>
+          </c:when>
+          <c:otherwise>
+            <h3><span>Ngày sinh: </span><fmt:parseDate pattern="yyyy-MM-dd" value=" ${ACC_INFO.birthday}" var="birthday" /><fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/></h3>
+          </c:otherwise>
+        </c:choose>
+
+        <h3><span>Giới tính: </span>
           <c:if test="${ACC_INFO.sex == 1}">
             Nam
           </c:if>
@@ -131,9 +137,9 @@
             Nữ
           </c:if>
         </h3>
-        <h3><strong>Số điện thoại: </strong>${ACC_INFO.phone}</h3>
-        <h3><strong>Địa chỉ: </strong>${ACC_INFO.address}</h3>
-        <h3><strong>CCCD: </strong>${ACC_INFO.cccd}</h3>
+        <h3><span>Số điện thoại: </span>${ACC_INFO.phone eq null ? "Không có thông tin!" : ACC_INFO.phone}</h3>
+        <h3><span>Địa chỉ: </span>${ACC_INFO.address eq null ? "Không có thông tin!" : ACC_INFO.address}</h3>
+        <h3><span>CCCD: </span>${ACC_INFO.cccd eq null ? "Không có thông tin!" : ACC_INFO.cccd}</h3>
         <% session.setAttribute("ACC_INFO", request.getAttribute("ACC_INFO")); %>
         <a href="Renter-update-profile">Chỉnh Sửa</a>
       </div>
@@ -184,7 +190,6 @@
 <script type="text/javascript">
   // Receive
   receiveWebsocket(alertPushNoti);
-
   // Close when leave
   window.onbeforeunload = function(){
     receiveWebsocket.disconnectWebSocket();

@@ -36,44 +36,44 @@
     Account account = (Account) session.getAttribute("USER");
 %>
 <div>
-  <nav class="navbar row">
-    <div class="navbar-left">
-      <div class="dropdown"  style="padding-left: 15px;">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false"style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
-          Menu
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
-          <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
-          <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
-          <a class="dropdown-item" href="renter-invoice"style="font-size: 15px;">Hóa đơn</a>
-          <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
-          <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
-          <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
-          <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
-          <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
-          <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
+    <nav class="navbar row">
+        <div class="navbar-left">
+            <div class="dropdown"  style="padding-left: 15px;">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
+                    Menu
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
+                    <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
+                    <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
+                    <a class="dropdown-item" href="renter-invoice"style="font-size: 15px;">Hóa đơn</a>
+                    <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
+                    <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
+                    <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
+                    <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
+                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
+                    <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
+                </div>
+            </div>
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="HostelRenterPage" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Hoá Đơn</li>
+                </ol>
+            </nav>
         </div>
-      </div>
-      <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="HostelRenterPage" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">Hoá Đơn</li>
-        </ol>
-      </nav>
-    </div>
-    <div class="navbar-center">
-      <a href="" role="button"><img src="./assets/images/logos/logowhite.png" alt=""></a>
-    </div>
-    <div class="navbar-right">
-      <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>
-    </div>
+        <div class="navbar-center">
+            <a href="" role="button"><img src="./assets/images/logos/logowhite.png" alt=""></a>
+        </div>
+        <div class="navbar-right">
+            <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>
+        </div>
 
     </nav>
 
-    <div class="row">
+    <div class="row main-body">
         <div class="dashboard hidden" id="dashboard">
             <div class="infor-top">
                 <img src="./assets/images/avatars/user-avatar.jpg" alt="">
@@ -168,7 +168,7 @@
                     <!-- <div class="copyright-logo">
                         <img src="../../assets/images/logos/logo-white.png" alt="Logo">
                     </div> -->
-                    <div class="copyright-content">© 2022 HQT Team. All rights reserved.</div>
+                    <div class="copyright-content"style="font-size: 18px;">© 2022 HQT Team. All rights reserved.</div>
                 </div>
             </div>
         </div>
@@ -197,7 +197,6 @@
 <script type="text/javascript">
     // Receive
     receiveWebsocket(alertPushNoti);
-
     // Close when leave
     window.onbeforeunload = function(){
         receiveWebsocket.disconnectWebSocket();

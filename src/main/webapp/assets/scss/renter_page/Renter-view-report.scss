@@ -8,7 +8,9 @@ body{
 .dropdown{
   display: none;
 }
-
+.main-body{
+  margin: 0;
+}
 .content {
   width: 80%;
   margin: 0px;
@@ -47,19 +49,19 @@ body{
       margin: 10px auto;
 
       thead {
-       tr{
-         height: fit-content;
-         padding: 0;
-         display: grid;
-         grid-template-columns: 1fr 1fr 1fr 1fr;
+        tr{
+          height: fit-content;
+          padding: 0;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
 
-         th {
-           padding:10px 0px;
-           margin: 0;
-           line-height: 22px;
-           font-size: 22px;
-         }
-       }
+          th {
+            padding:10px 0px;
+            margin: 0;
+            line-height: 22px;
+            font-size: 22px;
+          }
+        }
       }
 
       tbody {
@@ -94,9 +96,21 @@ footer {
 
 @media screen and (max-width: 1200px) {
   .dropdown{
-  display: block;
+    display: block;
   }
   .dashboard{
+    display: none;
+  }
+  .content{
+    width: 100%;
+    .report{
+      width: 100%;
+      padding: 10px;
+    }
+
+
+  }
+  .link{
     display: none;
   }
   .navbar {
@@ -117,7 +131,7 @@ footer {
       padding: 0px;
 
       a {
-        font-size: 15px;
+        font-size: 16px;
 
         img {
           display: none;

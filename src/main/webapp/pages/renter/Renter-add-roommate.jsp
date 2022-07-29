@@ -79,7 +79,7 @@
 
     </nav>
 
-    <div class="row">
+    <div class="row main-body">
         <div class="dashboard hidden" id="dashboard">
             <div class="infor-top">
                 <img src="./assets/images/avatars/user-avatar.jpg" alt="">
@@ -195,7 +195,7 @@
                     <!-- <div class="copyright-logo">
                         <img src="../../assets/images/logos/logo-white.png" alt="Logo">
                     </div> -->
-                    <div class="copyright-content">© 2022 HQT Team. All rights reserved.</div>
+                    <div class="copyright-content"style="font-size: 18px;">© 2022 HQT Team. All rights reserved.</div>
                 </div>
             </div>
         </div>
@@ -224,7 +224,6 @@
 <script type="text/javascript">
     // Receive
     receiveWebsocket(alertPushNoti);
-
     // Close when leave
     window.onbeforeunload = function(){
         receiveWebsocket.disconnectWebSocket();
