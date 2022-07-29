@@ -12,7 +12,7 @@ public class ContractDAO {
             "INSERT INTO [dbo].[Contracts]([room_id], [price], [start_date], [expiration], [deposit], [hostel_owner_id], [renter_id], [status])\n" +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_CONTRACT_STATUS =
-            "UPDATE Contracts SET status = 0, , cancelDate = GETDATE()\n" +
+            "UPDATE Contracts SET status = 0, cancelDate = GETDATE()\n" +
             "WHERE room_id = ? AND renter_id = ? AND status = 1";
 
     public boolean updateContractStatus (int roomId, int renterAccountId) {
