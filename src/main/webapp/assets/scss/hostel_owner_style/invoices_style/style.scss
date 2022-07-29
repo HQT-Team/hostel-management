@@ -138,3 +138,8 @@
     }
   }
 }
+
+#filter__room-select-1 ~ .select2-container,
+#filter__room-select-2 ~ .select2-container {
+  width: 100px !important;
+}

@@ -29,6 +29,9 @@
     <!-- Simple Datatable CSS -->
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 
+    <!-- CSS Push Nnotification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+
 </head>
 
 <body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
@@ -116,6 +119,9 @@
                                                     <c:when test="${room.roomStatus eq 1}">
                                                         <span class="text-success">Sẵn sàng cho thuê</span>
                                                     </c:when>
+                                                    <c:when test="${room.roomStatus eq -1}">
+                                                        <span class="text-warning">Đang làm hợp đồng</span>
+                                                    </c:when>
                                                 </c:choose>
                                             </td>
                                             <td>
@@ -161,6 +167,9 @@
 <!-- Footer -->
 <%@include file="components/footer.jsp"%>
 
+<!-- Push notification element -->
+<div id="push-noti"></div>
+
 <!-- Add service modal -->
 <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel"
      aria-hidden="true">
@@ -181,7 +190,7 @@
                                 <option value="${services.serviceID}">${services.serviceName}</option>
                             </c:forEach>
                         </select>
-                        <span class="form-message"></span>
+                        <span class="form-message" style="margin-bottom: 12px;"></span>
                     </div>
                     <div class="row">
                         <div class="col-8">
@@ -189,7 +198,7 @@
                                 <label for="service-price" class="form-label">Giá</label>
                                 <input type="number" name="service-price" id="service-price" class="form-control"
                                        placeholder="Nhập giá. VD: 1000">
-                                <div class="form-message"></div>
+                                <div class="form-message" style="margin-bottom: 12px;"></div>
                             </div>
                         </div>
                         <div class="col-4">
@@ -318,6 +327,11 @@
 <script src="./assets/js/valid-form.js"></script>
 <!-- Simple Datatable JS -->
 <script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/sendWebsocket.js"></script>
+<script src="./assets/js/receiveWebsocket.js"></script>
 <script>
     $(document).ready(function () {
         // Initial datatable
@@ -376,6 +390,27 @@
             </c:forEach>
         ]
     });
+</script>
+
+<script type="text/javascript">
+    // Send
+    <c:if test="${requestScope.RESPONSE_MSG.status == true &&  'Cập nhật dịch vụ thành công!' eq requestScope.RESPONSE_MSG.content }">
+    const params = new Object();
+    params.sender = "hostel_owner";
+    params.receiver = "hostel";
+    params.hostel_receiver_id = "${requestScope.HOSTEL_ID}";
+    params.account_receiver_id = null;
+    params.messages = "Chủ trọ đã gửi một thông báo mới. Vui lòng kiểm tra!";
+    sendToWebSocket(params);
+    </c:if>
+
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function(){
+        receiveWebsocket.disconnectWebSocket();
+    };
 </script>
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">

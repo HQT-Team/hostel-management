@@ -23,6 +23,10 @@
     <!-- Link your CSS here -->
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/room_detail_style/style.css">
 
+    <!-- CSS Push Nnotification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+
+
 </head>
 
 <body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
@@ -50,7 +54,7 @@
 
         <!-- Content -->
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
-            <div class="content-bar pt-5">
+            <div class="content-bar">
                 <!-- History link bar -->
                 <div class="content-history">
                     <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
@@ -102,7 +106,7 @@
                                 <button class="btn btn-outline-dark" data-bs-toggle="modal"
                                         data-bs-target="#change-room-status-modal"
                                         style="font-size: 1.6rem; font-weight: 600; padding: 8px 12px;">
-                                    Cập nhật trạng thái phòng
+                                    Kết thúc cho thuê phòng
                                 </button>
                                 <!-- Modal -->
                                 <div class="modal fade" id="change-room-status-modal" tabindex="-1"
@@ -118,7 +122,48 @@
                                             </div>
                                             <div class="modal-body mt-5 mb-5"
                                                  style="font-size: 1.8rem; line-height: 2.8rem;">
-                                                Phòng chưa tới hạn trả phòng, bạn có chắc là muốn cập nhật trạng thái về
+                                                Phòng đang có người thuê, bạn có chắc chắn là muốn kết thúc hợp đồng và cập nhật trạng thái về
+                                                "<span style="font-weight: 600;">Sẵn sàng cho thuê</span>" hay không?
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Hủy bỏ
+                                                </button>
+                                                <form action="end-rental-contract" method="POST">
+                                                    <input type="hidden" name="room-id" value="${sessionScope.room.roomId}" />
+                                                    <input type="hidden" name="renter-account-id" value="${requestScope.renterAccount.accId}" />
+                                                    <button type="submit" class="btn btn-danger">Đồng ý</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${sessionScope.room.roomStatus == -1}">
+                        <div class="row">
+                            <div class="col-12 col-md4">
+                                <button class="btn btn-outline-dark" data-bs-toggle="modal"
+                                        data-bs-target="#change-room-status-modal"
+                                        style="font-size: 1.6rem; font-weight: 600; padding: 8px 12px;">
+                                    Hủy thao tác tạo hợp đồng cho thuê
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="change-room-status-modal" tabindex="-1"
+                                     aria-labelledby="change-room-status-modalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title text-warning" id="change-room-status-modalLabel">
+                                                    Cảnh báo
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body mt-5 mb-5"
+                                                 style="font-size: 1.8rem; line-height: 2.8rem;">
+                                                Phòng này đang được tạo hợp đồng cho thuê, bạn có chắc là muốn cập nhật trạng thái về
                                                 "<span style="font-weight: 600;">Sẵn sàng cho thuê</span>" không?
                                             </div>
                                             <div class="modal-footer justify-content-between">
@@ -126,10 +171,8 @@
                                                         data-bs-dismiss="modal">Hủy bỏ
                                                 </button>
                                                 <form action="end-rental-contract" method="POST">
-                                                    <input type="hidden" name="room-id"
-                                                           value="${sessionScope.room.roomId}"/>
-                                                    <input type="hidden" name="renter-account-id"
-                                                           value="${requestScope.renterAccountId}"/>
+                                                    <input type="hidden" name="room-id" value="${sessionScope.room.roomId}" />
+                                                    <input type="hidden" name="renter-account-id" value="${requestScope.renterAccount.accId}" />
                                                     <button type="submit" class="btn btn-danger">Đồng ý</button>
                                                 </form>
                                             </div>
@@ -145,9 +188,11 @@
     </div>
 </div>
 
-
 <!-- Footer -->
 <%@include file="components/footer.jsp" %>
+
+<!-- Push notification element -->
+<div id="push-noti"></div>
 
 <!-- Toast element -->
 <div id="toast">&nbsp;</div>
@@ -163,6 +208,12 @@
 <script src="./assets/js/valid-form.js"></script>
 <script src="./assets/js/owner/room-detail/validate-input.js"></script>
 <script src="./assets/js/toast-alert.js"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/sendWebsocket.js"></script>
+<script src="./assets/js/receiveWebsocket.js"></script>
+
 <script>
     <c:choose>
     <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
@@ -182,6 +233,27 @@
     });
     </c:when>
     </c:choose>
+</script>
+
+<script type="text/javascript">
+    // Send
+    <c:if test="${requestScope.CREATE_BILL_MSG.status == true}">
+    const params = new Object();
+    params.sender = "hostel_owner";
+    params.receiver = "hostel_renter";
+    params.hostel_receiver_id = null;
+    params.account_receiver_id = "${requestScope.RENTER_ID}";
+    params.messages = "Chủ trọ đã gửi một hóa đơn mới. Vui lòng kiểm tra!";
+    sendToWebSocket(params);
+    </c:if>
+
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function(){
+        receiveWebsocket.disconnectWebSocket();
+    };
 </script>
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">

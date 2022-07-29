@@ -3,7 +3,7 @@
 <div class="room-members">
         <div class="members-header">
             <div class="members-title">Danh sách thành viên</div>
-            <c:if test="${(sessionScope.room.roomStatus ne 1) && (requestScope.renterAccount.status == 1) && (requestScope.listRoommatesInfo.size() < sessionScope.room.capacity)}">
+            <c:if test="${(sessionScope.room.roomStatus == 0) && (requestScope.listRoommatesInfo.size() < sessionScope.room.capacity)}">
                 <div class="members-actions">
                     <button class="add-member-btn" data-bs-toggle="modal"
                             data-bs-target="#add-new-member-modal">Thêm thành viên
@@ -258,7 +258,7 @@
                                                             </div>
                                                             <div class="col-6">
                                                                 <div class="member-detail-modal-content">
-                                                                        ${roommateList.information.sex eq 1 ? "Name" : "Nữ"}
+                                                                        ${roommateList.information.sex eq 1 ? "Nam" : "Nữ"}
                                                                 </div>
                                                             </div>
                                                         </div>

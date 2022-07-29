@@ -43,7 +43,7 @@ body{
 
     table {
       text-align: center;
-      width: 60%;
+      width: 80%;
       margin: 10px auto;
 
       thead {
@@ -92,7 +92,7 @@ footer {
   font-size: 18px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1200px) {
   .dropdown{
   display: block;
   }

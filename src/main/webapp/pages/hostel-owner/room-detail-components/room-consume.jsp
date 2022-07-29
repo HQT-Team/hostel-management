@@ -16,7 +16,7 @@
         <div class="consume-quantity">${requestScope.consumeNumber.numberWater}</div>
     </div>
     <div class="consume-actions">
-        <c:if test="${sessionScope.room.roomStatus == 0 && requestScope.renterAccount.status == 1}">
+        <c:if test="${sessionScope.room.roomStatus == 0}">
             <!-- Start consume update button -->
             <button class="consume-update-btn" data-bs-toggle="modal"
                     data-bs-target="#update-consume-modal">Cập nhật
@@ -105,14 +105,6 @@
                                         data-bs-dismiss="modal">Hủy bỏ
                                 </button>
                                 <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
-                                <c:choose>
-                                    <c:when test="">
-
-                                    </c:when>
-                                    <c:otherwise>
-
-                                    </c:otherwise>
-                                </c:choose>
                                 <button type="submit" class="btn btn-danger">
                                     Cập nhật
                                 </button>
@@ -164,18 +156,18 @@
                                 <div class="row">
                                     <div class="col-3">
                                         <input type="text" value="${consumeList.numberElectric}" class="form-control"
-                                               disabled>
+                                               disabled />
                                     </div>
                                     <div class="col-3">
                                         <input type="text" value="${consumeList.numberWater}" class="form-control"
-                                               disabled>
+                                               disabled />
                                     </div>
                                     <div class="col-6">
                                         <fmt:parseDate pattern="yyyy-MM-dd" value="${consumeList.updateDate}"
                                                        var="updateDateFormat"/>
                                         <fmt:formatDate pattern="dd/MM/yyyy" value="${updateDateFormat}"
                                                         var="updateDate"/>
-                                        <input type="text" value="${updateDate}" class="form-control" disabled>
+                                        <input type="text" value="${updateDate}" class="form-control" disabled />
                                     </div>
                                 </div>
                             </c:forEach>

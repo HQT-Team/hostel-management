@@ -56,7 +56,7 @@
 
             <!-- Content -->
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 pb-5 content-group">
-                <!-- Uncheck Account -->
+                <!-- Inactive Account -->
                 <div class="row mt-5">
                     <div class="uncheck-acc col-12 col-xl-10 col-xxl-8 m-auto">
                         <div class="uncheck-acc__title">
@@ -82,7 +82,115 @@
                                         <td>${count}</td>
                                         <td>${UncheckAccount.username}</td>
                                         <td>
-                                            <button type="button" class="btn btn-outline-info fs-5">Chi tiết</button>
+                                            <button class="btn btn-outline-info fs-5"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#uncheck-acc__modal-detail-${UncheckAccount.accId}"
+                                            >
+                                                Chi tiết
+                                            </button>
+                                            <!-- Modal detail -->
+                                            <div class="modal fade" id="uncheck-acc__modal-detail-${UncheckAccount.accId}" tabindex="-1"
+                                                 aria-labelledby="#uncheck-acc__modal-detail-label" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="#uncheck-acc__modal-detail-label-${UncheckAccount.accId}">
+                                                                Thông tin chi tiết
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body ps-5 pe-5">
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label-${UncheckAccount.accId}">
+                                                                        Họ và tên:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${UncheckAccount.accountInfo.information.fullname eq null ? "Trống" : UncheckAccount.accountInfo.information.fullname}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Ngày sinh:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${UncheckAccount.accountInfo.information.birthday eq null ? "Trống" : UncheckAccount.accountInfo.information.birthday}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Giới tính:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${UncheckAccount.accountInfo.information.sex eq 1 ? "Nam" : "Nữ"}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Số điện thoại:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${UncheckAccount.accountInfo.information.phone eq null ? "Trống" : UncheckAccount.accountInfo.information.phone}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Email:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${UncheckAccount.accountInfo.information.email eq null ? "Trống" : UncheckAccount.accountInfo.information.email}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        CCCD/CMND:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${UncheckAccount.accountInfo.information.cccd eq null ? "Trống" : UncheckAccount.accountInfo.information.cccd}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Địa chỉ thường trú:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${UncheckAccount.accountInfo.information.address eq null ? "Trống" : UncheckAccount.accountInfo.information.address}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đồng ý</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                         <td class="text-danger">
                                             Chưa kích hoạt
@@ -93,7 +201,7 @@
                                             <!-- Modal -->
                                             <div class="modal fade" id="uncheck-acc__modal-${UncheckAccount.accId}" tabindex="-1"
                                                  aria-labelledby="uncheck-acc__modal-label" aria-hidden="true">
-                                                <div class="modal-dialog">
+                                                <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="uncheck-acc__modal-label">
@@ -130,11 +238,11 @@
                     </div>
                 </div>
 
-                <!-- Checked Account -->
+                <!-- Active Account -->
                 <div class="row mt-5">
                     <div class="checked-acc col-12 col-xl-10 col-xxl-8 m-auto">
                         <div class="checked-acc__title">
-                            Danh sách tài khoản chủ nhà trọ
+                            Danh sách tài khoản đang hoạt động
                         </div>
                         <table id="checked-acc__table"
                                class="checked-acc__table mt-4 mb-4 table table-hover table-bordered table-striped">
@@ -155,7 +263,117 @@
                                     <tr>
                                         <td>${count}</td>
                                         <td>${CheckedAccount.username}</td>
-                                        <td><button type="button" class="btn btn-outline-info fs-5">Chi tiết</button>
+                                        <td>
+                                            <button
+                                                    class="btn btn-outline-info fs-5"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#checked-acc__modal-detail-${CheckedAccount.accId}"
+                                            >
+                                                Chi tiết
+                                            </button>
+                                            <!-- Modal detail -->
+                                            <div class="modal fade" id="checked-acc__modal-detail-${CheckedAccount.accId}" tabindex="-1"
+                                                 aria-labelledby="#checked-acc__modal-detail-label-${CheckedAccount.accId}" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="#checked-acc__modal-detail-label-${CheckedAccount.accId}">
+                                                                Thông tin chi tiết
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body ps-5 pe-5">
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Họ và tên:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${CheckedAccount.accountInfo.information.fullname eq null ? "Trống" : CheckedAccount.accountInfo.information.fullname}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Ngày sinh:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${CheckedAccount.accountInfo.information.birthday eq null ? "Trống" : CheckedAccount.accountInfo.information.birthday}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Giới tính:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${CheckedAccount.accountInfo.information.sex eq 1 ? "Nam" : "Nữ"}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Số điện thoại:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${CheckedAccount.accountInfo.information.phone eq null ? "Trống" : CheckedAccount.accountInfo.information.phone}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Email:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${CheckedAccount.accountInfo.information.email eq null ? "Trống" : CheckedAccount.accountInfo.information.email}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        CCCD/CMND:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${CheckedAccount.accountInfo.information.cccd eq null ? "Trống" : CheckedAccount.accountInfo.information.cccd}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Địa chỉ thường trú:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${CheckedAccount.accountInfo.information.address eq null ? "Trống" : CheckedAccount.accountInfo.information.address}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đồng ý</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                         <td class="text-success">
                                             Đã kích hoạt
@@ -166,7 +384,7 @@
                                             <!-- Modal -->
                                             <div class="modal fade" id="checked-acc__modal-${CheckedAccount.accId}" tabindex="-1"
                                                  aria-labelledby="checked-acc__modal-label" aria-hidden="true">
-                                                <div class="modal-dialog">
+                                                <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="checked-acc__modal-label">
@@ -187,6 +405,188 @@
                                                                 <input type="hidden" name="status" value="${CheckedAccount.status}" />
                                                                 <button type="submit" class="btn btn-danger fs-4">
                                                                     Khóa tài khoản
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </c:if>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Banned Account -->
+                <div class="row mt-5">
+                    <div class="banned-acc col-12 col-xl-10 col-xxl-8 m-auto">
+                        <div class="banned-acc__title">
+                            Danh sách tài khoản bị khóa
+                        </div>
+                        <table id="banned-acc__table"
+                               class="banned-acc__table mt-4 mb-4 table table-hover table-bordered table-striped">
+                            <thead class="table-dark banned-acc__table-head">
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên tài khoản</th>
+                                <th>Chi tiết</th>
+                                <th>Trạng thái</th>
+                                <th class="table-head__action">Hành động</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-light banned-acc__table-body">
+                            <c:set var="count" value="0" scope="page"/>
+                            <c:forEach var="BannedAccount" items="${requestScope.OWNER_LIST}">
+                                <c:if test="${BannedAccount.status eq -1}">
+                                    <c:set var="count" value="${count + 1}" scope="page"/>
+                                    <tr>
+                                        <td>${count}</td>
+                                        <td>${BannedAccount.username}</td>
+                                        <td>
+                                            <button
+                                                    class="btn btn-outline-info fs-5"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#banned-acc__modal-detail-${BannedAccount.accId}"
+                                            >
+                                                Chi tiết
+                                            </button>
+                                            <!-- Modal detail -->
+                                            <div class="modal fade" id="banned-acc__modal-detail-${BannedAccount.accId}" tabindex="-1"
+                                                 aria-labelledby="#banned-acc__modal-detail-label-${BannedAccount.accId}" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="#banned-acc__modal-detail-label-${BannedAccount.accId}">
+                                                                Thông tin chi tiết
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body ps-5 pe-5">
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Họ và tên:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${BannedAccount.accountInfo.information.fullname eq null ? "Trống" : BannedAccount.accountInfo.information.fullname}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Ngày sinh:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${BannedAccount.accountInfo.information.birthday eq null ? "Trống" : BannedAccount.accountInfo.information.birthday}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Giới tính:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${BannedAccount.accountInfo.information.sex eq 1 ? "Nam" : "Nữ"}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Số điện thoại:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${BannedAccount.accountInfo.information.phone eq null ? "Trống" : BannedAccount.accountInfo.information.phone}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Email:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${BannedAccount.accountInfo.information.email eq null ? "Trống" : BannedAccount.accountInfo.information.email}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        CCCD/CMND:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${BannedAccount.accountInfo.information.cccd eq null ? "Trống" : BannedAccount.accountInfo.information.cccd}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row pt-3 pb-3">
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-label">
+                                                                        Địa chỉ thường trú:
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="member-detail-modal-content">
+                                                                            ${BannedAccount.accountInfo.information.address eq null ? "Trống" : BannedAccount.accountInfo.information.address}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đồng ý</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-warning">
+                                            Đã bị khóa
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success fs-5" data-bs-toggle="modal"
+                                                    data-bs-target="#banned-acc__modal-${BannedAccount.accId}">Mở khóa tài khoản</button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="banned-acc__modal-${BannedAccount.accId}" tabindex="-1"
+                                                 aria-labelledby="banned-acc__modal-label" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="banned-acc__modal-label">
+                                                                Cảnh báo
+                                                            </h5>
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body mt-5 mb-5">
+                                                            Bạn đang thực hiện mở khóa tài khoản "${BannedAccount.username}"! Hãy
+                                                            đảm bảo bạn mở khóa tài khoản này với lý do rõ ràng!
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <button type="button" class="btn btn-danger fs-4"
+                                                                    data-bs-dismiss="modal">Hủy bỏ</button>
+                                                            <form action="updateAccountStatus" method="POST">
+                                                                <input type="hidden" name="owner_id" value="${BannedAccount.accId}" />
+                                                                <input type="hidden" name="status" value="${BannedAccount.status}" />
+                                                                <button type="submit" class="btn btn-success fs-4">
+                                                                    Mở khóa tài khoản
                                                                 </button>
                                                             </form>
                                                         </div>
@@ -226,27 +626,28 @@
 <script src="./assets/js/toast-alert.js"></script>
 <script>
     <c:choose>
-        <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq true}">
-            toast({
-                title: 'Thành công',
-                message: '${requestScope.RESPONSE_MSG.content}',
-                type: 'success',
-                duration: 5000
-            });
-        </c:when>
-        <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq false}">
-            toast({
-                title: 'Lỗi',
-                message: '${requestScope.RESPONSE_MSG.content}',
-                type: 'error',
-                duration: 5000
-            });
-        </c:when>
+    <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq true}">
+    toast({
+        title: 'Thành công',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'success',
+        duration: 5000
+    });
+    </c:when>
+    <c:when test="${requestScope.RESPONSE_MSG ne null && requestScope.RESPONSE_MSG.status eq false}">
+    toast({
+        title: 'Lỗi',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'error',
+        duration: 5000
+    });
+    </c:when>
     </c:choose>
 </script>
 <script>
     $('#uncheck-acc__table').DataTable();
     $('#checked-acc__table').DataTable();
+    $('#banned-acc__table').DataTable();
 </script>
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">

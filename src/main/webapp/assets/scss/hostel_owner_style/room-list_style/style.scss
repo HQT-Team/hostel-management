@@ -11,6 +11,7 @@
   padding: 16px 16px;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  margin-bottom: 32px;
 }
 
 .filter__wrapper {
@@ -79,5 +80,9 @@
 
   .content__tbody-status.no {
     color: #d90000;
+  }
+
+  .content__tbody-status.wait {
+    color: #ff8500;
   }
 }

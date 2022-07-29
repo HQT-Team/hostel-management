@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <session-config>
-        <session-timeout>20</session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
     <context-param>
         <param-name>SITEMAP_PROPERTIES_FILE_LOCATION</param-name>
@@ -20,27 +20,27 @@
     </context-param>
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.AuthenticationFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filters.AuthenticationFilter</filter-class>
     </filter>
     <filter>
         <filter-name>RoleRedirectFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.RoleRedirectFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filters.RoleRedirectFilter</filter-class>
     </filter>
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.AuthorizationFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filters.AuthorizationFilter</filter-class>
     </filter>
     <filter>
         <filter-name>RenterRegisterFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.RenterRegisterFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filters.RenterRegisterFilter</filter-class>
     </filter>
     <filter>
         <filter-name>DispatcherFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.DispatcherFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filters.DispatcherFilter</filter-class>
     </filter>
     <filter>
         <filter-name>CharsetFilter</filter-name>
-        <filter-class>com.hqt.happyhostel.filter.CharsetFilter</filter-class>
+        <filter-class>com.hqt.happyhostel.filters.CharsetFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>

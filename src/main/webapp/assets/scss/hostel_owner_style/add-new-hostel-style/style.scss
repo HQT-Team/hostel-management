@@ -15,6 +15,19 @@
   .main-title {
     text-align: left;
     color: rgb(15, 87, 255);
+    margin-bottom: 14px;
+  }
+
+  .form-warning {
+    p {
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--error-color);
+
+      &:last-child {
+        margin-bottom: 16px;
+      }
+    }
   }
 
   .form-select {

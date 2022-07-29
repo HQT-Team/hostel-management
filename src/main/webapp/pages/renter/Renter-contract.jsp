@@ -15,10 +15,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contract</title>
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
@@ -26,32 +26,39 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/renter_page/Renter-contract.css">
 
+    <!-- CSS Push Notification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
+
+
 </head>
 
 <body>
 <%
-    Account account = (Account)session.getAttribute("USER");
+    Account account = (Account) session.getAttribute("USER");
 %>
 <div>
     <!-- navbar -->
     <nav class="navbar row">
         <div class="navbar-left">
-            <div class="dropdown"  style="padding-left: 15px;">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
+            <div class="dropdown" style="padding-left: 15px;">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"
+                        style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
                     Menu
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
                     <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
                     <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
-                    <a class="dropdown-item" href="renter-invoice"style="font-size: 15px;">Hóa đơn</a>
-                    <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
-                    <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
-                    <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
-                    <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
-                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
-                    <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
+                    <a class="dropdown-item" href="renter-invoice" style="font-size: 15px;">Hóa đơn</a>
+                    <a class="dropdown-item" href="Renter-report" style="font-size: 15px;">Báo cáo</a>
+                    <a class="dropdown-item" href="RenterNotificationPage" style="font-size: 15px;">Thông báo</a>
+                    <a class="dropdown-item" href="Renter-add-roommate" style="font-size: 15px;">Thêm bạn</a>
+                    <a class="dropdown-item" href="Get-report" style="font-size: 15px;">Xem báo cáo</a>
+                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"
+                       style="font-size: 15px;">Hồ sơ</a>
+                    <a class="dropdown-item" href="logout" style="font-size: 15px;">Đăng xuất</a>
                 </div>
             </div>
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
@@ -76,7 +83,8 @@
         <div class="dashboard">
             <div class="infor-top">
                 <img src="./assets/images/avatars/user-avatar.jpg" alt="">
-                <h3><%= account.getAccountInfo().getInformation().getFullname() %></h3>
+                <h3><%= account.getAccountInfo().getInformation().getFullname() %>
+                </h3>
                 <p>Người Thuê</p>
             </div>
             <div class="card">
@@ -90,7 +98,7 @@
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        <h3><a href="HostelRenterPage" >Thông tin phòng</a></h3>
+                        <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
                         <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
                         <h3><a href="ContractPage" style="color:rgb(4, 4, 255)">Hợp đồng</a></h3>
                         <h3><a href="renter-invoice">Hóa đơn</a></h3>
@@ -119,30 +127,30 @@
         </div>
         <div class="content row">
             <div class="contract-content">
-               <div class="contract-head"><h4>Hợp Đồng Thuê Phòng</h4></div>
-              <div class="contract-body">
-                  <div class="owner-infor"> <p>Bên cho thuê</p>
-                      <h5><strong>Chủ trọ: </strong>${OWNER_INFO.fullname}</h5><br>
-                      <h5><strong>Ngày sinh: </strong>
-                          <fmt:parseDate pattern="yyyy-MM-dd" value=" ${OWNER_INFO.birthday}" var="birthday" />
-                          <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
-                      </h5><br>
-                      <h5><strong>CCCD: </strong>${OWNER_INFO.cccd}</h5><br>
-                      <h5><strong>SĐT: </strong>${OWNER_INFO.phone}</h5><br>
-                  </div>
-                  <div class="renter-infor">
-                      <p>Bên thuê</p>
-                      <h5><strong>Người Thuê: </strong>${RENTER_INFO.fullname}</h5><br>
-                      <h5><strong>Ngày sinh: </strong>
-                          <fmt:parseDate pattern="yyyy-MM-dd" value=" ${RENTER_INFO.birthday}" var="birthday" />
-                          <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
-                      </h5><br>
-                      <h5><strong>CCCD: </strong>${RENTER_INFO.cccd}</h5><br>
-                      <h5><strong>SĐT: </strong>${RENTER_INFO.phone}</h5><br>
-                  </div>
-              </div>
+                <div class="contract-head"><h4>Hợp Đồng Thuê Phòng</h4></div>
+                <div class="contract-body">
+                    <div class="owner-infor"><p>Bên cho thuê</p>
+                        <h5><strong>Chủ trọ: </strong>${OWNER_INFO.fullname}</h5><br>
+                        <h5><strong>Ngày sinh: </strong>
+                            <fmt:parseDate pattern="yyyy-MM-dd" value=" ${OWNER_INFO.birthday}" var="birthday"/>
+                            <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
+                        </h5><br>
+                        <h5><strong>CCCD: </strong>${OWNER_INFO.cccd}</h5><br>
+                        <h5><strong>SĐT: </strong>${OWNER_INFO.phone}</h5><br>
+                    </div>
+                    <div class="renter-infor">
+                        <p>Bên thuê</p>
+                        <h5><strong>Người Thuê: </strong>${RENTER_INFO.fullname}</h5><br>
+                        <h5><strong>Ngày sinh: </strong>
+                            <fmt:parseDate pattern="yyyy-MM-dd" value=" ${RENTER_INFO.birthday}" var="birthday"/>
+                            <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
+                        </h5><br>
+                        <h5><strong>CCCD: </strong>${RENTER_INFO.cccd}</h5><br>
+                        <h5><strong>SĐT: </strong>${RENTER_INFO.phone}</h5><br>
+                    </div>
+                </div>
                 <div class="contract-result">
-                    <p>Sau khi bàn bạc</p>
+                    <p>Thông tin phòng</p>
                     <h5><strong>Tại địa chỉ: </strong>${HOSTEL.address}, ${HOSTEL.ward.split('-')[1]},
                         ${HOSTEL.district.split('-')[1]}, ${HOSTEL.city.split('-')[1]} </h5><br>
                     <h5><strong>Giá: </strong>
@@ -154,10 +162,10 @@
                         <fmt:formatNumber value="${CONTRACT.deposit}" type="currency" currencySymbol="VNĐ"/>
                     </h5><br>
                     <h5><strong>Hợp đồng có giá trị từ ngày: </strong>
-                        <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.startDate}" var="startDate" />
+                        <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.startDate}" var="startDate"/>
                         <fmt:formatDate value="${startDate}" type="Date" pattern="dd-MM-yyyy"/>
                         <strong>đến ngày: </strong>
-                        <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.expiration}" var="expiration" />
+                        <fmt:parseDate pattern="yyyy-MM-dd" value="${CONTRACT.expiration}" var="expiration"/>
                         <fmt:formatDate value="${expiration}" type="Date" pattern="dd-MM-yyyy"/>
                     </h5>
                 </div>
@@ -178,12 +186,16 @@
                         <!-- <img src="../../assets/images/logos/logo-white.png" alt="Logo"> -->
                     </div>
                     <div class="copyright-content" style="font-size: 18px;">© 2022 HQT Team. All rights
-                        reserved.</div>
+                        reserved.
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
+
+<!-- Push notification element -->
+<div id="push-noti"></div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -197,6 +209,21 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/receiveWebsocket.js"></script>
+
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function(){
+        receiveWebsocket.disconnectWebSocket();
+    };
+</script>
 </body>
 
 </html>

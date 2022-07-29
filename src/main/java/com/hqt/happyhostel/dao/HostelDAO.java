@@ -13,18 +13,8 @@ public class HostelDAO {
     private static final String INSERT_HOSTEl =
             "INSERT INTO [dbo].[Hostels](owner_account_id, name, address, ward, district, city) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String INSERT_HOSTEL_SERVICE =
-            "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Điện'), ?, ?)\n" +
-                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Nước'), ?, ?)\n" +
-                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Wifi'), ?, ?)\n" +
-                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí quản lý'), ?, ?)\n" +
-                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí giữ xe'), ?, ?)\n" +
-                    "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date)\n" +
-                    "VALUES (?, (SELECT service_id FROM Services WHERE service_name = N'Phí vệ sinh'), ?, ?)";
+            "INSERT INTO HostelService (hostel_id, service_id, service_price, valid_date, status)\n" +
+            "VALUES (?, ?, ?, GETDATE(), 1)";
     private static final String UPDATE_HOSTEL =
             "UPDATE Hostels SET name = ?, address = ?, ward = ?, district = ?, city = ? WHERE hostel_id = ?";
     private static final String GET_HOSTEL_BY_ID =
@@ -39,11 +29,13 @@ public class HostelDAO {
                     "INNER JOIN Contracts ON Rooms.room_id = Contracts.room_id\n" +
                     "INNER JOIN Accounts ON Contracts.renter_id = Accounts.account_id\n" +
                     "Where account_id = ?";
-
+    private static final String GET_LIST_HOSTEL = "SELECT hostel_id, owner_account_id, [name], [address], ward, district, city \n" +
+            "FROM [dbo].[Hostels] ";
     private static final String GET_HOSTEL_BY_ROOM_ID =
             "SELECT Hostels.hostel_id AS 'hostel_id', Hostels.owner_account_id, Hostels.name, Hostels.address, Hostels.ward, Hostels.district, Hostels.city\n\n" +
                     "FROM Hostels, Rooms\n" +
                     "WHERE Rooms.room_id = ?";
+
 
 
     public Hostel getHostelById(int hostelId) throws SQLException {
@@ -59,8 +51,8 @@ public class HostelDAO {
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
                     int hostelOwnerAccountID = rs.getInt("owner_account_id");
-                    String name = rs.getString("name");
-                    String address = rs.getString("address");
+                    String name =  rs.getString("name");
+                    String address =  rs.getString("address");
                     String ward = rs.getString("ward");
                     String district = rs.getString("district");
                     String city = rs.getString("city");
@@ -105,8 +97,8 @@ public class HostelDAO {
                 if (rs != null && rs.next()) {
                     int hostelOwnerAccountID = rs.getInt("owner_account_id");
                     int hostelId = rs.getInt("hostel_id");
-                    String name = rs.getString("name");
-                    String address = rs.getString("address");
+                    String name =  rs.getString("name");
+                    String address =  rs.getString("address");
                     String ward = rs.getString("ward");
                     String district = rs.getString("district");
                     String city = rs.getString("city");
@@ -248,32 +240,31 @@ public class HostelDAO {
                 ptm.setString(5, hostel.getDistrict());
                 ptm.setString(6, hostel.getCity());
                 check = ptm.executeUpdate() > 0;
+                if (!check) {
+                    cn.rollback();
+                    cn.setAutoCommit(true);
+                    return -1;
+                }
 
                 rs = ptm.getGeneratedKeys();
 
                 if (rs.next()) {
                     id = rs.getInt(1);
-                    hostel.setHostelID(id);
                 }
 
-                int c = 0;
-                ptm = cn.prepareStatement(INSERT_HOSTEL_SERVICE);
-                for (HostelService ser : hostelServices
-                ) {
-                    c++;
-                    ptm.setInt(c, hostel.getHostelID());
-                    c++;
-                    ptm.setDouble(c, ser.getServicePrice());
-                    c++;
-                    ptm.setString(c, ser.getValidDate());
+                for (HostelService ser : hostelServices) {
+                    ptm = cn.prepareStatement(INSERT_HOSTEL_SERVICE);
+                    ptm.setInt(1, id);
+                    ptm.setInt(2, ser.getServiceID());
+                    ptm.setInt(3, ser.getServicePrice());
+                    check = ptm.executeUpdate() > 0;
+                    if (!check) {
+                        cn.rollback();
+                        cn.setAutoCommit(true);
+                        return -1;
+                    }
                 }
-                check = ptm.executeUpdate() > 0;
-
-                if (!check) {
-                    cn.rollback();
-                } else {
-                    cn.commit();
-                }
+                cn.commit();
                 cn.setAutoCommit(true);
             }
         } catch (Exception e) {
@@ -367,5 +358,84 @@ public class HostelDAO {
         }
         return hostel;
     }
+
+
+    public ArrayList<Hostel> getListHostel() throws SQLException {
+        Connection cn = null;
+        Statement pst = null;
+        ResultSet rs = null;
+        Hostel hostel = null;
+        ArrayList<Hostel> listHostel = new ArrayList<>();
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.createStatement();
+                rs = pst.executeQuery(GET_LIST_HOSTEL);
+                while (rs != null && rs.next()) {
+                    int hostelId = rs.getInt("hostel_id");
+                    int hostelOwnerAccountID = rs.getInt("owner_account_id");
+                    String name = rs.getString("name");
+                    String address = rs.getString("address");
+                    String ward = rs.getString("ward");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    hostel = new Hostel(hostelId, hostelOwnerAccountID, name, address, ward, district, city);
+                    listHostel.add(hostel);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return listHostel;
+    }
+    public ArrayList<Integer> getListRenterIdByHostelId(int hostelId){
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        ArrayList<Integer> accIdList = new ArrayList<>();
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement("SELECT A.[account_id] AS account_id\n" +
+                        "FROM [dbo].[Accounts] AS A JOIN [dbo].[Rooms] AS R ON A.[room_id] = R.[room_id]\n" +
+                        "WHERE R.[hostel_id] = ? AND A.[status] = 1");
+                pst.setInt(1, hostelId);
+                rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    int accId = rs.getInt("account_id");
+                    accIdList.add(accId);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+                if (cn != null) {
+                    cn.close();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+        return accIdList;
+    }
+
 
 }

@@ -26,6 +26,9 @@
 
     <!-- Simple Datatable CSS -->
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+
+    <!-- CSS Push Notification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 </head>
 
 <body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
@@ -79,7 +82,7 @@
                                             <th>STT</th>
                                             <th>Tên</th>
                                             <th>Địa chỉ</th>
-                                            <th>Số phòng</th>
+                                            <th>Tổng số phòng</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -94,7 +97,9 @@
                                             <td>${hostels.address}, ${hostels.ward.split('-')[1]},
                                                     ${hostels.district.split('-')[1]}, ${hostels.city.split('-')[1]}
                                             </td>
-                                            <td>...</td>
+                                            <td>
+                                                ${requestScope.LIST_TOTAL_ROOM.get(hostels.hostelID)}
+                                            </td>
                                             <td class="hostel-table__body-link">
                                                 <div class="hostel-table__body-wrapper">
                                                     <a href="detailHostel?hostelID=${hostels.hostelID}"
@@ -123,6 +128,9 @@
         <!-- Toast element -->
         <div id="toast">&nbsp;</div>
 
+        <!-- Push notification element -->
+        <div id="push-noti"></div>
+
     </div>
 
     <!-- Script Bootstrap !important -->
@@ -137,6 +145,10 @@
     <script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <!-- Toast Alert -->
     <script src="./assets/js/toast-alert.js"></script>
+    <!-- Push notification -->
+    <script src="./assets/js/push-notification-alert.js"></script>
+    <!-- Web socket -->
+    <script src="./assets/js/receiveWebsocket.js"></script>
     <script>
         $(document).ready(function () {
             // Initial datatable
@@ -169,6 +181,17 @@
             </c:choose>
         });
     </script>
+
+    <script type="text/javascript">
+        // Receive
+        receiveWebsocket(alertPushNoti);
+
+        // Close when leave
+        window.onbeforeunload = function(){
+            receiveWebsocket.disconnectWebSocket();
+        };
+    </script>
+
     <c:if test="${requestScope.RESPONSE_MSG eq null}">
         <!-- Loader -->
         <script src="./assets/js/loading-handler.js"></script>

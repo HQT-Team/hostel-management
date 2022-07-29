@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/renter_page/Renter-report.css">
+    <!-- CSS Push Nnotification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
 </head>
 <body>
@@ -30,7 +32,7 @@
         <!-- navbar -->
         <nav class="navbar row">
             <div class="navbar-left">
-                <div class="dropdown"  style="padding-left: 15px;">
+                <div class="dropdown" style="padding-left: 15px;">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false"style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
                         Menu
@@ -62,7 +64,6 @@
             <div class="navbar-right">
                 <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>
             </div>
-
         </nav>
 
         <!-- content -->
@@ -113,13 +114,15 @@
             </div>
             <div class="content row">
                 <div class="report">
-                    <form action="Add-report" method="post" id="form-submit">
+                    <form action="Renter-report" method="post" id="form-submit">
                         <h2>Viết Báo Cáo</h2>
-                        <h3 class="notification-success">${SUCCESS}</h3>
+                        <h3 class="notification-success">
+                            ${requestScope.RESPONSE_MSG.content}
+                        </h3>
                         <div>
                             <select name="cateID" id="select">
                                 <option value="">Loại Đơn</option>
-                                <c:forEach var="cate" items="${REPORT_CATE}">
+                                <c:forEach var="cate" items="${requestScope.REPORT_CATE}">
                                     <option value="${cate.cateID}">${cate.cateTitle}</option>
                                 </c:forEach>
                             </select>
@@ -148,15 +151,16 @@
         <div class="row">
             <div class="col-12">
                 <div class="copyright-wrapper d-flex justify-content-center">
-                    <!-- <div class="copyright-logo">
-                    <img src="../../assets/images/logos/logo-white.png" alt="Logo">
-                </div> -->
                     <div class="copyright-content">© 2022 HQT Team. All rights reserved.</div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
+
+<!-- Push notification element -->
+<div id="push-noti"></div>
+
 <script src="./assets/js/renter/Renter-report.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -170,9 +174,55 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+
+<!-- Web socket -->
+<script src="./assets/js/sendWebsocket.js"></script>
+<script src="./assets/js/receiveWebsocket.js"></script>
+
+<script type="text/javascript">
+    // Send
+    <c:if test="${requestScope.RESPONSE_MSG.status == true}">
+        const params = new Object();
+        params.sender = "hostel_renter";
+        params.receiver = "hostel_owner";
+        params.hostel_receiver_id = null;
+        params.account_receiver_id = "${requestScope.HOSTEL_OWNER_ID}";
+        params.messages = "Người thuê vừa gửi 1 báo cáo mới. Vui lòng kiểm tra!";
+        sendToWebSocket(params);
+    </c:if>
+
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function(){
+        receiveWebsocket.disconnectWebSocket();
+    };
+</script>
+
+<!-- Axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const handleSendReportMail = () => {
+        axios({
+            method:"POST",
+            url:'http://localhost:8080/HappyHostel/send-report-mail',
+            params: {
+                account_id: '${requestScope.HOSTEL_OWNER_ID}',
+                report_id : '${requestScope.REPORT_ID}'
+            }
+        })
+            .then(function (response) {
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    <c:if test="${requestScope.RESPONSE_MSG.status eq true}">
+        handleSendReportMail();
+    </c:if>
+</script>
 </body>
-
-
-
-
 </html>

@@ -21,6 +21,11 @@ public class NotificationDAO {
             "FROM [dbo].[Notifications]\n" +
             "WHERE [hostel_owner_account_id] = ?";
 
+    private static final String GET_NOTIFICATION_BY_OWNER_ID_AND_HOSTEL_ID =
+            "SELECT [notification_id], [title], [content], [create_date], [hostel_id]\n" +
+                    "FROM [dbo].[Notifications]\n" +
+                    "WHERE [hostel_owner_account_id] = ? AND [hostel_id] = ?";
+
     private static final String GET_NOTIFICATION_BY_ID =
             "SELECT [notification_id], [title], [content], [create_date], [hostel_id]\n" +
             "FROM [dbo].[Notifications]\n" +
@@ -41,6 +46,54 @@ public class NotificationDAO {
                     String createDate = rs.getString("create_date");
                     noti.add(Notification
                             .builder()
+                            .title(title)
+                            .content(content)
+                            .createDate(createDate)
+                            .build());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return noti;
+    }
+
+    public List<Notification> getNotificationByOwnerIdAndHostelId(int accId, int hostelId) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+        List<Notification> noti = new ArrayList<>();
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_NOTIFICATION_BY_OWNER_ID_AND_HOSTEL_ID);
+                pst.setInt(1, accId);
+                pst.setInt(2, hostelId);
+                ResultSet rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    int notiId = rs.getInt("notification_id");
+                    String title = rs.getString("title");
+                    int hostel_id = rs.getInt("hostel_id");
+                    String content = rs.getString("content");
+                    String createDate = rs.getString("create_date");
+                    noti.add(Notification
+                            .builder()
+                            .notification_id(notiId)
+                            .hostel_id(hostel_id)
                             .title(title)
                             .content(content)
                             .createDate(createDate)

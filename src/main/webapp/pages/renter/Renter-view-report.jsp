@@ -10,44 +10,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
     <title>Renter</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/renter_page/Renter-view-report.css">
+
+    <!-- CSS Push Notification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 </head>
 
 <body>
 <%
-    Account account = (Account)session.getAttribute("USER");
+    Account account = (Account) session.getAttribute("USER");
 
 %>
 <div>
     <!-- navbar -->
     <nav class="navbar row">
         <div class="navbar-left">
-            <div class="dropdown"  style="padding-left: 15px;">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
+            <div class="dropdown" style="padding-left: 15px;">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"
+                        style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
                     Menu
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
                     <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
                     <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
-                    <a class="dropdown-item" href="Renter-bill"style="font-size: 15px;">Hoá Đơn</a>
-                    <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
-                    <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
-                    <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
-                    <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
-                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
-                    <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
+                    <a class="dropdown-item" href="Renter-bill" style="font-size: 15px;">Hoá Đơn</a>
+                    <a class="dropdown-item" href="Renter-report" style="font-size: 15px;">Báo cáo</a>
+                    <a class="dropdown-item" href="RenterNotificationPage" style="font-size: 15px;">Thông báo</a>
+                    <a class="dropdown-item" href="Renter-add-roommate" style="font-size: 15px;">Thêm bạn</a>
+                    <a class="dropdown-item" href="Get-report" style="font-size: 15px;">Xem báo cáo</a>
+                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"
+                       style="font-size: 15px;">Hồ sơ</a>
+                    <a class="dropdown-item" href="logout" style="font-size: 15px;">Đăng xuất</a>
                 </div>
             </div>
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
@@ -120,25 +126,25 @@
                 <table class="table table-dark table-striped">
                     <thead>
                     <tr class="header">
-                        <th >Loại Đơn</th>
-                        <th >Ngày Gửi</th>
-                        <th >Tình Trạng</th>
+                        <th>Loại Đơn</th>
+                        <th>Ngày Gửi</th>
+                        <th>Tình Trạng</th>
                         <th>Hành Động</th>
                     </tr>
                     </thead>
                     <tbody id="myTable">
                     <c:forEach var="rp" items="${REPORT_LIST}">
                         <tr>
-                            <td >
+                            <td>
                                 <c:forEach var="cate" items="${REPORT_CATE}">
-                                    <c:if test = "${rp.cateID == cate.cateID}" >
-                                            ${cate.cateTitle}
+                                    <c:if test="${rp.cateID == cate.cateID}">
+                                        ${cate.cateTitle}
                                     </c:if>
                                 </c:forEach>
                             </td>
-                            <td >
-                                        <fmt:parseDate pattern="yyyy-MM-dd" value=" ${rp.sendDate}" var="sendDate" />
-                                        <fmt:formatDate value="${sendDate}" type="Date" pattern="dd-MM-yyyy"/>
+                            <td>
+                                <fmt:parseDate pattern="yyyy-MM-dd" value=" ${rp.sendDate}" var="sendDate"/>
+                                <fmt:formatDate value="${sendDate}" type="Date" pattern="dd-MM-yyyy"/>
                             </td>
                             <td>
                                 <c:if test="${rp.status == 0}">
@@ -170,12 +176,16 @@
                         <!-- <img src="../../assets/images/logos/logo-white.png" alt="Logo"> -->
                     </div>
                     <div class="copyright-content" style="font-size: 18px;">© 2022 HQT Team. All rights
-                        reserved.</div>
+                        reserved.
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
+
+<!-- Push notification element -->
+<div id="push-noti"></div>
 
 
 
@@ -192,6 +202,21 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
 <script src="./assets/js/renter/Renter-view-report.js"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/receiveWebsocket.js"></script>
+
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function(){
+        receiveWebsocket.disconnectWebSocket();
+    };
+</script>
 </body>
 
 </html>

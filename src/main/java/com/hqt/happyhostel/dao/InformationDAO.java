@@ -11,7 +11,9 @@ import java.sql.SQLException;
 
 public class InformationDAO {
 
-    private static final String IS_EXIST_EMAIL = "SELECT email FROM AccountInformations WHERE email = ? ";
+    private static final String IS_EXIST_EMAIL =
+            "SELECT A.email FROM AccountInformations A JOIN Accounts B ON A.account_id = B.account_id \n" +
+            "WHERE A.email = ? AND (B.status = -1 OR B.status = 1 OR B.status = 0)";
     private static final String GET_HOSTEL_OWNER_INFO_BY_RENTER_ID =
             "SELECT DISTINCT AccountInformations.fullname, AccountInformations.email, AccountInformations.birthday," +
             " AccountInformations.sex, AccountInformations.phone, AccountInformations.address, AccountInformations.identity_card_number\n" +
@@ -27,6 +29,7 @@ public class InformationDAO {
             "UPDATE AccountInformations SET fullname = ?, email = ?, birthday = ?, phone = ?, address = ?, identity_card_number = ?, sex = ? WHERE account_id = ?";
     private static final String UPDATE_ROOMMATE =
             "UPDATE [dbo].[RoomateInformations] SET fullname = ?, email = ?, birthday = ?, sex = ?, phone = ?, address = ?, identity_card_number = ? WHERE roomate_info_id = ?";
+
     public boolean isExistEmail(String email) {
         boolean check = false;
         Connection conn = null;
@@ -42,7 +45,6 @@ public class InformationDAO {
                     check = true;
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

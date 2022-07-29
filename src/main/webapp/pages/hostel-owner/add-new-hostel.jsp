@@ -7,20 +7,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
 
     <!-- Title -->
     <title>Thêm khu trọ</title>
 
     <!-- Link Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
 
     <!-- Link your CSS here -->
     <link rel="stylesheet" href="./assets/css/hostel_owner_style/add-new-hostel-style/style.css">
+
+    <!-- CSS Push Nnotification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
 </head>
 
@@ -61,7 +64,13 @@
                             <div class="form-header">
                                 <div class="form-title main-title">Thêm khu trọ mới</div>
                             </div>
+                            <!-- Warning -->
+                            <div class="form-warning">
+                                <p><span>*</span> Các trường có dấu * là bắt buộc phải nhập!</p>
+                                <p><span>*</span> Đối với giá dịch vụ khác có thể thêm vào bằng cách điều chỉnh giá, nếu không hãy để giá trị mặc định là 0</p>
+                            </div>
                             <div class="spacer"></div>
+                            <!-- Input fields -->
                             <div class="form-group">
                                 <label for="hostel-name" class="form-label">Tên: <span>*</span></label>
                                 <input id="hostel-name" name="hostel-name" type="text" class="form-control" placeholder="Điền tên khu trọ">
@@ -106,7 +115,7 @@
                             <div class="spacer"></div>
                             <div class="price-service-group">
                                 <div class="form-header">
-                                    <div class="form-title price-service-title">Giá dịch vụ</div>
+                                    <div class="form-title price-service-title">Giá điện nước</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-md-10 m-auto">
@@ -128,10 +137,17 @@
                                             </div>
                                             <span class="form-message"></span>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="form-header">
+                                    <div class="form-title price-service-title">Giá dịch vụ khác</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-10 m-auto">
                                         <div class="form-group price-service-fill">
                                             <div class="fill-group">
-                                                <label for="hostel-wifi" class="form-label fill-label">Wifi: <span>*</span></label>
-                                                <input id="hostel-wifi" name="hostel-wifi" value="100000" type="number" placeholder="Nhập giá"
+                                                <label for="hostel-wifi" class="form-label fill-label">Wifi:</label>
+                                                <input id="hostel-wifi" name="hostel-wifi" value="0" type="number" placeholder="Nhập giá"
                                                     class="form-control fill-input">
                                                 <span class="fill-unit">VNĐ/phòng</span>
                                             </div>
@@ -139,8 +155,8 @@
                                         </div>
                                         <div class="form-group price-service-fill">
                                             <div class="fill-group">
-                                                <label for="hostel-manage" class="form-label fill-label">Phí quản lý: <span>*</span></label>
-                                                <input id="hostel-manage" name="hostel-manage" value="30000" type="number" placeholder="Nhập giá"
+                                                <label for="hostel-manage" class="form-label fill-label">Phí quản lý:</label>
+                                                <input id="hostel-manage" name="hostel-manage" value="0" type="number" placeholder="Nhập giá"
                                                     class="form-control fill-input">
                                                 <span class="fill-unit">VNĐ/phòng</span>
                                             </div>
@@ -148,8 +164,8 @@
                                         </div>
                                         <div class="form-group price-service-fill">
                                             <div class="fill-group">
-                                                <label for="hostel-vehicle" class="form-label fill-label">Phí giữ xe: <span>*</span></label>
-                                                <input id="hostel-vehicle" name="hostel-vehicle" value="10000" type="number" placeholder="Nhập giá"
+                                                <label for="hostel-vehicle" class="form-label fill-label">Phí giữ xe:</label>
+                                                <input id="hostel-vehicle" name="hostel-vehicle" value="0" type="number" placeholder="Nhập giá"
                                                     class="form-control fill-input">
                                                 <span class="fill-unit">VNĐ/phòng</span>
                                             </div>
@@ -157,8 +173,8 @@
                                         </div>
                                         <div class="form-group price-service-fill">
                                             <div class="fill-group">
-                                                <label for="hostel-cleaning" class="form-label fill-label">Phí vệ sinh: <span>*</span></label>
-                                                <input id="hostel-cleaning" name="hostel-cleaning" value="10000" placeholder="Nhập giá"
+                                                <label for="hostel-cleaning" class="form-label fill-label">Phí vệ sinh:</label>
+                                                <input id="hostel-cleaning" name="hostel-cleaning" value="0" placeholder="Nhập giá"
                                                     type="number" class="form-control fill-input">
                                                 <span class="fill-unit">VNĐ/phòng</span>
                                             </div>
@@ -182,8 +198,11 @@
     <!-- Footer -->
     <%@include file="components/footer.jsp"%>
 
-    <!-- Script Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+<!-- Push notification element -->
+<div id="push-noti"></div>
+
+<!-- Script Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <!-- Jquery -->
@@ -194,6 +213,10 @@
     <script src="./assets/js/handle-main-navbar.js"></script>
     <script src="./assets/js/handle-address.js"></script>
     <script src="./assets/js/valid-form.js"></script>
+    <!-- Push notification -->
+    <script src="./assets/js/push-notification-alert.js"></script>
+    <!-- Web socket -->
+    <script src="./assets/js/receiveWebsocket.js"></script>
     <script>
         let maxNumber = 1000000;
         let minNumber = 0;
@@ -216,20 +239,16 @@
                 Validator.minNumber('#hostel-water', 1, 'Vui lòng nhập giá nước tối thiểu là 1'),
                 Validator.maxNumber('#hostel-water', maxNumber, 'Vui lòng nhập giá nước nhỏ hơn 1000000'),
                 Validator.isInteger('#hostel-water', 'Vui lòng nhập đúng định dạng số nguyên'),
-                Validator.isRequired('#hostel-wifi', 'Vui lòng nhập giá wifi'),
-                Validator.minNumber('#hostel-wifi', minNumber, 'Vui lòng nhập giá bắt đầu từ 0'),
+                Validator.minNumber('#hostel-wifi', minNumber, 'Vui lòng để giá trị mặc định là 0 hoặc giá tối thiểu lớn hơn 1'),
                 Validator.maxNumber('#hostel-wifi', maxNumber, 'Vui lòng nhập giá nhỏ hơn 1000000'),
                 Validator.isInteger('#hostel-wifi', 'Vui lòng nhập đúng định dạng số nguyên'),
-                Validator.isRequired('#hostel-manage', 'Vui lòng nhập phí quản lý'),
-                Validator.minNumber('#hostel-manage', minNumber, 'Vui lòng nhập giá bắt đầu từ 0'),
+                Validator.minNumber('#hostel-manage', minNumber, 'Vui lòng để giá trị mặc định là 0 hoặc giá tối thiểu lớn hơn 1'),
                 Validator.maxNumber('#hostel-manage', maxNumber, 'Vui lòng nhập giá nhỏ hơn 1000000'),
                 Validator.isInteger('#hostel-manage', 'Vui lòng nhập đúng định dạng số nguyên'),
-                Validator.isRequired('#hostel-vehicle', 'Vui lòng nhập phí giữ xe'),
-                Validator.minNumber('#hostel-vehicle', minNumber, 'Vui lòng nhập giá bắt đầu từ 0'),
+                Validator.minNumber('#hostel-vehicle', minNumber, 'Vui lòng để giá trị mặc định là 0 hoặc giá tối thiểu lớn hơn 1'),
                 Validator.maxNumber('#hostel-vehicle', maxNumber, 'Vui lòng nhập giá nhỏ hơn 1000000'),
                 Validator.isInteger('#hostel-vehicle', 'Vui lòng nhập đúng định dạng số nguyên'),
-                Validator.isRequired('#hostel-cleaning', 'Vui lòng nhập phí vệ sinh'),
-                Validator.minNumber('#hostel-cleaning', minNumber, 'Vui lòng nhập giá bắt đầu từ 0'),
+                Validator.minNumber('#hostel-cleaning', minNumber, 'Vui lòng để giá trị mặc định là 0 hoặc giá tối thiểu lớn hơn 1'),
                 Validator.maxNumber('#hostel-cleaning', maxNumber, 'Vui lòng nhập giá nhỏ hơn 1000000'),
                 Validator.isInteger('#hostel-cleaning', 'Vui lòng nhập đúng định dạng số nguyên'),
             ]
@@ -286,6 +305,16 @@
         </script>
     </c:when>
 </c:choose>
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function () {
+        receiveWebsocket.disconnectWebSocket();
+    };
+</script>
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">
     <!-- Loader -->

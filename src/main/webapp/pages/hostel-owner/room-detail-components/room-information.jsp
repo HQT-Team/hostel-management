@@ -12,7 +12,18 @@
             <span>${sessionScope.room.roomArea} m2</span></div>
         <div class="infor-group">Gác: <span>${sessionScope.room.hasAttic eq 1 ? "Có" : "Không"}</span></div>
         <div class="infor-group">Trạng thái:
-            <span>${sessionScope.room.roomStatus eq 1 ? "Phòng sẵn sàng cho thuê" : "Đã được thuê"}</span></div>
+            <c:choose>
+                <c:when test="${sessionScope.room.roomStatus eq 0}">
+                    <span class="text-danger">Đã được thuê</span>
+                </c:when>
+                <c:when test="${sessionScope.room.roomStatus eq 1}">
+                    <span class="text-success">Sẵn sàng cho thuê</span>
+                </c:when>
+                <c:when test="${sessionScope.room.roomStatus eq -1}">
+                    <span class="text-warning">Đang làm hợp đồng</span>
+                </c:when>
+            </c:choose>
+        </div>
     </div>
     <div class="col-12 col-md-5 room-information__right">
         <div class="infor-group">Ngày bắt đầu hợp đồng:

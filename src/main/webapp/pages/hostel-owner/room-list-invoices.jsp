@@ -24,6 +24,9 @@
 
     <!-- Simple Datatable CSS -->
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+
+    <!-- CSS Push Notification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 </head>
 
 <body class="over-flow-hidden">
@@ -58,14 +61,14 @@
                 <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}"
                    class="history-link">${sessionScope.hostel.hostelName}</a>
                 <i class="fa-solid fa-chevron-right"></i>
-                <a href="GetRoomDetailServlet?roomID=${sessionScope.room.roomId}"
+                <a href="roomDetail?roomID=${sessionScope.room.roomId}"
                    class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
                 <i class="fa-solid fa-chevron-right"></i>
                 <div class="current">Danh sách hóa đơn</div>
             </div>
             <!-- Infor box -->
             <div class="col-xxl-9 m-auto">
-                <div class="content__body">
+                <div class="content__body mb-5">
                     <h1 class="content__title">Danh sách hóa đơn</h1>
                     <table id="invoices-table" class="content__table table table-bordered table-striped">
                         <thead class="content__thead">
@@ -122,6 +125,10 @@
 </div>
 
 <!-- Footer -->
+<%@include file="./components/footer.jsp"%>
+<!-- Push notification element -->
+<div id="push-noti"></div>
+
 <%@include file="./components/footer.jsp" %>
 <script src="./assets/js/toast-alert.js"></script>
 <script>
@@ -155,6 +162,21 @@
 <script src="./assets/js/handle-main-navbar.js"></script>
 <!-- Simple Datatable JS -->
 <script src="./assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/receiveWebsocket.js"></script>
+
+
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function(){
+        receiveWebsocket.disconnectWebSocket();
+    };
+</script>
 <script>
     $(document).ready(function () {
         // Initial datatable

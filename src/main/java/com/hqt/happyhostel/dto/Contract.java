@@ -19,4 +19,5 @@ public class Contract {
     int hostelOwnerId;
     int renterId;
     int status;
+    String cancelDate;
 }
