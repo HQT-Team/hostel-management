@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlets.RenterServlet;
+package com.hqt.happyhostel.servlets.RenterServlets;
 
 import com.hqt.happyhostel.dao.ContractDAO;
 import com.hqt.happyhostel.dao.HostelDAO;

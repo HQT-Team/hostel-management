@@ -36,41 +36,45 @@
     Information ACC_INFO = (Information) session.getAttribute("ACC_INFO");
 %>
 <div>
-  <!-- navbar -->
-  <nav class="navbar row">
-    <div class="navbar-left">
-      <div class="dropdown"  style="padding-left: 15px;">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
-          Menu
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
-          <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
-          <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
-          <a class="dropdown-item" href="renter-invoice"style="font-size: 15px;">Hóa đơn</a>
-          <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
-          <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
-          <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
-          <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
-          <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
-          <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
+    <!-- navbar -->
+    <nav class="navbar row">
+        <div class="navbar-left">
+            <div class="dropdown" style="padding-left: 15px;">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"
+                        style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
+                    Menu
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
+                    <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
+                    <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
+                    <a class="dropdown-item" href="renter-invoice" style="font-size: 15px;">Hóa đơn</a>
+                    <a class="dropdown-item" href="Renter-report" style="font-size: 15px;">Báo cáo</a>
+                    <a class="dropdown-item" href="RenterNotificationPage" style="font-size: 15px;">Thông báo</a>
+                    <a class="dropdown-item" href="Renter-add-roommate" style="font-size: 15px;">Thêm bạn</a>
+                    <a class="dropdown-item" href="Get-report" style="font-size: 15px;">Xem báo cáo</a>
+                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"
+                       style="font-size: 15px;">Hồ sơ</a>
+                    <a class="dropdown-item" href="logout" style="font-size: 15px;">Đăng xuất</a>
+                </div>
+            </div>
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="HostelRenterPage" style="text-decoration: none; color:#FFFFFF">Người
+                        thuê</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa</li>
+                </ol>
+            </nav>
         </div>
-      </div>
-      <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="HostelRenterPage" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa</li>
-        </ol>
-      </nav>
-    </div>
-    <div class="navbar-center">
-      <a href="" role="button"><img src="./assets/images/logos/logowhite.png" alt=""></a>
-    </div>
-    <div class="navbar-right">
-      <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>
-    </div>
+        <div class="navbar-center">
+            <a href="" role="button"><img src="./assets/images/logos/logowhite.png" alt=""></a>
+        </div>
+        <div class="navbar-right">
+            <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>
+        </div>
 
     </nav>
 
@@ -139,39 +143,51 @@
 
                     </div>
                     <div class="form-content">
-                        <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !"
-                               value="<fmt:parseDate pattern="yyyy-MM-dd" value=" ${ACC_INFO.getBirthday()}" var="getBirthday" /><fmt:formatDate value="${getBirthday}" type="Date" pattern="dd-MM-yyyy"/>
-">
+                        <c:choose>
+                            <c:when test="<%=ACC_INFO.getBirthday() == null%>">
+                                <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !" value="">
+                            </c:when>
+                            <c:otherwise>
+                                <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !" value="<fmt:parseDate pattern="yyyy-MM-dd" value="<%=ACC_INFO.getBirthday()%>" var="birthday" /><fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>">
+                            </c:otherwise>
+                        </c:choose>
+
                         <span id="mes-3"></span>
                     </div>
                     <div class="form-content">
-                        <input id="input-7" type="text" name="new-sex" placeholder="Giới Tính!" <%
-                            if (ACC_INFO.getSex() == 1) {
-                        %>
-                               value="Nữ"
-                                <%
-                                } else {
-                                %>
-                               value="Nam"
-                                <%
-                                    }
-                                %>
-                        />
+                        <select name="new-sex" id="input-7">
+                            <%
+                                if (ACC_INFO.getSex() == 1) {
+                            %>
+                            <option value="1">Nam</option>
+                            <option value="0">Nữ</option>
+                            <%
+                            } else {
+                            %>
+                            <%--                               value="Nam"--%>
+                            <option value="0">Nữ</option>
+                            <option value="1">Nam</option>
+
+                            <%
+                                }
+                            %>
+                            />
+                        </select>
                         <span id="mes-7"></span>
                     </div>
                     <div class="form-content">
                         <input id="input-4" type="text" name="new-phone" placeholder="Nhập số điện thoại mới!"
-                               value="<%=ACC_INFO.getPhone()%>">
+                               value="<%=ACC_INFO.getPhone() == null ? "" : ACC_INFO.getPhone()%>">
                         <span id="mes-4"></span>
                     </div>
                     <div class="form-content">
                         <input id="input-5" type="text" name="new-address" placeholder="Nhập địa chỉ mới!"
-                               value="<%=ACC_INFO.getAddress()%>">
+                               value="<%=ACC_INFO.getAddress() == null ? "" : ACC_INFO.getAddress()%>">
                         <span id="mes-5"></span>
                     </div>
                     <div class="form-content">
                         <input id="input-6" type="text" name="new-cccd" placeholder="Nhập cccd mới!"
-                               value="<%=ACC_INFO.getCccd()%>">
+                               value="<%=ACC_INFO.getCccd() == null ? "" : ACC_INFO.getCccd()%>">
                         <span id="mes-6"></span>
                     </div>
                     <div>
@@ -230,9 +246,8 @@
 <script type="text/javascript">
     // Receive
     receiveWebsocket(alertPushNoti);
-
     // Close when leave
-    window.onbeforeunload = function(){
+    window.onbeforeunload = function () {
         receiveWebsocket.disconnectWebSocket();
     };
 </script>

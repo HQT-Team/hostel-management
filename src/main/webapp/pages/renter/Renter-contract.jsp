@@ -1,5 +1,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.hqt.happyhostel.dto.Account" %><%--
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.hqt.happyhostel.dto.Account" %>
+<%@ page import="java.security.acl.Owner" %>
+<%@ page import="com.hqt.happyhostel.dto.Information" %><%--
   Created by IntelliJ IDEA.
   User: 84337
   Date: 6/18/2022
@@ -63,7 +66,8 @@
             </div>
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="HostelRenterPage" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
+                    <li class="breadcrumb-item"><a href="HostelRenterPage" style="text-decoration: none; color:#FFFFFF">Người
+                        thuê</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">Hợp Đồng</li>
                 </ol>
@@ -129,24 +133,33 @@
             <div class="contract-content">
                 <div class="contract-head"><h4>Hợp Đồng Thuê Phòng</h4></div>
                 <div class="contract-body">
-                    <div class="owner-infor"><p>Bên cho thuê</p>
+                    <div class="owner-infor">
                         <h5><strong>Chủ trọ: </strong>${OWNER_INFO.fullname}</h5><br>
                         <h5><strong>Ngày sinh: </strong>
-                            <fmt:parseDate pattern="yyyy-MM-dd" value=" ${OWNER_INFO.birthday}" var="birthday"/>
-                            <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
+                            <c:if test="${!OWNER_INFO.birthday eq null}">
+                                <fmt:parseDate pattern="yyyy-MM-dd" value="${OWNER_INFO.birthday}" var="birthday"/>
+                                <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
+                            </c:if>
+                            <c:if test="${OWNER_INFO.birthday eq null}">
+                                Không có thông tin!
+                            </c:if>
                         </h5><br>
                         <h5><strong>CCCD: </strong>${OWNER_INFO.cccd}</h5><br>
                         <h5><strong>SĐT: </strong>${OWNER_INFO.phone}</h5><br>
                     </div>
                     <div class="renter-infor">
-                        <p>Bên thuê</p>
                         <h5><strong>Người Thuê: </strong>${RENTER_INFO.fullname}</h5><br>
                         <h5><strong>Ngày sinh: </strong>
-                            <fmt:parseDate pattern="yyyy-MM-dd" value=" ${RENTER_INFO.birthday}" var="birthday"/>
-                            <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
+                            <c:if test="${!RENTER_INFO.birthday eq null}">
+                                <fmt:parseDate pattern="yyyy-MM-dd" value=" ${RENTER_INFO.birthday}" var="birthday"/>
+                                <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
+                            </c:if>
+                            <c:if test="${RENTER_INFO.birthday eq null}">
+                                Không có thông tin!
+                            </c:if>
                         </h5><br>
-                        <h5><strong>CCCD: </strong>${RENTER_INFO.cccd}</h5><br>
-                        <h5><strong>SĐT: </strong>${RENTER_INFO.phone}</h5><br>
+                        <h5><strong>CCCD: </strong>${RENTER_INFO.cccd eq null ? "Không có thông tin!" : RENTER_INFO.cccd}</h5><br>
+                        <h5><strong>SĐT: </strong>${RENTER_INFO.phone eq null ? "Không có thông tin!" : RENTER_INFO.phone}</h5><br>
                     </div>
                 </div>
                 <div class="contract-result">
@@ -218,9 +231,8 @@
 <script type="text/javascript">
     // Receive
     receiveWebsocket(alertPushNoti);
-
     // Close when leave
-    window.onbeforeunload = function(){
+    window.onbeforeunload = function () {
         receiveWebsocket.disconnectWebSocket();
     };
 </script>

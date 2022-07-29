@@ -6,7 +6,9 @@
 .dropdown {
   display: none;
 }
-
+.main-body{
+  margin: 0;
+}
 body{
   overflow-x: hidden;
 }
@@ -136,8 +138,7 @@ body{
       }
 
       a {
-
-        font-size: 13px;
+        font-size: 16px;
       }
     }
   }
@@ -150,5 +151,3 @@ body{
     }
   }
 }
-
-
