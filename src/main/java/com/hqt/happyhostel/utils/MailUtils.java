@@ -195,8 +195,8 @@ public class MailUtils {
         return sendMail(receiveMail, mailObject, mailBody);
     }
 
-    public boolean SendMailConfirmActiveOwnerAccount(String receiveMail, String domain){
-        String mailObject = "Tài khoản đã được xác thực";
+    public boolean SendMailUnblockOwnerAccount(String receiveMail, String domain){
+        String mailObject = "Tài khoản của bạn đã được mở khóa";
         String mailBody =
                 "<head>\n" +
                         "\t<meta charset=\"UTF-8\">\n" +
@@ -226,7 +226,7 @@ public class MailUtils {
                         "\t\t\t<div class=\"content__title\" style=\"font-size: 20px;\n" +
                         "                                                padding: 22px 0;\n" +
                         "                                                font-weight: 500;\">\n" +
-                        "\t\t\t\tTài khoản của bạn đã được xác nhận.\n" +
+                        "\t\t\t\tTài khoản của bạn đã được mở khóa.\n" +
                         "\t\t\t</div>\n" +
                         "\t\t\t<div class=\"content__sub-title\" style=\"color: #1fdf7f;\n" +
                         "                                                    font-size: 20px;\n" +
@@ -250,6 +250,52 @@ public class MailUtils {
                         "</body>";
         return sendMail(receiveMail, mailObject, mailBody);
     }
+
+    public boolean SendMailBlockOwnerAccount(String receiveMail, String domain){
+        String mailObject = "Tài khoản của bạn đã bị khóa";
+        String mailBody =
+                "<head>\n" +
+                        "\t<meta charset=\"UTF-8\">\n" +
+                        "\t<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n" +
+                        "\t<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
+                        "\t<link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap\" rel=\"stylesheet\">\n" +
+                        "</head>\n" +
+                        "\n" +
+                        "<body>\n" +
+                        "\t<div class=\"mail\" style=\"max-width: 600px;\n" +
+                        "                                width: 100%;\n" +
+                        "                                margin: 0 auto;\n" +
+                        "                                background-color: #fff;\n" +
+                        "                                font-family: 'Roboto', sans-serif;\n" +
+                        "                                text-align: center;\n" +
+                        "                                padding-bottom: 24px;\n" +
+                        "                                box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;\">\n" +
+                        "\t\t<div class=\"header\" style=\"background-color: #1fdf7f;\n" +
+                        "                                    align-items: center;\n" +
+                        "                                    font-size: 20px;\n" +
+                        "                                    font-weight: bold;\n" +
+                        "                                    color: #fff;\n" +
+                        "                                    padding: 24px 0;\">\n" +
+                        "\t\t\tHQT Hostel Management\n" +
+                        "\t\t</div>\n" +
+                        "\t\t<div class=\"content\">\n" +
+                        "\t\t\t<div class=\"content__title\" style=\"font-size: 20px;\n" +
+                        "                                                padding: 22px 0;\n" +
+                        "                                                font-weight: 500;\">\n" +
+                        "\t\t\t\tTài khoản của bạn đã bị khóa.\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t\t<div class=\"content__sub-title\" style=\"color: #1fdf7f;\n" +
+                        "                                                    font-size: 20px;\n" +
+                        "                                                    font-weight: 500;\n" +
+                        "                                                    text-shadow: 1px 1px rgba(100, 94, 94, 0.4);\">\n" +
+                        "\t\t\t\tTừ giờ bạn không thể sử dụng dịch vụ của chúng tôi </br> Xin vui lòng liên hệ thông qua email hqthostel@gmail.com để được hỗ trợ.\n" +
+                        "\t\t\t</div>\n" +
+                        "\t\t</div>\n" +
+                        "\t</div>\n" +
+                        "</body>";
+        return sendMail(receiveMail, mailObject, mailBody);
+    }
+
     public boolean SendMailNotice(ArrayList<String> accMailList, String domain){
         String mailObject = "Bạn vừa nhận được thông báo mới từ chủ trọ.";
         String mailBody =

@@ -46,10 +46,14 @@ public class LoginServlet extends HttpServlet {
                     }
                 }
                 session.setAttribute("CURRENT_PAGE", "dashboard");
-            } else if (account != null && account.getStatus() == 0) {
+            }else if (account != null && account.getStatus() == -1){
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(false)
-                        .content("Tài khoản của bạn đã bị khóa hoặc chưa được kích hoạt!").build());
+                        .content("Tài khoản của bạn đã bị khóa! Vui lòng liên hệ quản trị viên để biết thêm chi tiết.").build());
+            }else if (account != null && account.getStatus() == 0) {
+                request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
+                        .status(false)
+                        .content("Tài khoản của bạn chưa được kích hoạt! Vui lòng liên hệ quản trị viên để biết thêm chi tiết.").build());
             } else {
                 request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                         .status(false)
