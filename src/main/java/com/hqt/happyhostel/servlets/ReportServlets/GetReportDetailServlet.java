@@ -1,5 +1,6 @@
 package com.hqt.happyhostel.servlets.ReportServlets;
 
+import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dao.ReportDetailDAO;
 import com.hqt.happyhostel.dto.ReportDetail;
 

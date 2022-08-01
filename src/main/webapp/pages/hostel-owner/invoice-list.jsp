@@ -315,7 +315,7 @@
 
             axios({
                 method: 'post',
-                url: 'http://localhost:8080/HappyHostel/getInvoiceList',
+                url: 'http://localhost:8080/HappyHostel/get-invoice-list-async',
                 params: {
                     'hostelId': $('#filter__hostel-select-1').find(':selected').val(),
                     'roomId': $('#filter__room-select-1').find(':selected').val(),
@@ -346,7 +346,7 @@
 
             axios({
                 method: 'post',
-                url: 'http://localhost:8080/HappyHostel/getInvoiceList',
+                url: 'http://localhost:8080/HappyHostel/get-invoice-list-async',
                 params: {
                     'hostelId': $('#filter__hostel-select-2').find(':selected').val(),
                     'roomId': $('#filter__room-select-2').find(':selected').val(),
