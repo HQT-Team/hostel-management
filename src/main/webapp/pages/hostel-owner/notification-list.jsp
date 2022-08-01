@@ -32,6 +32,12 @@
     <!-- CSS Push Notification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
+    <style>
+        .ck-editor__editable_inline {
+            height: 200px;
+        }
+    </style>
+
 </head>
 
 <body class="over-flow-hidden">
@@ -210,10 +216,20 @@
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
 <script src="./assets/js/receiveWebsocket.js"></script>
-
+<!-- CKEditor -->
+<script src="./assets/js/ckeditor.js"></script>
 
 <script>
     $(document).ready(function () {
+        // Initial CKEditor
+        ClassicEditor.create( document.querySelector('#noti-content'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch( error => {
+                console.error(error);
+            });
+
         // Select 2
         $(`#filter__hostel-select`).select2();
         $('#noti-hostel-id').select2();

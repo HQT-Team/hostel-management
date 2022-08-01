@@ -26,6 +26,11 @@
     <!-- CSS Push Nnotification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
+    <style>
+        .ck-editor__editable_inline {
+            height: 200px;
+        }
+    </style>
 </head>
 
 <body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
@@ -71,7 +76,7 @@
             </div>
             <!-- Infor box -->
             <div class="col-xxl-9 m-auto">
-                <div class="content__body">
+                <div class="content__body mb-5">
                     <div class="report">
                         <h1 class="report__title">Báo cáo #RP${requestScope.reportDetail.report.reportID}</h1>
                         <div class="report__spacer"></div>
@@ -116,8 +121,8 @@
                                     <input type="hidden" name="reportId" value="${requestScope.reportDetail.report.reportID}" />
                                     <input type="hidden" name="action" value="reply" />
                                     <div class="form-group">
-                                        <label for="response" class="form-label">Phản hồi: <span>*</span></label>
-                                        <textarea name="response" id="response" class="form-control" placeholder="Nhập phản hồi"></textarea>
+                                        <label for="response-textarea" class="form-label">Phản hồi: <span>*</span></label>
+                                        <textarea name="response" id="response-textarea" class="form-control" placeholder="Nhập phản hồi"></textarea>
                                     </div>
                                     <div class="report__spacer"></div>
                                     <div class="report__action d-flex justify-content-between">
@@ -178,7 +183,6 @@
 <!-- Push notification element -->
 <div id="push-noti"></div>
 
-
 <!-- Toast element -->
 <div id="toast">&nbsp;</div>
 
@@ -190,14 +194,27 @@
 <script src="./assets/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <!-- Navbar -->
 <script src="./assets/js/handle-main-navbar.js"></script>
-<!-- Link your script here -->
+<!-- Toast -->
 <script src="./assets/js/toast-alert.js"></script>
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
 <script src="./assets/js/receiveWebsocket.js"></script>
+<!-- CKEditor -->
+<script src="./assets/js/ckeditor.js"></script>
 
 <script>
+    <c:if test="${requestScope.reportDetail.report.status eq 0}">
+    // Initial CKEditor
+    ClassicEditor.create(document.querySelector('#response-textarea'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch( error => {
+            console.error(error);
+        });
+    </c:if>
+
     <c:choose>
         <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
             toast({
