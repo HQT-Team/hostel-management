@@ -24,6 +24,7 @@ public class AddReportServlet extends HttpServlet {
         try {
             List<ReportCategory> reportCategories = new ReportCategoryDAO().getReportCategory();
             req.setAttribute("REPORT_CATE", reportCategories);
+            req.setAttribute("uri", req.getRequestURI());
         } catch (Exception e) {
             log("Error at GetReportCategoryListServlet: " + e.toString());
         } finally {
@@ -39,7 +40,7 @@ public class AddReportServlet extends HttpServlet {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String sendDate = dateObj.format(formatter);
         HandlerStatus handlerStatus;
-
+        req.setAttribute("uri", req.getRequestURI());
         try {
             HttpSession session = req.getSession();
             Account acc = (Account) session.getAttribute("USER");

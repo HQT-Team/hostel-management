@@ -2,12 +2,6 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-.dropdown {
-  display: none;
-}
-.main-body{
-  margin: 0;
-}
 body {
   overflow-x: hidden;
 }
@@ -35,7 +29,6 @@ body {
     h2 {
       width: 100%;
       text-align: center;
-      color: #6a5af9;
       margin-bottom: 20px;
       font-size: 28px;
     }
@@ -129,111 +122,6 @@ body {
     }
   }
 }
-footer{
-  .copyright-content{
-    font-size: 18px;
-  }
-}
 
 @media screen and (max-width: 1024px) {
-  .dropdown {
-    display: block;
-  }
-
-  .dashboard {
-    display: none;
-  }
-
-  .link {
-    display: none;
-  }
-
-  .content {
-    width: 100%;
-
-    .report {
-      width: 70%;
-
-      h2 {
-        font-size: 20px;
-        width: 80%;
-      }
-
-      div {
-        #select {
-          width: 50%;
-        }
-      }
-    }
-  }
-}
-
-
-@media screen and (max-width: 740px) {
-  .navbar {
-    .navbar-center {
-      img {
-        width: 130px;
-        height: 40px;
-      }
-    }
-
-    .navbar-right {
-
-      img {
-        display: none;
-      }
-
-      a {
-
-        font-size: 16px;
-
-      }
-    }
-  }
-
-  .dropdown {
-    display: block;
-  }
-
-  .dashboard {
-    display: none;
-  }
-
-  .link {
-    display: none;
-  }
-
-  .main-body {
-    padding: 0px;
-    margin: 0px;
-  }
-
-  .content {
-    width: 100%;
-    padding: 0px;
-    margin: 0px;
-
-    .report {
-      width: 90%;
-      padding: 5px;
-
-      h2 {
-        font-size: 18px;
-        width: 80%;
-      }
-
-      div {
-        #select {
-          width: 100%;
-        }
-      }
-
-      div {
-        input {
-          width: 100%;
-        }
-      }
-    }
-  }
 }

@@ -5,23 +5,14 @@
 
 body {
   position: relative;
-
-}
-
-.dropdown {
-  display: none;
+  overflow-x: hidden;
+  height: 100vh;
+  font-size: 18px;
 }
 
 .main-body {
   padding: 0px;
   margin: 0px;
-}
-.main-body{
-  margin: 0;
-}
-body {
-  overflow-x: hidden;
-  height: 100vh;
 }
 
 .content {
@@ -34,7 +25,6 @@ body {
   .title-table {
     font-weight: 550;
     font-size: 34px;
-    color: #000000;
     margin: 40px 0px 10px 0px;
     text-align: center;
     height: 45px;
@@ -63,6 +53,7 @@ body {
           text-decoration: none;
           background-color: #fff;
           color: blue;
+
         }
       }
     }
@@ -70,136 +61,16 @@ body {
 
   .modal-header {
     h5 {
-      color: #6A5AF9;
       width: 100%;
+      margin-left: 27px;
       text-align: center;
     }
+  }
+  .modal-content{
+    padding: 10px 15px;
   }
 }
 
 
 @media screen and (min-width: 740px) and (max-width: 1024px) {
-  .link {
-    display: none;
-  }
-
-  .dropdown {
-    display: block;
-
-    button {
-      width: 100px;
-      height: 40px;
-      background-color: rgb(0, 102, 255);
-    }
-  }
-
-  .dashboard {
-    display: none;
-  }
-
-  .content {
-    width: 100%;
-    margin: 0px;
-
-    table {
-      margin: 100px auto;
-      width: 80%;
-      text-align: center;
-      font-size: 25px;
-
-      h2 {
-        color: rgb(119, 0, 255);
-        font-size: 26px;
-      }
-
-      tr {
-        th {
-          border: 1px solid black;
-        }
-
-        td {
-          border: 1px solid black;
-        }
-      }
-    }
-  }
-
-}
-
-@media screen and (max-width: 740px) {
-  .dropdown {
-    display: block;
-  }
-
-  .link {
-    display: none;
-  }
-
-  .dashboard {
-    display: none;
-  }
-
-  .navbar {
-    height: 60px;
-
-    .navbar-left {
-      width: 20%;
-    }
-
-    .main-body {
-      padding: 0px;
-      margin: 0px;
-    }
-
-    .navbar-center {
-      width: 60%;
-
-      a {
-        img {
-          width: 100px;
-          height: 30px;
-        }
-      }
-    }
-
-    .navbar-right {
-      width: 20%;
-      padding: 0px;
-
-      a {
-        font-size: 16px;
-
-        img {
-          display: none;
-        }
-      }
-    }
-  }
-
-  .content {
-    padding: 0px;
-    width: 100%;
-
-    table {
-      margin: 100px auto;
-      width: 80%;
-      text-align: center;
-      font-size: 25px;
-
-      h2 {
-        color: rgb(119, 0, 255);
-        font-size: 26px;
-      }
-
-      tr {
-        th {
-          border: 1px solid black;
-        }
-
-        td {
-          border: 1px solid black;
-        }
-      }
-    }
-  }
 }

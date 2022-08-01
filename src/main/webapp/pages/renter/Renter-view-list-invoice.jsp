@@ -36,96 +36,16 @@
     Account account = (Account) session.getAttribute("USER");
 %>
 <div>
-    <nav class="navbar row">
-        <div class="navbar-left">
-            <div class="dropdown"  style="padding-left: 15px;">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"style="width:80px ;height: 35px;font-size: 14px;background-color: rgb(0, 0, 0);">
-                    Menu
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="HostelRenterPage" style="font-size: 15px;">Thông tin phòng</a>
-                    <a class="dropdown-item" href="get-roommate-infor" style="font-size: 15px;">Bạn cùng phòng</a>
-                    <a class="dropdown-item" href="ContractPage" style="font-size: 15px;">Hợp đồng</a>
-                    <a class="dropdown-item" href="renter-invoice"style="font-size: 15px;">Hóa đơn</a>
-                    <a class="dropdown-item" href="Renter-report"style="font-size: 15px;">Báo cáo</a>
-                    <a class="dropdown-item" href="RenterNotificationPage"style="font-size: 15px;">Thông báo</a>
-                    <a class="dropdown-item" href="Renter-add-roommate"style="font-size: 15px;">Thêm bạn</a>
-                    <a class="dropdown-item" href="Get-report"style="font-size: 15px;">Xem báo cáo</a>
-                    <a class="dropdown-item" href="HostelRenterProfilePage?<%= account.getAccId()%>"style="font-size: 15px;">Hồ sơ</a>
-                    <a class="dropdown-item" href="logout"style="font-size: 15px;">Đăng xuất</a>
-                </div>
-            </div>
-            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="link">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="HostelRenterPage" style="text-decoration: none; color:#FFFFFF">Người thuê</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Hoá Đơn</li>
-                </ol>
-            </nav>
-        </div>
-        <div class="navbar-center">
-            <a href="" role="button"><img src="./assets/images/logos/logowhite.png" alt=""></a>
-        </div>
-        <div class="navbar-right">
-            <a href="logout" role="button">Đăng xuất <img src="./assets/images/logos/logout.png" alt=""></a>
-        </div>
-
-    </nav>
-
-    <div class="row main-body">
-        <div class="dashboard hidden" id="dashboard">
-            <div class="infor-top">
-                <img src="./assets/images/avatars/user-avatar.jpg" alt="">
-                <h3><%= account.getAccountInfo().getInformation().getFullname() %>
-                </h3>
-                <p>Người Thuê</p>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingOne">
-                    <button class="collapsed show" data-toggle="collapse" data-target="#collapseOne"
-                            aria-expanded="true" aria-controls="collapseOne">
-                        <img src="./assets/images/logos/homeicon.webp">
-                        Phòng trọ
-                    </button>
-                </div>
-
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                    <div class="card-body">
-                        <h3><a href="HostelRenterPage">Thông tin phòng</a></h3>
-                        <h3><a href="get-roommate-infor">Bạn cùng phòng</a></h3>
-                        <h3><a href="ContractPage">Hợp đồng</a></h3>
-                        <h3><a href="renter-invoice" style="color:rgb(4, 4, 255)">Hóa đơn</a></h3>
-                        <h3><a href="Renter-report">Gửi báo cáo</a></h3>
-                        <h3><a href="RenterNotificationPage">Xem thông báo</a></h3>
-                        <h3><a href="Renter-add-roommate">Thêm bạn</a></h3>
-                        <h3><a href="Get-report">Xem báo cáo</a></h3>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingTwo">
-                    <button class="collapsed" data-toggle="collapse" data-target="#collapseTwo"
-                            aria-expanded="false" aria-controls="collapseTwo">
-                        <img src="./assets/images/logos/account.png">
-                        Tài khoản
-                    </button>
-                </div>
-                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
-                    <div class="card-body">
-                        <h3><a href="HostelRenterProfilePage?<%=account.getAccId()%>">Hồ sơ</a></h3>
-                        <h3><a href="logout">Đăng xuất</a></h3>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <%@include file="components/navbar.jsp"%>
+    <div class="row" style="padding: 0;margin: 0;">
+        <%@include file="components/sidebar.jsp"%>
 
 
         <div class="content">
             <div class="table-content">
                 <h2>Danh Sách Hoá Đơn</h2>
                 <table class="table table-bordered">
-                    <thead>
+                    <thead class="table-head">
                     <tr>
                         <th>Mã Hoá Đơn</th>
                         <th>Ngày Tạo Hoá Đơn</th>
@@ -160,20 +80,7 @@
         </div>
     </div>
 </div>
-<footer>
-    <div>
-        <div class="row">
-            <div class="col-12">
-                <div class="copyright-wrapper d-flex justify-content-center">
-                    <!-- <div class="copyright-logo">
-                        <img src="../../assets/images/logos/logo-white.png" alt="Logo">
-                    </div> -->
-                    <div class="copyright-content"style="font-size: 18px;">© 2022 HQT Team. All rights reserved.</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+<%@include file="components/footer.jsp"%>
 
 <!-- Push notification element -->
 <div id="push-noti"></div>

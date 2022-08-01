@@ -2,13 +2,6 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-
-.dropdown {
-  display: none;
-}
-.main-body{
-  margin: 0;
-}
 body{
   overflow-x: hidden;
 }
@@ -88,66 +81,4 @@ body{
 }
 
 @media screen and (min-width: 740px) and (max-width: 1024px) {
-  .dropdown {
-    display: block;
-  }
-
-  .link {
-    display: none;
-  }
-
-  .dashboard {
-    display: none;
-  }
-
-  .content {
-    width: 100%;
-
-    .div-controll-form {
-      width: 80%;
-    }
-  }
-}
-
-
-
-@media screen and (max-width: 740px) {
-  .dropdown {
-    display: block;
-  }
-
-  .link {
-    display: none;
-  }
-
-  .dashboard {
-    display: none;
-  }
-
-  .navbar {
-    .navbar-center {
-      img {
-        width: 130px;
-        height: 40px;
-      }
-    }
-
-    .navbar-right {
-      img {
-        display: none;
-      }
-
-      a {
-        font-size: 16px;
-      }
-    }
-  }
-
-  .content {
-    width: 100%;
-
-    .div-controll-form {
-      width: 80%;
-    }
-  }
 }

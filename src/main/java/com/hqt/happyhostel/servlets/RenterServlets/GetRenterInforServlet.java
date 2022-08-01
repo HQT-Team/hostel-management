@@ -28,6 +28,7 @@ public class GetRenterInforServlet extends HttpServlet {
         List<ServiceInfo> serviceInfo = new ArrayList<>();
         Information accInfo;
         try {
+            req.setAttribute("uri", req.getRequestURI());
             HttpSession session = req.getSession();
             acc = (Account)session.getAttribute("USER");
             int renterId = acc.getAccId();

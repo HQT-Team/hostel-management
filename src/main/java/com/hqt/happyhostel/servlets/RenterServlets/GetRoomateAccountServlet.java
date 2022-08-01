@@ -21,6 +21,7 @@ public class GetRoomateAccountServlet extends HttpServlet {
 
             List<RoommateInfo> list = new RoommateInfoDAO().getListRoommatesOfAnAccount(account.getAccId());
             session.setAttribute("listroommateinfor", list);
+            request.setAttribute("uri", request.getRequestURI());
             request.getRequestDispatcher("Renter-roommate").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();

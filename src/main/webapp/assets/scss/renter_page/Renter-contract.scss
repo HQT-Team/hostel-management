@@ -2,22 +2,15 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-.dropdown {
-  display: none;
-}
-.main-body{
-  margin: 0;
-}
 body {
-  font-size: 20px;
   overflow-x: hidden;
 
   .content {
-
+    margin: 0;
     text-align: left;
     width: 80%;
     padding: 10px;
-    min-height: calc(100vh - 80px);
+
     .contract-content {
       padding: 20px 40px;
       border: 1px solid black;
@@ -31,7 +24,6 @@ body {
           margin-bottom: 20px;
           text-align: center;
           font-size: 30px;
-          color: blue;
           font-weight: 550;
         }
       }
@@ -90,103 +82,8 @@ body {
           font-size: 20px;
         }
       }
-
-
     }
   }
 }
-footer{
-  .copyright-content{
-    font-size: 18px;
-  }
-}
-
-
 @media screen and (min-width: 740px) and (max-width: 1024px) {
-  body {
-    .link {
-      display: none;
-    }
-
-    .dropdown {
-      display: block;
-    }
-
-    .dashboard {
-      display: none;
-    }
-
-    .content {
-      width: 100%;
-
-      .contract-content {
-        width: 100%;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 740px) {
-  .navbar {
-    .navbar-center {
-      img {
-        width: 130px;
-        height: 40px;
-      }
-    }
-
-    .navbar-right {
-      img {
-        display: none;
-      }
-
-      a {
-
-        font-size: 16px;
-      }
-    }
-  }
-
-  body {
-    .link {
-      display: none;
-    }
-
-    .dropdown {
-      display: block;
-    }
-
-    .dashboard {
-      display: none;
-    }
-
-    .content {
-      padding: 10px;
-      width: 100%;
-
-      .contract-content {
-        width: 100%;
-
-        h2 {
-          font-size: 23px;
-        }
-
-        h3 {
-          font-size: 20px;
-        }
-
-        h4 {
-          font-size: 18px;
-        }
-
-        p {
-          font-size: 16px;
-        }
-
-        h5 {
-          font-size: 14px;
-        }
-      }
-    }
-  }
 }

@@ -24,7 +24,8 @@ public class AddRenterRoommateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setAttribute("uri", request.getRequestURI());
+        request.getRequestDispatcher("Renter-add-roommate").forward(request, response);
     }
 
     @Override

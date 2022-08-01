@@ -2,15 +2,10 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-body{
+body {
   overflow-x: hidden;
 }
-.dropdown{
-  display: none;
-}
-.main-body{
-  margin: 0;
-}
+
 .content {
   width: 80%;
   margin: 0px;
@@ -18,126 +13,72 @@ body{
   min-height: 600px;
 
   .report {
-    width: 100%;
-    margin: 0px;
-    padding: 50px 20px;
-    text-align: center;
-    h2{
+    width: 80%;
+    margin: 10px auto;
+    padding: 30px 10px;
+
+    h2 {
+      color: blue;
       text-align: center;
       font-size: 30px;
       font-weight: 550;
-      margin-bottom: 20px;
-
-    }
-    #myInput {
-      width: 30%;
-      height: 35px;
-      border: 2px solid #7b7b7b;
-      margin-bottom: 10px;
-      border-radius: 6px;
-      padding-left: 10px;
-      font-size: 17px;
+      margin-bottom: 15px;
     }
 
-    input:focus {
-      border-color: #6A5Af9;
-    }
-
-    table {
-      text-align: center;
-      width: 80%;
-      margin: 10px auto;
-
-      thead {
-        tr{
-          height: fit-content;
-          padding: 0;
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
-
-          th {
-            padding:10px 0px;
-            margin: 0;
-            line-height: 22px;
-            font-size: 22px;
-          }
-        }
+    .main-form {
+      input {
+        font-weight: 500;
+        font-size: 20px;
+        border-radius: 5px;
+        border: 1px solid gray;
+        padding: 5px;
+        margin-bottom: 10px;
       }
 
-      tbody {
-        tr {
-          height: fit-content;
-          padding: 0;
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
+      .my-table {
+        width: 100%;
 
-          td {
-            padding:8px 0px;
-            margin: 0;
-            line-height: 18px;
-            font-size: 18px;
-            p {
-              padding: 0;
-              width: 100%;
-              margin: 0;
-              word-wrap: break-word;
+        thead {
+            background-color: #ff9595;
+          tr {
+            th {
+            text-align: center;
+              font-size: 20px;
+              font-weight: 600;
+              line-height: 20px;
+              padding: 10px;
             }
           }
         }
-      }
-    }
-  }
 
-}
+        tbody {
+          tr {
+            td {
+            text-align: center;
+              line-height: 18px;
+              font-size: 18px;
+              font-weight: 500;
+              padding: 5px;
 
-footer {
-  font-size: 18px;
-}
-
-@media screen and (max-width: 1200px) {
-  .dropdown{
-    display: block;
-  }
-  .dashboard{
-    display: none;
-  }
-  .content{
-    width: 100%;
-    .report{
-      width: 100%;
-      padding: 10px;
-    }
-
-
-  }
-  .link{
-    display: none;
-  }
-  .navbar {
-    height: 60px;
-
-    .navbar-center {
-
-      a {
-        img {
-          width: 100px;
-          height: 30px;
+              a {
+                color: blue;
+                font-size: 18px;
+                line-height: 18px;
+                text-decoration: none;
+                font-weight: 500;
+              }
+            }
+          }
+          tr:nth-child(odd){
+            background-color: #e4e7ea;
+          }
         }
       }
     }
 
-    .navbar-right {
-      width: 20%;
-      padding: 0px;
-
-      a {
-        font-size: 16px;
-
-        img {
-          display: none;
-        }
-      }
-    }
   }
 
+}
+
+@media screen and (max-width: 1024px) {
 }

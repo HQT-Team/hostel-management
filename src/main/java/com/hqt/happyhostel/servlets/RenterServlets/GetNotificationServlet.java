@@ -32,6 +32,7 @@ public class GetNotificationServlet extends HttpServlet {
             acc = (Account)session.getAttribute("USER");
             int accId = acc.getAccId();
             HostelDAO hostelDAO = new HostelDAO();
+            req.setAttribute("uri", req.getRequestURI());
 
             notifications = new NotificationDAO().getNotificationByRenterId(accId);
             if (notifications.size()>0){

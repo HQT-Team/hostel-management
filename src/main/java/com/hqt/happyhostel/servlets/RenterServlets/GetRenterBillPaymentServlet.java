@@ -29,6 +29,9 @@ public class GetRenterBillPaymentServlet extends HttpServlet {
             int billID = ( req.getAttribute("billID") != null) ? (int) req.getAttribute("billID") : Integer.parseInt(req.getParameter("billID")) ;
             BillDetail billDetail = new BillDAO().getBillDetail(billID);
 
+            RoomDAO roomDAO = new RoomDAO();
+            Room room = roomDAO.getRoomInfoByRenterId(account.getAccId());
+            req.setAttribute("RoomInfor", room);
             Bill bill = billDAO.getRenterBillByID(billID);
             req.setAttribute("RESPONSE_MSG", req.getAttribute("RESPONSE_MSG"));
             if (bill != null){

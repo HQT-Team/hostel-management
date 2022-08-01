@@ -2,40 +2,30 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-body {
-  font-size: 20px;
-}
-.main-body{
-  margin: 0;
-}
 body{
+  font-size: 20px;
   overflow-x: hidden;
-}
-.dropdown {
-  display: none;
 }
 
 .content {
   width: 80%;
 
   .profile {
-    width: 50%;
-    margin: 80px auto;
-    padding:15px 25px 20px 25px;
+    width: fit-content;
+    margin: 100px auto;
+    padding:20px 30px 20px 30px;
     color: #000000;
     height: fit-content;
     border-radius: 8px;
-    background: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    border: 1px solid black;
 
     h2 {
-      text-align: center;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
       font-size: 1.8em;
       width: 100%;
       line-height: 40px;
       display: block;
-      color: rgb(25, 0, 255);
+      text-align: center;
     }
 
     h3 {
@@ -47,162 +37,25 @@ body{
       font-weight: 400;
       line-height: 40px;
       span{
-        font-weight: 550;
+        font-weight: 500;
       }
     }
     a{
       text-decoration: none;
       font-size: 22px;
       border-radius: 8px;
+      width: 130px;
       background-color: blue;
       color: #FFFFFF;
-      text-align: center;
       padding: 10px;
       line-height: 22px;
-      margin-top: 15px;
+      margin: 15px auto;
       font-weight: 400;
       display: block;
+      text-align: center;
     }
   }
 }
-
-
 
 @media screen and (min-width: 740px) and (max-width: 1024px) {
-
-  .dropdown {
-    display: block;
-  }
-
-  .link {
-    display: none;
-  }
-
-  .dashboard {
-    display: none;
-  }
-
-  .content {
-    width: 100%;
-    margin: 50px 0px;
-
-    .profile {
-      width: 500px;
-      text-align: center;
-      margin: 50px auto;
-      padding: 20px 10px;
-      color: #000000;
-      border-radius: 8px;
-      background: rgb(255, 255, 255);
-      box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-
-      h2 {
-        margin: 10px auto;
-        width: 100%;
-        display: block;
-        color: rgb(25, 0, 255);
-
-      }
-
-      h3 {
-
-        margin: 5px auto;
-        display: block;
-        font-size: 22px;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 740px) {
-  .content {
-    width: 100%;
-    margin: 50px 0px;
-    padding: 0px;
-
-    .profile {
-      width: 80%;
-      margin: auto;
-      padding: 20px;
-      text-align: center;
-      border-radius: 8px;
-      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
-
-      h2 {
-        display: inline-block;
-        width: 100%;
-        font-size: 22px;
-      }
-
-      h3 {
-        display: inline-block;
-        width: 100%;
-        font-size: 18px;
-      }
-
-      a {
-        display: block;
-        font-size: 18px;
-        color: #eee;
-        width: 100%;
-        margin: auto;
-      }
-    }
-  }
-
-  .navbar {
-    height: 60px;
-
-    .navbar-left {
-      width: 20%;
-    }
-
-    .main-body {
-      padding: 0px;
-      margin: 0px;
-    }
-
-    .navbar-center {
-      width: 60%;
-
-      a {
-        img {
-          width: 100px;
-          height: 30px;
-        }
-      }
-    }
-
-    .navbar-right {
-      width: 20%;
-      padding: 0px;
-
-      a {
-        font-size: 16px;
-
-        img {
-          display: none;
-        }
-      }
-    }
-  }
-
-  .dropdown {
-    display: block;
-  }
-
-  .link {
-    display: none;
-  }
-
-  .dashboard {
-    display: none;
-  }
-
-  .main-body {
-    margin: 0px;
-  }
-
-
 }

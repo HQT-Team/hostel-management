@@ -7,19 +7,12 @@
   margin: 0;
   border: none;
 }
-.main-body{
-  margin: 0;
-}
+
 body {
   overflow-x: hidden;
 }
-
-.dropdown {
-  display: none;
-}
-
-
 .content {
+  font-size: 18px;
   width: 80%;
   margin: 0;
 
@@ -30,23 +23,23 @@ body {
     h2 {
       text-align: center;
       font-weight: 600;
-      font-size: 34px;
+      font-size: 30px;
     }
 
-    table {
+    .table {
       border-radius: 5px;
       width: 80%;
       margin: 60px auto;
       text-align: center;
 
-      thead {
+      .table-head {
         tr {
           width: 100%;
-          height: 30px;
+          height: 27px;
 
           th {
-            font-size: 22px;
-
+            font-size: 21px;
+            font-weight: 500;
           }
         }
       }
@@ -60,109 +53,53 @@ body {
           td:first-child {
             color: blue;
             text-align: center;
+            font-size: 20px;
 
             a {
               color: inherit;
               background-color: inherit;
-              font-size: 22px;
               cursor: pointer;
               height: 100%;
               text-decoration: none;
+              font-size: 20px;
             }
 
             a:hover {
               color: inherit;
               background-color: inherit;
-              font-size: 22px;
               cursor: pointer;
               height: 100%;
               text-decoration: none;
+              font-size: 20px;
             }
           }
 
           td:last-child {
             color: blue;
             text-align: center;
+            font-size: 20px;
 
             p {
+              font-size: 20px;
               color: inherit;
               background-color: inherit;
-              font-size: 22px;
               height: 100%;
               margin: 0px;
             }
 
             p:hover {
+              font-size: 20px;
               color: inherit;
               background-color: inherit;
-              font-size: 22px;
               height: 100%;
               margin: 0px;
             }
           }
-
-          td {
-
-            font-size: 22px;
-
-          }
         }
       }
     }
-  }
-}
-
-footer {
-  .copyright-content {
-    font-size: 18px;
   }
 }
 
 @media screen and (min-width: 400px) and (max-width: 1100px) {
-  .dropdown {
-    display: block;
-  }
-
-  .dashboard {
-    display: none;
-  }
-
-  .link {
-    display: none;
-  }
-
-
-  .navbar {
-    .navbar-center {
-      img {
-        width: 140px;
-        height: 50px;
-      }
-    }
-
-    .navbar-right {
-      a {
-        font-size: 16px;
-
-        img {
-          display: none;
-        }
-      }
-    }
-  }
-
-  .content {
-    width: 100%;
-
-    .table-content {
-      width: 100%;
-      padding: 80px 10px 0px 10px;
-
-      table {
-        border-radius: 5px;
-        width: 100%;
-      }
-    }
-  }
-
 }

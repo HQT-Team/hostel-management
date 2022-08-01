@@ -28,6 +28,7 @@ public class GetRenterBillServlet extends HttpServlet {
 
             BillDAO billDAO = new BillDAO();
             List<Bill> billList = billDAO.getBllListByRenterID(accID);
+            req.setAttribute("uri", req.getRequestURI());
             if (billList.size() > 0){
                 req.setAttribute("BILL_LIST", billList);
                 url = SUCCESS;

@@ -5,77 +5,92 @@
 body{
   overflow-x: hidden;
 }
-.dropdown{
-  display: none;
-}
-.main-body{
-  margin: 0;
-}
+
 .content {
   width: 80%;
   margin: 0px;
   padding: 0px;
-  min-height: calc(100vh - 80px);
+  min-height: 600px;
 
   .report {
-    width: 40%;
-    margin: 70px auto;
+    width: 100%;
+    margin: 0px;
     padding: 50px 20px;
-    text-align: center;
-    h2 {
-      color: #6A5Af9;
+
+    h2{
       text-align: center;
       font-size: 30px;
       font-weight: 550;
-      margin-bottom: 10px;
-    }
-    p{
-      font-size: 22px;
-    }
+      margin-bottom: 20px;
 
+    }
+    .main-form {
+      width: 80%;
+      height: fit-content;
+      margin: auto;
+
+      #myInput {
+        width: 30%;
+        height: 35px;
+        border: 2px solid #7b7b7b;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        padding-left: 10px;
+        font-size: 17px;
+      }
+
+      input:focus {
+        border-color: #6A5Af9;
+      }
+
+      .my-table {
+        text-align: center;
+        width: 100%;
+        margin: 10px 0 10px 0;
+
+        thead {
+          tr {
+            height: fit-content;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+
+            th {
+              padding: 10px 0px;
+              margin: 0;
+              line-height: 22px;
+              font-size: 22px;
+              background-color: #fff;
+            }
+          }
+        }
+        tbody {
+          tr {
+            height: fit-content;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+
+            td {
+              padding: 8px 0px;
+              margin: 0;
+              line-height: 18px;
+              font-size: 18px;
+
+              p {
+                padding: 0;
+                width: 100%;
+                margin: 0;
+                word-wrap: break-word;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
 }
 
-footer {
-  font-size: 18px;
-}
-
-@media screen and (max-width: 1024px) {
-  .dropdown{
-    display: block;
-  }
-  .dashboard{
-    display: none;
-  }
-  .navbar {
-    height: 60px;
-
-    .navbar-center {
-
-      a {
-        img {
-          width: 100px;
-          height: 30px;
-        }
-      }
-    }
-
-    .navbar-right {
-      width: 20%;
-      padding: 0px;
-
-      a {
-        font-size: 16px;
-
-        img {
-          display: none;
-        }
-      }
-    }
-  }
-  .content{
-    width: 100%;
-  }
-
+@media screen and (max-width: 1200px) {
 }

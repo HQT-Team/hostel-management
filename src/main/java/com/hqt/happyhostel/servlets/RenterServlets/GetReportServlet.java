@@ -34,6 +34,7 @@ public class GetReportServlet extends HttpServlet {
             ReportCategoryDAO reportCategoryDAO = new ReportCategoryDAO();
             ReportDAO reportDAO = new ReportDAO();
             reportCategories = reportCategoryDAO.getReportCategory();
+            req.setAttribute("uri", req.getRequestURI());
             if (reportCategories.size()>0){
                 req.setAttribute("REPORT_CATE", reportCategories);
                 url = SUCCESS;

@@ -2,12 +2,6 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-.dropdown {
-  display: none;
-}
-.main-body{
-  margin: 0;
-}
 body{
   overflow-x: hidden;
 }
@@ -38,90 +32,5 @@ body{
 }
 
 @media screen and (min-width: 740px) and (max-width: 1024px) {
-  .content {
-    width: 100%;
 
-    .invoice {
-      width: 90%;
-    }
-  }
-
-  .dropdown {
-    display: block;
-  }
-
-  .link {
-    display: none;
-  }
-
-  .dashboard {
-    display: none;
-  }
-}
-
-
-@media screen and (max-width: 740px) {
-  .content {
-    padding: 0px;
-    margin: 0px;
-    width: 100%;
-
-    .invoice {
-      width: 90%;
-    }
-  }
-
-  .navbar {
-    height: 60px;
-
-    .navbar-left {
-      width: 20%;
-    }
-
-    .main-body {
-      padding: 0px;
-      margin: 0px;
-    }
-
-    .navbar-center {
-      width: 60%;
-
-      a {
-        img {
-          width: 100px;
-          height: 30px;
-        }
-      }
-    }
-
-    .navbar-right {
-      width: 20%;
-      padding: 0px;
-
-      a {
-        font-size: 15px;
-
-        img {
-          display: none;
-        }
-      }
-    }
-  }
-
-  .main-body {
-    padding: 0px;
-    margin: 0px;
-  }
-
-  .dropdown {
-    display: block;
-  }
-
-  .link {
-    display: none;
-  }
-
-  .dashboard {
-    display: none;
-  }
 }

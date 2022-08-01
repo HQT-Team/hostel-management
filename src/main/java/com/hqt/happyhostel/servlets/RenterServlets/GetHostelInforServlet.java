@@ -31,7 +31,7 @@ public class GetHostelInforServlet extends HttpServlet {
 
             HostelDAO hostelDAO = new HostelDAO();
             InformationDAO informationDAO = new InformationDAO();
-
+            req.setAttribute("uri", req.getRequestURI());
             //Get Hostel
             Hostel hostel = hostelDAO.getHostelByRenterId(renterId);
             if (hostel != null) {
