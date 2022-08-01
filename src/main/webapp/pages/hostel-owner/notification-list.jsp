@@ -141,7 +141,7 @@
                 <!-- Content item - Send notification -->
                 <div class="content__item active">
                     <div class="col-12 col-xl-9 m-auto mb-5 content__body">
-                        <form action="add-notification" method="post" class="custom-form">
+                        <form id="add-notification-form" action="add-notification" method="post" class="custom-form">
                             <div class="form-header">
                                 <h1 class="form-title">Gửi thông báo mới</h1>
                             </div>
@@ -172,7 +172,7 @@
                                     <label for="noti-content" class="form-label">Nội dung:
                                         <span>*</span></label>
                                     <textarea name="noti-content" id="noti-content" class="form-control textarea"></textarea>
-                                    <span class="form-message"></span>
+                                    <span class="form-message mt-4 mb-0"></span>
                                 </div>
                             </div>
                             <div class="spacer"></div>
@@ -192,9 +192,6 @@
 
 <!-- Push notification element -->
 <div id="push-noti"></div>
-
-
-<!-- Script Socket !important -->
 
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -218,6 +215,8 @@
 <script src="./assets/js/receiveWebsocket.js"></script>
 <!-- CKEditor -->
 <script src="./assets/js/ckeditor.js"></script>
+<!-- Valid form -->
+<script src="./assets/js/valid-form.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -229,6 +228,18 @@
             .catch( error => {
                 console.error(error);
             });
+
+        // Valid form
+        Validator({
+            form: "#add-notification-form",
+            formGroupSelector: ".form-group",
+            errorSelector: ".form-message",
+            rules: [
+                Validator.isRequired("#noti-title", "Vui lòng nhập tiêu đề của thông báo"),
+                Validator.isRequired("#noti-hostel-id", "Vui lòng chọn khu trọ nhận thông báo"),
+                Validator.isRequired("#noti-content", "Vui lòng nhập nội dung thông báo"),
+            ],
+        });
 
         // Select 2
         $(`#filter__hostel-select`).select2();

@@ -117,12 +117,13 @@
                         <div class="report__spacer"></div>
                         <c:choose>
                             <c:when test="${requestScope.reportDetail.report.status eq 0}">
-                                <form action="update-report" method="POST">
+                                <form id="update-report" action="update-report" method="POST">
                                     <input type="hidden" name="reportId" value="${requestScope.reportDetail.report.reportID}" />
                                     <input type="hidden" name="action" value="reply" />
                                     <div class="form-group">
                                         <label for="response-textarea" class="form-label">Phản hồi: <span>*</span></label>
                                         <textarea name="response" id="response-textarea" class="form-control" placeholder="Nhập phản hồi"></textarea>
+                                        <span class="form-message mt-4"></span>
                                     </div>
                                     <div class="report__spacer"></div>
                                     <div class="report__action d-flex justify-content-between">
@@ -202,6 +203,8 @@
 <script src="./assets/js/receiveWebsocket.js"></script>
 <!-- CKEditor -->
 <script src="./assets/js/ckeditor.js"></script>
+<!-- Valid form -->
+<script src="./assets/js/valid-form.js"></script>
 
 <script>
     <c:if test="${requestScope.reportDetail.report.status eq 0}">
@@ -213,6 +216,16 @@
         .catch( error => {
             console.error(error);
         });
+
+    // Validator form
+    Validator({
+        form: "#update-report",
+        formGroupSelector: ".form-group",
+        errorSelector: ".form-message",
+        rules: [
+            Validator.isRequired("#response-textarea", "Vui lòng nhập phản hồi"),
+        ],
+    });
     </c:if>
 
     <c:choose>
