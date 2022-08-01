@@ -209,7 +209,22 @@
 <script>
     <c:if test="${requestScope.reportDetail.report.status eq 0}">
     // Initial CKEditor
-    ClassicEditor.create(document.querySelector('#response-textarea'))
+    ClassicEditor.create(document.querySelector('#response-textarea'), {
+        toolbar: {
+            items: [
+                'heading', '|',
+                'fontfamily', 'fontsize', '|',
+                'alignment', '|',
+                'fontColor', 'fontBackgroundColor', '|',
+                'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                'link', '|',
+                'bulletedList', 'numberedList', 'todoList', '|',
+                'code', 'codeBlock', 'blockQuote', '|',
+                'undo', 'redo'
+            ],
+            shouldNotGroupWhenFull: true
+        }
+    })
         .then(editor => {
             console.log(editor);
         })

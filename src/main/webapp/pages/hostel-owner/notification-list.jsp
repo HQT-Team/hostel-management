@@ -221,7 +221,22 @@
 <script>
     $(document).ready(function () {
         // Initial CKEditor
-        ClassicEditor.create( document.querySelector('#noti-content'))
+        ClassicEditor.create( document.querySelector('#noti-content'), {
+            toolbar: {
+                items: [
+                    'heading', '|',
+                    'fontfamily', 'fontsize', '|',
+                    'alignment', '|',
+                    'fontColor', 'fontBackgroundColor', '|',
+                    'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                    'link', '|',
+                    'bulletedList', 'numberedList', 'todoList', '|',
+                    'code', 'codeBlock', 'blockQuote', '|',
+                    'undo', 'redo'
+                ],
+                shouldNotGroupWhenFull: true
+            }
+        })
             .then(editor => {
                 console.log(editor);
             })
