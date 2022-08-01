@@ -186,7 +186,6 @@
 
 <!-- Toast element -->
 <div id="toast">&nbsp;</div>
-
 <!-- Script Bootstrap !important -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -200,6 +199,7 @@
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
+<script src="./assets/js/sendWebsocket.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>
 <!-- CKEditor -->
 <script src="./assets/js/ckeditor.js"></script>
@@ -264,6 +264,17 @@
 </script>
 
 <script type="text/javascript">
+    // Send
+    <c:if test="${requestScope.RESPONSE_MSG.status == true}">
+    const params = new Object();
+    params.sender = "hostel_owner";
+    params.receiver = "hostel_renter";
+    params.hostel_receiver_id =  null;
+    params.account_receiver_id = "${requestScope.reportDetail.report.sendAccountID}";
+    params.messages = "${requestScope.SOCKET_MSG}";
+    sendToWebSocket(params);
+    </c:if>
+
     // Receive
     receiveWebsocket(alertPushNoti);
 

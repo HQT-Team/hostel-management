@@ -758,4 +758,113 @@ public class MailUtils {
                 "</html>";
         return sendMail(receiveMail, mailObject, mailBody);
     }
+
+    public boolean sendMailReplyReport(String receiveMail, String reportId){
+        String domain = "http://localhost:8080/HappyHostel/Get-report?id="+reportId;
+        String mailObject = "Báo cáo của bạn vừa được phản hồi";
+        String mailBody = "<!doctype html>\n" +
+                "<html lang=\"vi\">\n" +
+                "\n" +
+                "<head>\n" +
+                "    <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\" />\n" +
+                "    <title>Reset Password</title>\n" +
+                "    <meta name=\"description\" content=\"Reset Password Email Template.\">\n" +
+                "    <style type=\"text/css\">\n" +
+                "        a:hover {\n" +
+                "            text-decoration: underline !important;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "\n" +
+                "<body marginheight=\"0\" topmargin=\"0\" marginwidth=\"0\" style=\"margin: 0px; background-color: #f2f3f8;\" leftmargin=\"0\">\n" +
+                "    <!--100% body table-->\n" +
+                "    <table cellspacing=\"0\" border=\"0\" cellpadding=\"0\" width=\"100%\" bgcolor=\"#f2f3f8\"\n" +
+                "        style=\"@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;\">\n" +
+                "        <tr>\n" +
+                "            <td>\n" +
+                "                <table style=\"background-color: #f2f3f8; \n" +
+                "                max-width: 670px;  \n" +
+                "                margin: 0 auto;\" width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height:80px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"text-align: center;\">\n" +
+                "                            <a href=\"\" title=\"logo\" target=\"_blank\">\n" +
+                "                                <img width=\"150\" src=\"https://i.ibb.co/XSs4xvj/hqt-logo.png\" title=\"logo\" alt=\"logo\">\n" +
+                "                            </a>\n" +
+                "                        </td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height: 20px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td>\n" +
+                "                            <table width=\"95%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width: 670px;\n" +
+                "                                background:#fff; \n" +
+                "                                border-radius: 3px;\n" +
+                "                                text-align: center;\n" +
+                "                                -webkit-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, .06);\n" +
+                "                                -moz-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, .06);\n" +
+                "                                box-shadow: 0 6px 18px 0 rgba(0, 0, 0, .06);\">\n" +
+                "                                <tr>\n" +
+                "                                    <td style=\"height: 40px;\">&nbsp;</td>\n" +
+                "                                </tr>\n" +
+                "                                <tr>\n" +
+                "                                    <td style=\"padding:0 35px; display: flex; flex-direction: column; align-items: center;\">\n" +
+                "                                        <h1 style=\"color: #1e1e2d; \n" +
+                "                                            font-weight: 500; margin: 0;\n" +
+                "                                            font-size: 32px;\n" +
+                "                                            font-family:'Rubik', sans-serif;\">\n" +
+                "                                            Bạn đã nhận được phản hồi báo cáo từ chủ trọ\n" +
+                "                                        </h1>\n" +
+                "                                        <span style=\"display: inline-block;\n" +
+                "                                            margin: 24px 0 0; \n" +
+                "                                            border-bottom: 1px solid #cecece;\n" +
+                "                                            width: 100px;\">\n" +
+                "                                        </span>\n" +
+                "                                        <a href=\""+domain+"\" style=\"background: #20e277;\n" +
+                "                                            text-decoration: none !important; \n" +
+                "                                            font-weight: 600; \n" +
+                "                                            margin-top: 35px; \n" +
+                "                                            color: #fff;\n" +
+                "                                            text-transform: uppercase;\n" +
+                "                                            font-size: 14px;\n" +
+                "                                            padding: 14px 24px;\n" +
+                "                                            width: 200px;\n" +
+                "                                            display: inline-block;\n" +
+                "                                            border-radius:50px;\" onmouseout=\"this.style.background='#20e277'\"\n" +
+                "                                            onmouseover=\"this.style.background='#0bb658'\">\n" +
+                "                                            Xem báo cáo\n" +
+                "                                        </a>\n" +
+                "                                    </td>\n" +
+                "                                </tr>\n" +
+                "                                <tr>\n" +
+                "                                    <td style=\"height:40px;\">&nbsp;</td>\n" +
+                "                                </tr>\n" +
+                "                            </table>\n" +
+                "                        </td>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height:20px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"text-align:center;\">\n" +
+                "                            <p\n" +
+                "                                style=\"font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;\">\n" +
+                "                                &copy; <strong>www.hqthostel.com</strong></p>\n" +
+                "                        </td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height:80px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                </table>\n" +
+                "            </td>\n" +
+                "        </tr>\n" +
+                "    </table>\n" +
+                "    <!--/100% body table-->\n" +
+                "</body>\n" +
+                "\n" +
+                "</html>";
+        return sendMail(receiveMail, mailObject, mailBody);
+    }
 }
