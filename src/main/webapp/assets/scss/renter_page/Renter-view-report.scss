@@ -41,6 +41,9 @@ body {
         thead {
             background-color: #ff9595;
           tr {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+
             th {
             text-align: center;
               font-size: 20px;
@@ -53,6 +56,8 @@ body {
 
         tbody {
           tr {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
             td {
             text-align: center;
               line-height: 18px;

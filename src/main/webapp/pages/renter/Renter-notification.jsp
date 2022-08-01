@@ -42,6 +42,7 @@
         <%@include file="components/sidebar.jsp" %>
         <div class="content row">
             <div class="notification">
+                <h1>Danh Sách Thông Báo Của Khu Trọ</h1>
                 <table id="example" class="display table table-striped" width="100%" data-page-length="25"
                        data-order="[[ 1, &quot;asc&quot; ]]">
                     <thead>

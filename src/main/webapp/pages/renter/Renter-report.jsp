@@ -53,9 +53,8 @@
                             <span id="mes-1"></span>
                         </div>
                         <div>
-                            <textarea rows="4" cols="50" name="content-report" class="form-input" placeholder=" "
-                                      id="form-input"></textarea>
-                            <label class="form-label">Nội dung</label>
+                            <label for="form-input" class="form-label">Nội dung</label>
+                            <textarea rows="4" cols="50" name="form-input" class="form-input" id="form-input"></textarea>
                             <span id="mes-2"></span>
                         </div>
 
@@ -74,7 +73,6 @@
 <!-- Push notification element -->
 <div id="push-noti"></div>
 
-<script src="./assets/js/renter/Renter-report.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -91,26 +89,60 @@
 <!-- Web socket -->
 <script src="./assets/js/sendWebsocket.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>
+<script src="./assets/js/ckeditor.js"></script>
 
-<script type="text/javascript">
-    // Send
-    <c:if test="${requestScope.RESPONSE_MSG.status == true}">
-    const params = new Object();
-    params.sender = "hostel_renter";
-    params.receiver = "hostel_owner";
-    params.hostel_receiver_id = null;
-    params.account_receiver_id = "${requestScope.HOSTEL_OWNER_ID}";
-    params.messages = "Người thuê vừa gửi 1 báo cáo mới. Vui lòng kiểm tra!";
-    sendToWebSocket(params);
-    </c:if>
-    // Receive
-    receiveWebsocket(alertPushNoti);
-    // Close when leave
-    window.onbeforeunload = function(){
-        receiveWebsocket.disconnectWebSocket();
-    };
+
+<%--<script type="text/javascript">--%>
+<%--    // Send--%>
+<%--    <c:if test="${requestScope.RESPONSE_MSG.status == true}">--%>
+<%--    const params = new Object();--%>
+<%--    params.sender = "hostel_renter";--%>
+<%--    params.receiver = "hostel_owner";--%>
+<%--    params.hostel_receiver_id = null;--%>
+<%--    params.account_receiver_id = "${requestScope.HOSTEL_OWNER_ID}";--%>
+<%--    params.messages = "Người thuê vừa gửi 1 báo cáo mới. Vui lòng kiểm tra!";--%>
+<%--    sendToWebSocket(params);--%>
+<%--    </c:if>--%>
+<%--    // Receive--%>
+<%--    receiveWebsocket(alertPushNoti);--%>
+<%--    // Close when leave--%>
+<%--    window.onbeforeunload = function(){--%>
+<%--        receiveWebsocket.disconnectWebSocket();--%>
+<%--    };--%>
+<%--</script>--%>
+
+<script>
+    ClassicEditor.create( document.querySelector('#form-input'), {
+        toolbar: {
+            items: [
+                'heading', '|',
+                'fontfamily', 'fontsize', '|',
+                'alignment', '|',
+                'fontColor', 'fontBackgroundColor', '|',
+                'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                'link', '|',
+                'bulletedList', 'numberedList', 'todoList', '|',
+                'code', 'codeBlock', 'blockQuote', '|',
+                'undo', 'redo'
+            ],
+            shouldNotGroupWhenFull: true
+        }
+    })
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch( error => {
+            console.error(error);
+        });
+
+    var input = document.getElementById("form-input").querySelector("p");
+    var submit = document.getElementById("Submit");
+    submit.addEventListener('click', () => {
+        if (input.value != null){
+            console.log(input.value)
+        }
+    })
 </script>
-
 <!-- Axios -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
@@ -133,5 +165,6 @@
     handleSendReportMail();
     </c:if>
 </script>
+<script src="./assets/js/renter/Renter-report.js"></script>
 </body>
 </html>

@@ -9,7 +9,7 @@ body{
 
 .content {
   width: 80%;
-
+margin: 0;
   .profile {
     width: fit-content;
     margin: 100px auto;
@@ -17,7 +17,7 @@ body{
     color: #000000;
     height: fit-content;
     border-radius: 8px;
-    border: 1px solid black;
+    border: 1px solid gray;
 
     h2 {
       margin-bottom: 10px;

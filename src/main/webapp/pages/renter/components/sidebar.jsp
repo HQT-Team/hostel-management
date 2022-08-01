@@ -24,11 +24,11 @@
             </div>
             <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetRoomateAccountServlet" ? "active": ""}">
                 <i class="fa-solid fa-user-group"></i>
-                <a href="get-roommate-infor">Xem bạn bè</a>
+                <a href="get-roommate-infor">Xem thành viên</a>
             </div>
             <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/AddRenterRoommateServlet" ? "active" : ""}">
                 <i class="fa-solid fa-user-plus"></i>
-                <a href="AddRenterRoommatePage">Thêm bạn mới</a>
+                <a href="AddRenterRoommatePage">Thêm thành viên</a>
             </div>
             <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetContractServlet" ? "active": ""}">
                 <i class="fa-solid fa-file-contract"></i>

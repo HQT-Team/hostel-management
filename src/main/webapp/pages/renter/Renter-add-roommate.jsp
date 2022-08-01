@@ -62,7 +62,7 @@
                         <span id="mes-2"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-3" type="text" placeholder="Ngày sinh" name="dob">
+                        <input id="form-item-input-3" type="date" placeholder="Ngày sinh" name="dob">
                         <p class="border-bottom"></p>
                         <span id="mes-3"></span>
                     </div>
@@ -99,7 +99,7 @@
                         <p class="border-bottom"></p>
                         <span id="mes-9"></span>
                     </div>
-                    <input id="form-item-submit" type="button" value="Tạo Mới">
+                    <input id="form-item-submit" type="submit" value="Tạo Mới">
                 </form>
             </div>
         </div>

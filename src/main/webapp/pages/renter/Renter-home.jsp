@@ -10,10 +10,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Renter</title>
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
@@ -27,23 +27,26 @@
 
 <body>
 <%
-    Account account = (Account)session.getAttribute("USER");
+    Account account = (Account) session.getAttribute("USER");
 %>
 <div>
 
-    <%@include file="components/navbar.jsp"%>
+    <%@include file="components/navbar.jsp" %>
     <div class="row main-body" style="padding: 0;margin: 0;">
 
-        <%@include file="components/sidebar.jsp"%>
+        <%@include file="components/sidebar.jsp" %>
         <div class="content">
             <h1 class="title">Tổng Quan Thông Tin Về Phòng Trọ</h1>
             <div class="main-information">
+                <h2 style="text-align: center;font-size: 26px; margin: 10px 0 20px 0">Thông tin phòng trọ</h2>
                 <div class="content-top">
                     <div class="content-top-1">
                         <p><span>Phòng số: </span>${ROOM_INFOR.roomNumber}</p>
                         <p><span>Diện tích phòng: </span>${ROOM_INFOR.roomArea} m2</p>
                         <p><span>Tên khu trọ: </span>${HOSTEL.hostelName}</p>
-                        <p><span>Địa chỉ: </span>${HOSTEL.address},${HOSTEL.ward.split('-')[1]},${HOSTEL.district.split('-')[1]},${HOSTEL.city.split('-')[1]}</p>
+                        <p>
+                            <span>Địa chỉ: </span>${HOSTEL.address},${HOSTEL.ward.split('-')[1]},${HOSTEL.district.split('-')[1]},${HOSTEL.city.split('-')[1]}
+                        </p>
                     </div>
                     <div class="content-top-2">
                         <p><span>Tên chủ phòng: </span>${ACCOUNT_INFOR.fullname}</p>
@@ -83,7 +86,8 @@
                                     <td>${s.serviceName}</td>
                                     <td>
                                         <fmt:setLocale value="vi_VN"/>
-                                        <fmt:formatNumber value="${s.servicePrice}" type="currency" currencySymbol="VNĐ"/>
+                                        <fmt:formatNumber value="${s.servicePrice}" type="currency"
+                                                          currencySymbol="VNĐ"/>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -96,7 +100,7 @@
     </div>
 
 
-    <%@include file="components/footer.jsp"%>
+    <%@include file="components/footer.jsp" %>
 
     <!-- Push notification element -->
     <div id="push-noti"></div>
@@ -120,7 +124,7 @@
         // Receive
         receiveWebsocket(alertPushNoti);
         // Close when leave
-        window.onbeforeunload = function(){
+        window.onbeforeunload = function () {
             receiveWebsocket.disconnectWebSocket();
         };
     </script>

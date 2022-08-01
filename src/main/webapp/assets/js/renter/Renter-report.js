@@ -50,11 +50,27 @@ function validateDatetime(input) {
     return (datetime instanceof Date && !isNaN(datetime.valueOf()));
 }
 
+// console.log(input.querySelector("p").innerText)
+// input.querySelector("p").addEventListener("focus", (event) => {
+//     console.log(input.innerText + "123")
+//         let parent = input.parentElement;
+//         let tagmes = parent.querySelector("#mes-2");
+//         tagmes.innerText = "";
+// })
+// input.querySelector("p").addEventListener("blur", (event) => {
+//     console.log(input.innerText + "123")
+//     if (input.innerText == null){
+//         let parent = input.parentElement;
+//         let tagmes = parent.querySelector("#mes-2");
+//         tagmes.innerText = "Không được để trống!";
+//     }
+// })
+
 
 submit.addEventListener('click', function (e) {
     let check = true;
     e.preventDefault();
-    check = checkEmpty([select, input])
+    // check = checkEmpty([select, input])
     if (check) {
         document.querySelector("#form-submit").submit();
     }

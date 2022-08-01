@@ -1,7 +1,7 @@
 .dashboard {
   width: 20%;
   min-height: calc(100vh - 80px);
-  background-color: #F7F6FB;
+  background-color: #e6e3f1;
   padding: 0;
 
   .infor-top {
@@ -33,13 +33,13 @@
     border: none;
 
     .card-body {
-      background-color: #F7F6FB;
+      background-color: #e6e3f1;
 
       .sidebar-item {
         width: 100%;
         text-align: left;
         padding:15px 0 15px 15px;
-        background-color: #F7F6FB;
+        background-color: #e6e3f1;
         border-radius: 4px;
         margin-bottom: 5px;
         margin-top: 5px;
@@ -48,30 +48,31 @@
         column-gap: 5px;
         i{
           font-size: 18px;
+          line-height: 100%;
         }
         a {
-          color: black;
+          color: #000000;
           font-size: 18px;
           text-decoration: none;
-          line-height: 18px;
+          line-height: 100%;
         }
       }
       .sidebar-item:hover {
-        background-color: #dddddd;
+        background-color: #4554fc;
         i{
-          color: blue;
+          color: #FFFFFF;
         }
         a{
-          color: blue;
+          color: #FFFFFF;
         }
       }
       .active{
-        background-color: #dddddd;
+        background-color: #4554fc;
         i{
-          color: blue;
+          color: #FFFFFF;
         }
         a{
-          color: blue;
+          color: #FFFFFF;
         }
       }
     }

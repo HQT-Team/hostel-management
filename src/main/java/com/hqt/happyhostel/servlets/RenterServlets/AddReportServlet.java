@@ -44,12 +44,13 @@ public class AddReportServlet extends HttpServlet {
         try {
             HttpSession session = req.getSession();
             Account acc = (Account) session.getAttribute("USER");
-
+            List<ReportCategory> reportCategories = new ReportCategoryDAO().getReportCategory();
+            req.setAttribute("REPORT_CATE", reportCategories);
             int accountId = acc.getAccId();
             int cateID = Integer.parseInt(req.getParameter("cateID"));
             Hostel hostel = new HostelDAO().getHostelByRenterId(accountId);
             int ownerID = hostel.getHostelOwnerAccountID();
-            String content = req.getParameter("content-report");
+            String content = req.getParameter("form-input");
             Report report = Report.builder()
                     .sendDate(sendDate)
                     .content(content)
@@ -61,7 +62,6 @@ public class AddReportServlet extends HttpServlet {
 
             //Add report
             int reportId = new ReportDAO().addReport(report);
-
             if (reportId > 0){
                 req.setAttribute("SUCCESS", "Bạn đã gửi đi báo cáo thành công");
                 req.setAttribute("HOSTEL_OWNER_ID", ownerID);
@@ -71,8 +71,6 @@ public class AddReportServlet extends HttpServlet {
                 handlerStatus = HandlerStatus.builder().status(false).content("Đã có lỗi xảy ra! Gửi báo cáo thất bại!").build();
             }
 
-            List<ReportCategory> reportCategories = new ReportCategoryDAO().getReportCategory();
-            req.setAttribute("REPORT_CATE", reportCategories);
             req.setAttribute("RESPONSE_MSG", handlerStatus);
         } catch (Exception e) {
             req.setAttribute("RESPONSE_MSG", HandlerStatus.builder().status(false).content("Đã có lỗi xảy ra! Gửi báo cáo thất bại!").build());

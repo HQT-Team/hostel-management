@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.hqt.happyhostel.dto.Account" %><%--
   Created by IntelliJ IDEA.
   User: 84337
@@ -77,6 +78,7 @@
                     </div>
                 </div>
                 <div class="contract-result">
+                    <h3><strong>Thông tin phòng</strong></h3>
                     <h5><strong>Địa chỉ: </strong>${HOSTEL.address}, ${HOSTEL.ward.split('-')[1]},
                         ${HOSTEL.district.split('-')[1]}, ${HOSTEL.city.split('-')[1]} </h5><br>
                     <h5><strong>Giá: </strong>

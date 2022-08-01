@@ -8,13 +8,13 @@ body {
 
 .content {
   width: 80%;
-
+margin: 0;
   .report {
 
-    width: 50%;
-    margin: 100px auto;
+    width: 75%;
+    margin: 40px auto;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    padding: 20px 50px;
+    padding: 20px;
     height: fit-content;
 
     .notification-success {
@@ -37,7 +37,7 @@ body {
       width: 100%;
 
       #select {
-        width: 50%;
+        width: 70%;
         border-radius: 5px;
         font-size: 16px;
         padding: 10px 20px;
@@ -62,16 +62,16 @@ body {
         min-width: 100%;
         max-width: 100%;
         min-height: 180px;
-        max-height: 180px;
+        max-height: 280px;
         padding: 10px 20px;
         transition: 0.2s;
         font-size: 18px;
       }
-
-      .form-input:focus {
-        border-color: #6a5af9;
-        outline: none;
-      }
+      //
+      //.form-input:focus {
+      //  border-color: #6a5af9;
+      //  outline: none;
+      //}
 
       .form-label {
         font-size: 15px;
@@ -86,17 +86,17 @@ body {
 
       }
 
-      .form-input:not(:placeholder-shown) + .form-label,
-      .form-input:focus + .form-label {
-        top: 0;
-        font-size: 15px;
-        display: inline-block;
-        background-color: #FFFFFF;
-        color: #6a5af9;
-        left: 11px;
-
-
-      }
+      //.form-input:not(:placeholder-shown) + .form-label,
+      //.form-input:focus + .form-label {
+      //  top: 0;
+      //  font-size: 15px;
+      //  display: inline-block;
+      //  background-color: #FFFFFF;
+      //  color: #6a5af9;
+      //  left: 11px;
+      //
+      //
+      //}
 
       span {
         margin-left: 10px;
@@ -109,7 +109,7 @@ body {
     cursor: pointer;
 
     div {
-      input {
+      #Submit {
         width: 100px;
         height: 30px;
         border: none;

@@ -7,13 +7,18 @@ body{
 }
 .content {
   width: 80%;
-
+margin: 0;
 }
 
 .notification {
-  margin: 10% auto;
+  margin: 40px auto;
   width: 90%;
-
+h1{
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: blue;
+  text-align: center;
+}
   table {
     font-size: 20px;
     width: 100%;
@@ -30,6 +35,21 @@ body{
         padding-left: 5px;
       }
     }
+  }
+  .dataTables_length{
+    font-size: 20px;
+  }
+  .dataTables_filter{
+    font-size: 20px;
+  }
+.dataTables_info{
+  font-size: 20px;
+}
+  .dataTables_paginate{
+    .paginate_button{
+      font-size: 18px;
+    }
+    font-size: 20px;
   }
 }
 
