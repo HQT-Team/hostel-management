@@ -1,6 +1,7 @@
 package com.hqt.happyhostel.servlets.RenterRegisterServlets;
 
 import com.hqt.happyhostel.dao.AccountDAO;
+import com.hqt.happyhostel.dao.RoomDAO;
 import com.hqt.happyhostel.dao.RoomInviteDAO;
 import com.hqt.happyhostel.dto.*;
 import com.hqt.happyhostel.utils.SecurityUtils;
@@ -57,6 +58,7 @@ public class RenterRegisterServlet extends HttpServlet {
                             //xoa invite code cua Room
                             int roomId = new RoomInviteDAO().getRoomInviteByAccountId(accId);
                             new RoomInviteDAO().updateRoomInviteCode(roomId, null, null, null);
+                            new RoomDAO().updateRoomStatus(roomId, 1);
 
                             //xoa session
                             session.invalidate();
