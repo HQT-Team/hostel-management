@@ -31,9 +31,15 @@ public class StatisticServlet extends HttpServlet {
         int revenueMoney = 0;
         int billLength = 0;
         ArrayList<String> listYear = new ArrayList<String>();
+
         try {
 
             List<Hostel> listHostel = hostelDAO.getHostelByOwnerId(account.getAccId());
+            if (listHostel.size() == 0){
+                request.setAttribute("error", "Ban chua co phong tro!");
+                request.getRequestDispatcher(URL).forward(request, response);
+
+            }
             ArrayList<Bill> listBillByHostel = billDAO.GetListBillByHostel(listHostel.get(0).getHostelName());
             boolean check;
             for (int i = 0; i < listBillByHostel.size(); i++) {
@@ -232,6 +238,11 @@ public class StatisticServlet extends HttpServlet {
 
             ArrayList<Hostel> listHostel = (ArrayList<Hostel>) hostelDAO.getHostelByOwnerId(account.getAccId());
             ArrayList<Bill> listBillByHostel = billDAO.GetListBillByHostel(hostelName);
+            if (listHostel.size() == 0){
+                request.setAttribute("error", "Ban chua co phong tro!");
+                request.getRequestDispatcher(URL).forward(request, response);
+
+            }
             if (listBillByHostel.size()==0)
                 year=null;
             boolean check;
