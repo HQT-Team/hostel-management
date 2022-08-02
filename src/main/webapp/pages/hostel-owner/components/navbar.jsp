@@ -35,6 +35,9 @@
                             <c:when test="${sessionScope.CURRENT_PAGE eq 'account'}">
                                 Tài khoản
                             </c:when>
+                            <c:when test="${sessionScope.CURRENT_PAGE eq 'propose'}">
+                                Phản hồi/Đóng góp
+                            </c:when>
                         </c:choose>
                     </h3>
                 </div>

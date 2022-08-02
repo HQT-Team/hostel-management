@@ -48,4 +48,10 @@
             <div class="group-option__label">Tài khoản</div>
         </a>
     </div>
+    <div class="group-option ${sessionScope.CURRENT_PAGE eq "propose" ? "active" : ""}">
+        <a href="propose" class="group-option__link">
+            <i class="group-option__icon fa-solid fa-envelopes-bulk"></i>
+            <div class="group-option__label">Góp ý hệ thống</div>
+        </a>
+    </div>
 </div>
