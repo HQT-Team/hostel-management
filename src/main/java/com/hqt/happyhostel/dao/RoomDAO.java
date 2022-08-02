@@ -392,14 +392,11 @@ public class RoomDAO {
                 String sql = "SELECT room_id, H.hostel_id as 'hostel_id', room_number, capacity, room_status, room_area, has_attic, name, address, ward, district, city\n" +
                         "FROM Rooms R, Hostels H\n" +
                         "WHERE R.room_id = ?\n" +
-                        "AND R.hostel_id = ?\n" +
-                        "AND H.owner_account_id = ?\n" +
-                        "AND R.hostel_id = H.hostel_id";
+                        "AND H.hostel_id = ?\n";
 
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, roomID);
                 pst.setInt(2, hostelID);
-                pst.setInt(3, accountOwnerID);
 
                 rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
