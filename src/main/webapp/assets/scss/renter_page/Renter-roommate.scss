@@ -64,10 +64,25 @@ body {
       width: 100%;
       margin-left: 27px;
       text-align: center;
+      font-size: 22px;
+      color: #0022ff;
+    }
+  }
+  .modal-body{
+    line-height: 29px;
+    font-size: 22px;
+  }
+  .modal-footer{
+    button{
+      background-color: #0003fd;
+      color: #FFFFFF;
+      width: 78px;
+      height: 36px;
+      font-size: 15px;
     }
   }
   .modal-content{
-    padding: 10px 15px;
+    padding: 5px 10px;
   }
 }
 

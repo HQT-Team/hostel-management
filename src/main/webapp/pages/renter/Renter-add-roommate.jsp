@@ -99,7 +99,7 @@
                         <p class="border-bottom"></p>
                         <span id="mes-9"></span>
                     </div>
-                    <input id="form-item-submit" type="submit" value="Tạo Mới">
+                    <input id="form-item-submit" type="button" value="Tạo Mới">
                 </form>
             </div>
         </div>
@@ -120,6 +120,39 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <script src="./assets/js/renter/Renter-add-roommate.js"></script>
+
+<script>
+    form_1.addEventListener("blur", () => {
+        isRequire(form_1, "Vui lòng nhập trường này!")
+    });
+    form_2.addEventListener("blur", () => {
+        isRequire(form_2, "Vui lòng nhập trường này!")
+        isMail(form_2, "Email không hợp lệ!")
+    });
+    form_3.addEventListener("blur", () => {
+        isRequire(form_3, "Vui lòng nhập trường này!")
+    });
+    form_5.addEventListener("blur", () => {
+        isRequire(form_5, "Vui lòng nhập trường này!")
+        isPhone(form_5, "Số điện thoại không khả dụng!")
+    });
+    form_6.addEventListener("blur", () => {
+        isRequire(form_6, "Vui lòng nhập trường này!")
+    });
+    form_7.addEventListener("blur", () => {
+        isRequire(form_7, "Vui lòng nhập trường này!")
+        isCccd(form_7, "Số cccd không khả dụng!")
+    });
+    form_8.addEventListener("blur", () => {
+        isRequire(form_8, "Vui lòng nhập trường này!")
+    });
+    form_9.addEventListener("blur", () => {
+        isRequire(form_9, "Vui lòng nhập trường này!")
+        isPhone(form_9, "Số điện thoại không khả dụng!")
+    });
+
+</script>
+
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->

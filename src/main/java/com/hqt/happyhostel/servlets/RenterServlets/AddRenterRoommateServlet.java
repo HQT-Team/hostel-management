@@ -38,6 +38,7 @@ public class AddRenterRoommateServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Account acc = (Account)session.getAttribute("USER");
         try {
+            request.setAttribute("uri", request.getRequestURI());
             int accId = acc.getAccId();
             RoomDAO roomDAO = new RoomDAO();
             Room room = roomDAO.getRoomInfoByRenterId(accId);

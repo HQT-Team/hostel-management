@@ -44,7 +44,6 @@
                         </h3>
                         <div>
                             <select name="cateID" id="select">
-                                <option value="">Loại Đơn</option>
                                 <c:forEach var="cate" items="${requestScope.REPORT_CATE}">
                                     <option value="${cate.cateID}">${cate.cateTitle}</option>
                                 </c:forEach>
@@ -89,28 +88,25 @@
 <!-- Web socket -->
 <script src="./assets/js/sendWebsocket.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>
+<script type="text/javascript">
+    // Send
+    <c:if test="${requestScope.RESPONSE_MSG.status == true}">
+    const params = new Object();
+    params.sender = "hostel_renter";
+    params.receiver = "hostel_owner";
+    params.hostel_receiver_id = null;
+    params.account_receiver_id = "${requestScope.HOSTEL_OWNER_ID}";
+    params.messages = "Người thuê vừa gửi 1 báo cáo mới. Vui lòng kiểm tra!";
+    sendToWebSocket(params);
+    </c:if>
+    // Receive
+    receiveWebsocket(alertPushNoti);
+    // Close when leave
+    window.onbeforeunload = function(){
+        receiveWebsocket.disconnectWebSocket();
+    };
+</script>
 <script src="./assets/js/ckeditor.js"></script>
-
-
-<%--<script type="text/javascript">--%>
-<%--    // Send--%>
-<%--    <c:if test="${requestScope.RESPONSE_MSG.status == true}">--%>
-<%--    const params = new Object();--%>
-<%--    params.sender = "hostel_renter";--%>
-<%--    params.receiver = "hostel_owner";--%>
-<%--    params.hostel_receiver_id = null;--%>
-<%--    params.account_receiver_id = "${requestScope.HOSTEL_OWNER_ID}";--%>
-<%--    params.messages = "Người thuê vừa gửi 1 báo cáo mới. Vui lòng kiểm tra!";--%>
-<%--    sendToWebSocket(params);--%>
-<%--    </c:if>--%>
-<%--    // Receive--%>
-<%--    receiveWebsocket(alertPushNoti);--%>
-<%--    // Close when leave--%>
-<%--    window.onbeforeunload = function(){--%>
-<%--        receiveWebsocket.disconnectWebSocket();--%>
-<%--    };--%>
-<%--</script>--%>
-
 <script>
     ClassicEditor.create( document.querySelector('#form-input'), {
         toolbar: {
