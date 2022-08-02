@@ -133,6 +133,13 @@
             console.error(error);
         });
 
+    var submitButton = document.getElementById("Submit");
+    var formSubmit = document.getElementById("form-submit")
+    submitButton.addEventListener('click', () => {
+        formSubmit.submit();
+    })
+
+
 </script>
 <!-- Axios -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
