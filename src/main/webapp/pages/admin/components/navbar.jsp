@@ -27,7 +27,7 @@
                                 Quản lý dịch vụ khu trọ
                             </c:when>
                             <c:when test="${sessionScope.CURRENT_PAGE eq 'infrastructure'}">
-                                Quản lý cơ sở hạ tầng phòng
+                                Quản lý cơ sở vật chất phòng
                             </c:when>
                         </c:choose>
                     </h3>
