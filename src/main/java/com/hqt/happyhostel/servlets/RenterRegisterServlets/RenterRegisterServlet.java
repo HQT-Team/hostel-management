@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(name = "RenterRegisterServlet", value = "/RenterRegisterServlet")
 public class RenterRegisterServlet extends HttpServlet {
 
-    private final String SUCCESS = "renter-register-page";
+    private final String SUCCESS = "loginPage";
     private final String FAIL = "input-account-information-page";
     private final String ERROR = "error-page";
 
