@@ -356,7 +356,6 @@ public class RoomDAO {
                 pst.setInt(13, quantity4);
                 pst.setInt(14, status4);
 
-                int rows = pst.executeUpdate();
                 if (pst.executeUpdate() > 0) {
                     isInserted = true;
                 }
