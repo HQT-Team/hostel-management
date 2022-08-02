@@ -11,6 +11,7 @@ public class ReportDAO {
     private static final String INSERT_REPORT =
             "INSERT INTO [dbo].[Reports](send_date, [content], status, reply_account_id, send_account_id, cate_id) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String GET_REPORTS = "SELECT * FROM Reports";
+    private static final String GET_REPORTS_BY_ID = "SELECT * FROM Reports where send_account_id = ?";
     private static final String UPDATE_REPORT_TO_PROCESS =
             "UPDATE Reports SET status = 1, reply_date = GETDATE(), reply = ? WHERE id_report = ?";
     private static final String UPDATE_REPORT_TO_FINISHED =
@@ -393,5 +394,57 @@ public class ReportDAO {
             }
         }
         return listReport;
+    }
+
+
+    public List<Report> getReportByRenterId(int id) throws SQLException {
+        List<Report> reports = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                pst = cn.prepareStatement(GET_REPORTS_BY_ID);
+                pst.setInt(1, id);
+                rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    int reportID = rs.getInt("id_report");
+                    String sendDate = rs.getString("send_date");
+                    String content = rs.getString("content");
+                    int status = rs.getInt("status");
+                    String reply = rs.getString("reply");
+                    String completeDate = rs.getString("complete_date");
+                    int replyAccountID = rs.getInt("reply_account_id");
+                    int sendAccountID = rs.getInt("send_account_id");
+                    int cateID = rs.getInt("cate_id");
+                    reports.add(Report.builder()
+                            .reportID(reportID)
+                            .sendDate(sendDate)
+                            .content(content)
+                            .status(status)
+                            .reply(reply)
+                            .completeDate(completeDate)
+                            .replyAccountID(replyAccountID)
+                            .sendAccountID(sendAccountID)
+                            .cateID(cateID)
+                            .build());
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+        return reports;
     }
 }

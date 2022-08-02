@@ -3,6 +3,7 @@ package com.hqt.happyhostel.servlets.RenterServlets;
 
 import com.hqt.happyhostel.dao.ReportCategoryDAO;
 import com.hqt.happyhostel.dao.ReportDAO;
+import com.hqt.happyhostel.dto.Account;
 import com.hqt.happyhostel.dto.Report;
 import com.hqt.happyhostel.dto.ReportCategory;
 
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,8 @@ public class GetReportServlet extends HttpServlet {
             ReportDAO reportDAO = new ReportDAO();
             reportCategories = reportCategoryDAO.getReportCategory();
             req.setAttribute("uri", req.getRequestURI());
+            HttpSession session = req.getSession();
+            Account account = (Account) session.getAttribute("USER");
             if (reportCategories.size()>0){
                 req.setAttribute("REPORT_CATE", reportCategories);
                 url = SUCCESS;
@@ -44,7 +48,7 @@ public class GetReportServlet extends HttpServlet {
                 }
             }
 
-            reports = reportDAO.getReports();
+            reports = reportDAO.getReportByRenterId(account.getAccId());
             if(reports.size()>0){
                 req.setAttribute("REPORT_LIST", reports);
                 url = SUCCESS;
