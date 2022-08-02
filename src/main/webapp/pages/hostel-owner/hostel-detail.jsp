@@ -74,7 +74,7 @@
                         <div class="hostel-address">${hostelInformation.address}, ${hostelInformation.district.split('-')[1]}, ${hostelInformation.city.split('-')[1]}</div>
                     </div>
                     <div class="hostel-actions">
-                        <!-- Add infrastructure button -->
+                        <!-- Add service button -->
                         <button data-bs-toggle="modal" data-bs-target="#addServiceModal"
                                 class="hostel-actions__btn hostel-actions__btn-infrastructure">
                             Thêm dịch vụ
