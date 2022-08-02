@@ -84,6 +84,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
 
 <!-- Web socket -->
 <script src="./assets/js/sendWebsocket.js"></script>
@@ -131,13 +133,13 @@
             console.error(error);
         });
 
-    var input = document.getElementById("form-input").querySelector("p");
-    var submit = document.getElementById("Submit");
-    submit.addEventListener('click', () => {
-        if (input.value != null){
-            console.log(input.value)
-        }
+    var submitButton = document.getElementById("Submit");
+    var formSubmit = document.getElementById("form-submit")
+    submitButton.addEventListener('click', () => {
+        formSubmit.submit();
     })
+
+
 </script>
 <!-- Axios -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
