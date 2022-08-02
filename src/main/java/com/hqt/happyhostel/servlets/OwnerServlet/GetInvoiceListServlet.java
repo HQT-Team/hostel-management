@@ -40,7 +40,6 @@ public class GetInvoiceListServlet extends HttpServlet {
             session.setAttribute("INVOICE_PAYMENT_LIST_HOSTEL_NAME", hostelNamePayment);
             session.setAttribute("INVOICE_PAYMENT_LIST_HOSTEL_ID", hostelIDPayment);
 
-
             List<Bill> invoiceNotPayment = invoiceDAO.getInvoiceListByOwnerAccountID(accountId, 0);
             List<String> roomNumberNotPayment = new ArrayList<>();
             List<String> hostelNameNotPayment = new ArrayList<>();
