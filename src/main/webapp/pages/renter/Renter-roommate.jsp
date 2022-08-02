@@ -11,10 +11,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Renter</title>
-    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/core_style/core.css">
@@ -34,103 +34,114 @@
     Account account = (Account)session.getAttribute("USER");
   %>
     <!-- navbar -->
-    <%@include file="components/navbar.jsp"%>
+    <%@include file="components/navbar.jsp" %>
 
     <!-- content -->
     <div class="main-body row" style="padding: 0;margin: 0;">
-        <%@include file="components/sidebar.jsp"%>
+        <%@include file="components/sidebar.jsp" %>
 
         <div class="content">
-            <h2 class="title-table">Danh Sách Bạn Cùng Phòng</h2>
-            <div>
-                <table class="table">
-                    <tr>
-                        <th>STT</th>
-                        <th>Họ và tên</th>
-                        <th colspan="3">Hành Động</th>
-                    </tr>
-                    <%
-                        int x = 1;
-                    %>
-                    <c:forEach items="${listroommateinfor}" var="roommateinfor">
+            <c:if test="${listroommateinfor.size() == 0}">
+                <h1 style="color: red; font-size: 26px; text-align: center; margin-top: 20px">Chưa Có Thành Viên</h1>
+            </c:if>
+            <c:if test="${listroommateinfor.size() != 0}">
+                <h2 class="title-table">Danh Sách Bạn Cùng Phòng</h2>
+                <div>
+                    <table class="table">
                         <tr>
-                            <td><%=x%>
-                            </td>
-                            <td><span>${roommateinfor.getInformation().getFullname()}</span></td>
-                            <td>
-                                <button type="button" class="btnAction" data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop<%=x%>">Chi tiết
-                                </button>
-                            </td>
-                            <td>
-                                <a href="Renter-update-roommate?roommateID=${roommateinfor.roommateID}" role="button"
-                                   class="btnAction">Chỉnh Sửa</a>
-                            </td>
-                            <td>
-                                <a href="DeleteRoommatePage?roommateID=${roommateinfor.roommateID}" role="button"
-                                   class="btnAction">Xoá</a>
-                            </td>
-
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th colspan="3">Hành Động</th>
                         </tr>
-
                         <%
-                            x += 1;
+                            int x = 1;
                         %>
-                    </c:forEach>
+                        <c:forEach items="${listroommateinfor}" var="roommateinfor">
+                            <tr>
+                                <td><%=x%>
+                                </td>
+                                <td><span>${roommateinfor.getInformation().getFullname()}</span></td>
+                                <td>
+                                    <button type="button" class="btnAction" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop<%=x%>">Chi tiết
+                                    </button>
+                                </td>
+                                <td>
+                                    <a href="Renter-update-roommate?roommateID=${roommateinfor.roommateID}"
+                                       role="button"
+                                       class="btnAction">Chỉnh Sửa</a>
+                                </td>
+                                <td>
+                                    <a href="DeleteRoommatePage?roommateID=${roommateinfor.roommateID}" role="button"
+                                       class="btnAction">Xoá</a>
+                                </td>
 
-                </table>
-            </div>
-            <%
-                for (int y = 1; y < x; y++) {
-            %>
-            <div class="modal fade" id="staticBackdrop<%=y%>" data-bs-backdrop="static" data-bs-keyboard="false"
-                 tabindex="-1"
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Thông Tin Chi Tiết
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" style="text-align: left">
-                            <h3><strong>Tên: </strong> <%=listroommateinfor.get(y - 1).getInformation().getFullname()%>
-                            </h3>
-                            <h3><strong>Email: </strong> <%=listroommateinfor.get(y - 1).getInformation().getEmail()%>
-                            </h3>
-                            <h3><strong>Ngày
-                                Sinh: </strong> <%=listroommateinfor.get(y - 1).getInformation().getBirthday()%>
-                            </h3>
-                            <h3><strong>Giới Tính: </strong>
-                                <c:if test="<%= listroommateinfor.get(y-1).getInformation().getSex() == 1 %>">
-                                    Nam
-                                </c:if>
-                                <c:if test="<%= listroommateinfor.get(y-1).getInformation().getSex() == 0 %>">
-                                    Nữ
-                                </c:if>
-                            </h3>
-                            <h3><strong>Số Điện
-                                Thoại: </strong> <%=listroommateinfor.get(y - 1).getInformation().getPhone()%>
-                            </h3>
-                            <h3><strong>Địa
-                                Chỉ: </strong> <%=listroommateinfor.get(y - 1).getInformation().getAddress()%>
-                            </h3>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                            </tr>
+
+                            <%
+                                x += 1;
+                            %>
+                        </c:forEach>
+
+                    </table>
+                </div>
+                <%
+                    for (int y = 1; y < x; y++) {
+                %>
+                <div class="modal fade" id="staticBackdrop<%=y%>" data-bs-backdrop="static" data-bs-keyboard="false"
+                     tabindex="-1"
+                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Thông Tin Chi Tiết
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="text-align: left">
+                                <h3>
+                                    <strong>Tên: </strong> <%=listroommateinfor.get(y - 1).getInformation().getFullname()%>
+                                </h3>
+                                <h3>
+                                    <strong>Email: </strong> <%=listroommateinfor.get(y - 1).getInformation().getEmail()%>
+                                </h3>
+                                <h3><strong>Ngày
+                                    Sinh: </strong> <%=listroommateinfor.get(y - 1).getInformation().getBirthday()%>
+                                </h3>
+                                <h3><strong>Giới Tính: </strong>
+                                    <c:if test="<%= listroommateinfor.get(y-1).getInformation().getSex() == 1 %>">
+                                        Nam
+                                    </c:if>
+                                    <c:if test="<%= listroommateinfor.get(y-1).getInformation().getSex() == 0 %>">
+                                        Nữ
+                                    </c:if>
+                                </h3>
+                                <h3><strong>Số Điện
+                                    Thoại: </strong> <%=listroommateinfor.get(y - 1).getInformation().getPhone()%>
+                                </h3>
+                                <h3><strong>Địa
+                                    Chỉ: </strong> <%=listroommateinfor.get(y - 1).getInformation().getAddress()%>
+                                </h3>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <%
-                }
-            %>
+                <%
+                    }
+                %>
+
+            </c:if>
         </div>
+
     </div>
 
     <!-- footer -->
 
-    <%@include file="components/footer.jsp"%>
+    <%@include file="components/footer.jsp" %>
 
     <!-- Push notification element -->
     <div id="push-noti"></div>
@@ -159,7 +170,7 @@
         // Receive
         receiveWebsocket(alertPushNoti);
         // Close when leave
-        window.onbeforeunload = function(){
+        window.onbeforeunload = function () {
             receiveWebsocket.disconnectWebSocket();
         };
     </script>

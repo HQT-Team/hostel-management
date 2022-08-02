@@ -47,12 +47,14 @@
                     <h2>Chỉnh sửa thông tin</h2>
                     <hr>
                     <div class="form-content">
-                        <input id="input-1" type="text" name="new-name" placeholder="Nhập tên mới!"
+                        <label for="form-item-input-1">Họ tên</label>
+                        <input id="form-item-input-1" type="text" name="new-name"
                                value="<%=ACC_INFO.getFullname()%>">
                         <span id="mes-1"></span>
                     </div>
                     <div class="form-content">
-                        <input id="input-2" type="text" name="new-email" placeholder="Nhập Email mới!"
+                        <label for="form-item-input-2">Email </label>
+                        <input id="form-item-input-2" type="text" name="new-email"
                                value="<%=ACC_INFO.getEmail()%>">
                         <span id="mes-2"></span>
 
@@ -60,17 +62,20 @@
                     <div class="form-content">
                         <c:choose>
                             <c:when test="<%=ACC_INFO.getBirthday() == null%>">
-                                <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !" value="">
+                                <label for="form-item-input-3">Ngày sinh</label>
+                                <input id="form-item-input-3" type="date" name="new-birthday" value="">
                             </c:when>
                             <c:otherwise>
-                                <input id="input-3" type="text" name="new-birthday" placeholder="Nhập ngày sinh !" value="<fmt:parseDate pattern="yyyy-MM-dd" value="<%=ACC_INFO.getBirthday()%>" var="birthday" /><fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>">
+                                <label for="form-item-input-3">Ngày sinh</label>
+                                <input id="form-item-input-3" type="date" name="new-birthday"  value="<fmt:parseDate pattern="yyyy-MM-dd" value="<%=ACC_INFO.getBirthday()%>" var="birthday" /><fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>">
                             </c:otherwise>
                         </c:choose>
 
                         <span id="mes-3"></span>
                     </div>
                     <div class="form-content">
-                        <select name="new-sex" id="input-7">
+                        <label for="form-item-input-7">Giới tính</label>
+                        <select name="new-sex" id="form-item-input-7">
                             <%
                                 if (ACC_INFO.getSex() == 1) {
                             %>
@@ -79,7 +84,6 @@
                             <%
                             } else {
                             %>
-                            <%--                               value="Nam"--%>
                             <option value="0">Nữ</option>
                             <option value="1">Nam</option>
 
@@ -91,21 +95,24 @@
                         <span id="mes-7"></span>
                     </div>
                     <div class="form-content">
-                        <input id="input-4" type="text" name="new-phone" placeholder="Nhập số điện thoại mới!"
+                        <label for="form-item-input-4">Số điện thoại</label>
+                        <input id="form-item-input-4" type="text" name="new-phone"
                                value="<%=ACC_INFO.getPhone() == null ? "" : ACC_INFO.getPhone()%>">
                         <span id="mes-4"></span>
                     </div>
                     <div class="form-content">
-                        <input id="input-5" type="text" name="new-address" placeholder="Nhập địa chỉ mới!"
+                        <label for="form-item-input-5">Địa chỉ</label>
+                        <input id="form-item-input-5" type="text" name="new-address"
                                value="<%=ACC_INFO.getAddress() == null ? "" : ACC_INFO.getAddress()%>">
                         <span id="mes-5"></span>
                     </div>
                     <div class="form-content">
-                        <input id="input-6" type="text" name="new-cccd" placeholder="Nhập cccd mới!"
+                        <label for="form-item-input-5">Số căn cước công dân</label>
+                        <input id="form-item-input-6" type="text" name="new-cccd"
                                value="<%=ACC_INFO.getCccd() == null ? "" : ACC_INFO.getCccd()%>">
                         <span id="mes-6"></span>
                     </div>
-                    <div>
+                    <div id="submit-button">
                         <input id="submit-1" type="button" value="Cập nhật"/>
                     </div>
                 </form>
@@ -137,6 +144,30 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
 <script src="./assets/js/renter/Renter-update-profile.js"></script>
+
+<script>
+    form_1.addEventListener("blur", () => {
+        isRequire(form_1, "Vui lòng nhập trường này!")
+    });
+    form_2.addEventListener("blur", () => {
+        isRequire(form_2, "Vui lòng nhập trường này!")
+        isMail(form_2, "Email không hợp lệ!")
+    });
+    form_3.addEventListener("blur", () => {
+        isRequire(form_3, "Vui lòng nhập trường này!")
+    });
+    form_4.addEventListener("blur", () => {
+        isRequire(form_4, "Vui lòng nhập trường này!")
+        isPhone(form_4, "Số điện thoại không hợp lệ!")
+    });
+    form_5.addEventListener("blur", () => {
+        isRequire(form_5, "Vui lòng nhập trường này!")
+    });
+    form_6.addEventListener("blur", () => {
+        isRequire(form_6, "Vui lòng nhập trường này!")
+        isCccd(form_6, "Số cccd không khả dụng!")
+    });
+</script>
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->

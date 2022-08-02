@@ -41,33 +41,33 @@
                 <h2>Chi Tiết Báo Cáo</h2>
                 <c:forEach var="rp" items="${REPORT_LIST}">
                     <c:if test="${id == rp.reportID}">
-                        <p><strong>Phân Loại: </strong><c:forEach var="cate" items="${REPORT_CATE}">
+                        <p><span>Phân Loại: </span><c:forEach var="cate" items="${REPORT_CATE}">
                             <c:if test="${rp.cateID == cate.cateID}">
                                 ${cate.cateTitle}
                             </c:if>
                         </c:forEach></p>
-                        <p><strong>Nội Dung: </strong>${rp.content}</p>
-                        <p><strong>Ngày Gửi: </strong> ${rp.sendDate}</p>
+                        <p><span>Nội Dung: </span>${rp.content}</p>
+                        <p><span>Ngày Gửi: </span> ${rp.sendDate}</p>
                         <c:choose>
                             <c:when test="${rp.reply!=null}">
-                                <p><strong>Nội Dung Phản Hồi: </strong>${rp.reply}</p>
+                                <p><span>Nội Dung Phản Hồi: </span>${rp.reply}</p>
                             </c:when>
                             <c:when test="${rp.reply==null}">
-                                <p><strong>Nội Dung Phản Hồi: </strong>Chưa Phản Hồi</p>
+                                <p><span>Nội Dung Phản Hồi: </span>Chưa Phản Hồi</p>
                             </c:when>
                         </c:choose>
                         <c:if test="${rp.status == 0}">
-                            <p style="color: lightsalmon"><strong style="color: black">Tình Trạng: </strong>Đang chờ</p>
+                            <p style="color: red"><span style="color: black">Tình Trạng: </span>Đang chờ</p>
                         </c:if>
                         <c:if test="${rp.status == 1}">
-                            <p style="color: green"><strong style="color: black">Tình Trạng: </strong>Đã phản hồi</p>
+                            <p style="color: green"><span style="color: black">Tình Trạng: </span>Đã phản hồi</p>
                         </c:if>
                         <c:choose>
                             <c:when test="${rp.completeDate!=null}">
-                                <p><strong>Ngày Trả Lời: </strong>${rp.completeDate}</p>
+                                <p><span>Ngày Trả Lời: </span>${rp.completeDate}</p>
                             </c:when>
                             <c:when test="${rp.completeDate==null}">
-                                <p><strong style="color: black">Ngày Trả Lời: </strong> Chưa Phản Hồi</p>
+                                <p><span style="color: black">Ngày Trả Lời: </span> Chưa Phản Hồi</p>
                             </c:when>
                         </c:choose>
                     </c:if>

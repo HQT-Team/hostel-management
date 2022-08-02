@@ -56,7 +56,7 @@
         %>
         <div class="content">
             <div class="div-controll-form" id="div-controll-form">
-                <form action="renter-roommate-update" method="post" class="form" id="form_123">
+                <form action="renter-roommate-update" method="post" class="form" id="form_update_roommate">
                     <h1>Cập Nhật Thông Tin</h1>
                     <h3 style="color: green">${SUCCESS}</h3>
                     <h3 style="color: red">${ERROR}</h3>
@@ -74,7 +74,7 @@
                         <span id="mes-2"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-3" name="new-birthday" type="text" placeholder="Ngày sinh"
+                        <input id="form-item-input-3" name="new-birthday" type="date" placeholder="Ngày sinh"
                                value="<fmt:parseDate pattern="yyyy-MM-dd" value="${roommate1.information.birthday}" var="birthday" /><fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>"/>
                         <p class="border-bottom"></p>
                         <span id="mes-3"></span>
@@ -130,7 +130,32 @@
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
 <script src="./assets/js/receiveWebsocket.js"></script>
-
+<script>
+   form_1.addEventListener("blur", () => {
+       isRequire(form_1, "Vui lòng nhập trường này!")
+   });
+   form_2.addEventListener("blur", () => {
+       isRequire(form_2, "Vui lòng nhập trường này!")
+       isMail(form_2, "Email không hợp lệ!")
+   });
+   form_3.addEventListener("blur", () => {
+       isRequire(form_3, "Vui lòng nhập trường này!")
+   });
+   form_4.addEventListener("blur", () => {
+       isRequire(form_4, "Vui lòng nhập trường này!")
+   });
+   form_5.addEventListener("blur", () => {
+       isRequire(form_5, "Vui lòng nhập trường này!")
+       isPhone(form_5, "Số điện thoại không hợp lệ!")
+   });
+   form_6.addEventListener("blur", () => {
+       isRequire(form_6, "Vui lòng nhập trường này!")
+   });
+   form_7.addEventListener("blur", () => {
+       isRequire(form_7, "Vui lòng nhập trường này!")
+       isCccd(form_7, "Số cccd không khả dụng!")
+   });
+</script>
 
 <script type="text/javascript">
     // Receive

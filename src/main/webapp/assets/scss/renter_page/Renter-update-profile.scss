@@ -2,81 +2,101 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-body{
+body {
   overflow-x: hidden;
 }
+
 .content {
   width: 80%;
-margin: 0;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4fb;
+
   .profile-update {
-    margin: 80px auto;
+    margin: 40px auto;
     width: 520px;
-    height: 615px;
+    height: fit-content;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
     flex-wrap: wrap;
-    background-color: #F2F2F2;
+    background-color: #fcfcfc;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 4px;
 
     h2 {
       font-size: 32px;
-      text-align: center;
+      text-align: left;
       margin: 20px 0px;
+      color: #0033ff;
+    }
 
+    label {
+      font-size: 17px;
+      color: #0046bd;
+      margin: 12px 0 0 0;
     }
 
     input {
       flex-grow: 1;
       display: inline-block;
       width: 100%;
-      height: 50px;
-      border-radius: 9px;
+      height: 32px;
+      border-radius: 4px;
       background-color: #fff;
-      color: #8f8b8b;
+      color: #000000;
       font-size: 20px;
       margin: 4px auto;
       padding-left: 10px;
-      text-align: center;
+      text-align: left;
+      border: 1px solid #687692;
     }
-    #input-7{
+
+    #form-item-input-7 {
       width: 100%;
-      height: 50px;
-      border-radius: 9px;
+      height: 32px;
+      border-radius: 4px;
       background-color: #fff;
-      color: #8f8b8b;
+      color: #000000;
       font-size: 20px;
       margin: 4px auto;
-      padding-left: 10px;
-      text-align: center;
-      outline: none;
-      border: none;
+      padding: 0 10px 0 10px;
+      text-align: left;
+      border: 1px solid #687692;
     }
+
     span {
       color: red;
       font-size: 15px;
       margin-left: 5px;
     }
 
-    #submit-1 {
-      width: 100%;
-      height: 50px;
-      border-radius: 9px;
-      color: #ffffff;
-      background-color: rgba(13, 0, 255, 0.8);
-      font-size: 20px;
-      margin: 4px auto;
-    }
+    #submit-button{
+      text-align: right;
+      #submit-1 {
+        width: fit-content;
+        height: fit-content;
+        border-radius: 4px;
+        color: #ffffff;
+        background-color: rgba(13, 0, 255, 0.8);
+        font-size: 20px;
+        text-align: center;
+        padding: 6px 20px;
+        margin: 4px auto;
+      }
 
-    #submit-1:hover {
-      width: 100%;
-      height: 50px;
-      border-radius: 9px;
-      color: #ffffff;
-      background-color: rgba(13, 0, 255, 1.0);
-      font-size: 20px;
-      margin: 4px auto;
+      #submit-1:hover {
+        width: fit-content;
+        height: fit-content;
+        border-radius: 4px;
+        color: #ffffff;
+        background-color: rgba(13, 0, 255, 1.0);
+        font-size: 20px;
+        text-align: center;
+        padding: 6px 20px;
+        margin: 4px auto;
+      }
     }
   }
 }
