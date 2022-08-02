@@ -39,6 +39,10 @@
         <%@include file="components/sidebar.jsp"%>
         <div class="content row">
             <div class="report">
+                <c:if test="${REPORT_LIST == null}">
+                    <h1 style="font-size: 28px; color: red; text-align: center;line-height: 28px;margin-top: 20px">Bạn chưa có báo cáo nào!</h1>
+                </c:if>
+                <c:if test="${REPORT_LIST != null}">
                 <h2>Danh Sách Báo Cáo</h2>
 
                 <div class="main-form">
@@ -80,6 +84,7 @@
                         </tbody>
                     </table>
                 </div>
+                </c:if>
             </div>
         </div>
     </div>

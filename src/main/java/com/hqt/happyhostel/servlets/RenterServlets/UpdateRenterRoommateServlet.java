@@ -31,8 +31,6 @@ public class UpdateRenterRoommateServlet extends HttpServlet {
             String roommateName = req.getParameter("new-name").equals("") ? roommateInfo.getInformation().getFullname() : req.getParameter("new-name");
             String roommateEmail = req.getParameter("new-email").equals("") ? roommateInfo.getInformation().getEmail() : req.getParameter("new-email");
             String roommateBirthday = req.getParameter("new-birthday").equals("") ? roommateInfo.getInformation().getBirthday() : req.getParameter("new-birthday");
-            String[] array = roommateBirthday.split("-", 3);
-            String roommateBirthdayformat = array[2]+"-" + array[1]+"-" + array[0];
             int roommateGender = Integer.parseInt(req.getParameter("new-gender"));
             String roommatePhone = req.getParameter("new-phone").equals("") ? roommateInfo.getInformation().getPhone() : req.getParameter("new-phone");
             String roommateAddress = req.getParameter("new-address").equals("") ? roommateInfo.getInformation().getAddress() : req.getParameter("new-address");
@@ -41,7 +39,7 @@ public class UpdateRenterRoommateServlet extends HttpServlet {
             Information information = Information.builder()
                     .fullname(roommateName)
                     .email(roommateEmail)
-                    .birthday(roommateBirthdayformat)
+                    .birthday(roommateBirthday)
                     .sex(roommateGender)
                     .phone(roommatePhone)
                     .address(roommateAddress).cccd(roommateCCCD).build();

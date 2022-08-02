@@ -60,7 +60,7 @@
                             </c:if>
                         </h5><br>
                         <h5><strong>CCCD: </strong>${OWNER_INFO.cccd}</h5><br>
-                        <h5><strong>SĐT: </strong>${OWNER_INFO.phone}</h5><br>
+                        <h5><strong>SĐT: </strong>${OWNER_INFO.phone eq null ? "Không có thông tin!" : OWNER_INFO.phone}</h5><br>
                     </div>
                     <div class="renter-infor">
                         <h5><strong>Người Thuê: </strong>${RENTER_INFO.fullname}</h5><br>

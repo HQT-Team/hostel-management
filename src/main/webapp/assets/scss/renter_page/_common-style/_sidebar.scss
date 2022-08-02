@@ -1,7 +1,7 @@
 .dashboard {
   width: 20%;
   min-height: calc(100vh - 80px);
-  background-color: #e6e3f1;
+  background-color: #f7f7f7;
   padding: 0;
 
   .infor-top {
@@ -33,13 +33,13 @@
     border: none;
 
     .card-body {
-      background-color: #e6e3f1;
+      background-color: #f7f7f7;
 
       .sidebar-item {
         width: 100%;
         text-align: left;
         padding:15px 0 15px 15px;
-        background-color: #e6e3f1;
+        background-color: #f7f7f7;
         border-radius: 4px;
         margin-bottom: 5px;
         margin-top: 5px;

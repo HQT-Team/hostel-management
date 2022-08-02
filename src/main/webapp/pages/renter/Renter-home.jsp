@@ -50,7 +50,7 @@
                     </div>
                     <div class="content-top-2">
                         <p><span>Tên chủ phòng: </span>${ACCOUNT_INFOR.fullname}</p>
-                        <p><span>Số điện thoại: </span> ${ACCOUNT_INFOR.phone}</p>
+                        <p><span>Số điện thoại: </span> ${ACCOUNT_INFOR.phone eq null ? "Không có thông tin!" : ACCOUNT_INFOR.phone}</p>
                         <p><span>Số thành viên hiện tại: </span>${NUM_OF_MEMBERS}</p>
                         <p><span>Số thành viên tối đa: </span>${ROOM_INFOR.capacity}</p>
                     </div>
