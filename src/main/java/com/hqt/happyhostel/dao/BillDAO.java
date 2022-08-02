@@ -23,7 +23,7 @@ public class BillDAO {
     private static final String INSERT_NEW_BILL_SERVICE = "INSERT INTO BillService (bill_detail_id, hostel_service_id) VALUES (?, ?)";
 
     // After insert new bill, you need to set all old consume to 1, and insert 1 new consume start with status = 0
-    private static final String INSERT_NEW_BILL_TAIL = "UPDATE Consumes SET status = 1 WHERE room_id = 1\n" +
+    private static final String INSERT_NEW_BILL_TAIL = "UPDATE Consumes SET status = 1 WHERE room_id = ?\n" +
             "INSERT INTO Consumes (number_electric, number_water, update_date, status, room_id) VALUES (?, ?, GETDATE(), 0, ?)\n";
     private static final String UPDATE_BILL_STATUS = "UPDATE [dbo].[Bill] SET [status] = ?, [payment_date] = ?, [payment_id]= ? WHERE [bill_id] = ?";
 
@@ -108,9 +108,10 @@ public class BillDAO {
 
                 // Do the rest of insert app
                 ptm = cn.prepareStatement(INSERT_NEW_BILL_TAIL);
-                ptm.setInt(1, numberLastElectric);
-                ptm.setInt(2, numberLastWater);
-                ptm.setInt(3, roomID);
+                ptm.setInt(1, roomID);
+                ptm.setInt(2, numberLastElectric);
+                ptm.setInt(3, numberLastWater);
+                ptm.setInt(4, roomID);
                 check = ptm.executeUpdate() > 0;
 
                 if (!check) {

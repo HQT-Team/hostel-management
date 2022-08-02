@@ -58,7 +58,7 @@ public class RenterRegisterServlet extends HttpServlet {
                             //xoa invite code cua Room
                             int roomId = new RoomInviteDAO().getRoomInviteByAccountId(accId);
                             new RoomInviteDAO().updateRoomInviteCode(roomId, null, null, null);
-                            new RoomDAO().updateRoomStatus(roomId, 1);
+                            new RoomDAO().updateRoomStatus(roomId, 0);
 
                             //xoa session
                             session.invalidate();
