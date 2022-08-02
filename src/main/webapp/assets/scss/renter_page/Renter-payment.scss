@@ -144,6 +144,7 @@ body {
         border-style: none;
 
         th {
+          padding: 3px;
           font-size: 22px;
           color: black;
           text-align: center;
@@ -159,6 +160,7 @@ body {
 
         td {
           color: black;
+          padding: 3px;
           text-align: center;
           border: 1px solid black;
           font-size: 20px;
@@ -169,5 +171,39 @@ body {
 }
 
 @media screen and (min-width: 650px) and (max-width: 1280px) {
+  .table {
+    width: 95%;
+    margin: 50px auto;
 
+    thead {
+      tr {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+        border-style: none;
+
+        th {
+          padding: 3px;
+          font-size: 22px;
+          color: black;
+          text-align: center;
+          border: 1px solid black;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+
+        td {
+          color: black;
+          padding: 3px;
+          text-align: center;
+          border: 1px solid black;
+          font-size: 20px;
+        }
+      }
+    }
+  }
 }
