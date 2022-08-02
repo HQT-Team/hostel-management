@@ -70,7 +70,7 @@ public class AddHostelServlet extends HttpServlet {
             int managementPrice = Integer.parseInt(req.getParameter("hostel-manage"));
             if (managementPrice > 0) {
                 hostelServiceList.add(HostelService.builder()
-                        .serviceID(servicesList.get("Phí quản lí").getServiceID())
+                        .serviceID(servicesList.get("Phí quản lý").getServiceID())
                         .servicePrice(managementPrice).build());
             }
 

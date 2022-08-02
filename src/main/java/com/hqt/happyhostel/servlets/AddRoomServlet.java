@@ -64,7 +64,7 @@ public class AddRoomServlet extends HttpServlet {
                     if (isSuccess) {
                         request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                                 .status(true)
-                                .content("Bạn đã thêm 1 phòng mới thành công!").build());
+                                .content("Bạn đã thêm " + quantityRoom + " phòng mới thành công!").build());
                     } else {
                         request.setAttribute("RESPONSE_MSG", HandlerStatus.builder()
                                 .status(false)
@@ -94,8 +94,6 @@ public class AddRoomServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-
-
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
