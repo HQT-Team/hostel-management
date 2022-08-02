@@ -75,7 +75,7 @@
           <div class="row">
             <div class="col-12 col-md-8 col-lg-8 col-xl-7 m-auto">
               <div class="account__wrapper">
-                <img src="./assets/images/avatars/user-avatar.jpg" alt=""
+                <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.jpg" alt="User avatar"
                      class="account__sub-img">
                 <div class="account__sub-info">
                   <h2 class="account__sub-name">${sessionScope.USER.accountInfo.information.fullname}</h2>
@@ -154,7 +154,7 @@
             <div class="col-md-10 col-lg-9 col-xl-8 m-auto">
               <div class="update__wrapper">
                 <div class="update__image">
-                  <img id="update__img" src="./assets/images/avatars/user-avatar.jpg"
+                  <img id="update__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.jpg"
                        alt="" class="update__img">
                   <input id="update__input-img" type="file"
                          accept="image/x-png,image/gif,image/jpeg" class="update__input-img">

@@ -51,8 +51,8 @@
                             <span class="infor__role">Chủ phòng trọ</span>
                         </div>
                         <div class="profile__avatar">
-                            <img class="avatar__img" src="./assets/images/avatars/user-avatar.jpg"
-                                 alt="User avatar image">
+                            <img class="avatar__img" src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.jpg"
+                                 alt="User avatar">
                         </div>
                     </div>
                     <div id="menu-sidebar-btn" class="menu-sidebar-btn">
@@ -201,7 +201,7 @@
             <div id="nav-profile-dropdown" class="profile__actions">
                 <a href="profile" class="action__view-profile-link">
                     <div class="action__image">
-                        <img src="./assets/images/avatars/user-avatar.jpg" alt="">
+                        <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.jpg" alt="User avatar">
                     </div>
                     <div class="action__content">
                         <div class="title">${sessionScope.USER.accountInfo.information.fullname}</div>

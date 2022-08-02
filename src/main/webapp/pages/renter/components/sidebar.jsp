@@ -1,19 +1,12 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 84337
-  Date: 8/1/2022
-  Time: 4:46 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="dashboard hidden" id="dashboard">
     <div class="infor-top">
         <% String[] spilitName = account.getAccountInfo().getInformation().getFullname().split(" ");
             int size = spilitName.length;
         %>
-        <img src="./assets/images/avatars/user-avatar.jpg" alt="">
+        <img src="./assets/images/avatars/${sessionScope.USER.accountInfo.information.sex == 1 ? "male" : "female"}.jpg" alt="">
         <p>Người Thuê</p>
-        <h3>Xin Chào <%= spilitName[size-1] %></h3>
+        <h3>Xin Chào, <%= spilitName[size-1] %></h3>
 
     </div>
     <div class="card">

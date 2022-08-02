@@ -11,7 +11,7 @@
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
 
     <!-- Title -->
-    <title>Tổng quan</title>
+    <title>Quản lý tài khoản</title>
 
     <!-- Link Bootstrap !important -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
