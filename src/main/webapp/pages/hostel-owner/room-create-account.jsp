@@ -12,6 +12,9 @@
     <!-- Title -->
     <title>Thêm khu trọ</title>
 
+    <!-- Date picker -->
+    <link rel="stylesheet" href="./assets/scss/datepicker/rome.css">
+
     <!-- Link Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -107,6 +110,32 @@
                         <div class="form-group">
                             <div class="row align-items-center">
                                 <div class="col-6">
+                                    <label for="input_from" class="form-label">Ngày bắt đầu hợp đồng:
+                                        <span>*</span></label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" class="form-control m-0" id="input_from" placeholder="Start Date"
+                                           name="room-startdate" value="${requestScope.startDate}">
+                                </div>
+                            </div>
+                            <span class="form-message mt-4"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <label for="input_to" class="form-label">Ngày kết thúc hợp đồng:
+                                        <span>*</span></label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" class="form-control m-0" id="input_to" placeholder="Start Date"
+                                           name="room-enddate" value="${requestScope.endDate}">
+                                </div>
+                            </div>
+                            <span class="form-message mt-4"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="row align-items-center">
+                                <div class="col-6">
                                     <label for="room-electric" class="form-label">Số điện hiện tại:
                                         <span>*</span></label>
                                 </div>
@@ -156,32 +185,6 @@
                             </div>
                             <span class="form-message mt-4"></span>
                         </div>
-                        <div class="form-group">
-                            <div class="row align-items-center">
-                                <div class="col-6">
-                                    <label for="room-startdate" class="form-label">Ngày bắt đầu hợp đồng:
-                                        <span>*</span></label>
-                                </div>
-                                <div class="col-6">
-                                    <input id="room-startdate" type="text" class="form-control m-0 clickable input-md" required
-                                           name="room-startdate" value="${requestScope.startDate}" placeholder="mm/dd/yyyy">
-                                </div>
-                            </div>
-                            <span class="form-message mt-4"></span>
-                        </div>
-                        <div class="form-group">
-                            <div class="row align-items-center">
-                                <div class="col-6">
-                                    <label for="room-enddate" class="form-label">Ngày kết thúc hợp đồng:
-                                        <span>*</span></label>
-                                </div>
-                                <div class="col-6">
-                                    <input id="room-enddate" type="text" class="form-control m-0 clickable input-md" required
-                                           name="room-enddate" value="${requestScope.endDate}" placeholder="mm/dd/yyyy">
-                                </div>
-                            </div>
-                            <span class="form-message mt-4"></span>
-                        </div>
                         <div class="spacer"></div>
                         <div class="create-room-account-actions">
                             <a href="roomDetail?roomID=${sessionScope.room.roomId}" class="form-submit">Hủy bỏ</a>
@@ -222,7 +225,8 @@
 <!-- Web socket -->
 <script src="./assets/js/receiveWebsocket.js"></script>
 <!-- Date picker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+<script src="./assets/js/datepicker/popper.min.js"></script>
+<script src="./assets/js/datepicker/rome.js"></script>
 
 <script>
     <c:choose>
@@ -246,30 +250,20 @@
 </script>
 
 <script>
-    let checkin = $('#room-startdate').datepicker({
-        autoclose: true
-    }).on('changeDate', function (ev) {
-        if (ev.date.valueOf() > checkout.datepicker("getDate").valueOf() || !checkout.datepicker("getDate").valueOf()) {
+    $(function () {
+        rome(input_from, {
+            dateValidator: rome.val.beforeEq(input_to),
+            inputFormat: "DD/MM/YYYY",
+            time: false,
+        });
 
-            let newDate = new Date(ev.date);
-            newDate.setDate(newDate.getDate() + 1);
-            checkout.datepicker("update", newDate);
-
-        }
-        $('#room-enddate')[0].focus();
+        rome(input_to, {
+            dateValidator: rome.val.afterEq(input_from),
+            inputFormat: "DD/MM/YYYY",
+            time: false,
+        });
     });
 
-    let checkout = $('#room-enddate').datepicker({
-        beforeShowDay: function (date) {
-            if (!checkin.datepicker("getDate").valueOf()) {
-                return date.valueOf() >= new Date().valueOf();
-            } else {
-                return date.valueOf() > checkin.datepicker("getDate").valueOf();
-            }
-        },
-        autoclose: true
-
-    }).on('changeDate', function (ev) { });
 </script>
 
 <script>
@@ -293,6 +287,8 @@
             Validator.isRequired('#room-deposit', 'Vui lòng nhập trường này'),
             Validator.minNumber('#room-deposit', 1, 'Vui lòng nhập tối thiểu 1'),
             Validator.maxNumber('#room-deposit', 100000000, 'Vui lòng nhập tối đa 100000000'),
+            Validator.isRequired('#input_from', 'Vui lòng nhập trường này'),
+            Validator.isRequired('#input_to', 'Vui lòng nhập trường này'),
         ]
     });
 </script>
