@@ -121,14 +121,17 @@
                     <div>
                         <h2 style="color: green;">${requestScope.SUCCESS}</h2>
                         <h2 style="color: red;">${requestScope.ERROR}</h2>
-                        <h2 style="color: green;">${SUCCESS_IMPORT}</h2>
-                        <h2 style="color: red;">${ERROR_IMPORT}</h2>
+                        <c:forEach var="e" items="${SUCCESS_IMPORT}">
+                            <h2 style="color: green;">${e.content}</h2>
+                        </c:forEach>
+                        <c:forEach var="e" items="${ERROR_IMPORT}">
+                            <h2 style="color: red;">${e.content}</h2>
+                        </c:forEach>
                         <h2> Chọn tệp excel để tiến hành thêm khu trọ: </h2>
                         <br>
                         <form action="HostelFileUpLoadServlet" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" value="Khoa" name="file2" />
                             <input type="file" name="file"/>
-                            <button type="submit">Upload</button>
+                            <button type="submit">Tải lên</button>
                         </form>
                         <br>
                         <form action="import-hostel" method="get" class="custom-form add-hostel-form">
