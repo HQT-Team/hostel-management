@@ -151,12 +151,38 @@
         </div>
     </div>
 
+    <!-- Toast element -->
+    <div id="toast">&nbsp;</div>
+
     <!-- Script Bootstrap -->
     <script src="./assets/js/bootstrap/bootstrap.bundle.min.js"></script>
-
-    <!-- Link your script here -->
+    <!-- Valid form -->
     <script src="./assets/js/valid-form.js"></script>
+    <!-- Toast -->
+    <script src="./assets/js/toast-alert.js"></script>
+    <!-- Link your script here -->
     <script src="./assets/js/system/login-handle.js"></script>
+
+    <script>
+            <c:choose>
+                <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+                    toast({
+                        title: 'Thành công',
+                        message: '${requestScope.RESPONSE_MSG.content}',
+                        type: 'success',
+                        duration: 5000
+                    });
+                </c:when>
+                <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+                    toast({
+                        title: 'Lỗi',
+                        message: '${requestScope.RESPONSE_MSG.content}',
+                        type: 'error',
+                        duration: 5000
+                    });
+                </c:when>
+        </c:choose>
+    </script>
 
     <c:if test="${requestScope.RESPONSE_MSG eq null}">
         <!-- Loader -->
