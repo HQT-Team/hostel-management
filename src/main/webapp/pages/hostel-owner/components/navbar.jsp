@@ -32,6 +32,9 @@
                             <c:when test="${sessionScope.CURRENT_PAGE eq 'invoice'}">
                                 Hóa đơn
                             </c:when>
+                            <c:when test="${sessionScope.CURRENT_PAGE eq 'statistic'}">
+                                Thống kê
+                            </c:when>
                             <c:when test="${sessionScope.CURRENT_PAGE eq 'account'}">
                                 Tài khoản
                             </c:when>

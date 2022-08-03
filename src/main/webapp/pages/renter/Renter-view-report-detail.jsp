@@ -57,9 +57,12 @@
                             </c:when>
                         </c:choose>
                         <c:if test="${rp.status == 0}">
-                            <p style="color: red"><span style="color: black">Tình Trạng: </span>Đang chờ</p>
+                            <p style="color: #b12ce0"><span style="color: black">Tình Trạng: </span>Chưa tiếp nhận</p>
                         </c:if>
                         <c:if test="${rp.status == 1}">
+                            <p style="color: red"><span style="color: black">Tình Trạng: </span>Đang xử lí</p>
+                        </c:if>
+                        <c:if test="${rp.status == 2}">
                             <p style="color: green"><span style="color: black">Tình Trạng: </span>Đã phản hồi</p>
                         </c:if>
                         <c:choose>
@@ -67,7 +70,7 @@
                                 <p><span>Ngày Trả Lời: </span>${rp.completeDate}</p>
                             </c:when>
                             <c:when test="${rp.completeDate==null}">
-                                <p><span style="color: black">Ngày Trả Lời: </span> Chưa Phản Hồi</p>
+                                <p><span style="color: black">Ngày Trả Lời: </span>Chưa Phản Hồi</p>
                             </c:when>
                         </c:choose>
                     </c:if>

@@ -72,9 +72,12 @@
                                 </td>
                                 <td>
                                     <c:if test="${rp.status == 0}">
-                                        Đang Chờ
+                                        Chưa tiếp nhận
                                     </c:if>
                                     <c:if test="${rp.status == 1}">
+                                        Đang xử lí
+                                    </c:if>
+                                    <c:if test="${rp.status == 2}">
                                         Đã phản hồi
                                     </c:if>
                                 </td>

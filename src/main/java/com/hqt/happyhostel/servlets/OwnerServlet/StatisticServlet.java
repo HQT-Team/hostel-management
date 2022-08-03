@@ -25,7 +25,7 @@ public class StatisticServlet extends HttpServlet {
         ContractDAO contractDAO = new ContractDAO();
         ReportDAO reportDAO = new ReportDAO();
         RoomDAO roomDAO = new RoomDAO();
-       Account account = (Account) session.getAttribute("USER");
+        Account account = (Account) session.getAttribute("USER");
         int totalMoney = 0;
         int expenseMoney = 0;
         int revenueMoney = 0;
@@ -37,9 +37,11 @@ public class StatisticServlet extends HttpServlet {
             List<Hostel> listHostel = hostelDAO.getHostelByOwnerId(account.getAccId());
             if (listHostel.size() == 0){
                 request.setAttribute("error", "Ban chưa khu trọ nào!");
-                request.getRequestDispatcher(URL).forward(request, response);
-
+                session.setAttribute("CURRENT_PAGE", "statistic");
+                return;
             }
+            List<Room> listRoomToCheck = roomDAO.getListRoomsByHostelId(listHostel.get(0).getHostelID());
+            request.setAttribute("listRoomToCheck", listRoomToCheck);
             ArrayList<Bill> listBillByHostel = billDAO.GetListBillByHostel(listHostel.get(0).getHostelName());
 //            if (listBillByHostel.size() == 0){
 //                request.setAttribute("error", "Phòng trọ của bạn chưa có bill!");
@@ -86,8 +88,7 @@ public class StatisticServlet extends HttpServlet {
                         totalMoneyMonth3 += listBillByFixValue.get(i).getTotalMoney();
                     }
                 }
-                List<Room> listRoomToCheck = roomDAO.getListRoomsByHostelId(listHostel.get(0).getHostelID());
-                request.setAttribute("listRoomToCheck", listRoomToCheck);
+
                 request.setAttribute("totalMoneyMonth1", totalMoneyMonth1);
                 request.setAttribute("totalMoneyMonth2", totalMoneyMonth2);
                 request.setAttribute("listBillByFixValue", listBillByFixValue);
@@ -142,7 +143,7 @@ public class StatisticServlet extends HttpServlet {
                 }
 
                 List<Report> listReport;
-                listReport = reportDAO.getReports();
+                listReport = reportDAO.getListReportByHostelId(listHostel.get(0).getHostelID());
                 var rate = 0;
                 int rep = 0;
                 int notyet = 0;
@@ -170,8 +171,6 @@ public class StatisticServlet extends HttpServlet {
                         numberContract++;
                     }
                 }
-
-
                 request.setAttribute("rate", rate);
                 request.setAttribute("numberEmpty", numberEmpty);
                 request.setAttribute("numberRenting", numberRenting);

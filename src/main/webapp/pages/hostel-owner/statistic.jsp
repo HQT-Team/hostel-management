@@ -54,7 +54,7 @@
 
     <!-- Body -->
     <div class="container">
-        <div class="row">
+        <div class="row position-relative">
 
             <!-- Side bar -->
             <div class="col-12 col-lg-3 col-xl-3 col-xxl-2">
@@ -64,8 +64,8 @@
             <!-- Content -->
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 pb-5 content-group">
                 <!-- Your content here -->
-                <div class="content mt-5">
-                    <c:if test="${requestScope.error == null}">
+                <c:if test="${requestScope.error == null}">
+                    <div class="content mt-5">
                         <div class="statistic-content">
                             <form action="statistic" method="POST" id="form-search">
                                 <div class="search">
@@ -99,19 +99,19 @@
                             <div class="money">
                                 <div class="income">
                                     <div>
-                                        <h3>${requestScope.totalMoney} VND</h3>
+                                        <h3>${requestScope.totalMoney == null ? 0 : requestScope.totalMoney} VND</h3>
                                         <p>Thu nhập</p>
                                     </div>
                                 </div>
                                 <div class="expense">
                                     <div>
-                                        <h3>${requestScope.expenseMoney} VND</h3>
+                                        <h3>${requestScope.expenseMoney == null ? 0 : requestScope.expenseMoney} VND</h3>
                                         <p>Chi phí</p>
                                     </div>
                                 </div>
                                 <div class="revenue">
                                     <div>
-                                        <h3>${requestScope.revenueMoney} VND</h3>
+                                        <h3>${requestScope.revenueMoney == null ? 0 : requestScope.revenueMoney} VND</h3>
                                         <p>Doanh thu</p>
                                     </div>
                                 </div>
@@ -146,25 +146,31 @@
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <th>${requestScope.listReport.size()}</th>
-                                            <th>${requestScope.rate}%</th>
+                                            <th>${requestScope.listReport.size() == null ? 0 :  requestScope.listReport.size()}</th>
+                                            <th>${requestScope.rate == null ? 0 : requestScope.rate}%</th>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="room-infor">
                                     <h3>Phòng Trọ</h3>
-                                    <p>Đang cho thuê: ${requestScope.numberEmpty}</p>
-                                    <p>Phòng Trống: ${requestScope.numberRenting}</p>
-                                    <p>Đang làm hợp đồng: ${requestScope.numberContract}</p>
+                                    <p>Đang cho thuê: ${requestScope.numberEmpty == null ? 0 : requestScope.numberEmpty}</p>
+                                    <p>Phòng Trống: ${requestScope.numberRenting == null ? 0 : requestScope.numberRenting}</p>
+                                    <p>Đang làm hợp đồng: ${requestScope.numberContract == null ? 0 : requestScope.numberContract}</p>
                                 </div>
                             </div>
                         </div>
-                    </c:if>
-                    <c:if test="${requestScope.error != null}">
-                        <h1>${requestScope.error}</h1>
-                    </c:if>
-                </div>
+                    </div>
+                </c:if>
+                <c:if test="${requestScope.error != null}">
+                    <!-- Warning -->
+                    <div class="content-warning mt-5">
+                        <div class="blink"></div>
+                        <span>Hệ thống nhận thấy bạn chưa có khu trọ nào cả! <a href="add-hostel">
+                                Click vào đây để tạo khu trọ mới nhen!</a>
+                        </span>
+                    </div>
+                </c:if>
             </div>
         </div>
     </div>
@@ -209,6 +215,23 @@
         document.getElementById("select-year").disabled = true;
         document.getElementById("quater").disabled = true;
     }
+    if (${requestScope.listRoomToCheck.size() == 0}) {
+        document.getElementById("select-year").disabled = true;
+        document.getElementById("quater").disabled = true;
+    }
+    if (${requestScope.listRoomToCheck.size() > 0}) {
+        document.getElementById("select-year").disabled = false;
+        document.getElementById("quater").disabled = false;
+    }
+    if (${requestScope.listRoom.size() == 0}) {
+        document.getElementById("select-year").disabled = true;
+        document.getElementById("quater").disabled = true;
+    }
+    if (${requestScope.listRoom.size() > 0}) {
+        document.getElementById("select-year").disabled = false;
+        document.getElementById("quater").disabled = false;
+    }
+
     if (${requestScope.quater eq null ? false : true}) {
         document.getElementById("${requestScope.quater}").setAttribute("selected", "selected");
     }

@@ -65,6 +65,7 @@ function newBarChartWithQuater(list, listMonthTmp) {
                 },
             ],
         },
+
     });
 }
 
@@ -106,6 +107,17 @@ function newLineChartWithQuater(listCreate, listCancel, listMonthTmp) {
     var ctx = canvasElement.getContext("2d");
     new Chart("myLineChart", {
         type: "line",
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true,
+                        min: 0,
+                        max: 500
+                    }
+                }]
+            }
+        },
         data: {
             labels: [...listMonthTmp],
             datasets: [
@@ -124,9 +136,7 @@ function newLineChartWithQuater(listCreate, listCancel, listMonthTmp) {
                 },
             ],
         },
-        options: {
-            legend: { display: false },
-        },
+
     });
 }
 
