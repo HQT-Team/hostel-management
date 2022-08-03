@@ -28,17 +28,21 @@
 
 </head>
 
-<body class="over-flow-hidden">
-<div id="preloader">
-    <div class="dots">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-</div>
+<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
 
 <!-- Navbar -->
 <%@include file="./components/navbar.jsp"%>
+
+<!-- Preload -->
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</c:if>
 
 <!-- Body -->
 <div class="container min-height">
@@ -137,6 +141,9 @@
 <!-- Push notification element -->
 <div id="push-noti"></div>
 
+<!-- Toast element -->
+<div id="toast">&nbsp;</div>
+
 <!-- Script Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -153,6 +160,30 @@
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
 <script src="./assets/js/receiveWebsocket.js"></script>
+<!-- Toast -->
+<script src="./assets/js/toast-alert.js"></script>
+
+<script>
+    <c:choose>
+    <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+    toast({
+        title: 'Thành công',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'success',
+        duration: 5000
+    });
+    </c:when>
+    <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+    toast({
+        title: 'Lỗi',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'error',
+        duration: 5000
+    });
+    </c:when>
+    </c:choose>
+</script>
+
 <script>
     // Handle encode and render QR image
     const imgBase64Code ='${requestScope.ROOM_INVITE.QRCode}';
@@ -177,8 +208,10 @@
     };
 </script>
 
-<!-- Loader -->
-<script src="./assets/js/loading-handler.js"></script>
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <!-- Loader -->
+    <script src="./assets/js/loading-handler.js"></script>
+</c:if>
 
 </body>
 

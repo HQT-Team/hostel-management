@@ -17,7 +17,7 @@ public class CreateContractServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.sendRedirect(ERROR);
     }
 
     @Override
@@ -25,7 +25,6 @@ public class CreateContractServlet extends HttpServlet {
         String url = ERROR;
         try {
             int roomId = (int) req.getAttribute("contract_room_id");
-            ;
             String price = (String) req.getAttribute("contract_room_price");
             String deposit = (String) req.getAttribute("contract_deposit");
             String startDate = (String) req.getAttribute("contract_startDate");
