@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renter</title>
+    <title>Thêm thành viên</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-day-picker/8.0.0-beta.3/index.js"
             integrity="sha512-xiApCyCA5ca1At8kqvl5iezIE7Gg3NwkuMCjIf0zkPmJkre1rRPydTVYvRacFJbRhOPaqiZEFZPDODc5m9312Q=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -49,8 +49,8 @@
             <div class="div-controll-form" id="div-controll-form">
                 <form action="AddRenterRoommatePage" method="post" class="form" id="form">
                     <h1>Thêm Thành Viên</h1>
-                    <h3 style="color: red">${ERROR}</h3>
-                    <h3 style="color: green">${SUCCESS}</h3>
+                    <h3 style="color: red" id="show-message-1">${ERROR}</h3>
+                    <h3 style="color: green" id="show-message-2">${SUCCESS}</h3>
                     <div class="form-item" id="form-item">
                         <input id="form-item-input-1" name="full-name" type="text" placeholder="Tên đây đủ">
                         <p class="border-bottom"></p>
@@ -122,6 +122,13 @@
 <script src="./assets/js/renter/Renter-add-roommate.js"></script>
 
 <script>
+    var message1 = document.getElementById("show-message-1");
+    var message2 = document.getElementById("show-message-2");
+
+    setTimeout(() => {
+        message1.innerText = ""
+        message2.innerText = ""
+    }, 3000)
     form_1.addEventListener("blur", () => {
         isRequire(form_1, "Vui lòng nhập trường này!")
     });

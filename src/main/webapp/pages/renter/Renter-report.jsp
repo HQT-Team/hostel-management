@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renter Report</title>
+    <title>Gửi báo cáo</title>
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -39,7 +39,7 @@
                 <div class="report">
                     <form action="Renter-report" method="post" id="form-submit">
                         <h2>Viết Báo Cáo</h2>
-                        <h3 class="notification-success">
+                        <h3 class="notification-success" id="notification-success">
                             ${requestScope.RESPONSE_MSG.content}
                         </h3>
                         <div>
@@ -51,8 +51,7 @@
                             <br>
                             <span id="mes-1"></span>
                         </div>
-                        <div>
-                            <label for="form-input" class="form-label">Nội dung</label>
+                        <div class="form-input">
                             <textarea rows="4" cols="50" name="form-input" class="form-input" id="form-input"></textarea>
                             <span id="mes-2"></span>
                         </div>
@@ -139,7 +138,10 @@
     submitButton.addEventListener('click', () => {
         formSubmit.submit();
     })
-
+    let success = document.getElementById("notification-success");
+    setTimeout(() => {
+        success.innerText = ""
+    }, 3000)
 
 </script>
 <!-- Axios -->

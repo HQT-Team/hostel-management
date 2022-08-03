@@ -10,8 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <title>Document</title>
+    <title>Chỉnh sửa</title>
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
     <title>Renter</title>
@@ -67,7 +66,7 @@
                             </c:when>
                             <c:otherwise>
                                 <label for="form-item-input-3">Ngày sinh</label>
-                                <input id="form-item-input-3" type="date" name="new-birthday"  value="<fmt:parseDate pattern="yyyy-MM-dd" value="<%=ACC_INFO.getBirthday()%>" var="birthday" /><fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>">
+                                <input id="form-item-input-3" type="date" name="new-birthday"  value="<%=ACC_INFO.getBirthday()%>">
                             </c:otherwise>
                         </c:choose>
 

@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contract</title>
+    <title>Hợp đồng</title>
     <link rel="icon" href="./assets/images/favicon/favicon.png" type="image/x-icon"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <div class="contract-result">
-                    <h3><strong>Thông tin phòng</strong></h3>
+                    <h3><strong style="font-size: 22px; margin-bottom: 5px">Thông tin phòng</strong></h3>
                     <h5><strong>Địa chỉ: </strong>${HOSTEL.address}, ${HOSTEL.ward.split('-')[1]},
                         ${HOSTEL.district.split('-')[1]}, ${HOSTEL.city.split('-')[1]} </h5><br>
                     <h5><strong>Giá: </strong>
