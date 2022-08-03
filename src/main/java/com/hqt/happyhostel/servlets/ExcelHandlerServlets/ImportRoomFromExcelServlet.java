@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlet.ExcelHandlerServlets;
+package com.hqt.happyhostel.servlets.ExcelHandlerServlets;
 
 import com.hqt.happyhostel.dao.RoomDAO;
 import com.hqt.happyhostel.dto.Account;
@@ -138,24 +138,33 @@ public class ImportRoomFromExcelServlet extends HttpServlet {
                                 break;
                         }
                     }
-                    checkAdd = roomDAO.addNewRoom(hostelID, room.getRoomNumber(), room.getCapacity(), room.getRoomArea(), room.getHasAttic(), room.getRoomStatus(),
-                            quantity1,status1,quantity2,status2,quantity3,status3,quantity4,status4);
+                    if(room.getRoomNumber() != 0){
+                        checkAdd = roomDAO.addNewRoom(hostelID, room.getRoomNumber(), room.getCapacity(), room.getRoomArea(), room.getHasAttic(), room.getRoomStatus(),
+                                quantity1,status1,quantity2,status2,quantity3,status3,quantity4,status4);
+                    } else {
+                        errors.add(HandlerStatus.builder()
+                                .status(false)
+                                .content("Đã có lỗi xảy ra! Không thể thêm phòng với số phòng để trống, vui lòng kiểm tra lại dự liệu trong file excel.").build());
+                    }
                 } catch (Exception e){
                     e.printStackTrace();
                     errors.add(HandlerStatus.builder()
                             .status(false)
                             .content("Đã có lỗi xảy ra! Sai định dạng dữ liệu trong file excel. Không thể thêm phòng số: "+room.getRoomNumber()).build());
                 }finally {
-                    if(checkAdd){
-                        successes.add(HandlerStatus.builder()
-                                .status(true)
-                                .content("Đã thêm thành công phòng số: "+room.getRoomNumber()).build());
+                    if(room.getRoomNumber() != 0){
+                        if(checkAdd){
+                            successes.add(HandlerStatus.builder()
+                                    .status(true)
+                                    .content("Đã thêm thành công phòng số: "+room.getRoomNumber()).build());
 
-                    } else {
-                        errors.add(HandlerStatus.builder()
-                                .status(false)
-                                .content("Không thể thêm phòng số: "+room.getRoomNumber()+"! Số phòng này đã tồn tại trong khu trọ!").build());
+                        } else {
+                            errors.add(HandlerStatus.builder()
+                                    .status(false)
+                                    .content("Không thể thêm phòng số: "+room.getRoomNumber()+"! Số phòng này đã tồn tại trong khu trọ!").build());
+                        }
                     }
+
                 }
             }
 

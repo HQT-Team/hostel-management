@@ -176,8 +176,8 @@
     <br>
     <form method="post" action="RoomFileUpLoadServlet" enctype="multipart/form-data">
         <input type="hidden" value="${hostelInformation.hostelID}" name="hostelID">
-        <input type="file" name="file" placeholder="${file}"/>
-        <input type="submit" value="Upload" />
+        <input type="file" name="file"/>
+        <button type="submit">Tải lên</button>
     </form>
     <br>
     <form action="import-room" class="custom-form add-hostel-form">

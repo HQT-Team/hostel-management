@@ -2,6 +2,7 @@ package com.hqt.happyhostel.servlets.ExcelHandlerServlets;
 
 import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dto.Account;
+import com.hqt.happyhostel.dto.HandlerStatus;
 import com.hqt.happyhostel.dto.Hostel;
 import com.hqt.happyhostel.dto.HostelService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -47,6 +48,8 @@ public class ImportHostelFromExcelServlet extends HttpServlet {
             Account account = (Account) session.getAttribute("USER");
             int accID = account.getAccId();
             HostelDAO hostelDAO = new HostelDAO();
+            List<HandlerStatus> errors = new ArrayList<>();
+            List<HandlerStatus> successes = new ArrayList<>();
 
             String fileName = req.getParameter("fileName");
             String excelFilePath = req.getServletContext().getRealPath("/excels" + "/" + fileName);
@@ -75,66 +78,84 @@ public class ImportHostelFromExcelServlet extends HttpServlet {
                 String validDate = dateObj.format(formatter);
                 List<HostelService> hostelServiceList = new ArrayList<>();
                 Hostel hostel = new Hostel();
-
-                while (cellIterator.hasNext()) {
-                    hostel.setHostelOwnerAccountID(accID);
-                    //Read cell
-                    Cell cell = cellIterator.next();
-                    Object cellValue = getCellValue(cell);
-                    if (cellValue == null || cellValue.toString().isEmpty()) {
-                        continue;
+                int hostelId = -1;
+                try {
+                    while (cellIterator.hasNext()) {
+                        hostel.setHostelOwnerAccountID(accID);
+                        //Read cell
+                        Cell cell = cellIterator.next();
+                        Object cellValue = getCellValue(cell);
+                        if (cellValue == null || cellValue.toString().isEmpty()) {
+                            continue;
+                        }
+                        // Set value for hostel object
+                        int columnIndex = cell.getColumnIndex();
+                        switch (columnIndex) {
+                            case COLUMN_INDEX_NAME:
+                                hostel.setHostelName((String) getCellValue(cell));
+                                break;
+                            case COLUMN_INDEX_ADDRESS:
+                                hostel.setAddress((String) getCellValue(cell));
+                                break;
+                            case COLUMN_INDEX_WARD:
+                                hostel.setWard((String) getCellValue(cell));
+                                break;
+                            case COLUMN_INDEX_DISTRICT:
+                                hostel.setDistrict((String) getCellValue(cell));
+                                break;
+                            case COLUMN_INDEX_CITY:
+                                hostel.setCity((String) getCellValue(cell));
+                                break;
+                            case COLUMN_INDEX_ELECTRIC:
+                                int electricPrice = BigDecimal.valueOf((double) cellValue).intValue();
+                                hostelServiceList.add(HostelService.builder().serviceID(1).validDate(validDate).servicePrice(electricPrice).build());
+                                break;
+                            case COLUMN_INDEX_WATER:
+                                int waterPrice = BigDecimal.valueOf((double) cellValue).intValue();
+                                hostelServiceList.add(HostelService.builder().serviceID(2).validDate(validDate).servicePrice(waterPrice).build());
+                                break;
+                            case COLUMN_INDEX_INTERNET:
+                                int internetPrice = new BigDecimal((double) cellValue).intValue();
+                                hostelServiceList.add(HostelService.builder().serviceID(3).validDate(validDate).servicePrice(internetPrice).build());
+                                break;
+                            case COLUMN_INDEX_MANAGEMENT:
+                                int managementPrice = new BigDecimal((double) cellValue).intValue();
+                                hostelServiceList.add(HostelService.builder().serviceID(4).validDate(validDate).servicePrice(managementPrice).build());
+                                break;
+                            case COLUMN_INDEX_VEHICLE:
+                                int vehicleryPrice = new BigDecimal((double) cellValue).intValue();
+                                hostelServiceList.add(HostelService.builder().serviceID(7).validDate(validDate).servicePrice(vehicleryPrice).build());
+                                break;
+                            case COLUMN_INDEX_SANITARY:
+                                int sanitaryPrice = new BigDecimal((double) cellValue).intValue();
+                                hostelServiceList.add(HostelService.builder().serviceID(6).validDate(validDate).servicePrice(sanitaryPrice).build());
+                                break;
+                        }
                     }
-                    // Set value for hostel object
-                    int columnIndex = cell.getColumnIndex();
-                    switch (columnIndex) {
-                        case COLUMN_INDEX_NAME:
-                            hostel.setHostelName((String) getCellValue(cell));
-                            break;
-                        case COLUMN_INDEX_ADDRESS:
-                            hostel.setAddress((String) getCellValue(cell));
-                            break;
-                        case COLUMN_INDEX_WARD:
-                            hostel.setWard((String) getCellValue(cell));
-                            break;
-                        case COLUMN_INDEX_DISTRICT:
-                            hostel.setDistrict((String) getCellValue(cell));
-                            break;
-                        case COLUMN_INDEX_CITY:
-                            hostel.setCity((String) getCellValue(cell));
-                            break;
-                        case COLUMN_INDEX_ELECTRIC:
-                            int electricPrice = BigDecimal.valueOf((double) cellValue).intValue();
-                            hostelServiceList.add(HostelService.builder().serviceID(1).validDate(validDate).servicePrice(electricPrice).build());
-                            break;
-                        case COLUMN_INDEX_WATER:
-                            int waterPrice = BigDecimal.valueOf((double) cellValue).intValue();
-                            hostelServiceList.add(HostelService.builder().serviceID(2).validDate(validDate).servicePrice(waterPrice).build());
-                            break;
-                        case COLUMN_INDEX_INTERNET:
-                            int internetPrice = new BigDecimal((double) cellValue).intValue();
-                            hostelServiceList.add(HostelService.builder().serviceID(3).validDate(validDate).servicePrice(internetPrice).build());
-                            break;
-                        case COLUMN_INDEX_MANAGEMENT:
-                            int managementPrice = new BigDecimal((double) cellValue).intValue();
-                            hostelServiceList.add(HostelService.builder().serviceID(4).validDate(validDate).servicePrice(managementPrice).build());
-                            break;
-                        case COLUMN_INDEX_VEHICLE:
-                            int vehicleryPrice = new BigDecimal((double) cellValue).intValue();
-                            hostelServiceList.add(HostelService.builder().serviceID(7).validDate(validDate).servicePrice(vehicleryPrice).build());
-                            break;
-                        case COLUMN_INDEX_SANITARY:
-                            int sanitaryPrice = new BigDecimal((double) cellValue).intValue();
-                            hostelServiceList.add(HostelService.builder().serviceID(6).validDate(validDate).servicePrice(sanitaryPrice).build());
-                            break;
-                    }
-                }
 
-                int hostelId = hostelDAO.addHostel(hostel, hostelServiceList);
-                if(hostelId > 0){
-                    req.setAttribute("SUCCESS_IMPORT", "Thêm khu trọ thành công");
+                    hostelId = hostelDAO.addHostel(hostel, hostelServiceList);
+
+                } catch (Exception e){
+                    e.printStackTrace();
+                    errors.add(HandlerStatus.builder()
+                            .status(false)
+                            .content("Đã có lỗi xảy ra! Sai định dạng dữ liệu trong file excel. Không thể thêm khu trọ: "+hostel.getHostelName()).build());
+                }finally {
+                    if(hostelId > 0){
+                        successes.add(HandlerStatus.builder()
+                                .status(true)
+                                .content("Đã thêm thành công khu trọ: "+hostel.getHostelName()).build());
+
+                    } else {
+                        errors.add(HandlerStatus.builder()
+                                .status(false)
+                                .content("Không thể thêm khu trọ: "+hostel.getHostelName()+" Vui lòng kiểm tra lại định dạng dữ liệu trong file excel").build());
+                    }
                 }
                 workbook.close();
                 inputStream.close();
+                req.setAttribute("SUCCESS_IMPORT", successes);
+                req.setAttribute("ERROR_IMPORT", errors);
             }
 
         } catch (Exception e) {
