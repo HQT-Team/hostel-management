@@ -289,6 +289,9 @@
             Validator.maxNumber('#room-deposit', 100000000, 'Vui lòng nhập tối đa 100000000'),
             Validator.isRequired('#input_from', 'Vui lòng nhập trường này'),
             Validator.isRequired('#input_to', 'Vui lòng nhập trường này'),
+            Validator.isGreaterDate('#input_to', function () {
+                return document.querySelector('#input_from').value;
+            })
         ]
     });
 </script>

@@ -246,6 +246,19 @@ Validator.isConfirmed = function (selector, getConfirmValue, message) {
   };
 };
 
+Validator.isGreaterDate = function (selector, getEndDateValue, message) {
+  return {
+    selector: selector,
+    test: function (value) {
+      var d1 = new Date(value);
+      var d2 = new Date(getEndDateValue());
+      return d1 >= d2
+          ? undefined
+          : message || "Giá trị nhập vào không chính xác";
+    },
+  };
+}
+
 Validator.isViePhoneNumber = function (selector, message) {
   return {
     selector: selector,
