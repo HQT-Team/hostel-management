@@ -51,11 +51,11 @@
                     <div class="owner-infor">
                         <h5><strong>Chủ trọ: </strong>${OWNER_INFO.fullname}</h5><br>
                         <h5><strong>Ngày sinh: </strong>
-                            <c:if test="${!OWNER_INFO.birthday eq null}">
+                            <c:if test="${OWNER_INFO.birthday != null}">
                                 <fmt:parseDate pattern="yyyy-MM-dd" value="${OWNER_INFO.birthday}" var="birthday"/>
                                 <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
                             </c:if>
-                            <c:if test="${OWNER_INFO.birthday eq null}">
+                            <c:if test="${OWNER_INFO.birthday == null}">
                                 Không có thông tin!
                             </c:if>
                         </h5><br>
@@ -65,11 +65,11 @@
                     <div class="renter-infor">
                         <h5><strong>Người Thuê: </strong>${RENTER_INFO.fullname}</h5><br>
                         <h5><strong>Ngày sinh: </strong>
-                            <c:if test="${!RENTER_INFO.birthday eq null}">
+                            <c:if test="${RENTER_INFO.birthday != null}">
                                 <fmt:parseDate pattern="yyyy-MM-dd" value=" ${RENTER_INFO.birthday}" var="birthday"/>
                                 <fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>
                             </c:if>
-                            <c:if test="${RENTER_INFO.birthday eq null}">
+                            <c:if test="${RENTER_INFO.birthday == null}">
                                 Không có thông tin!
                             </c:if>
                         </h5><br>

@@ -28,10 +28,10 @@ function isRequire(tagNameToCheck, messageError) {
 }
 
 function isCccd(tagNameToCheck, messageError) {
-    if (tagNameToCheck.value.length !== 12 && tagNameToCheck.value.length !== 0) {
+    if ((tagNameToCheck.value.length !== 12 && tagNameToCheck.value.length !== 9) && tagNameToCheck.value.length !== 0){
         showMessage(tagNameToCheck, messageError)
         check = false;
-    } else if (tagNameToCheck.value.length === 12) {
+    }else if(tagNameToCheck.value.length === 12 || tagNameToCheck.value.length === 9){
         showMessage(tagNameToCheck, "")
         check = true;
     }
