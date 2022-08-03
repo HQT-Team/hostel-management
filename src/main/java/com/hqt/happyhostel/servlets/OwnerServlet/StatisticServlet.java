@@ -41,6 +41,11 @@ public class StatisticServlet extends HttpServlet {
 
             }
             ArrayList<Bill> listBillByHostel = billDAO.GetListBillByHostel(listHostel.get(0).getHostelName());
+            if (listBillByHostel.size() == 0){
+                request.setAttribute("error", "Phòng trọ của bạn chưa có bill!");
+                request.getRequestDispatcher(URL).forward(request, response);
+
+            }
             boolean check;
             for (int i = 0; i < listBillByHostel.size(); i++) {
                 String tmpYear = listBillByHostel.get(i).getCreatedDate().substring(0, 4);
