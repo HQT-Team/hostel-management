@@ -21,7 +21,7 @@ public class CreateRenterAccountServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.sendRedirect("ERROR");
     }
 
     @Override
@@ -103,30 +103,41 @@ public class CreateRenterAccountServlet extends HttpServlet {
                                     }
                                 } else {
                                     // username has been existed
-                                    handlerStatus = HandlerStatus.builder().status(false).content("Email đã tồn tại trong hệ thống!").build();
+                                    handlerStatus = HandlerStatus.builder().status(false).content("Email đã tồn tại trong hệ thống! Vui lòng điền email khác").build();
                                     req.setAttribute("username", username);
+                                    req.setAttribute("email", email);
                                     req.setAttribute("price", price);
                                     req.setAttribute("deposit", deposit);
                                     req.setAttribute("startDate", startDate);
                                     req.setAttribute("endDate", endDate);
+                                    req.setAttribute("roomElectric", roomElectric);
+                                    req.setAttribute("roomWater", roomWater);
+                                    req.setAttribute("errorType", "email");
                                 }
-
                             } else {
                                 // username has been existed
-                                handlerStatus = HandlerStatus.builder().status(false).content("Tài khoản đã tồn tại trong hệ thống!").build();
+                                handlerStatus = HandlerStatus.builder().
+                                        status(false).
+                                        content("Tài khoản đã tồn tại trong hệ thống! Vui lòng chọn tên tài khoản khác!").build();
                                 req.setAttribute("username", username);
+                                req.setAttribute("email", email);
                                 req.setAttribute("price", price);
                                 req.setAttribute("deposit", deposit);
                                 req.setAttribute("startDate", startDate);
                                 req.setAttribute("endDate", endDate);
+                                req.setAttribute("roomElectric", roomElectric);
+                                req.setAttribute("roomWater", roomWater);
+                                req.setAttribute("errorType", "username");
                             }
                         } else {
-                            handlerStatus = HandlerStatus.builder().status(false).content("Tài khoản cho phòng này đã tồn tại trong hệ thống!").build();
+                            handlerStatus = HandlerStatus.builder().
+                                    status(false).
+                                    content("Phòng này đã và đang có người thuê! Không thể tạo tài khoản mới cho phòng!").build();
                             url = FAIL;
                         }
                     }
                 }
-                req.setAttribute("RESPONSES_MSG", handlerStatus);
+                req.setAttribute("RESPONSE_MSG", handlerStatus);
             }
         } catch (Exception e) {
             log("Error at CreateRenterAccountServlet: " + e);

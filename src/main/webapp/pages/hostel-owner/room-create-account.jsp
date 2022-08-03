@@ -25,11 +25,25 @@
     <!-- CSS Push Nnotification -->
     <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 
+    <!-- Datepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css">
+
 </head>
 
-<body>
+<body class="${requestScope.RESPONSE_MSG eq null ? "over-flow-hidden" : ""}">
 <!-- Navbar -->
 <%@include file="./components/navbar.jsp"%>
+
+<!-- Preload -->
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <div id="preloader">
+        <div class="dots">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</c:if>
 
 <!-- Body -->
 <div class="container min-height">
@@ -67,11 +81,13 @@
                                         <span>*</span></label>
                                 </div>
                                 <div class="col-6">
-                                    <input id="room-username" name="room-username" type="text"
+                                    <input id="room-username" name="room-username" type="text" value="${requestScope.username}"
                                            class="form-control m-0" placeholder="Nhập tên tài khoản truy cập phòng">
                                 </div>
                             </div>
-                            <span class="form-message"></span>
+                            <span class="form-message mt-4">
+                                ${requestScope.RESPONSE_MSG.status eq false && requestScope.errorType eq "username" ? requestScope.RESPONSE_MSG.content : ""}
+                            </span>
                         </div>
                         <div class="form-group">
                             <div class="row align-items-center">
@@ -80,11 +96,13 @@
                                         <span>*</span></label>
                                 </div>
                                 <div class="col-6">
-                                    <input id="room-email" name="room-email" type="text"
+                                    <input id="room-email" name="room-email" type="text" value="${requestScope.email}"
                                            class="form-control m-0" placeholder="Nhập email của tài khoản">
                                 </div>
                             </div>
-                            <span class="form-message"></span>
+                            <span class="form-message mt-4">
+                                ${requestScope.RESPONSE_MSG.status eq false && requestScope.errorType eq "email" ? requestScope.RESPONSE_MSG.content : ""}
+                            </span>
                         </div>
                         <div class="form-group">
                             <div class="row align-items-center">
@@ -93,11 +111,11 @@
                                         <span>*</span></label>
                                 </div>
                                 <div class="col-6">
-                                    <input id="room-electric" name="room-electric" type="number"
+                                    <input id="room-electric" name="room-electric" type="number" value="${requestScope.roomElectric}"
                                            class="form-control m-0" placeholder="Nhập số điện mới nhất của phòng">
                                 </div>
                             </div>
-                            <span class="form-message"></span>
+                            <span class="form-message mt-4"></span>
                         </div>
                         <div class="form-group">
                             <div class="row align-items-center">
@@ -106,11 +124,11 @@
                                         <span>*</span></label>
                                 </div>
                                 <div class="col-6">
-                                    <input id="room-water" name="room-water" type="number"
+                                    <input id="room-water" name="room-water" type="number" value="${requestScope.roomWater}"
                                            class="form-control m-0" placeholder="Nhập số nước mới nhất của phòng">
                                 </div>
                             </div>
-                            <span class="form-message"></span>
+                            <span class="form-message mt-4"></span>
                         </div>
                         <div class="form-group">
                             <div class="row align-items-center">
@@ -120,10 +138,10 @@
                                 </div>
                                 <div class="col-6">
                                     <input id="room-fee" name="room-fee" type="number" class="form-control m-0"
-                                           placeholder="Nhập số tiền phòng">
+                                           placeholder="Nhập số tiền phòng" value="${requestScope.price}">
                                 </div>
                             </div>
-                            <span class="form-message"></span>
+                            <span class="form-message mt-4"></span>
                         </div>
                         <div class="form-group">
                             <div class="row align-items-center">
@@ -132,11 +150,11 @@
                                         <span>*</span></label>
                                 </div>
                                 <div class="col-6">
-                                    <input id="room-deposit" name="room-deposit" type="number"
+                                    <input id="room-deposit" name="room-deposit" type="number" value="${requestScope.deposit}"
                                            class="form-control m-0" placeholder="Nhập số tiền cọc cho phòng">
                                 </div>
                             </div>
-                            <span class="form-message"></span>
+                            <span class="form-message mt-4"></span>
                         </div>
                         <div class="form-group">
                             <div class="row align-items-center">
@@ -145,11 +163,11 @@
                                         <span>*</span></label>
                                 </div>
                                 <div class="col-6">
-                                    <input id="room-startdate" name="room-startdate" type="date"
-                                           class="form-control m-0">
+                                    <input id="room-startdate" type="text" class="form-control m-0 clickable input-md" required
+                                           name="room-startdate" value="${requestScope.startDate}" placeholder="mm/dd/yyyy">
                                 </div>
                             </div>
-                            <span class="form-message"></span>
+                            <span class="form-message mt-4"></span>
                         </div>
                         <div class="form-group">
                             <div class="row align-items-center">
@@ -158,11 +176,11 @@
                                         <span>*</span></label>
                                 </div>
                                 <div class="col-6">
-                                    <input id="room-enddate" name="room-enddate" type="date"
-                                           class="form-control m-0" placeholder="">
+                                    <input id="room-enddate" type="text" class="form-control m-0 clickable input-md" required
+                                           name="room-enddate" value="${requestScope.endDate}" placeholder="mm/dd/yyyy">
                                 </div>
                             </div>
-                            <span class="form-message"></span>
+                            <span class="form-message mt-4"></span>
                         </div>
                         <div class="spacer"></div>
                         <div class="create-room-account-actions">
@@ -182,6 +200,8 @@
 <!-- Push notification element -->
 <div id="push-noti"></div>
 
+<!-- Toast element -->
+<div id="toast">&nbsp;</div>
 
 <!-- Script Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -193,11 +213,65 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- Link your script here -->
 <script src="./assets/js/handle-main-navbar.js"></script>
+<!-- Valid form -->
 <script src="./assets/js/valid-form.js"></script>
+<!-- Toast -->
+<script src="./assets/js/toast-alert.js"></script>
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
 <script src="./assets/js/receiveWebsocket.js"></script>
+<!-- Date picker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+
+<script>
+    <c:choose>
+        <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+            toast({
+                title: 'Thành công',
+                message: '${requestScope.RESPONSE_MSG.content}',
+                type: 'success',
+                duration: 5000
+            });
+        </c:when>
+        <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+            toast({
+                title: 'Lỗi',
+                message: '${requestScope.RESPONSE_MSG.content}',
+                type: 'error',
+                duration: 5000
+            });
+        </c:when>
+    </c:choose>
+</script>
+
+<script>
+    let checkin = $('#room-startdate').datepicker({
+        autoclose: true
+    }).on('changeDate', function (ev) {
+        if (ev.date.valueOf() > checkout.datepicker("getDate").valueOf() || !checkout.datepicker("getDate").valueOf()) {
+
+            let newDate = new Date(ev.date);
+            newDate.setDate(newDate.getDate() + 1);
+            checkout.datepicker("update", newDate);
+
+        }
+        $('#room-enddate')[0].focus();
+    });
+
+    let checkout = $('#room-enddate').datepicker({
+        beforeShowDay: function (date) {
+            if (!checkin.datepicker("getDate").valueOf()) {
+                return date.valueOf() >= new Date().valueOf();
+            } else {
+                return date.valueOf() > checkin.datepicker("getDate").valueOf();
+            }
+        },
+        autoclose: true
+
+    }).on('changeDate', function (ev) { });
+</script>
+
 <script>
     Validator({
         form: '#create-room-account-form',
@@ -207,11 +281,18 @@
             Validator.isRequired('#room-username', 'Vui lòng nhập trường này'),
             Validator.isUsername('#room-username'),
             Validator.maxLength('#room-username', 64, 'Tên tài khoản dài tối đa 64 kí tự'),
+            Validator.isRequired('#room-email', 'Vui lòng nhập trường này'),
+            Validator.isEmail('#room-email', 'Vui lòng nhập đúng định dạng email'),
+            Validator.isRequired('#room-electric', 'Vui lòng nhập trường này'),
+            Validator.minNumber('#room-electric', 0, 'Vui lòng nhập tối thiểu 0'),
+            Validator.isRequired('#room-water', 'Vui lòng nhập trường này'),
+            Validator.minNumber('#room-water', 0, 'Vui lòng nhập tối thiểu 0'),
+            Validator.isRequired('#room-fee', 'Vui lòng nhập trường này'),
+            Validator.minNumber('#room-fee', 1, 'Vui lòng nhập tối thiểu 1'),
+            Validator.maxNumber('#room-fee', 100000000, 'Vui lòng nhập tối đa 100000000'),
             Validator.isRequired('#room-deposit', 'Vui lòng nhập trường này'),
             Validator.minNumber('#room-deposit', 1, 'Vui lòng nhập tối thiểu 1'),
             Validator.maxNumber('#room-deposit', 100000000, 'Vui lòng nhập tối đa 100000000'),
-            Validator.isRequired('#room-startdate', 'Vui lòng nhập trường này'),
-            Validator.isRequired('#room-enddate', 'Vui lòng nhập trường này'),
         ]
     });
 </script>
@@ -225,6 +306,11 @@
         receiveWebsocket.disconnectWebSocket();
     };
 </script>
+
+<c:if test="${requestScope.RESPONSE_MSG eq null}">
+    <!-- Loader -->
+    <script src="./assets/js/loading-handler.js"></script>
+</c:if>
 
 </body>
 
