@@ -867,4 +867,98 @@ public class MailUtils {
                 "</html>";
         return sendMail(receiveMail, mailObject, mailBody);
     }
+
+    public boolean sendMailConfirmChangePassword(String receiveMail){
+        String mailObject = "Cảnh báo: Mật khẩu tài khoản của bạn vừa thay đổi";
+        String mailBody = "<!doctype html>\n" +
+                "<html lang=\"vi\">\n" +
+                "\n" +
+                "<head>\n" +
+                "    <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\" />\n" +
+                "    <title>Reset Password</title>\n" +
+                "    <meta name=\"description\" content=\"Reset Password Email Template.\">\n" +
+                "    <style type=\"text/css\">\n" +
+                "        a:hover {\n" +
+                "            text-decoration: underline !important;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "\n" +
+                "<body marginheight=\"0\" topmargin=\"0\" marginwidth=\"0\" style=\"margin: 0px; background-color: #f2f3f8;\" leftmargin=\"0\">\n" +
+                "    <!--100% body table-->\n" +
+                "    <table cellspacing=\"0\" border=\"0\" cellpadding=\"0\" width=\"100%\" bgcolor=\"#f2f3f8\"\n" +
+                "        style=\"@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;\">\n" +
+                "        <tr>\n" +
+                "            <td>\n" +
+                "                <table style=\"background-color: #f2f3f8; \n" +
+                "                max-width: 670px;  \n" +
+                "                margin: 0 auto;\" width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height:80px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"text-align: center;\">\n" +
+                "                            <a href=\"\" title=\"logo\" target=\"_blank\">\n" +
+                "                                <img width=\"150\" src=\"https://i.ibb.co/XSs4xvj/hqt-logo.png\" title=\"logo\" alt=\"logo\">\n" +
+                "                            </a>\n" +
+                "                        </td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height: 20px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td>\n" +
+                "                            <table width=\"95%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width: 670px;\n" +
+                "                                background:#fff; \n" +
+                "                                border-radius: 3px;\n" +
+                "                                text-align: center;\n" +
+                "                                -webkit-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, .06);\n" +
+                "                                -moz-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, .06);\n" +
+                "                                box-shadow: 0 6px 18px 0 rgba(0, 0, 0, .06);\">\n" +
+                "                                <tr>\n" +
+                "                                    <td style=\"height: 40px;\">&nbsp;</td>\n" +
+                "                                </tr>\n" +
+                "                                <tr>\n" +
+                "                                    <td style=\"padding:0 35px; display: flex; flex-direction: column; align-items: center;\">\n" +
+                "                                        <h1 style=\"color: #cf2121; \n" +
+                "                                            font-weight: 500; margin: 0;\n" +
+                "                                            font-size: 24px;\n" +
+                "                                            font-family:'Rubik', sans-serif;\">\n" +
+                "                                            Hệ thống vừa ghi nhận việc tài khoản của bạn đã thay đổi mật khẩu.</br> Nếu không phải bạn thực hiện việc này, hãy lập tức liên hệ với quản trị viên của trang web để được xử lí.\n" +
+                "                                        </h1>\n" +
+                "                                        <span style=\"display: inline-block;\n" +
+                "                                            margin: 24px 0 0; \n" +
+                "                                            border-bottom: 1px solid #cecece;\n" +
+                "                                            width: 100px;\">\n" +
+                "                                        </span>\n" +
+                "                                    </td>\n" +
+                "                                </tr>\n" +
+                "                                <tr>\n" +
+                "                                    <td style=\"height:40px;\">&nbsp;</td>\n" +
+                "                                </tr>\n" +
+                "                            </table>\n" +
+                "                        </td>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height:20px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"text-align:center;\">\n" +
+                "                            <p\n" +
+                "                                style=\"font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;\">\n" +
+                "                                &copy; <strong>www.hqthostel.com</strong></p>\n" +
+                "                        </td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height:80px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                </table>\n" +
+                "            </td>\n" +
+                "        </tr>\n" +
+                "    </table>\n" +
+                "    <!--/100% body table-->\n" +
+                "</body>\n" +
+                "\n" +
+                "</html>";
+        return sendMail(receiveMail, mailObject, mailBody);
+    }
 }
