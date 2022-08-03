@@ -65,7 +65,7 @@
             <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 pb-5 content-group">
                 <!-- Your content here -->
                 <div class="content mt-5">
-                    <c:if test="${requestScope.error eq null}">
+                    <c:if test="${requestScope.error == null}">
                         <div class="statistic-content">
                             <form action="statistic" method="POST" id="form-search">
                                 <div class="search">
@@ -162,7 +162,7 @@
                         </div>
                     </c:if>
                     <c:if test="${requestScope.error != null}">
-                        <h1>Ban chua co phong tro!</h1>
+                        <h1>${requestScope.error}</h1>
                     </c:if>
                 </div>
             </div>
