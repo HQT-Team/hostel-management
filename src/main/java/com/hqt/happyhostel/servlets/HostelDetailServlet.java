@@ -14,6 +14,7 @@ import java.util.List;
 
 @WebServlet(name = "HostelDetailServlet", value = "/HostelDetailServlet")
 public class HostelDetailServlet extends HttpServlet {
+    private final String ERROR = "error-page";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "list-hostels";
@@ -31,7 +32,7 @@ public class HostelDetailServlet extends HttpServlet {
             RoomDAO roomDao = new RoomDAO();
 
             if (hostel == null) {
-                url = "list-hostels";
+                url = ERROR;
             } else {
                 List<Room> rooms = roomDao.getListRoomsByHostelId(hostelId);
                 int numberRoom = roomDao.getNumberRoomSpecificHostel(hostelId);
@@ -52,7 +53,10 @@ public class HostelDetailServlet extends HttpServlet {
         } catch (Exception e) {
             log("Error at HostelDetailServlet: " + e.toString());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            if (ERROR.equalsIgnoreCase(url))
+                response.sendRedirect(url);
+            else
+                request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

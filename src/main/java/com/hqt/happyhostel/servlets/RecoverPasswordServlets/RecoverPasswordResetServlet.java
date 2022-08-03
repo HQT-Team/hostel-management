@@ -3,6 +3,7 @@ package com.hqt.happyhostel.servlets.RecoverPasswordServlets;
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dto.HandlerStatus;
 import com.hqt.happyhostel.utils.EncodeBase64Utils;
+import com.hqt.happyhostel.utils.MailUtils;
 import com.hqt.happyhostel.utils.SecurityUtils;
 
 import javax.servlet.*;
@@ -99,10 +100,11 @@ public class RecoverPasswordResetServlet extends HttpServlet {
             String password = request.getParameter("password");
             if (password != null) {
                 String passwordHashed = SecurityUtils.hashMd5(password);
-
                 boolean updatePasswordResult = new AccountDAO().updateAccountPass(accountId, passwordHashed);
                 if (updatePasswordResult) {
+                    String userMail = new AccountDAO().getAccountInformationById(accountId).getInformation().getEmail();
                     new AccountDAO().addKeyAndExpirationTimeForPasswordRecoveryRequest(null, null, accountId);
+                    new MailUtils().sendMailConfirmChangePassword(userMail);
                     handlerStatus = HandlerStatus.builder()
                             .status(true)
                             .content("Cập nhật mật khẩu mới thành công!").build();
