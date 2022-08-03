@@ -163,6 +163,30 @@
         </div>
     </div>
 </div>
+<div>
+    <c:forEach var="e" items="${SUCCESS_IMPORT}">
+        <h2 style="color: green;">${e.content}</h2>
+    </c:forEach>
+    <c:forEach var="e" items="${ERROR_IMPORT}">
+        <h2 style="color: red;">${e.content}</h2>
+    </c:forEach>
+    <h2 style="color: red;">${ERROR}</h2>
+    <h2 style="color: green">${SUCCESS}</h2>
+    <h2> Chọn tệp excel để tiến hành thêm phòng trọ: </h2>
+    <br>
+    <form method="post" action="RoomFileUpLoadServlet" enctype="multipart/form-data">
+        <input type="hidden" value="${hostelInformation.hostelID}" name="hostelID">
+        <input type="file" name="file" placeholder="${file}"/>
+        <input type="submit" value="Upload" />
+    </form>
+    <br>
+    <form action="import-room" class="custom-form add-hostel-form">
+        <input type="hidden" value="${hostelInformation.hostelID}" name="hostelID">
+        <input type="hidden" value="${file}" name="fileName">
+        <button type="submit" >Thêm phòng trọ từ tệp excel đã tải lên</button>
+    </form>
+
+</div>
 
 <!-- Footer -->
 <%@include file="components/footer.jsp"%>

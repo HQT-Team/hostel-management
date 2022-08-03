@@ -90,6 +90,7 @@
 <!-- Web socket -->
 <script src="./assets/js/sendWebsocket.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>
+
 <script type="text/javascript">
     // Send
     <c:if test="${requestScope.RESPONSE_MSG.status == true}">

@@ -27,6 +27,8 @@
     <!-- Simple Datatable CSS -->
     <link href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 
+    <!-- CSS Push Notification -->
+    <link rel="stylesheet" href="./assets/css/push_notification_style/style.css">
 </head>
 
 <body class="over-flow-hidden">
@@ -201,6 +203,9 @@
     <!-- Footer -->
     <%@include file="components/footer.jsp"%>
 
+    <!-- Push notification element -->
+    <div id="push-noti"></div>
+
 </div>
 <script>
     let list = ${requestScope.ListMonthAndYear};
@@ -225,9 +230,24 @@
 <!-- Chart JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
 <script src="./assets/js/owner/dashboard/revenue-chart.js"></script>
+<!-- Push notification -->
+<script src="./assets/js/push-notification-alert.js"></script>
+<!-- Web socket -->
+<script src="./assets/js/receiveWebsocket.js"></script>
 
+<script type="text/javascript">
+    // Receive
+    receiveWebsocket(alertPushNoti);
+
+    // Close when leave
+    window.onbeforeunload = function(){
+        receiveWebsocket.disconnectWebSocket();
+    };
+</script>
 <!-- Loader -->
 <script src="./assets/js/loading-handler.js"></script>
+
+
 </body>
 
 </html>
