@@ -67,7 +67,7 @@
                                     </button>
                                 </td>
                                 <td>
-                                    <a href="Renter-update-roommate?roommateID=${roommateinfor.roommateID}"
+                                    <a href="RoommateUpdateDetail?roommateID=${roommateinfor.roommateID}"
                                        role="button"
                                        class="btnAction">Chỉnh Sửa</a>
                                 </td>

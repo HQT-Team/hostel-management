@@ -1,6 +1,7 @@
 package com.hqt.happyhostel.servlets.RenterServlets;
 
 import com.hqt.happyhostel.dao.*;
+import com.hqt.happyhostel.dto.Account;
 import com.hqt.happyhostel.dto.Information;
 import com.hqt.happyhostel.dto.RoommateInfo;
 
@@ -9,12 +10,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "UpdateRenterRoommateServlet", value = "/UpdateRenterRoommateServlet")
 public class UpdateRenterRoommateServlet extends HttpServlet {
-    public static final String ERROR = "Renter-update-roommate";
-    public static final String SUCCESS = "Renter-update-roommate";
+    public static final String ERROR = "RoommateUpdateDetail";
+    public static final String SUCCESS = "RoommateUpdateDetail";
+//    public static final String SUCCESS = "Renter-update-roommate";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -50,6 +55,12 @@ public class UpdateRenterRoommateServlet extends HttpServlet {
             boolean checkUpdateProfile = new InformationDAO().updateRoommateInfoByID(roommateInfo, roommateID);
             if (checkUpdateProfile) {
                 req.setAttribute("SUCCESS", "Đã cập nhật thông tin thành công");
+                req.setAttribute("roommateID", roommateID);
+                HttpSession session = req.getSession();
+                Account account = (Account)session.getAttribute("USER");
+
+                List<RoommateInfo> list = new RoommateInfoDAO().getListRoommatesOfAnAccount(account.getAccId());
+                session.setAttribute("listroommateinfor", list);
                 url = SUCCESS;
             } else {
                 req.setAttribute("ERROR", "Đã xảy ra lỗi! Vui lòng kiểm tra lại");

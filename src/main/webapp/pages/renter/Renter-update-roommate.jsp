@@ -44,16 +44,6 @@
 
     <div class="row" style="padding: 0;margin: 0;">
         <%@include file="components/sidebar.jsp"%>
-        <%
-            ArrayList<RoommateInfo> listroommateinfor = (ArrayList<RoommateInfo>) session.getAttribute("listroommateinfor");
-            RoommateInfo roommate1 = null;
-            for (int i = 0; i < listroommateinfor.size(); i++) {
-                if (listroommateinfor.get(i).getRoommateID() == Integer.parseInt(request.getParameter("roommateID"))) {
-                    roommate1 = listroommateinfor.get(i);
-                    session.setAttribute("roommate1", roommate1);
-                }
-            }
-        %>
         <div class="content">
             <div class="div-controll-form" id="div-controll-form">
                 <form action="renter-roommate-update" method="post" class="form" id="form_update_roommate">
@@ -63,43 +53,49 @@
 
                     <div class="form-item" id="form-item">
                         <input id="form-item-input-1" name="new-name" type="text" placeholder="Tên Đầy đủ"
-                               value="<%=roommate1.getInformation().getFullname()%>">
+                               value="${sessionScope.roommate1.getInformation().getFullname()}">
                         <p class="border-bottom"></p>
                         <span id="mes-1"></span>
                     </div>
                     <div class="form-item">
                         <input id="form-item-input-2" placeholder="Email" type="email" name="new-email" multiple
-                               value="<%=roommate1.getInformation().getEmail()%>">
+                               value="${sessionScope.roommate1.getInformation().getEmail()}">
                         <p class="border-bottom"></p>
                         <span id="mes-2"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-3" name="new-birthday" type="date" placeholder="Ngày sinh"
-                               value="<fmt:parseDate pattern="yyyy-MM-dd" value="${roommate1.information.birthday}" var="birthday" /><fmt:formatDate value="${birthday}" type="Date" pattern="dd-MM-yyyy"/>"/>
+                        <input id="form-item-input-3" name="new-birthday" type="date" placeholder="Ngày sinh" value="${sessionScope.roommate1.information.birthday}"/>
                         <p class="border-bottom"></p>
                         <span id="mes-3"></span>
                     </div>
                     <div class="form-item">
                         <select name="new-gender" id="form-item-input-4">
-                            <option value="0">Nữ</option>
-                            <option value="1">Nam</option>
+                            <c:if test="${sessionScope.roommate1.information.sex == 0}">
+                                <option value="0">Nữ</option>
+                                <option value="1">Nam</option>
+                            </c:if>
+                            <c:if test="${sessionScope.roommate1.information.sex == 1}">
+                                <option value="1">Nam</option>
+                                <option value="0">Nữ</option>
+                            </c:if>
+
                         </select>
                     </div>
                     <div class="form-item">
                         <input id="form-item-input-5" name="new-phone" type="text" placeholder="Số điện thoại"
-                               value="<%=roommate1.getInformation().getPhone()%>">
+                               value="${sessionScope.roommate1.getInformation().getPhone()}">
                         <p class="border-bottom"></p>
                         <span id="mes-5"></span>
                     </div>
                     <div class="form-item">
                         <input id="form-item-input-6" name="new-address" type="text" placeholder="Địa chỉ"
-                               value="<%=roommate1.getInformation().getAddress()%>">
+                               value="${sessionScope.roommate1.getInformation().getAddress()}">
                         <p class="border-bottom"></p>
                         <span id="mes-6"></span>
                     </div>
                     <div class="form-item">
                         <input id="form-item-input-7" name="new-cccd" type="text" placeholder="Số CCCD"
-                               value="<%=roommate1.getInformation().getCccd()%>">
+                               value="${sessionScope.roommate1.getInformation().getCccd()}">
                         <p class="border-bottom"></p>
                         <span id="mes-7"></span>
                     </div>
