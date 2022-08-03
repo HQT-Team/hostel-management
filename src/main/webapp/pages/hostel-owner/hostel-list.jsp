@@ -118,6 +118,24 @@
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <h2 style="color: green;">${requestScope.SUCCESS}</h2>
+                        <h2 style="color: red;">${requestScope.ERROR}</h2>
+                        <h2 style="color: green;">${SUCCESS_IMPORT}</h2>
+                        <h2 style="color: red;">${ERROR_IMPORT}</h2>
+                        <h2> Chọn tệp excel để tiến hành thêm khu trọ: </h2>
+                        <br>
+                        <form action="HostelFileUpLoadServlet" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" value="Khoa" name="file2" />
+                            <input type="file" name="file"/>
+                            <button type="submit">Upload</button>
+                        </form>
+                        <br>
+                        <form action="import-hostel" method="get" class="custom-form add-hostel-form">
+                            <input type="hidden" value="${requestScope.file}" name="fileName">
+                            <button type="submit" >Thêm khu trọ từ tệp excel đã tải lên</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
