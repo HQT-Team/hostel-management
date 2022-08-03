@@ -8,12 +8,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -87,70 +84,87 @@ public class ImportRoomFromExcelServlet extends HttpServlet {
                 // Get data
                 Room room = new Room();
 
-                while (cellIterator.hasNext()) {
-                    //Read cell
-                    Cell cell = cellIterator.next();
-                    Object cellValue = getCellValue(cell);
-                    if (cellValue == null || cellValue.toString().isEmpty()) {
-                        continue;
+                try {
+                    while (cellIterator.hasNext()) {
+                        //Read cell
+                        Cell cell = cellIterator.next();
+                        Object cellValue = getCellValue(cell);
+                        if (cellValue == null || cellValue.toString().isEmpty()) {
+                            continue;
+                        }
+                        // Set value for hostel object
+                        int columnIndex = cell.getColumnIndex();
+                        switch (columnIndex) {
+                            case COLUMN_INDEX_ROOM_NUMBER:
+                                room.setRoomNumber(new BigDecimal((double) cellValue).intValue());
+                                break;
+                            case COLUMN_INDEX_CAPACITY:
+                                room.setCapacity(new BigDecimal((double) cellValue).intValue());
+                                break;
+                            case COLUMN_INDEX_AREA:
+                                room.setRoomArea(new BigDecimal((double) cellValue).intValue());
+                                break;
+                            case COLUMN_INDEX_ATTIC:
+                                room.setHasAttic(new BigDecimal((double) cellValue).intValue());
+                                break;
+                            case COLUMN_INDEX_ROOM_STATUS:
+                                room.setRoomStatus(new BigDecimal((double) cellValue).intValue());
+                                break;
+                            case COLUMN_INDEX_TOILET:
+                                quantity1 = new BigDecimal((double) cellValue).intValue();
+                                break;
+                            case COLUMN_INDEX_TOILET_STATUS:
+                                status1 = new BigDecimal((double) cellValue).intValue();
+                                break;
+                            case COLUMN_INDEX_WINDOWS:
+                                quantity2 = new BigDecimal((double) cellValue).intValue();
+                                break;
+                            case COLUMN_INDEX_WINDOWS_STATUS:
+                                status2 = new BigDecimal((double) cellValue).intValue();
+                                break;
+                            case COLUMN_INDEX_DOOR:
+                                quantity3 = new BigDecimal((double) cellValue).intValue();
+                                break;
+                            case COLUMN_INDEX_DOOR_STATUS:
+                                status3 = new BigDecimal((double) cellValue).intValue();
+                                break;
+                            case COLUMN_INDEX_AIR_CONDITIONER:
+                                quantity4 = new BigDecimal((double) cellValue).intValue();
+                                break;
+                            case COLUMN_INDEX_AIR_CONDITIONER_STATUS:
+                                status4 = new BigDecimal((double) cellValue).intValue();
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                    // Set value for hostel object
-                    int columnIndex = cell.getColumnIndex();
-                    switch (columnIndex) {
-                        case COLUMN_INDEX_ROOM_NUMBER:
-                            room.setRoomNumber(new BigDecimal((double) cellValue).intValue());
-                            break;
-                        case COLUMN_INDEX_CAPACITY:
-                            room.setCapacity(new BigDecimal((double) cellValue).intValue());
-                            break;
-                        case COLUMN_INDEX_AREA:
-                            room.setRoomArea(new BigDecimal((double) cellValue).intValue());
-                            break;
-                        case COLUMN_INDEX_ATTIC:
-                            room.setHasAttic(new BigDecimal((double) cellValue).intValue());
-                            break;
-                        case COLUMN_INDEX_ROOM_STATUS:
-                            room.setRoomStatus(new BigDecimal((double) cellValue).intValue());
-                            break;
-                        case COLUMN_INDEX_TOILET:
-                            quantity1 = new BigDecimal((double) cellValue).intValue();
-                            break;
-                        case COLUMN_INDEX_TOILET_STATUS:
-                            status1 = new BigDecimal((double) cellValue).intValue();
-                            break;
-                        case COLUMN_INDEX_WINDOWS:
-                            quantity2 = new BigDecimal((double) cellValue).intValue();
-                            break;
-                        case COLUMN_INDEX_WINDOWS_STATUS:
-                            status2 = new BigDecimal((double) cellValue).intValue();
-                            break;
-                        case COLUMN_INDEX_DOOR:
-                            quantity3 = new BigDecimal((double) cellValue).intValue();
-                            break;
-                        case COLUMN_INDEX_DOOR_STATUS:
-                            status3 = new BigDecimal((double) cellValue).intValue();
-                            break;
-                        case COLUMN_INDEX_AIR_CONDITIONER:
-                            quantity4 = new BigDecimal((double) cellValue).intValue();
-                            break;
-                        case COLUMN_INDEX_AIR_CONDITIONER_STATUS:
-                            status4 = new BigDecimal((double) cellValue).intValue();
-                            break;
-                        default:
-                            break;
+                    if(room.getRoomNumber() != 0){
+                        checkAdd = roomDAO.addNewRoom(hostelID, room.getRoomNumber(), room.getCapacity(), room.getRoomArea(), room.getHasAttic(), room.getRoomStatus(),
+                                quantity1,status1,quantity2,status2,quantity3,status3,quantity4,status4);
+                    } else {
+                        errors.add(HandlerStatus.builder()
+                                .status(false)
+                                .content("Đã có lỗi xảy ra! Không thể thêm phòng với số phòng để trống, vui lòng kiểm tra lại dự liệu trong file excel.").build());
                     }
-                }
-                checkAdd = roomDAO.addNewRoom(hostelID, room.getRoomNumber(), room.getCapacity(), room.getRoomArea(), room.getHasAttic(), room.getRoomStatus(),
-                        quantity1,status1,quantity2,status2,quantity3,status3,quantity4,status4);
-                if(checkAdd){
-                    successes.add(HandlerStatus.builder()
-                            .status(true)
-                            .content("Đã thêm thành công phòng số: "+room.getRoomNumber()).build());
-
-                } else {
+                } catch (Exception e){
+                    e.printStackTrace();
                     errors.add(HandlerStatus.builder()
                             .status(false)
-                            .content("Đã thêm phòng có số phòng trùng với số phòng đã có! Không thể thêm phòng số: "+room.getRoomNumber()).build());
+                            .content("Đã có lỗi xảy ra! Sai định dạng dữ liệu trong file excel. Không thể thêm phòng số: "+room.getRoomNumber()).build());
+                }finally {
+                    if(room.getRoomNumber() != 0){
+                        if(checkAdd){
+                            successes.add(HandlerStatus.builder()
+                                    .status(true)
+                                    .content("Đã thêm thành công phòng số: "+room.getRoomNumber()).build());
+
+                        } else {
+                            errors.add(HandlerStatus.builder()
+                                    .status(false)
+                                    .content("Không thể thêm phòng số: "+room.getRoomNumber()+"! Số phòng này đã tồn tại trong khu trọ!").build());
+                        }
+                    }
+
                 }
             }
 

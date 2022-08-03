@@ -32,13 +32,8 @@ public class HostelDAO {
     private static final String GET_LIST_HOSTEL = "SELECT hostel_id, owner_account_id, [name], [address], ward, district, city \n" +
             "FROM [dbo].[Hostels] ";
     private static final String GET_HOSTEL_BY_ROOM_ID =
-            "SELECT Hostels.hostel_id AS 'hostel_id', Hostels.owner_account_id, Hostels.name, Hostels.address, Hostels.ward, Hostels.district, Hostels.city\n" +
-                    "FROM Hostels, Rooms, Bill\n" +
-                    "WHERE Rooms.room_id = ?\n" +
-                    "AND Bill.room_id = Rooms.room_id\n" +
-                    "AND Rooms.hostel_id = Hostels.hostel_id";
-
-
+            "SELECT H.hostel_id, owner_account_id, name, address, ward, district, city\n" +
+            "FROM Hostels H JOIN Rooms R ON H.hostel_id = R.hostel_id WHERE R.room_id = ?";
 
     public Hostel getHostelById(int hostelId) throws SQLException {
         Connection cn = null;

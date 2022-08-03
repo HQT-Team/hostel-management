@@ -114,7 +114,7 @@
                                         <span>*</span></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" class="form-control m-0" id="input_from" placeholder="Start Date"
+                                    <input type="text" class="form-control m-0" id="input_from" placeholder="Ngày bắt đầu"
                                            name="room-startdate" value="${requestScope.startDate}">
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
                                         <span>*</span></label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" class="form-control m-0" id="input_to" placeholder="Start Date"
+                                    <input type="text" class="form-control m-0" id="input_to" placeholder="Ngày kết thúc"
                                            name="room-enddate" value="${requestScope.endDate}">
                                 </div>
                             </div>
@@ -253,13 +253,11 @@
     $(function () {
         rome(input_from, {
             dateValidator: rome.val.beforeEq(input_to),
-            inputFormat: "DD/MM/YYYY",
             time: false,
         });
 
         rome(input_to, {
             dateValidator: rome.val.afterEq(input_from),
-            inputFormat: "DD/MM/YYYY",
             time: false,
         });
     });
