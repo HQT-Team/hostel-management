@@ -325,7 +325,7 @@
             })
             .then(function (response) {
                 console.log(response);
-                loadNotificationAsync(response.data);
+                loadNotificationAsync(response.data[0], response.data[1]);
             })
             .catch(function (error) {
                 console.log(error);

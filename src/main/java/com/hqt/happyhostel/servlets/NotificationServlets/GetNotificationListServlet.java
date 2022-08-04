@@ -11,7 +11,10 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "GetNotificationListServlet", value = "/GetNotificationListServlet")
 public class GetNotificationListServlet extends HttpServlet {
@@ -51,16 +54,27 @@ public class GetNotificationListServlet extends HttpServlet {
             HttpSession session = request.getSession();
             String hostelIdStr = request.getParameter("hostelID");
             Account owner = (Account) session.getAttribute("USER");
+            Map<Integer, Hostel> hostelOfNotification = new HashMap<>();
+            HostelDAO hostelDAO = new HostelDAO();
             int ownerId = owner.getAccId();
             List<Notification> notificationList;
+
             if (hostelIdStr.equals("")) {
                 notificationList = new NotificationDAO().getNotificationByOwnerId(ownerId);
             } else {
                 int hostelId = Integer.parseInt(hostelIdStr);
                 notificationList = new NotificationDAO().getNotificationByOwnerIdAndHostelId(ownerId, hostelId);
             }
+
+            for (Notification item : notificationList) {
+                hostelOfNotification.put(item.getNotification_id(), hostelDAO.getHostelById(item.getHostel_id()));
+            }
+
+            List<Object> list = new ArrayList<>();
+            list.add(notificationList);
+            list.add(hostelOfNotification);
             Gson gson = new Gson();
-            String json = gson.toJson(notificationList);
+            String json = gson.toJson(list);
             response.getWriter().println(json);
         } catch (Exception e) {
             e.printStackTrace();
