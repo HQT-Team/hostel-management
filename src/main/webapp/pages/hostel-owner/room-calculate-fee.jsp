@@ -117,7 +117,6 @@
                                         </c:forEach>
                                     </select>
                                     </span></p>
-                                    <%--                                <p class="bill__item">Trạng thái: <span class="status--no">Chưa thanh toán</span>--%>
                                 </div>
                             </div>
                             <div class="bill__table">
@@ -205,9 +204,14 @@
                             <input type="hidden" name="consumeStartID" value="${consumeBeginMonth}">
                             <input type="hidden" name="consumeEndID" value="${consumeEndMonth}">
                             <input type="hidden" name="billTitle" value="${requestScope.billTitle}">
-                            <button class="btn btn-primary fs-2" type="submit"
-                                    class="bill__form d-flex justify-content-end">Xác nhận
-                            </button>
+                            <div class="bill__form d-flex justify-content-between">
+                                <button class="btn btn-primary fs-2" type="submit">
+                                    Xác nhận
+                                </button>
+                                <a href="roomDetail?roomID=${sessionScope.room.roomId}" class="btn btn-secondary fs-2">
+                                    Hủy bỏ
+                                </a>
+                            </div>
                         </div>
                     </form>
                 </div>
