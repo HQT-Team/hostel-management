@@ -1,4 +1,4 @@
-function loadNotificationAsync(data) {
+function loadNotificationAsync(data, hostels) {
     const notiContainer = document.querySelector('#list-notifications-container');
 
     const tbl = document.createElement("table");
@@ -59,7 +59,7 @@ function loadNotificationAsync(data) {
                     tdElement.classList.add('text-center');
                     break;
                 case 4:
-                    tdElement.innerHTML = item.hostel_id;
+                    tdElement.innerHTML = hostels[item.hostel_id].hostelName;
                     tdElement.classList.add('text-center');
                     break;
             }
