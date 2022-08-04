@@ -9,6 +9,8 @@ import com.hqt.happyhostel.utils.RandomStringGenerator;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -946,4 +948,97 @@ public class AccountDAO {
         return result;
     }
 
+
+    public List<Account> GetAccountsByStatus(int status) {
+        Account acc;
+        ArrayList<Account> list = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT * \n" +
+                        "FROM [dbo].[Accounts] \n" +
+                        "WHERE status = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, status);
+                ResultSet rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    acc = getAccount(rs);
+                    list.add(acc);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return list;
+    }
+
+    public List<Account> GetAccountsByRoleInRecentMonth(int role) {
+        LocalDate currentdate = LocalDate.now();
+        String currentMonth = String.valueOf(Calendar.getInstance().get(Calendar.MONTH));
+        Calendar cal = Calendar.getInstance();
+        int tempMonth = Integer.parseInt(currentMonth);
+        String recentMonth = String.valueOf(tempMonth);
+        String currentYear = String.valueOf(currentdate.getYear());
+        String ngayDauThang = String.valueOf(cal.getActualMinimum(Calendar.DATE));
+        String ngayCuoiThang = String.valueOf(cal.getMaximum(Calendar.DATE));
+
+        String startDate = currentYear+"-"+recentMonth+"-"+ngayDauThang;
+        String endDate = currentYear+"-"+recentMonth+"-"+ngayCuoiThang;
+        Account acc;
+        ArrayList<Account> list = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT * FROM [dbo].[Accounts] WHERE role = ? and create_date between ? and ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, role);
+                pst.setString(2, startDate);
+                pst.setString(3, endDate);
+                ResultSet rs = pst.executeQuery();
+                while (rs != null && rs.next()) {
+                    acc = getAccount(rs);
+                    list.add(acc);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return list;
+    }
 }
