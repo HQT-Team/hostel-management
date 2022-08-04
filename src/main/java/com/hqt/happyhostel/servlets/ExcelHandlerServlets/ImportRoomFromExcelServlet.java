@@ -147,25 +147,32 @@ public class ImportRoomFromExcelServlet extends HttpServlet {
                                 .content("Đã có lỗi xảy ra! Không thể thêm phòng với số phòng để trống, vui lòng kiểm tra lại dự liệu trong file excel.").build());
                     }
                 } catch (Exception e){
+                    checkAdd = false;
                     e.printStackTrace();
                     errors.add(HandlerStatus.builder()
                             .status(false)
                             .content("Đã có lỗi xảy ra! Sai định dạng dữ liệu trong file excel. Không thể thêm phòng số: "+room.getRoomNumber()).build());
                 }finally {
-                    if(room.getRoomNumber() != 0){
-                        if(checkAdd){
-                            successes.add(HandlerStatus.builder()
-                                    .status(true)
-                                    .content("Đã thêm thành công phòng số: "+room.getRoomNumber()).build());
+                    List<Room> roomList = roomDAO.getListRoomsByHostelId(hostelID);
 
-                        } else {
-                            errors.add(HandlerStatus.builder()
-                                    .status(false)
-                                    .content("Không thể thêm phòng số: "+room.getRoomNumber()+"! Số phòng này đã tồn tại trong khu trọ!").build());
+                        if(room.getRoomNumber() != 0){
+                            if(checkAdd){
+                                successes.add(HandlerStatus.builder()
+                                        .status(true)
+                                        .content("Đã thêm thành công phòng số: "+room.getRoomNumber()).build());
+
+                            } else {
+                                for (Room r:roomList
+                                ) {
+                                if (room.getRoomNumber() == r.getRoomNumber()){
+                                    errors.add(HandlerStatus.builder()
+                                            .status(false)
+                                            .content("Không thể thêm phòng số: "+room.getRoomNumber()+"! Số phòng này đã tồn tại trong khu trọ!").build());
+                                    }
+                                }
+                            }
                         }
-                    }
-
-                }
+              }
             }
 
 
