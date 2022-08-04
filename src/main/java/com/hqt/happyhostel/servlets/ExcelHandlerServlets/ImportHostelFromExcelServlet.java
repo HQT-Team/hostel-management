@@ -140,16 +140,13 @@ public class ImportHostelFromExcelServlet extends HttpServlet {
                     errors.add(HandlerStatus.builder()
                             .status(false)
                             .content("Đã có lỗi xảy ra! Sai định dạng dữ liệu trong file excel. Không thể thêm khu trọ: "+hostel.getHostelName()).build());
+                    hostelId = -1;
                 }finally {
                     if(hostelId > 0){
                         successes.add(HandlerStatus.builder()
                                 .status(true)
                                 .content("Đã thêm thành công khu trọ: "+hostel.getHostelName()).build());
 
-                    } else {
-                        errors.add(HandlerStatus.builder()
-                                .status(false)
-                                .content("Không thể thêm khu trọ: "+hostel.getHostelName()+" Vui lòng kiểm tra lại định dạng dữ liệu trong file excel").build());
                     }
                 }
                 workbook.close();
