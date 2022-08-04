@@ -105,14 +105,80 @@ Live Demo: :point_right: [here]()
 - [x] View home page
 - [x] Login by account
 - [x] Register a hostel owner account
-- [ ] Register a renter account by invite code
+- [x] Register a renter account by invite code
 
 **2. Hostel Owner**
-- [ ] ...
-- [ ] ...
+- [x] View home page
+- [x] Login by account
+- [x] Logout
+- [x] View account information
+- [x] Update account information
+- [x] List hostel
+- [x] Add new hostel
+- [x] Update hostel information
+- [x] View list services (Hostel detail)
+- [x] Add new service (Hostel detail)
+- [x] Room detail
+- [x] Add room
+- [x] Generate room account
+- [x] View Invite code
+- [x] Update room information (room detail)
+- [x] View room information
+- [x] Update room consume (room detail)
+- [x] View current consume (room detail)
+- [x] View history update consume (room detail)
+- [x] View room infrastructure (Room detail)
+- [x] Add room infrastructure (Room detail)
+- [x] Update infrastructure (Room detail)
+- [x] Update contact (room detail)
+- [x] View contract
+- [x] Generate contract (in generate room account screen)
+- [x] View detail invoice
+- [x] View all invoice
+- [x] Calculate money
+- [x] Export invoice
+- [x] View revenue statistic
+- [x] View report statistic
+- [x] View list roommates
+- [x] Add roommate
+- [x] Roommate information
+- [x] Update roommate information
+- [x] Send reports
+- [x] List report
+- [x] Process the report and change its state
+- [x] View list notification
+- [x] View detail notification
+- [x] Add notification
 
-**3. Admin:**
+**3. Hostel Owner**
+- [x] View home page
+- [x] Login by account
+- [x] Logout
+- [x] View account information
+- [x] Update account information
+- [x] Hostel detail
+- [x] View list services (Hostel detail)
+- [x] Room detail
+- [x] View room information
+- [x] View room infrastructure (Room detail)
+- [x] View contract
+- [x] View detail invoice
+- [x] View all invoice
+- [x] Export invoice
+- [x] View list roommates
+- [x] Add roommate
+- [x] Roommate information
+- [x] Update roommate information
+- [x] Send reports
+- [x] List report
+- [x] View list notification
+
+**4. Admin:**
+- [x] View home page
+- [x] Login by account
+- [x] Logout
 - [x] Managing account
+- [x] View list account pending to approve
 
 ## Useful Resources
 
