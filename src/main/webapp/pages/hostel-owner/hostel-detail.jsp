@@ -416,7 +416,7 @@
         rules: [
             Validator.isRequired("#service-id", "Vui lòng chọn loại dịch vụ cần thêm mới vào khu trọ!"),
             Validator.isRequired("#service-price", "Vui lòng nhập giá tiền của dịch vụ!"),
-            Validator.minNumber("#service-price", 1, "Vui lòng nhập giá tối thiểu là 1!"),
+            Validator.minNumber("#service-price", 1000, "Vui lòng nhập giá tối thiểu là 1000"),
             Validator.isInteger("#service-price", "Vui lòng nhập đúng giá trị số nguyên"),
         ]
     });

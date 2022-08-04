@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <p class="content__infor-item">Chủ trọ: <span>${sessionScope.CONTRACT_OWNER.information.fullname}</span></p>
-                        <p class="content__infor-item">Số Điện Thoại: <span>${sessionScope.CONTRACT_OWNER.information.phone}</span></p>
+                        <p class="content__infor-item">Số Điện Thoại: <span>${sessionScope.CONTRACT_OWNER.information.phone eq null ? "N/a" : sessionScope.CONTRACT_OWNER.information.phone}</span></p>
                     </div>
                 </div>
             </div>
@@ -137,12 +137,15 @@
                             <tbody>
                             <tr>
                                 <td>${infrastructure.name}</td>
-                                <td class="good">
-                                    <c:choose>
-                                        <c:when test="${infrastructure.status == 1}">Sử dụng tốt</c:when>
-                                        <c:otherwise>Hư hỏng</c:otherwise>
-                                    </c:choose>
-                                </td>
+                                <c:choose>
+                                    <c:when test="${infrastructure.status == 1}">
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td class="break">Hư hỏng</td>
+                                    </c:otherwise>
+                                </c:choose>
+
                             </tr>
                             </tbody>
                         </c:forEach>
