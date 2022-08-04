@@ -46,6 +46,7 @@ public class ExportBillToExcelServlet extends HttpServlet {
             HttpSession session = req.getSession();
             Account account = (Account) session.getAttribute("USER");
             int accID = account.getAccId();
+            int accRole = account.getRole();
             String name = account.getAccountInfo().getInformation().getFullname();
             String phone = account.getAccountInfo().getInformation().getPhone();
             String address = account.getAccountInfo().getInformation().getAddress();
@@ -72,9 +73,17 @@ public class ExportBillToExcelServlet extends HttpServlet {
                 url = SUCCESS;
             }
             //Get service
+            int hostelID = 0;
+            int roomID = 0;
             HostelDAO hostelDAO = new HostelDAO();
-            Hostel hostel = hostelDAO.getHostelByRenterId(accID);
-            int hostelID = hostel.getHostelID();
+            Hostel hostel = new Hostel();
+            if(accRole == 1){
+                hostelID = Integer.parseInt(req.getParameter("hostelID"));
+                hostel = hostelDAO.getHostelById(hostelID);
+            } else if(accRole == 2){
+                hostel = hostelDAO.getHostelByRenterId(accID);
+                hostelID = hostel.getHostelID();
+            }
             String hostelName = hostel.getHostelName();
             String hostelAddress = hostel.getAddress();
             String ward = hostel.getWard().split("-")[1];
@@ -83,8 +92,17 @@ public class ExportBillToExcelServlet extends HttpServlet {
 
             //Get room
             RoomDAO roomDAO = new RoomDAO();
-            Room room = roomDAO.getRoomInfoByRenterId(accID);
-            int roomNumber = room.getRoomNumber();
+            Room room = new Room();
+            int roomNumber = 0;
+            if(accRole == 1){
+                roomID = Integer.parseInt(req.getParameter("roomID"));
+                room = roomDAO.getRoomById(roomID);
+                roomNumber = room.getRoomNumber();
+            } else if(accRole == 2){
+                room = roomDAO.getRoomInfoByRenterId(accID);
+                roomNumber = room.getRoomNumber();
+            }
+
 
             int billDetailID = billDetail.getBillDetailID();
             ServiceInfoDAO serviceInfoDao = new ServiceInfoDAO();
@@ -178,7 +196,7 @@ public class ExportBillToExcelServlet extends HttpServlet {
 
             Cell billIDCell = row.createCell(4);
             billIDCell.setCellStyle(billIDCellStyle);
-            billIDCell.setCellValue("#" + strCreatedDate + bill.getBillID());
+            billIDCell.setCellValue("#B" + bill.getBillID());
 
             //Payment status
             rowIndex++;
@@ -432,6 +450,7 @@ public class ExportBillToExcelServlet extends HttpServlet {
 
         } catch (Exception e) {
             log("Error at ExportBillToExcelServlet: " + e.toString());
+            req.setAttribute("ERROR_EXPORT", "Đã có lỗi không thể xuất excel!");
         }
     }
 
