@@ -87,5 +87,10 @@ body {
 }
 
 
-@media screen and (min-width: 740px) and (max-width: 1024px) {
+@media screen  and (max-width: 1024px) {
+  .content {
+    .table {
+      width: 85%;
+    }
+  }
 }

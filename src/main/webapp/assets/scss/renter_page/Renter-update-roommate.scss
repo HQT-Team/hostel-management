@@ -2,9 +2,10 @@
 @import "./_common-style/_footer";
 @import "./_common-style/_sidebar";
 
-body{
+body {
   overflow-x: hidden;
 }
+
 .content {
   width: 80%;
 
@@ -22,6 +23,7 @@ body{
     .form {
       .form-item {
         margin: 5px;
+
         #form-item-input-4 {
           line-height: 18px;
           width: 100%;
@@ -49,7 +51,7 @@ body{
           transition: 0.5s;
         }
 
-        input:focus~p {
+        input:focus ~ p {
           width: 100%;
           outline: none;
           border-bottom: none;
@@ -81,4 +83,9 @@ body{
 }
 
 @media screen and (min-width: 740px) and (max-width: 1024px) {
+  .content {
+    .div-controll-form {
+      width: 80%;
+    }
+  }
 }

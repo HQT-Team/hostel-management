@@ -87,6 +87,10 @@ body{
   }
 }
 
-@media screen and (min-width: 740px) and (max-width: 1024px) {
-
+@media screen and (max-width: 1024px) {
+  .content {
+    .div-controll-form {
+      width: 80%;
+    }
+  }
 }

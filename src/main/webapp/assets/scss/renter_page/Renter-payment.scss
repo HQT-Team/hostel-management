@@ -140,11 +140,11 @@ body {
     thead {
       tr {
         display: grid;
-        grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 2fr 1fr 1fr 2fr 2fr;
         border-style: none;
 
         th {
-          padding: 3px;
+          padding: 3px 0 3px 0;
           font-size: 22px;
           color: black;
           text-align: center;
@@ -156,11 +156,11 @@ body {
     tbody {
       tr {
         display: grid;
-        grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 2fr 1fr 1fr 2fr 2fr;
 
         td {
           color: black;
-          padding: 3px;
+          padding: 3px 0 3px 0;
           text-align: center;
           border: 1px solid black;
           font-size: 20px;
@@ -170,38 +170,38 @@ body {
   }
 }
 
-@media screen and (min-width: 650px) and (max-width: 1280px) {
-  .table {
-    width: 95%;
-    margin: 50px auto;
+@media screen and (max-width: 1280px) {
+  .content {
+    .table {
+      width: 95%;
+      margin: 50px auto;
 
-    thead {
-      tr {
-        display: grid;
-        grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
-        border-style: none;
+      thead {
+        tr {
+          display: grid;
+          grid-template-columns: 1fr 2fr 1fr 1fr 2fr 2fr;
+          border-style: none;
 
-        th {
-          padding: 3px;
-          font-size: 22px;
-          color: black;
-          text-align: center;
-          border: 1px solid black;
+          th {
+            font-size: 22px;
+            color: black;
+            text-align: center;
+            border: 1px solid black;
+          }
         }
       }
-    }
 
-    tbody {
-      tr {
-        display: grid;
-        grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+      tbody {
+        tr {
+          display: grid;
+          grid-template-columns: 1fr 2fr 1fr 1fr 2fr 2fr;
 
-        td {
-          color: black;
-          padding: 3px;
-          text-align: center;
-          border: 1px solid black;
-          font-size: 20px;
+          td {
+            color: black;
+            text-align: center;
+            border: 1px solid black;
+            font-size: 20px;
+          }
         }
       }
     }
