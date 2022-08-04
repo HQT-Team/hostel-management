@@ -51,16 +51,16 @@
 
             <!-- Profile dropdown -->
             <div id="nav-profile-dropdown" class="profile__actions">
-                <a href="" class="action__view-profile-link">
-                    <div class="action__image">
-                        <img src="./assets/images/avatars/user-avatar.jpg" alt="">
-                    </div>
-                    <div class="action__content">
-                        <div class="title">${sessionScope.USER.accountInfo.information.fullname}</div>
-                        <span class="subtitle">Xem trang cá nhân của bạn</span>
-                    </div>
-                </a>
-                <div class="spacer"></div>
+<%--                <a href="" class="action__view-profile-link">--%>
+<%--                    <div class="action__image">--%>
+<%--                        <img src="./assets/images/avatars/user-avatar.jpg" alt="">--%>
+<%--                    </div>--%>
+<%--                    <div class="action__content">--%>
+<%--                        <div class="title">${sessionScope.USER.accountInfo.information.fullname}</div>--%>
+<%--                        <span class="subtitle">Xem trang cá nhân của bạn</span>--%>
+<%--                    </div>--%>
+<%--                </a>--%>
+<%--                <div class="spacer"></div>--%>
                 <a href="logout" class="action__logout">
                     <div class="action__image">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
