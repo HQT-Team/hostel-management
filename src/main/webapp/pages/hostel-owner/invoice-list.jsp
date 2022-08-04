@@ -226,6 +226,9 @@
 <!-- Footer -->
 <%@include file="./components/footer.jsp" %>
 
+<!-- Toast element -->
+<div id="toast">&nbsp;</div>
+
 <!-- Push notification element -->
 <div id="push-noti"></div>
 
@@ -249,6 +252,8 @@
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
 <script src="./assets/js/receiveWebsocket.js"></script>
+<!-- Toast Alert -->
+<script src="./assets/js/toast-alert.js"></script>
 <script>
     $(document).ready(function () {
 
@@ -363,6 +368,25 @@
                 });
         });
     });
+
+    <c:choose>
+    <c:when test="${requestScope.RESPONSE_MSG.status eq true}">
+    toast({
+        title: 'Thành công',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'success',
+        duration: 5000
+    });
+    </c:when>
+    <c:when test="${requestScope.RESPONSE_MSG.status eq false}">
+    toast({
+        title: 'Lỗi',
+        message: '${requestScope.RESPONSE_MSG.content}',
+        type: 'error',
+        duration: 5000
+    });
+    </c:when>
+    </c:choose>
 </script>
 <script type="text/javascript">
     // Receive
