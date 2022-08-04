@@ -66,7 +66,7 @@
                 <i class="fa-solid fa-chevron-right"></i>
                 <div class="current">${hostelInformation.hostelName}</div>
             </div>
-            <div class="content-body">
+            <div class="content-body mb-5">
                 <div class="hostel-header">
                     <!-- Hostel information -->
                     <div class="hostel-infor">
@@ -160,32 +160,51 @@
                     </div>
                 </div>
             </div>
+            <div class="row mb-5">
+                <div class="upload-file-section col-12 col-md-8 col-lg-7 col-xl-6">
+                    <div class="upload-wrapper">
+                        <h1>Thêm phòng trọ bằng file Excel</h1>
+                        <c:choose>
+                            <c:when test="${requestScope.SUCCESS ne null}">
+                                <h3 class="success mb-4">${requestScope.SUCCESS}</h3>
+                            </c:when>
+                            <c:when test="${requestScope.ERROR ne null}">
+                                <h3 class="failed mb-4">${requestScope.ERROR}</h3>
+                            </c:when>
+                        </c:choose>
+                        <form action="RoomFileUpLoadServlet" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" value="${hostelInformation.hostelID}" name="hostelID">
+                            <input class="form-control" type="file" name="file" value="${requestScope.file}"
+                                   accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                            <button class="btn btn-primary fs-3" type="submit">Tải file lên hệ thống</button>
+                        </form>
+                        <c:if test="${requestScope.SUCCESS ne null}">
+                            <form action="import-room" method="GET" class="d-none">
+                                <input type="hidden" value="${hostelInformation.hostelID}" name="hostelID">
+                                <input type="hidden" value="${requestScope.file}" name="fileName">
+                                <button class="btn btn-primary fs-3" type="submit">
+                                    Thêm phòng trọ từ tệp excel đã tải lên
+                                </button>
+                            </form>
+                        </c:if>
+                    </div>
+                </div>
+                <c:if test="${requestScope.SUCCESS_IMPORT ne null || requestScope.ERROR_IMPORT ne null}">
+                    <div class="upload-file-section col-12 col-md-4 col-lg-5 col-xl-6 d-none">
+                        <div class="upload-wrapper">
+                            <h1>Kết quả thêm phòng</h1>
+                            <c:forEach var="e" items="${requestScope.SUCCESS_IMPORT}">
+                                <h3 class="success mb-4 fw-normal">${e.content}</h3>
+                            </c:forEach>
+                            <c:forEach var="e" items="${requestScope.ERROR_IMPORT}">
+                                <h3 class="failed mb-4 fw-normal">${e.content}</h3>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:if>
+            </div>
         </div>
     </div>
-</div>
-<div>
-    <c:forEach var="e" items="${SUCCESS_IMPORT}">
-        <h2 style="color: green;">${e.content}</h2>
-    </c:forEach>
-    <c:forEach var="e" items="${ERROR_IMPORT}">
-        <h2 style="color: red;">${e.content}</h2>
-    </c:forEach>
-    <h2 style="color: red;">${ERROR}</h2>
-    <h2 style="color: green">${SUCCESS}</h2>
-    <h2> Chọn tệp excel để tiến hành thêm phòng trọ: </h2>
-    <br>
-    <form method="post" action="RoomFileUpLoadServlet" enctype="multipart/form-data">
-        <input type="hidden" value="${hostelInformation.hostelID}" name="hostelID">
-        <input type="file" name="file"/>
-        <button type="submit">Tải lên</button>
-    </form>
-    <br>
-    <form action="import-room" class="custom-form add-hostel-form">
-        <input type="hidden" value="${hostelInformation.hostelID}" name="hostelID">
-        <input type="hidden" value="${file}" name="fileName">
-        <button type="submit" >Thêm phòng trọ từ tệp excel đã tải lên</button>
-    </form>
-
 </div>
 
 <!-- Footer -->

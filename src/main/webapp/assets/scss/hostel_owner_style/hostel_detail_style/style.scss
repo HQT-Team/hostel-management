@@ -263,3 +263,31 @@
     }
   }
 }
+
+// Upload file
+.upload-file-section {
+  .upload-wrapper {
+    padding: 16px 16px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+
+    .form-control {
+      font-size: 2rem;
+    }
+  }
+
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 600;
+    margin: 8px 0 16px 0;
+    letter-spacing: 0.02em;
+  }
+
+  h3.success {
+    color: #008000;
+  }
+
+  h3.failed {
+    color: rgb(208, 0, 0);
+  }
+}

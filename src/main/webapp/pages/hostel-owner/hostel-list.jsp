@@ -118,26 +118,46 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <h2 style="color: green;">${requestScope.SUCCESS}</h2>
-                        <h2 style="color: red;">${requestScope.ERROR}</h2>
-                        <c:forEach var="e" items="${SUCCESS_IMPORT}">
-                            <h2 style="color: green;">${e.content}</h2>
-                        </c:forEach>
-                        <c:forEach var="e" items="${ERROR_IMPORT}">
-                            <h2 style="color: red;">${e.content}</h2>
-                        </c:forEach>
-                        <h2> Chọn tệp excel để tiến hành thêm khu trọ: </h2>
-                        <br>
-                        <form action="HostelFileUpLoadServlet" method="POST" enctype="multipart/form-data">
-                            <input type="file" name="file"/>
-                            <button type="submit">Tải lên</button>
-                        </form>
-                        <br>
-                        <form action="import-hostel" method="get" class="custom-form add-hostel-form">
-                            <input type="hidden" value="${requestScope.file}" name="fileName">
-                            <button type="submit" >Thêm khu trọ từ tệp excel đã tải lên</button>
-                        </form>
+                    <div class="row mb-5">
+                        <div class="upload-file-section col-12 col-md-8 col-lg-7 col-xl-6">
+                            <div class="upload-wrapper">
+                                <h1>Thêm khu trọ bằng file Excel</h1>
+                                <c:choose>
+                                    <c:when test="${requestScope.SUCCESS ne null}">
+                                        <h3 class="success mb-4">${requestScope.SUCCESS}</h3>
+                                    </c:when>
+                                    <c:when test="${requestScope.ERROR ne null}">
+                                        <h3 class="failed mb-4">${requestScope.ERROR}</h3>
+                                    </c:when>
+                                </c:choose>
+                                <form action="HostelFileUpLoadServlet" method="POST" enctype="multipart/form-data">
+                                    <input class="form-control" type="file" name="file"
+                                           accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                    <button class="btn btn-primary fs-3" type="submit">Tải file lên hệ thống</button>
+                                </form>
+                                <c:if test="${requestScope.SUCCESS ne null}">
+                                    <form action="import-hostel" method="GET" class="d-none">
+                                        <input type="hidden" value="" name="fileName">
+                                        <button class="btn btn-primary fs-3" type="submit">
+                                            Thêm khu trọ từ tệp excel đã tải lên
+                                        </button>
+                                    </form>
+                                </c:if>
+                            </div>
+                        </div>
+                        <c:if test="${requestScope.SUCCESS_IMPORT ne null || requestScope.ERROR_IMPORT ne null}">
+                            <div class="upload-file-section col-12 col-md-4 col-lg-5 col-xl-6 d-none">
+                                <div class="upload-wrapper">
+                                    <h1>Kết quả thêm khu trọ</h1>
+                                    <c:forEach var="e" items="${requestScope.SUCCESS_IMPORT}">
+                                        <h3 class="success mb-4 fw-normal">${e.content}</h3>
+                                    </c:forEach>
+                                    <c:forEach var="e" items="${requestScope.ERROR_IMPORT}">
+                                        <h3 class="failed mb-4 fw-normal">${e.content}</h3>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
             </div>
