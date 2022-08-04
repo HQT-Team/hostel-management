@@ -21,13 +21,16 @@ public class DashboardServlet extends HttpServlet {
             if (account != null) {
                 switch (account.getRole()) {
                     case 0:
-                        url = "AdminPage";
+                        url = "AdminDashboard";
                         break;
                     case 1:
                         url = "HostelOwnerPage";
                         break;
                     case 2:
                         url = "HostelRenterPage";
+                        break;
+                    default:
+                        url = "loginPage";
                         break;
                 }
             }
