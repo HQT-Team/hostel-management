@@ -139,13 +139,12 @@
                                 <td>${infrastructure.name}</td>
                                 <c:choose>
                                     <c:when test="${infrastructure.status == 1}">
-
+                                        <td class="good">Sử dụng tốt</td>
                                     </c:when>
                                     <c:otherwise>
                                         <td class="break">Hư hỏng</td>
                                     </c:otherwise>
                                 </c:choose>
-
                             </tr>
                             </tbody>
                         </c:forEach>
