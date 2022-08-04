@@ -29,9 +29,6 @@ public class DashboardServlet extends HttpServlet {
                     case 2:
                         url = "HostelRenterPage";
                         break;
-                    default:
-                        url = "loginPage";
-                        break;
                 }
             }
 
