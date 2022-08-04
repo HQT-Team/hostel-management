@@ -310,14 +310,14 @@
             </div>
 
             <div class="row" data-aos="fade-up" data-aos-delay="100">
-                <div class="col-lg-3 col-md-6 d-flex m-auto">
+                <div class="col-lg-2 col-md-6 d-flex m-auto">
                     <div class="member">
                         <img src="https://avatars.githubusercontent.com/u/77594830?v=4" class="img-fluid" alt="">
                         <div class="member-content">
                             <h4>Hoàng Đăng Khoa</h4>
                             <span>Web Development</span>
                             <p>
-                                皆さん、こんにちは。私はコーアです。よろしくお願いいたします。
+                                Xin chào, tôi tên là Khoa! Rất hân hạnh được làm việc với mọi người!
                             </p>
                             <div class="social">
                                 <a href="https://twitter.com/khoahd7621" target="_blank"><i
@@ -334,14 +334,14 @@
                 </div>
                 <!-- End Team Member -->
 
-                <div class="col-lg-3 col-md-6 d-flex m-auto">
+                <div class="col-lg-2 col-md-6 d-flex m-auto">
                     <div class="member">
                         <img src="https://avatars.githubusercontent.com/u/79690773?v=4" class="img-fluid" alt="">
                         <div class="member-content">
                             <h4>Hồ Hải Nam</h4>
                             <span>Web Development</span>
                             <p>
-                                皆さん、こんにちは。私はナームです。よろしくお願いいたします。
+                                Xin chào, tôi tên là Nam! Rất hân hạnh được làm việc với mọi người!
                             </p>
                             <div class="social">
                                 <a href="https://www.facebook.com/nam.hohai.hi" target="_blank"><i
@@ -354,14 +354,14 @@
                 </div>
                 <!-- End Team Member -->
 
-                <div class="col-lg-3 col-md-6 d-flex m-auto">
+                <div class="col-lg-2 col-md-6 d-flex m-auto">
                     <div class="member">
                         <img src="https://avatars.githubusercontent.com/u/54205370?v=4" class="img-fluid" alt="">
                         <div class="member-content">
                             <h4>Nguyễn Tấn Lộc</h4>
                             <span>Web Developer</span>
                             <p>
-                                皆さん、こんにちは。私はロークです。よろしくお願いいたします。
+                                Xin chào, tôi tên là Lộc! Rất hân hạnh được làm việc với mọi người!
                             </p>
                             <div class="social">
                                 <a href="https://www.facebook.com/ngntanlocc" target="_blank"><i
@@ -374,14 +374,14 @@
                 </div>
                 <!-- End Team Member -->
 
-                <div class="col-lg-3 col-md-6 d-flex m-auto">
+                <div class="col-lg-2 col-md-6 d-flex m-auto">
                     <div class="member">
                         <img src="https://avatars.githubusercontent.com/u/87026966?v=4" class="img-fluid" alt="">
                         <div class="member-content">
                             <h4>Thái Thành Phát</h4>
                             <span>Web Developer</span>
                             <p>
-                                皆さん、こんにちは。私はファットです。よろしくお願いいたします。
+                                Xin chào, tôi tên là Phát! Rất hân hạnh được làm việc với mọi người!
                             </p>
                             <div class="social">
                                 <a href="https://twitter.com/69King0" target="_blank"><i
@@ -398,14 +398,14 @@
                 </div>
                 <!-- End Team Member -->
 
-                <div class="col-lg-3 col-md-6 d-flex m-auto">
+                <div class="col-lg-2 col-md-6 d-flex m-auto">
                     <div class="member">
-                        <img src="https://avatars.githubusercontent.com/u/87080671?v=4" class="img-fluid" alt="">
+                        <img src="./assets/images/system/nam.jpg" class="img-fluid" alt="">
                         <div class="member-content">
                             <h4>Trần Hoài Nam</h4>
                             <span>Web Developer</span>
                             <p>
-                                皆さん、こんにちは。私はナームです。よろしくお願いいたします。
+                                Xin chào, tôi tên là Nam! Rất hân hạnh được làm việc với mọi người!
                             </p>
                             <div class="social">
                                 <a href="https://www.facebook.com/profile.php?id=100011914069133" target="_blank"><i
@@ -434,7 +434,7 @@
                         <div class="testimonial-item">
                             <img src="./assets/images/testimonials/testimonials-1.jpg" class="testimonial-img"
                                  alt="">
-                            <h3>Anh Lân</h3>
+                            <h3>Anh Hải</h3>
                             <h4>Quản lý 100 phòng trọ</h4>
                             <div class="stars">
                                 <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
@@ -456,7 +456,7 @@
                         <div class="testimonial-item">
                             <img src="./assets/images/testimonials/testimonials-2.jpg" class="testimonial-img"
                                  alt="">
-                            <h3>Chị Lan</h3>
+                            <h3>Chị Phượng</h3>
                             <h4>Quản lý 30 phòng trọ</h4>
                             <div class="stars">
                                 <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
@@ -476,9 +476,30 @@
 
                     <div class="swiper-slide">
                         <div class="testimonial-item">
+                            <img src="./assets/images/testimonials/testimonials-4.jpg" class="testimonial-img"
+                                 alt="">
+                            <h3>Anh Thịnh</h3>
+                            <h4>Quản lý chung cư mini</h4>
+                            <div class="stars">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                    class="bi bi-star-fill"></i>
+                            </div>
+                            <p>
+                                <i class="bi bi-quote quote-icon-left"></i>
+                                Lúc đầu tôi chỉ dùng thử vì tò mò. Nhưng khi thấy được sự tiện lợi về cách quản lý
+                                cũng như có thể giám sát ngay trên điện thoại. Tôi đã đăng ký ngay 5 năm để sử dụng.
+                                <i class="bi bi-quote quote-icon-right"></i>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- End testimonial item -->
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
                             <img src="./assets/images/testimonials/testimonials-3.jpg" class="testimonial-img"
                                  alt="">
-                            <h3>Chị Thu</h3>
+                            <h3>Chị Hà</h3>
                             <h4>Quản lý chuỗi BĐS cho thuê</h4>
                             <div class="stars">
                                 <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
@@ -500,7 +521,7 @@
                         <div class="testimonial-item">
                             <img src="./assets/images/testimonials/testimonials-5.jpg" class="testimonial-img"
                                  alt="">
-                            <h3>Anh Thiên</h3>
+                            <h3>Anh Tùng</h3>
                             <h4>Quản lý chuỗi nhà trọ</h4>
                             <div class="stars">
                                 <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
@@ -512,27 +533,6 @@
                                 Hình ảnh vỗ cùng trực quan và dễ quản lý. Tôi rất hài lòng với tính năng ghi tiền
                                 điện nước bằng hình ảnh. Tôi đã không còn phải sử dụng giấy bút và excel phức tạp để
                                 quản lý nữa. Một phần mềm hoàn hảo!
-                                <i class="bi bi-quote quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- End testimonial item -->
-
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img src="./assets/images/testimonials/testimonials-4.jpg" class="testimonial-img"
-                                 alt="">
-                            <h3>Anh Thuận</h3>
-                            <h4>Quản lý chung cư mini</h4>
-                            <div class="stars">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i>
-                            </div>
-                            <p>
-                                <i class="bi bi-quote quote-icon-left"></i>
-                                Lúc đầu tôi chỉ dùng thử vì tò mò. Nhưng khi thấy được sự tiện lợi về cách quản lý
-                                cũng như có thể giám sát ngay trên điện thoại. Tôi đã đăng ký ngay 5 năm để sử dụng.
                                 <i class="bi bi-quote quote-icon-right"></i>
                             </p>
                         </div>
