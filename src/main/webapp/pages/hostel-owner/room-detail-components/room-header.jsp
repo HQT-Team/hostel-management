@@ -137,19 +137,23 @@
                 <a href="create-room-account-page" class="action-create-account-link">Tạo tài khoản</a>
                 <!-- End create account button -->
             </c:when>
-            <c:when test="${requestScope.renterAccount.status eq 1 && consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric ne 0 &&
-                consumeEndMonth.numberWater - consumeBeginMonth.numberWater ne 0}">
-                <form action="calculateTotalCost" method="get">
-                    <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
-                    <button class="action-calculate-btn">
-                        Tính tiền phòng
-                    </button>
-                </form>
-            </c:when>
-            <c:when test="${requestScope.renterAccount.status eq 1}">
-                <button class="action-calculate-btn" data-bs-toggle="modal"
-                        data-bs-target="#calculateRoomPriceModel" style="margin-right: 0;">Tính tiền phòng
-                </button>
+            <c:when test="${sessionScope.room.roomStatus eq 0}">
+                <c:choose>
+                    <c:when test="${consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric ne 0 &&
+                                    consumeEndMonth.numberWater - consumeBeginMonth.numberWater ne 0}">
+                        <form action="calculateTotalCost" method="get">
+                            <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
+                            <button type="submit" class="action-calculate-btn">
+                                Tính tiền phòng
+                            </button>
+                        </form>
+                    </c:when>
+                    <c:otherwise>
+                        <button class="action-calculate-btn" data-bs-toggle="modal"
+                                data-bs-target="#calculateRoomPriceModel" style="margin-right: 0;">Tính tiền phòng
+                        </button>
+                    </c:otherwise>
+                </c:choose>
             </c:when>
             <c:when test="${sessionScope.room.roomStatus eq -1}">
                 <!-- Start view QR Code button -->
@@ -162,39 +166,32 @@
     </div>
 </div>
 
-<%--<c:choose>--%>
-<%--    <c:when test="${requestScope.consumeStart.numberElectric - requestScope.consumeEnd.numberElectric eq 0 ||--%>
-<%--    requestScope.consumeStart.numberWater - requestScope.consumeEnd.numberWater eq 0}">--%>
-<div class="modal fade" id="calculateRoomPriceModel" tabindex="-1" aria-labelledby="updateServicesModelLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title updateServicesModel-label" id="updateServicesModelLabel">Cảnh báo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body updateServicesModel-content">
-                Tháng này bạn chưa cập nhật số điện nước. Hãy đảm bảo số điện nước chính xác trước khi tiếp tục
-                tính tiền phòng.
-            </div>
-            <div class="modal-footer updateServicesModel-action">
-                <%--                        <button type="button" class="btn btn-secondary back-btn" data-bs-dismiss="modal">Quay lại</button>--%>
-                <%--                        <button data-bs-toggle="modal" data-bs-target="#updateServiceInputModal"--%>
-                <%--                                class="btn btn-primary continue-btn">Đã rõ và tiếp tục--%>
-                <%--                        </button>--%>
-                <form action="calculateTotalCost" method="get">
-                    <button type="button" class="btn btn-secondary back-btn" data-bs-dismiss="modal">Quay lại
+<!-- Modal toggle warning update consume -->
+<c:if test="${sessionScope.room.roomStatus eq 0 && consumeEndMonth.numberElectric - consumeBeginMonth.numberElectric eq 0 &&
+              consumeEndMonth.numberWater - consumeBeginMonth.numberWater eq 0}">
+    <div class="modal fade" id="calculateRoomPriceModel" tabindex="-1" aria-labelledby="updateServicesModelLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title updateServicesModel-label" id="updateServicesModelLabel">Cảnh báo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body updateServicesModel-content mt-5 mb-5 text-danger">
+                    Hệ thống nhận thấy bạn chưa cập nhật số điện và số nước của tháng này! Vui lòng nhấn nút "Cập nhật"
+                    để cập nhật số điện và số nước trước. Sau đó thực hiện tính tiền phòng lại sau!
+                </div>
+                <div class="modal-footer updateServicesModel-action justify-content-between">
+                    <button type="button" class="btn btn-secondary back-btn" data-bs-dismiss="modal">
+                        Quay lại
                     </button>
-
-                    <input type="hidden" name="roomID" value="${sessionScope.room.roomId}">
-
-                    <button data-bs-toggle="modal" data-bs-target="#calculateRoomPriceModel"
-                            class="btn btn-primary continue-btn">Đã rõ và tiếp tục
+                    <button data-bs-toggle="modal"
+                            data-bs-target="#update-consume-modal"
+                            class="btn btn-primary continue-btn">
+                        Cập nhật
                     </button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<%--    </c:when>--%>
-<%--</c:choose>--%>
+</c:if>

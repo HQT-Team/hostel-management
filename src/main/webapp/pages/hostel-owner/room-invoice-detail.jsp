@@ -55,17 +55,26 @@
         <div class="col-12 col-lg-9 col-xl-9 col-xxl-10 col-xxl-10 content-group">
             <!-- History link bar -->
             <div class="content-history">
-                <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
-                <i class="fa-solid fa-chevron-right"></i>
-                <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}"
-                   class="history-link">${sessionScope.hostel.hostelName}</a>
-                <i class="fa-solid fa-chevron-right"></i>
-                <a href="roomDetail?roomID=${sessionScope.room.roomId}"
-                   class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
-                <i class="fa-solid fa-chevron-right"></i>
-                <a href="roomInvoiceList?roomId=${sessionScope.room.roomId}" class="history-link">Danh sách hóa đơn</a>
-                <i class="fa-solid fa-chevron-right"></i>
-                <div class="current">#B${requestScope.billRoom.billID}</div>
+                <c:choose>
+                    <c:when test="${sessionScope.CURRENT_PAGE eq 'invoice'}">
+                        <a href="getInvoiceList" class="history-link">Danh sách hóa đơn</a>
+                        <i class="fa-solid fa-chevron-right"></i>
+                        <div class="current">#B${requestScope.billRoom.billID}</div>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="list-hostels" class="history-link">Danh sách khu trọ</a>
+                        <i class="fa-solid fa-chevron-right"></i>
+                        <a href="detailHostel?hostelID=${sessionScope.hostel.hostelID}"
+                           class="history-link">${sessionScope.hostel.hostelName}</a>
+                        <i class="fa-solid fa-chevron-right"></i>
+                        <a href="roomDetail?roomID=${sessionScope.room.roomId}"
+                           class="history-link">Phòng ${sessionScope.room.roomNumber}</a>
+                        <i class="fa-solid fa-chevron-right"></i>
+                        <a href="roomInvoiceList?roomId=${sessionScope.room.roomId}" class="history-link">Danh sách hóa đơn</a>
+                        <i class="fa-solid fa-chevron-right"></i>
+                        <div class="current">#B${requestScope.billRoom.billID}</div>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <!-- Infor box -->
             <div class="col-xxl-9 m-auto">
@@ -240,10 +249,10 @@
                                     </a>
                                 </c:when>
                             </c:choose>
-
+                            <a class="btn btn-secondary fs-4" href="export-excel?billID=${requestScope.billRoom.billID}">
+                                Xuất Excel
+                            </a>
                             <form action="updateBilLStatus" method="post" class="bill__form d-flex justify-content-end">
-                                <input type="hidden" name="roomID" value=""/>
-                                <!-- Change type="submit" of button tag below when implement -->
                                 <c:choose>
                                     <c:when test="${requestScope.billRoom.status eq 0}">
                                         <input type="hidden" name="billID" value="${requestScope.billRoom.billID}">

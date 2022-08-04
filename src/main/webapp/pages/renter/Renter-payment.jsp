@@ -151,6 +151,10 @@
                     </c:forEach>
                     </tbody>
                 </table>
+                <!-- Export Excel Btn -->
+                <h2 style="margin: 0 auto 16px; width: 90%;">
+                    <a href="export-excel?billID=${BILL.billID}">Xuất hoá đơn ra file Excel</a>
+                </h2>
             </div>
         </div>
     </div>
