@@ -172,14 +172,16 @@
                                 <h3 class="failed mb-4">${requestScope.ERROR}</h3>
                             </c:when>
                         </c:choose>
-                        <form action="RoomFileUpLoadServlet" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" value="${hostelInformation.hostelID}" name="hostelID">
-                            <input class="form-control" type="file" name="file" value="${requestScope.file}"
-                                   accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                            <button class="btn btn-primary fs-3" type="submit">Tải file lên hệ thống</button>
-                        </form>
+                        <c:if test="${requestScope.SUCCESS eq null}">
+                            <form action="RoomFileUpLoadServlet" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" value="${hostelInformation.hostelID}" name="hostelID">
+                                <input class="form-control" type="file" name="file" value="${requestScope.file}"
+                                       accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                <button class="btn btn-primary fs-3" type="submit">Tải file lên hệ thống</button>
+                            </form>
+                        </c:if>
                         <c:if test="${requestScope.SUCCESS ne null}">
-                            <form action="import-room" method="GET" class="d-none">
+                            <form action="import-room" method="GET">
                                 <input type="hidden" value="${hostelInformation.hostelID}" name="hostelID">
                                 <input type="hidden" value="${requestScope.file}" name="fileName">
                                 <button class="btn btn-primary fs-3" type="submit">
@@ -190,7 +192,7 @@
                     </div>
                 </div>
                 <c:if test="${requestScope.SUCCESS_IMPORT ne null || requestScope.ERROR_IMPORT ne null}">
-                    <div class="upload-file-section col-12 col-md-4 col-lg-5 col-xl-6 d-none">
+                    <div class="upload-file-section col-12 col-md-4 col-lg-5 col-xl-6">
                         <div class="upload-wrapper">
                             <h1>Kết quả thêm phòng</h1>
                             <c:forEach var="e" items="${requestScope.SUCCESS_IMPORT}">

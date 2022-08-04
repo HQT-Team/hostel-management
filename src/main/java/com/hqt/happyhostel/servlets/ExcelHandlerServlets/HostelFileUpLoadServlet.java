@@ -30,8 +30,6 @@ public class HostelFileUpLoadServlet extends HttpServlet {
                 Files.createDirectories(excelPath);
             }
 
-            String name = req.getParameter("file2");
-            String name2 = req.getParameter("file");
             Part filePart = req.getPart("file");
             String fileName = Path.of(filePart.getSubmittedFileName()).getFileName().toString();
             filePart.write(Paths.get(excelPath.toString(), fileName).toString());
