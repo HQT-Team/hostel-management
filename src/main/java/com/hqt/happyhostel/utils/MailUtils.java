@@ -150,47 +150,110 @@ public class MailUtils {
 
 
     //-----------------------------------------------------------MAIL-TEMPLATE-----------------------------------------------------------//
-    public boolean SendMailConfirmPayment(String receiveMail, int roomNum, String billTitle){
-        String mailBody =
+    public boolean SendMailConfirmPayment(String receiveMail, int roomNum, String hostelName, String billTitle, String domain){
+        String mailBody = "<!doctype html>\n" +
+                "<html lang=\"vi\">\n" +
+                "\n" +
                 "<head>\n" +
-                        "\t<meta charset=\"UTF-8\">\n" +
-                        "\t<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n" +
-                        "\t<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
-                        "\t<link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap\" rel=\"stylesheet\">\n" +
-                        "</head>\n" +
-                        "\n" +
-                        "<body>\n" +
-                        "\t<div class=\"mail\" style=\"max-width: 600px;\n" +
-                        "                                width: 100%;\n" +
-                        "                                margin: 0 auto;\n" +
-                        "                                background-color: #fff;\n" +
-                        "                                font-family: 'Roboto', sans-serif;\n" +
-                        "                                text-align: center;\n" +
-                        "                                padding-bottom: 24px;\n" +
-                        "                                box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;\">\n" +
-                        "\t\t<div class=\"header\" style=\"background-color: #1fdf7f;\n" +
-                        "                                    align-items: center;\n" +
-                        "                                    font-size: 20px;\n" +
-                        "                                    font-weight: bold;\n" +
-                        "                                    color: #fff;\n" +
-                        "                                    padding: 24px 0;\">\n" +
-                        "\t\t\tHQT Hostel Management\n" +
-                        "\t\t</div>\n" +
-                        "\t\t<div class=\"content\">\n" +
-                        "\t\t\t<div class=\"content__title\" style=\"font-size: 20px;\n" +
-                        "                                                padding: 22px 0;\n" +
-                        "                                                font-weight: 500;\">\n" +
-                        "\t\t\t\tNgười thuê phòng " + roomNum + "vừa thanh toán hóa đơn "+ billTitle +".\n" +
-                        "\t\t\t</div>\n" +
-                        "\t\t\t<div class=\"content__sub-title\" style=\"color: #1fdf7f;\n" +
-                        "                                                    font-size: 20px;\n" +
-                        "                                                    font-weight: 500;\n" +
-                        "                                                    text-shadow: 1px 1px rgba(100, 94, 94, 0.4);\">\n" +
-                        "\t\t\t\tVui lòng kiểm tra lại thông tin. </br> Xin cảm ơn.\n" +
-                        "\t\t\t</div>\n" +
-                        "\t\t</div>\n" +
-                        "\t</div>\n" +
-                        "</body>";
+                "    <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\" />\n" +
+                "    <title>Reset Password</title>\n" +
+                "    <meta name=\"description\" content=\"Reset Password Email Template.\">\n" +
+                "    <style type=\"text/css\">\n" +
+                "        a:hover {\n" +
+                "            text-decoration: underline !important;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "\n" +
+                "<body marginheight=\"0\" topmargin=\"0\" marginwidth=\"0\" style=\"margin: 0px; background-color: #f2f3f8;\" leftmargin=\"0\">\n" +
+                "    <!--100% body table-->\n" +
+                "    <table cellspacing=\"0\" border=\"0\" cellpadding=\"0\" width=\"100%\" bgcolor=\"#f2f3f8\"\n" +
+                "        style=\"@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;\">\n" +
+                "        <tr>\n" +
+                "            <td>\n" +
+                "                <table style=\"background-color: #f2f3f8; \n" +
+                "                max-width: 670px;  \n" +
+                "                margin: 0 auto;\" width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height:80px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"text-align: center;\">\n" +
+                "                            <a href=\"\" title=\"logo\" target=\"_blank\">\n" +
+                "                                <img width=\"150\" src=\"https://i.ibb.co/XSs4xvj/hqt-logo.png\" title=\"logo\" alt=\"logo\">\n" +
+                "                            </a>\n" +
+                "                        </td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height: 20px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td>\n" +
+                "                            <table width=\"95%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width: 670px;\n" +
+                "                                background:#fff; \n" +
+                "                                border-radius: 3px;\n" +
+                "                                text-align: center;\n" +
+                "                                -webkit-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, .06);\n" +
+                "                                -moz-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, .06);\n" +
+                "                                box-shadow: 0 6px 18px 0 rgba(0, 0, 0, .06);\">\n" +
+                "                                <tr>\n" +
+                "                                    <td style=\"height: 40px;\">&nbsp;</td>\n" +
+                "                                </tr>\n" +
+                "                                <tr>\n" +
+                "                                    <td style=\"padding:0 35px; display: flex; flex-direction: column !important; align-items: center !important;\">\n" +
+                "                                        <h1 style=\"color: #1e1e2d; \n" +
+                "                                            font-weight: 500; margin: 0;\n" +
+                "                                            font-size: 24px;\n" +
+                "                                            font-family:'Rubik', sans-serif;\">\n" +
+                "                                            Hệ thống vừa ghi nhận người thuê phòng "+ roomNum +" khu trọ "+ hostelName +" vừa thanh toán hóa đơn "+ billTitle +"\n" +
+                "                                        </h1>\n" +
+                "                                        <span style=\"display: inline-block;\n" +
+                "                                            margin: 24px 0 0;\n" +
+                "                                            border-bottom: 1px solid #cecece;\n" +
+                "                                            width: 100px;\">\n" +
+                "                                        </span>\n" +
+                "                                        <a href=\""+domain+"\" style=\"background: #20e277;\n" +
+                "                                            text-decoration: none !important; \n" +
+                "                                            font-weight: 600; \n" +
+                "                                            margin-top: 35px; \n" +
+                "                                            color: #fff;\n" +
+                "                                            text-transform: uppercase;\n" +
+                "                                            font-size: 14px;\n" +
+                "                                            padding: 14px 24px;\n" +
+                "                                            width: 200px;\n" +
+                "                                            display: inline-block;\n" +
+                "                                            border-radius:50px;\" onmouseout=\"this.style.background='#20e277'\"\n" +
+                "                                            onmouseover=\"this.style.background='#0bb658'\">\n" +
+                "                                            Xem hóa đơn\n" +
+                "                                        </a>\n" +
+                "                                    </td>\n" +
+                "                                </tr>\n" +
+                "                                <tr>\n" +
+                "                                    <td style=\"height:40px;\">&nbsp;</td>\n" +
+                "                                </tr>\n" +
+                "                            </table>\n" +
+                "                        </td>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height:20px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"text-align:center;\">\n" +
+                "                            <p\n" +
+                "                                style=\"font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;\">\n" +
+                "                                &copy; <strong>www.hqthostel.com</strong></p>\n" +
+                "                        </td>\n" +
+                "                    </tr>\n" +
+                "                    <tr>\n" +
+                "                        <td style=\"height:80px;\">&nbsp;</td>\n" +
+                "                    </tr>\n" +
+                "                </table>\n" +
+                "            </td>\n" +
+                "        </tr>\n" +
+                "    </table>\n" +
+                "    <!--/100% body table-->\n" +
+                "</body>\n" +
+                "\n" +
+                "</html>";
         String mailObject = "Thông báo người thuê vừa thanh toán hóa đơn";
         return sendMail(receiveMail, mailObject, mailBody);
     }

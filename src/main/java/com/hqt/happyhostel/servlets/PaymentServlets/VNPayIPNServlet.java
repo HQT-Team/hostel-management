@@ -2,8 +2,10 @@ package com.hqt.happyhostel.servlets.PaymentServlets;
 
 import com.hqt.happyhostel.dao.AccountDAO;
 import com.hqt.happyhostel.dao.BillDAO;
+import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dto.Bill;
 import com.hqt.happyhostel.dto.HandlerStatus;
+import com.hqt.happyhostel.dto.Hostel;
 import com.hqt.happyhostel.utils.ConfigUtils;
 import com.hqt.happyhostel.utils.MailUtils;
 
@@ -103,7 +105,9 @@ public class VNPayIPNServlet extends HttpServlet {
                                     int ownerId = billDAO.getBillDetail(billId).getAccountHostelOwnerID();
                                     String ownerEmail = new AccountDAO().getAccountInformationById(ownerId).getInformation().getEmail();
                                     if (ownerEmail != null) {
-                                        if (new MailUtils().SendMailConfirmPayment(ownerEmail, bill.getRoomID(), bill.getBillTitle())) {
+                                        Hostel hostel = new HostelDAO().getHostelByRoomId(bill.getRoomID());
+                                        String domain = "http://localhost:8080/HappyHostel/getRoomInvoiceDetail?billID="+billId+"&hostelID="+hostel.getHostelID()+"&roomID="+ bill.getRoomID();
+                                        if (new MailUtils().SendMailConfirmPayment(ownerEmail, bill.getRoomID(), hostel.getHostelName() ,bill.getBillTitle(), domain)) {
                                             handlerStatus = HandlerStatus.builder().status(true).content("GD Thanh cong").build();
                                         }
                                     }
