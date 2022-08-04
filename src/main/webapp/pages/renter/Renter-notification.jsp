@@ -36,11 +36,11 @@
 %>
 <div>
     <!-- navbar -->
-    <%@include file="components/navbar.jsp" %>
     <!-- content -->
     <div class="main-body row" style="padding: 0;margin: 0;">
         <%@include file="components/sidebar.jsp" %>
         <div class="content row">
+    <%@include file="components/navbar.jsp" %>
             <c:if test="${NOTIFY == null}">
                 <h1 style="font-size: 28px; color: red; text-align: center;line-height: 28px;margin-top: 20px">Bạn chưa có thông báo
                     nào!</h1>

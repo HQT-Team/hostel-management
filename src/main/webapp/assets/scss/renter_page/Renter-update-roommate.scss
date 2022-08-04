@@ -5,10 +5,15 @@
 body {
   overflow-x: hidden;
 }
-
+.dashboard{
+  display: block;
+}
+.dropdown{
+  display: none;
+}
 .content {
   width: 80%;
-
+  min-height: calc(100vh - 80px);
   .div-controll-form {
     width: 50%;
     margin: 100px auto;
@@ -82,10 +87,22 @@ body {
   }
 }
 
-@media screen and (min-width: 740px) and (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
   .content {
+    padding: 0;
+    width: 100%;
+    min-height: calc(100vh - 80px);
     .div-controll-form {
       width: 80%;
     }
+  }
+  .dashboard{
+    display: none;
+  }
+  .dropdown{
+    display: block;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
   }
 }

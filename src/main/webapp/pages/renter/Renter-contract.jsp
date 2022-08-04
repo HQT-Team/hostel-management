@@ -39,12 +39,12 @@
 %>
 <div>
     <!-- navbar -->
-    <%@include file="components/navbar.jsp"%>
 
     <!-- content -->
     <div class="main-body row" style="padding: 0;margin: 0;">
-        <%@include file="components/sidebar.jsp"%>
+        <%@include file="components/sidebar.jsp" %>
         <div class="content row">
+        <%@include file="components/navbar.jsp" %>
             <div class="contract-content">
                 <div class="contract-head"><h4>Hợp Đồng Thuê Phòng</h4></div>
                 <div class="contract-body">
@@ -60,7 +60,8 @@
                             </c:if>
                         </h5><br>
                         <h5><strong>CCCD: </strong>${OWNER_INFO.cccd}</h5><br>
-                        <h5><strong>SĐT: </strong>${OWNER_INFO.phone eq null ? "Không có thông tin!" : OWNER_INFO.phone}</h5><br>
+                        <h5><strong>SĐT: </strong>${OWNER_INFO.phone eq null ? "Không có thông tin!" : OWNER_INFO.phone}
+                        </h5><br>
                     </div>
                     <div class="renter-infor">
                         <h5><strong>Người Thuê: </strong>${RENTER_INFO.fullname}</h5><br>
@@ -73,8 +74,12 @@
                                 Không có thông tin!
                             </c:if>
                         </h5><br>
-                        <h5><strong>CCCD: </strong>${RENTER_INFO.cccd eq null ? "Không có thông tin!" : RENTER_INFO.cccd}</h5><br>
-                        <h5><strong>SĐT: </strong>${RENTER_INFO.phone eq null ? "Không có thông tin!" : RENTER_INFO.phone}</h5><br>
+                        <h5>
+                            <strong>CCCD: </strong>${RENTER_INFO.cccd eq null ? "Không có thông tin!" : RENTER_INFO.cccd}
+                        </h5><br>
+                        <h5>
+                            <strong>SĐT: </strong>${RENTER_INFO.phone eq null ? "Không có thông tin!" : RENTER_INFO.phone}
+                        </h5><br>
                     </div>
                 </div>
                 <div class="contract-result">
@@ -105,7 +110,7 @@
 
 <!-- footer -->
 
-<%@include file="components/footer.jsp"%>
+<%@include file="components/footer.jsp" %>
 
 <!-- Push notification element -->
 <div id="push-noti"></div>
@@ -132,7 +137,7 @@
     // Receive
     receiveWebsocket(alertPushNoti);
     // Close when leave
-    window.onbeforeunload = function(){
+    window.onbeforeunload = function () {
         receiveWebsocket.disconnectWebSocket();
     };
 </script>

@@ -30,12 +30,12 @@
 %>
 <div>
     <!-- navbar -->
-    <%@include file="components/navbar.jsp"%>
 
     <!-- content -->
     <div class="main-body row" style="padding: 0;margin: 0;">
         <%@include file="components/sidebar.jsp"%>
         <div class="content row">
+    <%@include file="components/navbar.jsp"%>
             <div class="report">
                 <h2>Chi Tiết Báo Cáo</h2>
                 <c:forEach var="rp" items="${REPORT_LIST}">

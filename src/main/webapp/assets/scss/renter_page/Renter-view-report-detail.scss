@@ -5,12 +5,17 @@
 body {
   overflow-x: hidden;
 }
-
+.dashboard{
+  display: block;
+}
+.dropdown{
+  display: none;
+}
 .content {
   width: 80%;
   margin: 0px;
   padding: 0px;
-  min-height: 600px;
+  min-height: calc(100vh - 80px);
 
   .report {
     width: 80%;
@@ -41,4 +46,18 @@ body {
 }
 
 @media screen and (max-width: 1200px) {
+  .content{
+    width: 100%;
+    padding: 0;
+    min-height: calc(100vh - 80px);
+  }
+  .dashboard{
+    display: none;
+  }
+  .dropdown{
+    display: block;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
+  }
 }

@@ -40,11 +40,11 @@
     Account account = (Account) session.getAttribute("USER");
 %>
 <div>
-    <%@include file="components/navbar.jsp"%>
 
     <div class="row" style="padding: 0;margin: 0;">
         <%@include file="components/sidebar.jsp"%>
         <div class="content">
+    <%@include file="components/navbar.jsp"%>
             <div class="div-controll-form" id="div-controll-form">
                 <form action="renter-roommate-update" method="post" class="form" id="form_update_roommate">
                     <h1>Cập Nhật Thông Tin</h1>

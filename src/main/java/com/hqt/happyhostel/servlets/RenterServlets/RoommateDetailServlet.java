@@ -20,6 +20,7 @@ public class RoommateDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        req.setAttribute("uri", "/HappyHostel/GetRoomateAccountServlet");
         int roommateId = Integer.parseInt(req.getParameter("roommateID"));
         ArrayList<RoommateInfo> listroommateinfor = (ArrayList<RoommateInfo>) session.getAttribute("listroommateinfor");
         RoommateInfo roommate1 = null;

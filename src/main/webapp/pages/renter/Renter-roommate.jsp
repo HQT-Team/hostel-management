@@ -34,13 +34,13 @@
     Account account = (Account)session.getAttribute("USER");
   %>
     <!-- navbar -->
-    <%@include file="components/navbar.jsp" %>
 
     <!-- content -->
     <div class="main-body row" style="padding: 0;margin: 0;">
         <%@include file="components/sidebar.jsp" %>
 
         <div class="content">
+    <%@include file="components/navbar.jsp" %>
             <c:if test="${listroommateinfor.size() == 0}">
                 <h1 style="color: red; font-size: 26px; text-align: center; margin-top: 20px">Chưa Có Thành Viên</h1>
             </c:if>

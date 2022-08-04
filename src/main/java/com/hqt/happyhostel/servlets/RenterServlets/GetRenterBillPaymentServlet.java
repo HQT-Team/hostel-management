@@ -22,6 +22,7 @@ public class GetRenterBillPaymentServlet extends HttpServlet {
         String url = ERROR;
         try {
             HttpSession session = req.getSession();
+            req.setAttribute("uri", "/HappyHostel/GetRenterBillServlet");
             Account account = (Account) session.getAttribute("USER");
             int accID = account.getAccId();
 

@@ -1,80 +1,88 @@
 .dashboard {
-  width: 20%;
-  min-height: calc(100vh - 80px);
-  background-color: #f7f7f7;
-  padding: 0;
+    width: 20%;
+    min-height: calc(100vh - 80px);
+    background-color: #f7f7f7;
+    padding: 0;
 
-  .infor-top {
-    text-align: center;
-    margin: 20px 0px 10px 0px;
+    .infor-top {
+      text-align: center;
+      margin: 20px 0px 10px 0px;
 
-    img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      margin: 10px 0px 10px 0px;
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin: 10px 0px 10px 0px;
+      }
+
+      h3 {
+        font-size: 19px;
+        color: #000000;
+        font-weight: 300;
+        font-family: serif;
+      }
+
+      p {
+        color: #000000;
+        font-size: 18px;
+
+      }
     }
 
-    h3 {
-      font-size: 19px;
-      color: #000000;
-      font-weight: 300;
-      font-family: serif;
-    }
+    .card {
+      border: none;
 
-    p {
-      color: #000000;
-      font-size: 18px;
-
-    }
-  }
-
-  .card {
-    border: none;
-
-    .card-body {
-      background-color: #f7f7f7;
-
-      .sidebar-item {
-        width: 100%;
-        text-align: left;
-        padding:15px 0 15px 15px;
+      .card-body {
         background-color: #f7f7f7;
-        border-radius: 4px;
-        margin-bottom: 5px;
-        margin-top: 5px;
-        display: grid;
-        grid-template-columns: 1fr 6fr;
-        column-gap: 5px;
-        i{
-          font-size: 18px;
-          line-height: 100%;
+
+        .sidebar-item {
+          width: 100%;
+          text-align: left;
+          padding: 15px 0 15px 15px;
+          background-color: #f7f7f7;
+          border-radius: 4px;
+          margin-bottom: 5px;
+          margin-top: 5px;
+          display: grid;
+          grid-template-columns: 1fr 6fr;
+          column-gap: 5px;
+
+          i {
+            font-size: 18px;
+            line-height: 100%;
+          }
+
+          a {
+            color: #000000;
+            font-size: 18px;
+            text-decoration: none;
+            line-height: 100%;
+          }
         }
-        a {
-          color: #000000;
-          font-size: 18px;
-          text-decoration: none;
-          line-height: 100%;
+
+        .sidebar-item:hover {
+          background-color: #4554fc;
+
+          i {
+            color: #FFFFFF;
+          }
+
+          a {
+            color: #FFFFFF;
+          }
         }
-      }
-      .sidebar-item:hover {
-        background-color: #4554fc;
-        i{
-          color: #FFFFFF;
-        }
-        a{
-          color: #FFFFFF;
-        }
-      }
-      .active{
-        background-color: #4554fc;
-        i{
-          color: #FFFFFF;
-        }
-        a{
-          color: #FFFFFF;
+
+        .active {
+          background-color: #4554fc;
+
+          i {
+            color: #FFFFFF;
+          }
+
+          a {
+            color: #FFFFFF;
+          }
         }
       }
     }
   }
-}

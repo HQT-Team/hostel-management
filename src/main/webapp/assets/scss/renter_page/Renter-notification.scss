@@ -5,9 +5,16 @@
 body{
   overflow-x: hidden;
 }
+.dashboard{
+  display: block;
+}
+.dropdown{
+  display: none;
+}
 .content {
   width: 80%;
 margin: 0;
+  min-height: calc(100vh - 80px);
 }
 
 .notification {
@@ -54,4 +61,20 @@ h1{
 }
 
 @media screen and (max-width: 1024px) and (min-width: 740px) {
+  .content{
+    width: 100%;
+    padding: 0;
+    min-height: calc(100vh - 80px);
+  }
+  .main-body{
+  .dashboard{
+    display: none;
+  }
+  }
+  .dropdown{
+    display: block;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
+  }
 }

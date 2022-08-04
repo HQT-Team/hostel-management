@@ -11,10 +11,17 @@
 body {
   overflow-x: hidden;
 }
+.dashboard{
+  display: block;
+}
+.dropdown{
+  display: none;
+}
 .content {
   font-size: 18px;
   width: 80%;
   margin: 0;
+  min-height: calc(100vh - 80px);
 
   .table-content {
     width: 100%;
@@ -101,5 +108,18 @@ body {
   }
 }
 
-@media screen and (min-width: 400px) and (max-width: 1100px) {
+@media only screen and(max-width: 1024px) {
+  .content{
+    width: 100%;
+    padding: 0;
+  }
+  .dashboard{
+    display: none;
+  }
+  .dropdown{
+    display: block;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
+  }
 }

@@ -31,11 +31,11 @@
 %>
 <div>
   <!-- navbar -->
-  <%@include file="components/navbar.jsp"%>
   <!-- content -->
   <div class="main-body row" style="padding: 0;margin: 0;">
     <%@include file="components/sidebar.jsp"%>
     <div class="content row">
+  <%@include file="components/navbar.jsp"%>
       <div class="profile">
         <h2>Thông Tin Cá Nhân</h2>
         <h3><span>Tên: </span>${ACC_INFO.fullname}</h3>

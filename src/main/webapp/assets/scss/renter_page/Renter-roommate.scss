@@ -14,9 +14,14 @@ body {
   padding: 0px;
   margin: 0px;
 }
-
+.dashboard{
+  display: block;
+}
+.dropdown{
+  display: none;
+}
 .content {
-  height: 100vh;
+  min-height: calc(100vh - 80px);
   width: 80%;
   margin: 0px;
   padding: 0px;
@@ -89,8 +94,22 @@ body {
 
 @media screen  and (max-width: 1024px) {
   .content {
+    width: 100%;
+    padding: 0;
+    min-height: calc(100vh - 80px);
     .table {
       width: 85%;
     }
+  }
+  .main-body{
+  .dashboard{
+    display: none;
+  }
+  }
+  .dropdown{
+    display: block;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
   }
 }

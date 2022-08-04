@@ -43,7 +43,7 @@
                 <i class="fa-solid fa-envelope-open-text"></i>
                 <a href="RenterNotificationPage">Thông báo</a>
             </div>
-            <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetRenterInforServlet" ? "active": ""}">
+            <div class="sidebar-item ${requestScope.uri eq "/HappyHostel/GetRenterInforServlet" ? "active": ""}" id="sidebaritem">
                 <i class="fa-solid fa-id-card"></i>
                 <a href="HostelRenterProfilePage?<%=account.getAccId()%>">Thông tin cá nhân</a>
             </div>

@@ -5,8 +5,14 @@
 body {
   overflow-x: hidden;
 }
-
+.dashboard{
+  display: block;
+}
+.dropdown{
+  display: none;
+}
 .content {
+  min-height: calc(100vh - 80px);
   width: 80%;
   margin: 0;
   padding: 0;
@@ -101,5 +107,19 @@ body {
   }
 }
 
-@media screen and (min-width: 740px) and (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
+  .content{
+    width: 100%;
+    padding: 0;
+    min-height: calc(100vh - 80px);
+  }
+  .dashboard{
+    display: none;
+  }
+  .dropdown{
+    display: block;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
+  }
 }

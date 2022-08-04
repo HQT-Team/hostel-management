@@ -5,9 +5,15 @@
 body{
   overflow-x: hidden;
 }
+.dashboard{
+  display: block;
+}
+.dropdown{
+  display: none;
+}
 .content {
   width: 80%;
-
+  min-height: calc(100vh - 80px);
   .invoice {
     width: 60%;
     margin: 100px auto;
@@ -33,8 +39,20 @@ body{
 
 @media screen  and (max-width: 1024px) {
   .content {
+    width: 100%;
+    padding: 0;
+    min-height: calc(100vh - 80px);
     .table-bordered {
       width: 90%;
     }
+  }
+  .dashboard{
+    display: none;
+  }
+  .dropdown{
+    display: block;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
   }
 }

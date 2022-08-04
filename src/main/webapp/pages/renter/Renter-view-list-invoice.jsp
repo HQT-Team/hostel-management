@@ -36,12 +36,12 @@
     Account account = (Account) session.getAttribute("USER");
 %>
 <div>
-    <%@include file="components/navbar.jsp"%>
     <div class="row" style="padding: 0;margin: 0;">
         <%@include file="components/sidebar.jsp"%>
 
 
         <div class="content">
+    <%@include file="components/navbar.jsp"%>
             <div class="table-content">
                 <h2>Danh Sách Hoá Đơn</h2>
                 <table class="table table-bordered">

@@ -11,9 +11,14 @@
 body {
   overflow-x: hidden;
 }
-
+.dashboard{
+  display: block;
+}
+.dropdown{
+  display: none;
+}
 .content {
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   margin: 0;
   padding: 0;
   width: 80%;
@@ -272,5 +277,22 @@ body {
         text-decoration: none;
       }
     }
+  }
+}
+
+@media only screen and(max-width: 1024px) {
+  .content{
+    width: 100%;
+    padding: 0;
+    min-height: calc(100vh - 80px);
+  }
+  .dashboard{
+    display: none;
+  }
+  .dropdown{
+    display: block;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
   }
 }

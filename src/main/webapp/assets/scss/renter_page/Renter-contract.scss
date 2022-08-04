@@ -4,13 +4,19 @@
 
 body {
   overflow-x: hidden;
-
+}
+  .dashboard{
+    display: block;
+  }
+  .dropdown{
+    display: none;
+  }
   .content {
     margin: 0;
     text-align: left;
     width: 80%;
     padding: 10px;
-
+    min-height: calc(100vh - 80px);
     .contract-content {
       padding: 20px 40px;
       border: 1px solid black;
@@ -83,7 +89,24 @@ body {
         }
       }
     }
-  }
 }
-@media screen and (min-width: 740px) and (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
+  body {
+    .content {
+      width: 100%;
+      padding: 0;
+      min-height: calc(100vh - 80px);
+    }
+
+    .dashboard {
+      display: none;
+    }
+
+    .dropdown {
+      display: block;
+      padding: 0;
+      width: fit-content;
+      height: fit-content;
+    }
+  }
 }

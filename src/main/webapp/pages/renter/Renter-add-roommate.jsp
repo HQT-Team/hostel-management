@@ -38,13 +38,13 @@
     Account account = (Account) session.getAttribute("USER");
 %>
 <div>
-    <%@include file="components/navbar.jsp"%>
 
     <div class="row" style="margin: 0;padding: 0;">
 
         <%@include file="components/sidebar.jsp"%>
 
         <div class="content">
+    <%@include file="components/navbar.jsp"%>
 
             <div class="div-controll-form" id="div-controll-form">
                 <form action="AddRenterRoommatePage" method="post" class="form" id="form">

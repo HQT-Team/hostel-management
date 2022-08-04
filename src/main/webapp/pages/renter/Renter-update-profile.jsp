@@ -36,11 +36,11 @@
 %>
 <div>
     <!-- navbar -->
-    <%@include file="components/navbar.jsp"%>
     <!-- content -->
     <div class="main-body row" style="padding: 0;margin: 0;">
         <%@include file="components/sidebar.jsp"%>
         <div class="content row">
+    <%@include file="components/navbar.jsp"%>
             <div class="profile-update">
                 <form action="profile-update" method="post" id="myForm">
                     <h2>Chỉnh sửa thông tin</h2>
@@ -166,6 +166,7 @@
         isRequire(form_6, "Vui lòng nhập trường này!")
         isCccd(form_6, "Số cccd không khả dụng!")
     });
+    document.getElementById("sidebaritem").classList.add("active");
 </script>
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>

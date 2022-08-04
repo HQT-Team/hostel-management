@@ -31,6 +31,7 @@ public class UpdateProfileServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         Account acc = new Account();
         Information accountInfos = new Information();
+        req.setAttribute("uri", req.getRequestURI());
         try {
             HttpSession session = req.getSession();
             acc = (Account) session.getAttribute("USER");

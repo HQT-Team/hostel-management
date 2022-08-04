@@ -37,15 +37,15 @@
 %>
 <div>
 
-    <%@include file="components/navbar.jsp"%>
     <div class="row" style="padding: 0;margin: 0;">
 
         <%@include file="components/sidebar.jsp"%>
         <div class="content">
+    <%@include file="components/navbar.jsp"%>
             <h1>Hóa Đơn</h1>
             <input id="key" type="hidden" value="<%=request.getAttribute("RESPONSE_MSG")%>"/>
             <div id="notification">
-                <p id="notification-p">Thanh toán thành công</p>
+                <p id="notification-p">${requestScope.RESPONSE_MSG}</p>
             </div>
             <div id="invoice-cover">
                 <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.createdDate}" var="createdDate"/>
