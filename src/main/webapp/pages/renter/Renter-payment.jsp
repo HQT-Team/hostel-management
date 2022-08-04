@@ -51,7 +51,7 @@
                 <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.createdDate}" var="createdDate"/>
                 <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.expiredPaymentDate}" var="expiredPaymentDate"/>
 
-                <h2>#<fmt:formatDate value="${createdDate}" type="Date" pattern="yyyyMMdd"/>${BILL.billID}</h2>
+                <h2>#B${BILL.billID}</h2>
                 <h3><a>
                     <c:if test="${BILL.status == 1}">
                         <p class="payment-status" style="color: green">Đã thanh toán</p>
