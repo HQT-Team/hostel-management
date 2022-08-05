@@ -49,7 +49,9 @@ public class UpdateProfileServlet extends HttpServlet {
             boolean checkUpdateProfile = new InformationDAO().updateProfileByAccId(accountInfos, accId);
             if (checkUpdateProfile) {
                 url = SUCCESS;
+                req.setAttribute("MES", "Cập nhật thành công!");
             } else {
+                req.setAttribute("MES", "Cập nhật thất bại!");
                 session.setAttribute("Error", "Somethings Wrong!");
             }
         } catch (Exception e) {

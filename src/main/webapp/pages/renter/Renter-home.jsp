@@ -37,10 +37,6 @@
         <%@include file="components/sidebar.jsp" %>
         <div class="content">
             <%@include file="components/navbar.jsp" %>
-                <div class="hidden_notification" id="notification">
-                    <p>Welcome back, ${sessionScope.USER.accountInfo.information.fullname}</p>
-                    <span class="progress"></span>
-                </div>
             <h1 class="title">Tổng Quan Thông Tin Về Phòng Trọ</h1>
             <div class="main-information">
                 <h2 style="text-align: center;font-size: 26px; margin: 10px 0 20px 0">Thông tin phòng trọ</h2>
@@ -74,7 +70,6 @@
                                     <td>${infras.quantity}</td>
                                 </tr>
                             </c:forEach>
-
                         </table>
                     </div>
 
@@ -133,13 +128,6 @@
             receiveWebsocket.disconnectWebSocket();
         };
     </script>
-<script>
-    var notification = document.getElementById("notification")
-    if (${sessionScope.USER.accountInfo.information.fullname != null}){
-        notification.classList.add("display_notification")
-        notification.classList.remove("hidden_notification")
-    }
-</script>
 </div>
 </body>
 
