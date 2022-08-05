@@ -42,8 +42,8 @@
         <%@include file="components/sidebar.jsp"%>
         <div class="content">
     <%@include file="components/navbar.jsp"%>
-            <div class="hidden_notification" id="notification">
-                <p>${requestScope.RESPONSE_MSG}</p>
+            <div class="hidden_notification" id="notifications">
+                <p>${requestScope.RESPONSE_MSG.content}</p>
                 <span class="progress"></span>
             </div>
             <h1>Hóa Đơn</h1>
@@ -165,7 +165,6 @@
 <!-- Push notification element -->
 <div id="push-noti"></div>
 
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -179,15 +178,26 @@
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
+<script src="./assets/js/sendWebsocket.js"></script>
 <script src="./assets/js/receiveWebsocket.js"></script>
 <script>
-    var notification = document.getElementById("notification")
-    if (${requestScope.RESPONSE_MSG != null}){
-        notification.classList.add("display_notification")
-        notification.classList.remove("hidden_notification")
+    var notificationElement = document.getElementById("notifications")
+    if (${requestScope.RESPONSE_MSG ne null}) {
+        notificationElement.classList.add("display_notification")
+        notificationElement.classList.remove("hidden_notification")
     }
 </script>
 <script type="text/javascript">
+    // Send
+    <c:if test="${requestScope.RESPONSE_MSG.status == true}">
+    const params = new Object();
+    params.sender = "hostel_renter";
+    params.receiver = "hostel_owner";
+    params.hostel_receiver_id = null;
+    params.account_receiver_id = "${requestScope.HOSTEL_OWNER_ID}";
+    params.messages = "${requestScope.SOCKET_MSG}";
+    sendToWebSocket(params);
+    </c:if>
     // Receive
     receiveWebsocket(alertPushNoti);
     // Close when leave

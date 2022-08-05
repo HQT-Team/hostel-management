@@ -107,19 +107,19 @@ public class VNPayIPNServlet extends HttpServlet {
                                     if (ownerEmail != null) {
                                         Hostel hostel = new HostelDAO().getHostelByRoomId(bill.getRoomID());
                                         String domain = "http://localhost:8080/HappyHostel/getRoomInvoiceDetail?billID="+billId+"&hostelID="+hostel.getHostelID()+"&roomID="+ bill.getRoomID();
-                                        if (new MailUtils().SendMailConfirmPayment(ownerEmail, bill.getRoomID(), hostel.getHostelName() ,bill.getBillTitle(), domain)) {
-                                            handlerStatus = HandlerStatus.builder().status(true).content("GD Thanh cong").build();
-                                        }
+                                        new MailUtils().SendMailConfirmPayment(ownerEmail, bill.getRoomID(), hostel.getHostelName() ,bill.getBillTitle(), domain);
+                                        handlerStatus = HandlerStatus.builder().status(true).content("Giao dịch thành công!").build();
+                                        request.setAttribute("HOSTEL_OWNER_ID", ownerId);
+                                        request.setAttribute("SOCKET_MSG", "Hóa đơn #B" + bill.getBillID() + " vừa được thanh toán thành công bằng VNPay!");
                                     }
                                     url = SUCCESS;
-
                                 } else {
                                     //Xu ly thanh toan khong thanh cong
-                                    handlerStatus = HandlerStatus.builder().status(false).content("GD Khong thanh cong").build();
+                                    handlerStatus = HandlerStatus.builder().status(false).content("Giao dịch không thành công!").build();
                                 }
                             } else {
                                 //Don hang nay da duoc cap nhat roi, Merchant khong cap nhat nua (Duplicate callback)
-                                handlerStatus = HandlerStatus.builder().status(false).content("Order already confirmed").build();
+                                handlerStatus = HandlerStatus.builder().status(false).content("Hóa đơn đã được thanh toán!").build();
                             }
                         } else {
                             handlerStatus = HandlerStatus.builder().status(false).content("Invalid Amount").build();
