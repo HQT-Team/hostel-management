@@ -98,10 +98,20 @@
                                         <fmt:formatNumber value="${requestScope.ListMoneyEachMonth.get(0)}" type="currency" currencySymbol="VNĐ"/>
                                     </div>
                                     <div class="summary-income_compared">
-                                            <span class="summary-income_compared-percent">
-                                                <i class="fa-solid fa-arrow-trend-up"></i>
-                                                ${requestScope.ComparePercentOfTwoMonthAgo}%
-                                            </span>
+                                        <c:choose>
+                                            <c:when test="${requestScope.ComparePercentOfTwoMonthAgo < 0}">
+                                                <span class="summary-income_compared-percent down">
+                                                    <i class="fa-solid fa-arrow-trend-down"></i>
+                                                    ${requestScope.ComparePercentOfTwoMonthAgo}%
+                                                </span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span class="summary-income_compared-percent up">
+                                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                                    ${requestScope.ComparePercentOfTwoMonthAgo}%
+                                                </span>
+                                            </c:otherwise>
+                                        </c:choose>
                                         so với
                                         <span class="summary-income_compared-prev-price">
                                             <fmt:formatNumber value="${requestScope.ListMoneyEachMonth.get(1)}" type="currency" currencySymbol="VNĐ"/>

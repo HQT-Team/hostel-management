@@ -73,8 +73,15 @@
 }
 
 .summary-income_compared-percent {
-  color: #00d722;
   font-weight: 500;
+}
+
+.summary-income_compared-percent.up {
+  color: #00d722;
+}
+
+.summary-income_compared-percent.down {
+  color: #d90000;
 }
 
 .summary-income_compared-prev-price {
