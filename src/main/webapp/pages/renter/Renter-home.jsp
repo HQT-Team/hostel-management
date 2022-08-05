@@ -70,7 +70,6 @@
                                     <td>${infras.quantity}</td>
                                 </tr>
                             </c:forEach>
-
                         </table>
                     </div>
 
@@ -129,7 +128,6 @@
             receiveWebsocket.disconnectWebSocket();
         };
     </script>
-
 </div>
 </body>
 

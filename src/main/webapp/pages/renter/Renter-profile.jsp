@@ -36,6 +36,10 @@
     <%@include file="components/sidebar.jsp"%>
     <div class="content row">
   <%@include file="components/navbar.jsp"%>
+      <div class="hidden_notification" id="notification">
+        <p>${requestScope.MES}</p>
+        <span class="progress"></span>
+      </div>
       <div class="profile">
         <h2>Thông Tin Cá Nhân</h2>
         <h3><span>Tên: </span>${ACC_INFO.fullname}</h3>
@@ -100,6 +104,13 @@
   window.onbeforeunload = function(){
     receiveWebsocket.disconnectWebSocket();
   };
+</script>
+<script>
+  var notification = document.getElementById("notification")
+  if (${requestScope.MES != null}){
+    notification.classList.add("display_notification")
+    notification.classList.remove("hidden_notification")
+  }
 </script>
 </body>
 

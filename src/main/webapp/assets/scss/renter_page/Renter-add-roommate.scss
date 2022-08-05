@@ -14,6 +14,60 @@ body{
 .content {
   width: 80%;
   min-height: calc(100vh - 80px);
+  .hidden_notification{
+    display: none;
+  }
+  .display_notification{
+    position: absolute;
+    display: inline-block;
+    font-size: 18px;
+    width: fit-content;
+    padding: 20px 15px;
+    border-radius: 4px;
+    background-color: #141619;
+    color: #f6f5f9;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, .1);
+    transform: translateY(30px);
+    opacity: 0;
+    visibility: hidden;
+    animation: fade 4s linear forwards;
+    right: 5px;
+    top: 5px;
+  }
+  .progress{
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    width: 0;
+    height: 3px;
+    background-image: linear-gradient(to right, #529bdb, #3250bf);
+    border-radius: 4px;
+    animation: progress 3s .25s linear forwards;
+  }
+
+  @keyframes fade{
+    5%{
+      opacity: 1;
+      visibility: visible;
+      transform: translate(0px);
+    }
+    90%{
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    95%{
+      opacity: 0;
+    }
+    100%{
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+  }
+  @keyframes progress{
+    to{
+      width: calc(100% - 10px);
+    }
+  }
   .div-controll-form {
     width: 50%;
     margin: 50px auto;
