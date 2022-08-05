@@ -45,12 +45,15 @@
 
         <div class="content">
     <%@include file="components/navbar.jsp"%>
-
+            <%--           start notification--%>
+            <div class="hidden_notification" id="notification">
+                <p>${requestScope.SUCCESS != null ? requestScope.SUCCESS : ""} ${requestScope.ERROR != null ? requestScope.ERROR : ""}</p>
+                <span class="progress"></span>
+            </div>
+            <%--           end notification--%>
             <div class="div-controll-form" id="div-controll-form">
                 <form action="AddRenterRoommatePage" method="post" class="form" id="form">
                     <h1>Thêm Thành Viên</h1>
-                    <h3 style="color: red" id="show-message-1">${ERROR}</h3>
-                    <h3 style="color: green" id="show-message-2">${SUCCESS}</h3>
                     <div class="form-item" id="form-item">
                         <input id="form-item-input-1" name="full-name" type="text" placeholder="Tên đây đủ">
                         <p class="border-bottom"></p>
@@ -159,7 +162,19 @@
     });
 
 </script>
+<script>
+    var notification = document.getElementById("notification")
+    if (${requestScope.SUCCESS != null}){
+        notification.classList.add("display_notification")
+        notification.classList.remove("hidden_notification")
+    }
+    if (${requestScope.ERROR != null}){
+        console.log("ahihi")
+        notification.classList.add("display_notification")
+        notification.classList.remove("hidden_notification")
+    }
 
+</script>
 <!-- Push notification -->
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->

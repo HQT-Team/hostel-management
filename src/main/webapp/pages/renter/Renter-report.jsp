@@ -36,12 +36,13 @@
             <%@include file="components/sidebar.jsp"%>
             <div class="content row">
         <%@include file="components/navbar.jsp"%>
+                <div class="hidden_notification" id="notification">
+                    <p>${requestScope.RESPONSE_MSG.content}</p>
+                    <span class="progress"></span>
+                </div>
                 <div class="report">
                     <form action="Renter-report" method="post" id="form-submit">
                         <h2>Viết Báo Cáo</h2>
-                        <h3 class="notification-success" id="notification-success">
-                            ${requestScope.RESPONSE_MSG.content}
-                        </h3>
                         <div>
                             <select name="cateID" id="select">
                                 <c:forEach var="cate" items="${requestScope.REPORT_CATE}">
@@ -143,6 +144,13 @@
         success.innerText = ""
     }, 3000)
 
+</script>
+<script>
+    var notification = document.getElementById("notification")
+    if (${requestScope.RESPONSE_MSG.content != null}){
+        notification.classList.add("display_notification")
+        notification.classList.remove("hidden_notification")
+    }
 </script>
 <!-- Axios -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

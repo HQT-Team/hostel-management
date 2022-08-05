@@ -42,15 +42,18 @@
 <div>
 
     <div class="row" style="padding: 0;margin: 0;">
-        <%@include file="components/sidebar.jsp"%>
+        <%@include file="components/sidebar.jsp" %>
         <div class="content">
-    <%@include file="components/navbar.jsp"%>
+            <%@include file="components/navbar.jsp" %>
+            <%--           start notification--%>
+            <div class="hidden_notification" id="notification">
+                <p>${requestScope.SUCCESS != null ? requestScope.SUCCESS : ""} ${requestScope.ERROR != null ? requestScope.ERROR : ""}</p>
+                <span class="progress"></span>
+            </div>
+            <%--           end notification--%>
             <div class="div-controll-form" id="div-controll-form">
                 <form action="renter-roommate-update" method="post" class="form" id="form_update_roommate">
                     <h1>Cập Nhật Thông Tin</h1>
-                    <h3 style="color: green">${SUCCESS}</h3>
-                    <h3 style="color: red">${ERROR}</h3>
-
                     <div class="form-item" id="form-item">
                         <input id="form-item-input-1" name="new-name" type="text" placeholder="Tên Đầy đủ"
                                value="${sessionScope.roommate1.getInformation().getFullname()}">
@@ -64,7 +67,8 @@
                         <span id="mes-2"></span>
                     </div>
                     <div class="form-item">
-                        <input id="form-item-input-3" name="new-birthday" type="date" placeholder="Ngày sinh" value="${sessionScope.roommate1.information.birthday}"/>
+                        <input id="form-item-input-3" name="new-birthday" type="date" placeholder="Ngày sinh"
+                               value="${sessionScope.roommate1.information.birthday}"/>
                         <p class="border-bottom"></p>
                         <span id="mes-3"></span>
                     </div>
@@ -78,7 +82,6 @@
                                 <option value="1">Nam</option>
                                 <option value="0">Nữ</option>
                             </c:if>
-
                         </select>
                     </div>
                     <div class="form-item">
@@ -101,12 +104,13 @@
                     </div>
                     <input type="hidden" value="${param.roommateID}" name="roommateID">
                     <input id="form-item-submit" type="button" value="Lưu">
+                    <h1>${requestScope.SUCCESS}</h1>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<%@include file="components/footer.jsp"%>
+<%@include file="components/footer.jsp" %>
 
 <!-- Push notification element -->
 <div id="push-noti"></div>
@@ -127,37 +131,49 @@
 <!-- Web socket -->
 <script src="./assets/js/receiveWebsocket.js"></script>
 <script>
-   form_1.addEventListener("blur", () => {
-       isRequire(form_1, "Vui lòng nhập trường này!")
-   });
-   form_2.addEventListener("blur", () => {
-       isRequire(form_2, "Vui lòng nhập trường này!")
-       isMail(form_2, "Email không hợp lệ!")
-   });
-   form_3.addEventListener("blur", () => {
-       isRequire(form_3, "Vui lòng nhập trường này!")
-   });
-   form_4.addEventListener("blur", () => {
-       isRequire(form_4, "Vui lòng nhập trường này!")
-   });
-   form_5.addEventListener("blur", () => {
-       isRequire(form_5, "Vui lòng nhập trường này!")
-       isPhone(form_5, "Số điện thoại không hợp lệ!")
-   });
-   form_6.addEventListener("blur", () => {
-       isRequire(form_6, "Vui lòng nhập trường này!")
-   });
-   form_7.addEventListener("blur", () => {
-       isRequire(form_7, "Vui lòng nhập trường này!")
-       isCccd(form_7, "Số cccd không khả dụng!")
-   });
-</script>
+    var notification = document.getElementById("notification")
+    if (${requestScope.SUCCESS != null}){
+        notification.classList.add("display_notification")
+        notification.classList.remove("hidden_notification")
+    }
+    if (${requestScope.ERROR != null}){
+        console.log("ahihi")
+        notification.classList.add("display_notification")
+        notification.classList.remove("hidden_notification")
+    }
 
+</script>
+<script>
+    form_1.addEventListener("blur", () => {
+        isRequire(form_1, "Vui lòng nhập trường này!")
+    });
+    form_2.addEventListener("blur", () => {
+        isRequire(form_2, "Vui lòng nhập trường này!")
+        isMail(form_2, "Email không hợp lệ!")
+    });
+    form_3.addEventListener("blur", () => {
+        isRequire(form_3, "Vui lòng nhập trường này!")
+    });
+    form_4.addEventListener("blur", () => {
+        isRequire(form_4, "Vui lòng nhập trường này!")
+    });
+    form_5.addEventListener("blur", () => {
+        isRequire(form_5, "Vui lòng nhập trường này!")
+        isPhone(form_5, "Số điện thoại không hợp lệ!")
+    });
+    form_6.addEventListener("blur", () => {
+        isRequire(form_6, "Vui lòng nhập trường này!")
+    });
+    form_7.addEventListener("blur", () => {
+        isRequire(form_7, "Vui lòng nhập trường này!")
+        isCccd(form_7, "Số cccd không khả dụng!")
+    });
+</script>
 <script type="text/javascript">
     // Receive
     receiveWebsocket(alertPushNoti);
     // Close when leave
-    window.onbeforeunload = function(){
+    window.onbeforeunload = function () {
         receiveWebsocket.disconnectWebSocket();
     };
 </script>

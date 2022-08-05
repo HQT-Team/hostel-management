@@ -42,11 +42,12 @@
         <%@include file="components/sidebar.jsp"%>
         <div class="content">
     <%@include file="components/navbar.jsp"%>
+            <div class="hidden_notification" id="notification">
+                <p>${requestScope.RESPONSE_MSG}</p>
+                <span class="progress"></span>
+            </div>
             <h1>Hóa Đơn</h1>
             <input id="key" type="hidden" value="<%=request.getAttribute("RESPONSE_MSG")%>"/>
-            <div id="notification">
-                <p id="notification-p">${requestScope.RESPONSE_MSG}</p>
-            </div>
             <div id="invoice-cover">
                 <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.createdDate}" var="createdDate"/>
                 <fmt:parseDate pattern="yyyy-MM-dd" value="${BILL.expiredPaymentDate}" var="expiredPaymentDate"/>
@@ -179,7 +180,13 @@
 <script src="./assets/js/push-notification-alert.js"></script>
 <!-- Web socket -->
 <script src="./assets/js/receiveWebsocket.js"></script>
-
+<script>
+    var notification = document.getElementById("notification")
+    if (${requestScope.RESPONSE_MSG != null}){
+        notification.classList.add("display_notification")
+        notification.classList.remove("hidden_notification")
+    }
+</script>
 <script type="text/javascript">
     // Receive
     receiveWebsocket(alertPushNoti);
