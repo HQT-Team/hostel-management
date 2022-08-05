@@ -200,15 +200,15 @@ public class MailUtils {
                 "                                    <td style=\"height: 40px;\">&nbsp;</td>\n" +
                 "                                </tr>\n" +
                 "                                <tr>\n" +
-                "                                    <td style=\"padding:0 35px; display: flex; flex-direction: column !important; align-items: center !important;\">\n" +
+                "                                    <td style=\"padding: 0 35px;\">\n" +
                 "                                        <h1 style=\"color: #1e1e2d; \n" +
                 "                                            font-weight: 500; margin: 0;\n" +
                 "                                            font-size: 24px;\n" +
                 "                                            font-family:'Rubik', sans-serif;\">\n" +
                 "                                            Hệ thống vừa ghi nhận người thuê phòng "+ roomNum +" khu trọ "+ hostelName +" vừa thanh toán hóa đơn "+ billTitle +"\n" +
                 "                                        </h1>\n" +
-                "                                        <span style=\"display: inline-block;\n" +
-                "                                            margin: 24px 0 0;\n" +
+                "                                        <span style=\"display: block;\n" +
+                "                                            margin: 24px auto 0;\n" +
                 "                                            border-bottom: 1px solid #cecece;\n" +
                 "                                            width: 100px;\">\n" +
                 "                                        </span>\n" +
@@ -874,15 +874,15 @@ public class MailUtils {
                 "                                    <td style=\"height: 40px;\">&nbsp;</td>\n" +
                 "                                </tr>\n" +
                 "                                <tr>\n" +
-                "                                    <td style=\"padding:0 35px; display: flex; flex-direction: column; align-items: center;\">\n" +
+                "                                    <td style=\"padding:0 35px;\">\n" +
                 "                                        <h1 style=\"color: #1e1e2d; \n" +
                 "                                            font-weight: 500; margin: 0;\n" +
                 "                                            font-size: 32px;\n" +
                 "                                            font-family:'Rubik', sans-serif;\">\n" +
                 "                                            Bạn đã nhận được phản hồi báo cáo từ chủ trọ\n" +
                 "                                        </h1>\n" +
-                "                                        <span style=\"display: inline-block;\n" +
-                "                                            margin: 24px 0 0; \n" +
+                "                                        <span style=\"display: block;\n" +
+                "                                            margin: 24px auto 0; \n" +
                 "                                            border-bottom: 1px solid #cecece;\n" +
                 "                                            width: 100px;\">\n" +
                 "                                        </span>\n" +
@@ -982,15 +982,15 @@ public class MailUtils {
                 "                                    <td style=\"height: 40px;\">&nbsp;</td>\n" +
                 "                                </tr>\n" +
                 "                                <tr>\n" +
-                "                                    <td style=\"padding:0 35px; display: flex; flex-direction: column; align-items: center;\">\n" +
+                "                                    <td style=\"padding:0 35px;\">\n" +
                 "                                        <h1 style=\"color: #cf2121; \n" +
                 "                                            font-weight: 500; margin: 0;\n" +
                 "                                            font-size: 24px;\n" +
                 "                                            font-family:'Rubik', sans-serif;\">\n" +
                 "                                            Hệ thống vừa ghi nhận việc tài khoản của bạn đã thay đổi mật khẩu.</br> Nếu không phải bạn thực hiện việc này, hãy lập tức liên hệ với quản trị viên của trang web để được xử lí.\n" +
                 "                                        </h1>\n" +
-                "                                        <span style=\"display: inline-block;\n" +
-                "                                            margin: 24px 0 0; \n" +
+                "                                        <span style=\"display: block;\n" +
+                "                                            margin: 24px auto 0; \n" +
                 "                                            border-bottom: 1px solid #cecece;\n" +
                 "                                            width: 100px;\">\n" +
                 "                                        </span>\n" +
