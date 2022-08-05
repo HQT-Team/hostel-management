@@ -24,12 +24,18 @@
                 <div class="invoice-group">
                     <div class="invoice-label">Trạng thái:</div>
                     <!-- Paid: success ~ Unpaid: fail -->
-                    <div class="invoice-content status success">
-                        <c:choose>
-                            <c:when test="${requestScope.billRoom.status eq 1}">Đã thanh toán</c:when>
-                            <c:when test="${requestScope.billRoom.status eq 0}">Chưa thanh toán</c:when>
-                        </c:choose>
-                    </div>
+                    <c:choose>
+                        <c:when test="${requestScope.billRoom.status eq 1}">
+                            <div class="invoice-content status success">
+                                Đã thanh toán
+                            </div>
+                        </c:when>
+                        <c:when test="${requestScope.billRoom.status eq 0}">
+                            <div class="invoice-content status fail">
+                                Chưa thanh toán
+                            </div>
+                        </c:when>
+                    </c:choose>
                 </div>
                 <div class="invoice-group">
                     <div class="invoice-label">Phương thức thanh toán:</div>

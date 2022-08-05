@@ -117,41 +117,51 @@
                                     <td>${count}</td>
                                     <td>${infrastructure.infrastructureName}</td>
                                     <td>
-                                        <button class="btn btn-primary fs-5" data-bs-toggle="modal"
-                                                data-bs-target="#infrastructure__modal-${infrastructure.idInfrastructureItem}">Chỉnh sửa</button>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="infrastructure__modal-${infrastructure.idInfrastructureItem}" tabindex="-1"
-                                             aria-labelledby="infrastructure__modal-label-${infrastructure.idInfrastructureItem}" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="infrastructure__modal-label-${infrastructure.idInfrastructureItem}">
-                                                            Cập nhật dịch vụ
-                                                        </h5>
-                                                        <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <form id="update-infrastructure-form-${infrastructure.idInfrastructureItem}" action="admin-update-infrastructure" method="POST">
-                                                        <input type="hidden" name="infrastructureId" value="${infrastructure.idInfrastructureItem}" />
-                                                        <div class="modal-body mt-5 mb-5">
-                                                            <div class="form-group">
-                                                                <label for="update-infrastructure-name-${infrastructure.idInfrastructureItem}" class="form-label">Tên cơ sở hạ tầng: <span>*</span></label>
-                                                                <input type="text" name="infrastructureName" id="update-infrastructure-name-${infrastructure.idInfrastructureItem}" class="form-control"
-                                                                       placeholder="Nhập tên cơ sở hạ tầng" value="${infrastructure.infrastructureName}">
-                                                                <div class="form-message"></div>
+                                        <c:choose>
+                                            <c:when test="${infrastructure.idInfrastructureItem eq 1 ||
+                                                            infrastructure.idInfrastructureItem eq 2 ||
+                                                            infrastructure.idInfrastructureItem eq 3 ||
+                                                            infrastructure.idInfrastructureItem eq 4}">
+                                                -
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button class="btn btn-primary fs-5" data-bs-toggle="modal"
+                                                        data-bs-target="#infrastructure__modal-${infrastructure.idInfrastructureItem}">Chỉnh sửa</button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="infrastructure__modal-${infrastructure.idInfrastructureItem}" tabindex="-1"
+                                                     aria-labelledby="infrastructure__modal-label-${infrastructure.idInfrastructureItem}" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="infrastructure__modal-label-${infrastructure.idInfrastructureItem}">
+                                                                    Cập nhật dịch vụ
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
+                                                            <form id="update-infrastructure-form-${infrastructure.idInfrastructureItem}" action="admin-update-infrastructure" method="POST">
+                                                                <input type="hidden" name="infrastructureId" value="${infrastructure.idInfrastructureItem}" />
+                                                                <div class="modal-body mt-5 mb-5">
+                                                                    <div class="form-group">
+                                                                        <label for="update-infrastructure-name-${infrastructure.idInfrastructureItem}" class="form-label">Tên cơ sở hạ tầng: <span>*</span></label>
+                                                                        <input type="text" name="infrastructureName" id="update-infrastructure-name-${infrastructure.idInfrastructureItem}" class="form-control"
+                                                                               placeholder="Nhập tên cơ sở hạ tầng" value="${infrastructure.infrastructureName}">
+                                                                        <div class="form-message"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer justify-content-between">
+                                                                    <button type="button" class="btn btn-danger fs-4"
+                                                                            data-bs-dismiss="modal">Hủy bỏ</button>
+                                                                    <button type="submit" class="btn btn-success fs-4">
+                                                                        Cập nhật
+                                                                    </button>
+                                                                </div>
+                                                            </form>
                                                         </div>
-                                                        <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-danger fs-4"
-                                                                    data-bs-dismiss="modal">Hủy bỏ</button>
-                                                            <button type="submit" class="btn btn-success fs-4">
-                                                                Cập nhật
-                                                            </button>
-                                                        </div>
-                                                    </form>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -199,14 +209,23 @@
 
     // Valid form
     <c:forEach var="infrastructure" items="${requestScope.infrastructuresList}">
-        Validator({
-            form: "#update-infrastructure-form-${infrastructure.idInfrastructureItem}",
-            formGroupSelector: ".form-group",
-            errorSelector: ".form-message",
-            rules: [
-                Validator.isRequired("#update-infrastructure-name-${infrastructure.idInfrastructureItem}", "Vui lòng nhập tên cơ sở hạ tầng")
-            ],
-        });
+    <c:choose>
+        <c:when test="${infrastructure.idInfrastructureItem eq 1 ||
+                        infrastructure.idInfrastructureItem eq 2 ||
+                        infrastructure.idInfrastructureItem eq 3 ||
+                        infrastructure.idInfrastructureItem eq 4}">
+        </c:when>
+        <c:otherwise>
+            Validator({
+                form: "#update-infrastructure-form-${infrastructure.idInfrastructureItem}",
+                formGroupSelector: ".form-group",
+                errorSelector: ".form-message",
+                rules: [
+                    Validator.isRequired("#update-infrastructure-name-${infrastructure.idInfrastructureItem}", "Vui lòng nhập tên cơ sở hạ tầng")
+                ],
+            });
+        </c:otherwise>
+    </c:choose>
     </c:forEach>
 
     <c:choose>
@@ -228,7 +247,9 @@
     </c:when>
     </c:choose>
 
-    $('#infrastructure__table').DataTable();
+    $('#infrastructure__table').DataTable({
+        "order": [],
+    });
 </script>
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">

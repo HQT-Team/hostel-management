@@ -131,55 +131,68 @@
                                     <td>${service.serviceName}</td>
                                     <td>${service.unit}</td>
                                     <td>
-                                            <button class="btn btn-primary fs-5" data-bs-toggle="modal"
-                                                    data-bs-target="#service__modal-${service.serviceID}">Chỉnh sửa</button>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="service__modal-${service.serviceID}" tabindex="-1"
-                                                 aria-labelledby="service__modal-label-${service.serviceID}" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="service__modal-label-${service.serviceID}">
+                                        <c:choose>
+                                            <c:when test="${service.serviceID eq 1 ||
+                                                            service.serviceID eq 2 ||
+                                                            service.serviceID eq 3 ||
+                                                            service.serviceID eq 4 ||
+                                                            service.serviceID eq 5 ||
+                                                            service.serviceID eq 6 ||
+                                                            service.serviceID eq 7}">
+                                                -
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button class="btn btn-primary fs-5" data-bs-toggle="modal"
+                                                        data-bs-target="#service__modal-${service.serviceID}">Chỉnh sửa</button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="service__modal-${service.serviceID}" tabindex="-1"
+                                                     aria-labelledby="service__modal-label-${service.serviceID}" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="service__modal-label-${service.serviceID}">
                                                                     Cập nhật dịch vụ
-                                                            </h5>
-                                                            <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <form id="update-service-form-${service.serviceID}" action="admin-update-service" method="POST">
-                                                            <input type="hidden" name="serviceId" value="${service.serviceID}" />
-                                                            <div class="modal-body mt-5 mb-5">
-                                                                <div class="row">
-                                                                    <div class="col-8">
-                                                                        <div class="form-group">
-                                                                            <label for="update-service-name-${service.serviceID}" class="form-label">Tên dịch vụ: <span>*</span></label>
-                                                                            <input type="text" name="serviceName" id="update-service-name-${service.serviceID}" class="form-control"
-                                                                                   placeholder="Nhập tên dịch vụ" value="${service.serviceName}">
-                                                                            <div class="form-message" style="margin-bottom: 12px;"></div>
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <form id="update-service-form-${service.serviceID}" action="admin-update-service" method="POST">
+                                                                <input type="hidden" name="serviceId" value="${service.serviceID}" />
+                                                                <div class="modal-body mt-5 mb-5">
+                                                                    <div class="row">
+                                                                        <div class="col-8">
+                                                                            <div class="form-group">
+                                                                                <label for="update-service-name-${service.serviceID}" class="form-label">Tên dịch vụ: <span>*</span></label>
+                                                                                <input type="text" name="serviceName" id="update-service-name-${service.serviceID}" class="form-control"
+                                                                                       placeholder="Nhập tên dịch vụ" value="${service.serviceName}">
+                                                                                <div class="form-message" style="margin-bottom: 12px;"></div>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-4">
-                                                                        <div class="form-group">
-                                                                            <label for="update-service-unit" class="form-label">Đơn vị <span>*</span></label>
-                                                                            <select name="serviceUnit" id="update-service-unit" class="form-control">
-                                                                                <option value="phòng" ${service.unit eq "phòng" ? "selected" : ""}>Phòng</option>
-                                                                                <option value="Kwh" ${service.unit eq "Kwh" ? "selected" : ""}>Kwh</option>
-                                                                                <option value="m3" ${service.unit eq "m3" ? "selected" : ""}>m3</option>
-                                                                            </select>
+                                                                        <div class="col-4">
+                                                                            <div class="form-group">
+                                                                                <label for="update-service-unit" class="form-label">Đơn vị <span>*</span></label>
+                                                                                <select name="serviceUnit" id="update-service-unit" class="form-control">
+                                                                                    <option value="phòng" ${service.unit eq "phòng" ? "selected" : ""}>Phòng</option>
+                                                                                    <option value="Kwh" ${service.unit eq "Kwh" ? "selected" : ""}>Kwh</option>
+                                                                                    <option value="m3" ${service.unit eq "m3" ? "selected" : ""}>m3</option>
+                                                                                </select>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="modal-footer justify-content-between">
-                                                                <button type="button" class="btn btn-danger fs-4"
-                                                                        data-bs-dismiss="modal">Hủy bỏ</button>
-                                                                <button type="submit" class="btn btn-success fs-4">
-                                                                    Cập nhật
-                                                                </button>
-                                                            </div>
-                                                        </form>
+                                                                <div class="modal-footer justify-content-between">
+                                                                    <button type="button" class="btn btn-danger fs-4"
+                                                                            data-bs-dismiss="modal">Hủy bỏ</button>
+                                                                    <button type="submit" class="btn btn-success fs-4">
+                                                                        Cập nhật
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -227,14 +240,26 @@
 
     // Valid form
     <c:forEach var="service" items="${requestScope.servicesList}">
-        Validator({
-            form: "#update-service-form-${service.serviceID}",
-            formGroupSelector: ".form-group",
-            errorSelector: ".form-message",
-            rules: [
-                Validator.isRequired("#update-service-name-${service.serviceID}", "Vui lòng nhập tên của dịch vụ")
-            ],
-        });
+    <c:choose>
+        <c:when test="${service.serviceID eq 1 ||
+                        service.serviceID eq 2 ||
+                        service.serviceID eq 3 ||
+                        service.serviceID eq 4 ||
+                        service.serviceID eq 5 ||
+                        service.serviceID eq 6 ||
+                        service.serviceID eq 7}">
+        </c:when>
+        <c:otherwise>
+            Validator({
+                form: "#update-service-form-${service.serviceID}",
+                formGroupSelector: ".form-group",
+                errorSelector: ".form-message",
+                rules: [
+                    Validator.isRequired("#update-service-name-${service.serviceID}", "Vui lòng nhập tên của dịch vụ")
+                ],
+            });
+        </c:otherwise>
+    </c:choose>
     </c:forEach>
 
     <c:choose>
@@ -256,7 +281,9 @@
         </c:when>
     </c:choose>
 
-    $('#service__table').DataTable();
+    $('#service__table').DataTable({
+        "order": [],
+    });
 </script>
 
 <c:if test="${requestScope.RESPONSE_MSG eq null}">

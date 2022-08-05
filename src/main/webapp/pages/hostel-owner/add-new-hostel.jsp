@@ -186,7 +186,7 @@
                             <div class="spacer"></div>
                             <div class="add-hostel-action">
                                 <a href="list-hostels" class="form-submit">Hủy bỏ</a>
-                                <button class="form-submit">Tạo phòng</button>
+                                <button class="form-submit">Tạo khu trọ</button>
                             </div>
                         </form>
                     </div>
