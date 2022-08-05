@@ -16,6 +16,10 @@ body {
   overflow-x: hidden;
 }
 
+.content-group {
+  min-height: var(--min-body-height);
+}
+
 .content {
 
   .statistic-content {

@@ -174,13 +174,13 @@
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <%@include file="./components/footer.jsp" %>
+
+    <!-- Push notification element -->
+    <div id="push-noti"></div>
 </div>
-
-<!-- Footer -->
-<%@include file="./components/footer.jsp" %>
-
-<!-- Push notification element -->
-<div id="push-noti"></div>
 
 <!-- Script Bootstrap !important -->
 <script
