@@ -2,7 +2,7 @@
 
 The main project folder for the team to organize, manage and work
 
-Live Demo: :point_right: [here]()
+Video Demo: :point_right: [here](https://www.youtube.com/watch?v=6m1wAVtJlec)
 
 ## Table of Contents
 
@@ -32,7 +32,17 @@ Live Demo: :point_right: [here]()
 
 ## Preview Screenshot
 
-- Updating
+<div  align="center">
+
+<img  src="https://github.com/HQT-Team/hostel-management/blob/main/images/p1.png"  alt="Home Page"  width="45%"></img> &nbsp;&nbsp; <img  src="https://github.com/HQT-Team/hostel-management/blob/main/images/p2.png"  alt="About us"  width="45%"></img>
+
+<img  src="https://github.com/HQT-Team/hostel-management/blob/main/images/p3.png"  alt="Admin Dashboard"  width="45%"></img> &nbsp;&nbsp; <img  src="https://github.com/HQT-Team/hostel-management/blob/main/images/p4.png"  alt="Manage Account"  width="45%"></img>
+
+<img  src="https://github.com/HQT-Team/hostel-management/blob/main/images/p5.png"  alt="Owner Dashboard"  width="45%"></img> &nbsp;&nbsp; <img  src="https://github.com/HQT-Team/hostel-management/blob/main/images/p6.png"  alt="Manage Room"  width="45%"></img>
+
+<img  src="https://github.com/HQT-Team/hostel-management/blob/main/images/p7.png"  alt="Renter Dashboard"  width="45%"></img> &nbsp;&nbsp; <img  src="https://github.com/HQT-Team/hostel-management/blob/main/images/p8.png"  alt="List Bills"  width="45%"></img>
+
+</div>
 
 ## Install and run
 
