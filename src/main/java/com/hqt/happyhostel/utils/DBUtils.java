@@ -7,10 +7,10 @@ public class DBUtils {
     public static Connection makeConnection() throws Exception {
         Connection cn = null;
         String IP = "localhost";
-        String instanceName="MAKAIKNIGHTS\\KHOAHD7621";
-        String pwd="0792596763";
+        String instanceName=""; // Change here
+        String uid = ""; // Change here
+        String pwd=""; // Change here
         String port = "1433";
-        String uid = "sa";
         String db = "HostelManagement";
         String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         String url = "jdbc:sqlserver://" + IP + "\\" + instanceName + ":" + port
