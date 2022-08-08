@@ -50,7 +50,7 @@ public class HostelOwnerPageServlet extends HttpServlet {
             if (listHostel.size() > 0) {
                 Random rand = new Random();
                 int randomHostelId = rand.nextInt(listHostel.size());
-                int hostelId = listHostel.get(randomHostelId).getHostelID(); // Hard code
+                int hostelId = listHostel.get(randomHostelId).getHostelID();
 
                 listMoneyEachMonth = GetListMoneyEachMonthOfSixMonthAgoByHostelId(hostelId, listSixMonthsAndYearsBeforeCurrentDate);
 
