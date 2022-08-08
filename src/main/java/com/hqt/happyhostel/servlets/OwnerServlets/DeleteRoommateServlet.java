@@ -1,4 +1,4 @@
-package com.hqt.happyhostel.servlets.OwnerServlet;
+package com.hqt.happyhostel.servlets.OwnerServlets;
 
 import com.hqt.happyhostel.dao.RoommateInfoDAO;
 import com.hqt.happyhostel.dto.HandlerStatus;

@@ -1,6 +1,5 @@
-package com.hqt.happyhostel.servlets.OwnerServlet;
+package com.hqt.happyhostel.servlets.OwnerServlets;
 
-import com.google.gson.Gson;
 import com.hqt.happyhostel.dao.HostelDAO;
 import com.hqt.happyhostel.dao.InvoiceDAO;
 import com.hqt.happyhostel.dao.RoomDAO;
