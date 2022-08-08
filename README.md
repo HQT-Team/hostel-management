@@ -1,6 +1,7 @@
-# :star_struck: HQT Hostel Management - SWP391
+[![HQT Hostel Management with CI | © 2022 by HQT Team](https://github.com/HQT-Team/hostel-management/actions/workflows/maven.yml/badge.svg)](https://github.com/HQT-Team/hostel-management/actions/workflows/maven.yml)
+# 🏨 HQT Hostel Management 🏨
 
-The main project folder for the team to organize, manage and work
+👋 Welcome to our Software Development Project (SWP391) 👋
 
 Video Demo: :point_right: [here](https://www.youtube.com/watch?v=6m1wAVtJlec)
 
@@ -194,14 +195,13 @@ Video Demo: :point_right: [here](https://www.youtube.com/watch?v=6m1wAVtJlec)
 
 #| Name | Description
 -| ---- | -----------
-1| [Main Project Folder](https://github.com/HaiNam-FoodBoy/HappyHostel_SWP391_SUMMER2022) | -
-2| [Database Script]() | -
-2.1| [Database ERD Diagram](https://drive.google.com/file/d/1EWFwGAEFJI4Ijg2RoIbt_WtL_wtLur4R/view?usp=sharing) | -
-2.2| [Database Physical Diagram]() | -
-3| [UI Design](https://www.figma.com/file/2gRO4Afc88rHWHuuQlrR6g/Layout-Hostel?node-id=0%3A1) | -
+1| [Main Project Folder](https://github.com/HQT-Team/hostel-management/tree/main/HostelManagement) | -
+2| [Database Script](https://github.com/HQT-Team/hostel-management/tree/main/database) | -
+3| [UI Design](https://www.figma.com/file/2gRO4Afc88rHWHuuQlrR6g/Layout-Hostel?node-id=0%3A1) | Prototype for UI
+4| [Resources](https://drive.google.com/drive/folders/1l4k8ewRLmPochv4mXUzeAM4PCYGqMEVg?usp=sharing) | Documents, diagrams, necessary tools...
 
 ## Contributors
-- [Hoang Dang Khoa](https://github.com/khoahd7621) - SE150848 - **Front-end Developer | Back-end Developer | UI Designer**
+- [Hoang Dang Khoa](https://github.com/khoahd7621) - SE150848 - **Leader | Front-end Developer | Back-end Developer | UI Designer (Admin/Owner)**
 
 - [Nguyen Tan Loc](https://github.com/ngntanloc) - SE150877 - **Back-end Developer | Database Designer**
 
@@ -209,12 +209,14 @@ Video Demo: :point_right: [here](https://www.youtube.com/watch?v=6m1wAVtJlec)
 
 - [Thai Thanh Phat](https://github.com/ttphats) - SE150968 - **Back-end Developer**
 
-- [Tran Hoai Nam](https://github.com/namth1606) - SE150921 - **Front-end Developer | UI Designer**
+- [Tran Hoai Nam](https://github.com/namth1606) - SE150921 - **Front-end Developer | UI Designer (Renter)**
 
 ## Learn More
+- Updating
 
 ## Reference
+- Updating
 
 ## License & Copyright
 
-&copy; 2022 [HQT Team](https://github.com/HQT-Team) Licensed under the [GPL-3.0 LICENSE]().
+&copy; 2022 [HQT Team](https://github.com/HQT-Team) Licensed under the [GPL-3.0 LICENSE](https://github.com/HQT-Team/hostel-management/blob/main/LICENSE).
