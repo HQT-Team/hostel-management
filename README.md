@@ -215,7 +215,9 @@ Video Demo: :point_right: [here](https://www.youtube.com/watch?v=6m1wAVtJlec)
 - Updating
 
 ## Reference
-- Updating
+- Websocket: https://viblo.asia/p/su-dung-java-tao-websocket-de-tao-ung-dung-chat-gDVK2QAw5Lj.
+- VnPay: https://sandbox.vnpayment.vn/apis/docs/thanh-toan-pay/pay.html#code-ipn-url.
+- JavaMail: https://gpcoder.com/3753-huong-dan-su-dung-thu-vien-java-mail/.
 
 ## License & Copyright
 
